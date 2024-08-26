@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", sans-serif;
+}
+:root {
+    --primary-color: #561C24;
+    --secondary-color: #FFAF45;
+    --panel-color: #FFF;
+    --text-color: #000;
+    --text-color2: #fff;
+    --text-color3: #999;
+    --text-color4: #f5f5f5;
+    --black-light-color: #707070;
+    --border-color: #e6e5e5;
+    --toggle-color: #DDD;
+    --title-icon-color: #fff;
+    
+    --tran-05: all 0.5s ease;
+    --tran-03: all 0.3s ease;
+    --tran-02: all 0.2s ease;
+}
+body {
+    background: linear-gradient(to top, #561c24, #9e4d56); 
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+section {
+    margin: auto;
+}
+.wrapper {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 150px;
+    margin-bottom: 40px;
+}
+.logo-content {
+    display: flex;
+    align-items: center;
+}
+.logo-content img {
+    height: 500px;
+}
+.line {
+    border: 1px solid;
+    opacity: 75%;
+    height: 250px;
+    margin: auto 0;
+    position: relative;
+    right: 32px;
+}
+.login-content {
+    margin-top: 32px;
+    border-radius: 8px;
+    padding: 40px 25px;
+    height: 350px;
+    background: #f0f0f0;
+    box-shadow: 
+        inset 2px 2px 5px #ffffff32,
+        inset -2px -2px 5px rgba(0, 0, 0, 0.1);
+}
+.login-content h1 {
+    font-size: 32px;
+    color: var(--secondary-color);
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+.username, .password {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+.username label, .password label {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+.username input, .password input {
+    width: 275px;
+    height: 38px;
+    padding-left: 8px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 
+        inset 2px 2px 5px rgba(0, 0, 0, 0.2),
+        inset -2px -2px 5px rgba(255, 255, 255, 0.5);
+    outline: none;
+    transition: box-shadow 0.3s ease;
+}
+.username input:focus, .password input:focus {
+    box-shadow: 
+        inset 2px 2px 5px rgba(0, 0, 0, 0.3),
+        inset -2px -2px 5px rgba(255, 255, 255, 0.6);
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin: 24px 0 16px 0;
+}
+.buttons button {
+    width: 142px;
+    height: 48px;
+    cursor: pointer;
+}
+.buttons a {
+    margin-left: 8px;
+    cursor: pointer;
+}
+.forgot a {
+    display: flex;
+    justify-content: center;
+    color: rgb(4, 136, 189);
+}
+.bn3637 {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    font-size: 18px;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+    backface-visibility: hidden;
+    border: .15rem solid transparent;
+    border-radius: 8px;
+}
+.bn36 {
+    color: var(--text-color3);
+    border-color: transparent;
+    transition: transform 0.2s cubic-bezier(0.235, 0, 0.05, 0.95);
+}
+.bn36:hover {
+    transform: perspective(1px) scale3d(1.044, 1.044, 1) translateZ(0) !important;
+}
+.bn37 {
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    transition: transform 0.2s cubic-bezier(0.235, 0, 0.05, 0.95);
+}
+.bn37:hover {
+    transform: perspective(1px) scale3d(1.044, 1.044, 1) translateZ(0) !important;
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawminary | Account Settings</title>
+    <link rel="icon" href="../../imgs/lawminarylogo.png" type="image/png">
+    <link rel="stylesheet" href="../../styles/settings/account-settings_style.css">
+    <link rel="stylesheet" href="../../styles/nav_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <aside>
+            <div class="top-nav">
+                <div class="profile">
+                    <div class="user-indicator">
+                        <img src="../../imgs/user-img.png" alt="Profile Picture">
+                        <label>@Username</label>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="../home.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                        <li><a href="../search.html"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></a></li>
+                        <li><a href="../resources.html"><i class="fa-solid fa-folder"></i><span>Resources</span></a></li>
+                        <li><a href="../profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a></li>
+                        <li>
+                            <a class="current" onclick="toggleDropdown(event)"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+                            <div id="settingsDropdown" class="dropdown-content">
+                                <ul>
+                                    <li><a href="about_lawminary.html">About Lawminary</a></li>
+                                    <li><a href="about_pao.html">About PAO</a></li>
+                                    <li><a class="current-settings" href="account_settings.html">Account Settings</a></li>
+                                    <li><a href="activity_logs.html">Activity Logs</a></li>
+                                    <li><a href="provide_feedback.html">Provide Feedback</a></li>
+                                    <li><a href="tos.html">Terms of Service</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="bottom-nav">
+                <a class="logout"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
+            </div>
+        </aside>
+        <main>
+            <header>
+                <div class="header-top">
+                    <img src="../../imgs/Lawminary_Logo_2-Gold.png" alt="Lawminary Logo">
+                    <div class="notification">
+                        <a href="../../frontend/notification.html"><i class="fas fa-bell bell-icon"></i></a>
+                    </div>
+                </div>
+                <hr class="divider">
+            </header>
+            <content>
+                <div class="settings-container">
+                    <div class="settings-menu">
+                        <ul>
+                            <li><a href="#" class="active" data-tab="general">General</a></li>
+                            <li><a href="#" data-tab="change-password">Change Password</a></li>
+                            <li><a href="#" data-tab="info">Info</a></li>
+                        </ul>
+                    </div>
+                    <div class="settings-content">
+                        <div id="general" class="tab-content active">
+                            <h2>General</h2>
+                            <div class="profile-pic">
+                                <img src="../../imgs/user-img.png" alt="Profile Picture">
+                                <button>Upload new photo</button>
+                                <button>Reset</button>
+                                <p>Allowed JPG, GIF or PNG. Max size of 800K</p>
+                            </div>
+                            <form>
+                                <label for="username">Username</label>
+                                <input type="text" id="username" name="username" value="nmaxwell">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" value="Nelle Maxwell">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="nmaxwell@mail.com">
+                                <p class="email-confirmation">Your email is not confirmed. Please check your inbox. <a href="#">Resend confirmation</a></p>
+                                <label for="company">Company</label>
+                                <input type="text" id="company" name="company" value="Company Ltd.">
+                                <div class="action-button">
+                                    <button type="button">Cancel</button>
+                                    <button type="submit">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="change-password" class="tab-content">
+                            <h2>Change Password</h2>
+                            <form>
+                                <label for="current-password">Current Password</label>
+                                <input type="password" id="current-password" name="current-password">
+                                <label for="new-password">New Password</label>
+                                <input type="password" id="new-password" name="new-password">
+                                <label for="repeat-password">Repeat New Password</label>
+                                <input type="password" id="repeat-password" name="repeat-password">
+                                <div class="action-button">
+                                    <button type="button">Cancel</button>
+                                    <button type="submit">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div id="info" class="tab-content">
+                            <h2>Info</h2>
+                            <form>
+                                <label for="bio">Bio</label>
+                                <textarea id="bio" name="bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
+                                <label for="birthday">Birthday</label>
+                                <input type="text" id="birthday" name="birthday" value="May 3, 1995">
+                                <label for="country">Country</label>
+                                <select id="country" name="country">
+                                    <option value="canada">Canada</option>
+                                </select>
+                                <label for="phone">Phone</label>
+                                <input type="text" id="phone" name="phone" value="+0 (123) 456 7891">
+                                <label for="website">Website</label>
+                                <input type="text" id="website" name="website">
+                                <div class="action-button">
+                                    <button type="button">Cancel</button>
+                                    <button type="submit">Save changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </content>
+        </main>
+    </div>
+    <script src="../../js/settings.js"></script>
+</body>
+</html>

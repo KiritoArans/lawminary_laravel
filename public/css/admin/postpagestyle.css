@@ -1,0 +1,99 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    height: 120vh;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 0px 48px 0px 32px;
+}
+header {
+    text-align: center;
+}
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    color: var(--primary-color);
+}
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-top img{
+    height: 32px;
+    position: relative;
+    left: -8px;
+}
+header hr {
+    margin-top: 10px;
+    border: 1px solid #b1b1b1;
+}
+
+.search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.search-bar input {
+    width: 450px;
+    padding: 10px 10px 10px 32px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.search-bar i {
+    position: absolute;
+    left: 8px;
+    color: var(--primary-color);
+}
+
+.filter-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+.action-buttons #filterButton {
+    margin-left: auto;
+}
+.custom-button {
+    background-color: #b0b0b0; /* Adjust to your preferred color */
+    border: 1px solid #ccc;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s ease;
+}
+
+.custom-button:hover {
+    background-color: #a0a0a0; /* Slightly darker shade for hover effect */
+}

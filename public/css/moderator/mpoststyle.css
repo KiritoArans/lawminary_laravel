@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 0px 48px 0px 32px;
+}
+header {
+    text-align: center;
+    padding-bottom: 10px;
+}
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-top img{
+    height: 32px;
+    position: relative;
+    left: -8px;
+}
+header hr {
+    margin-top: 10px;
+    border: 1px solid #b1b1b1;
+}
+.header-line {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-top: 10px;
+}
+.header-ttl {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-line input {
+    flex: 1;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-right: 8px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.action-buttons button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #999;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.action-buttons button:hover {
+    background-color: #333333;
+}
+
+.edit-btn button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #999;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 3px;
+}
+
+.edit-btn button:hover {
+    background-color: #333333;
+}
+
+#filterButton {
+    margin-left: auto;
+}

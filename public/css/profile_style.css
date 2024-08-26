@@ -1,0 +1,362 @@
+*{
+    font-family: "Montserrat", sans-serif;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+:root{
+    --primary-color: #561C24;
+    --secondary-color: #FFAF45;
+    --panel-color: #FFF;
+    --text-color: #000;
+    --text-color1: #333;
+    --text-color2: #fff;
+    --text-color3: #999;
+    --text-color4: #f5f5f5;
+    --black-light-color: #707070;
+    --border-color: #e6e5e5;
+    --toggle-color: #DDD;
+    --title-icon-color: #fff;
+    
+    --tran-05: all 0.5s ease;
+    --tran-03: all 0.3s ease;
+    --tran-03: all 0.2s ease;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 0px 48px 0px 32px;
+}
+header {
+    text-align: center;
+    padding-bottom: 10px;
+}
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    color: var(--primary-color);
+}
+.header-top img{
+    height: 32px;
+    position: relative;
+    left: -8px;
+}
+header hr {
+    margin-top: 10px;
+    border: 1px solid #b1b1b1;
+}
+
+.notification {
+    margin-left: 10px;
+}
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bell-icon {
+    font-size: 24px;
+    margin-right: 8px;
+    color: #333;
+    cursor: pointer;
+}
+.bell-icon:hover {
+    color: var(--primary-color);
+}
+
+
+.profile-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.profile-header {
+    display: flex;
+    flex-wrap: wrap;
+    /* align-items: center; */
+    margin-bottom: 20px;
+
+}
+
+.profile-details{
+    display: flex;
+    gap: 800px;
+}
+.profile-left, .profile-right{
+    display: flex;
+}
+.profile-details img{
+    width: 100px;
+    height: 100px;
+    border-radius: 10%;
+    margin: 0 1.5rem 0 0;
+}
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-info h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+}
+
+.profile-info h4 {
+    margin: 5px 0;
+    color: #777;
+}
+
+.profile-badge{
+    margin-top: .5rem;
+}
+
+.badge{
+    font-size: .8rem;
+    border: 1px solid gray;
+    padding: 4px 8px;
+    background-color: gray;
+    border-radius: 10%;
+    cursor: pointer;
+}
+
+.profile-stats{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    margin: 0;
+}
+
+.edit-profile-button {
+    margin-top: 1rem;
+    padding: 8px 24px;
+    background-color: #561C24;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: "Montserrat", sans-serif;
+    text-decoration: none;
+    text-align: center;
+    display: inline-block;
+}
+.edit-profile-button:hover {
+    background-color: #FFAF45;
+}
+
+
+.profile-nav ul{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 0;
+}
+.profile-nav ul li{
+    list-style: none;
+    cursor: pointer;
+}
+.profile-nav ul li a{
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--text-color1);
+    transition: var(--tran-05);
+}
+.profile-nav ul li a:hover{
+    opacity: 50%;
+}
+.profile-nav ul li.active {
+    scale: 1.1;
+    font-weight: 800;
+    color: var(--text-color1);
+}
+
+
+.posts .post-content {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.posts .post-content .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.posts .user-info{
+    display: flex;
+}
+.posts .post-content .post-header .profile-pic {
+    border-radius: 10%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+.posts .post-content .post-header .post-info h2 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--text-color1);
+}
+.post-content hr{
+    margin-bottom: 16px;
+    opacity: 50%;
+}
+.posts .post-content .post-header .post-info p {
+    margin: 0;
+    color: #aaa;
+}
+.posts .post-content .post-header .post-options {
+    font-size: 1.5em;
+    position: relative;
+    top: -16px;
+    color: #aaa;
+    cursor: pointer;
+}
+.post-options .options{
+    display: none;
+    position: absolute;
+    right: 16px;
+    bottom: 8px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.options a{
+    font-size: 1rem;
+    text-decoration: none;
+}
+.posts .post-text{
+    margin: 0 0 24px 0;
+    color: #666;
+}
+
+.posts .post-content .actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.posts .post-content .actions button {
+    background-color: transparent;
+    color: var(--text-color1);
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: var(--tran-05);
+}
+.posts .post-content .actions button i {
+    margin-right: 8px;
+    font-size: 20px;
+    position: relative;
+    top: -.25px;
+}
+.posts .post-content .actions button:hover {
+    color: var(--primary-color);
+    scale: 1.1;
+}
+
+
+.profile-comments{
+    display: none;
+}
+.comments .comment-content {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.comments .comment-content .comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.comments .user-info{
+    display: flex;
+}
+.comments .comment-content .comment-header .profile-pic {
+    border-radius: 10%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+.comments .comment-content .comment-header .comment-info h2 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--text-color1);
+}
+.comment-content hr{
+    margin-bottom: 16px;
+    opacity: 50%;
+}
+.comments .comment-content .comment-header .comment-info p {
+    margin: 0;
+    color: #aaa;
+}
+.comments .comment-content .comment-header .comment-options {
+    font-size: 1.5em;
+    position: relative;
+    top: -16px;
+    color: #aaa;
+}
+.comments .comment-text{
+    margin: 0 0 24px 0;
+    color: #666;
+}
+
+.comments .comment-content .actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.comments .comment-content .actions button {
+    background-color: transparent;
+    color: var(--text-color1);
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: var(--tran-05);
+}
+.comments .comment-content .actions button i {
+    margin-right: 8px;
+    font-size: 20px;
+    position: relative;
+    top: -.25px;
+}
+.comments .comment-content .actions button:hover {
+    color: var(--primary-color);
+    scale: 1.1;
+}
+
+.profile-liked{
+    display: none;
+}
+.profile-bookmarked{
+    display: none;
+}

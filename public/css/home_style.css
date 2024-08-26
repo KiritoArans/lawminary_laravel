@@ -1,0 +1,334 @@
+*{
+    font-family: "Montserrat", sans-serif;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+:root{
+    --primary-color: #561C24;
+    --secondary-color: #FFAF45;
+    --panel-color: #FFF;
+    --text-color: #000;
+    --text-color1: #333;
+    --text-color2: #fff;
+    --text-color3: #999;
+    --text-color4: #f5f5f5;
+    --black-light-color: #707070;
+    --border-color: #e6e5e5;
+    --toggle-color: #DDD;
+    --title-icon-color: #fff;
+    
+    --tran-05: all 0.5s ease;
+    --tran-03: all 0.3s ease;
+    --tran-03: all 0.2s ease;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 0px 48px 0px 32px;
+}
+header {
+    text-align: center;
+    padding-bottom: 10px;
+}
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    color: var(--primary-color);
+}
+.header-top img{
+    height: 32px;
+    position: relative;
+    left: -8px;
+}
+header hr {
+    margin-top: 10px;
+    border: 1px solid #b1b1b1;
+}
+.header-buttons-search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.header-buttons button {
+    padding: 10px 20px;
+    background-color: var(--text-color3);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.header-buttons button:hover {
+    background-color: var(--text-color1);
+}
+.current-tab{
+    font-weight: bold;
+    scale: 1.15;
+    margin: 0 8px;
+}
+
+.search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+.search-bar input {
+    width: 450px;
+    padding: 10px 10px 10px 32px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.search-bar i {
+    position: absolute;
+    left: 8px;
+    color: var(--primary-color);
+}
+
+.notification {
+    margin-left: 10px;
+}
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bell-icon {
+    font-size: 24px;
+    margin-right: 8px;
+    color: #333;
+    cursor: pointer;
+}
+.bell-icon:hover {
+    color: var(--primary-color);
+}
+
+.posts .post-content {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.posts .post-content .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.posts .user-info{
+    display: flex;
+}
+.posts .post-content .post-header .profile-pic {
+    border-radius: 10%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+.posts .post-content .post-header .post-info h2 {
+    margin: 0;
+    font-size: 16px;
+    color: var(--text-color1);
+}
+.post-content hr{
+    margin-bottom: 16px;
+    opacity: 50%;
+}
+.posts .post-content .post-header .post-info p {
+    margin: 0;
+    color: #aaa;
+}
+.posts .post-content .post-header .post-options {
+    font-size: 1.5em;
+    position: relative;
+    top: -16px;
+    color: #aaa;
+    cursor: pointer;
+}
+
+.options{
+    display: none;
+    position: absolute;
+    right: 16px;
+    bottom: 8px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.options a{
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.posts .post-text{
+    margin: 0 0 24px 0;
+    color: #666;
+}
+
+.posts .post-content .actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.posts .post-content .actions button {
+    padding: 10px;
+    background-color: transparent;
+    color: var(--text-color1);
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: var(--tran-05);
+}
+.posts .post-content .actions button i {
+    margin-right: 8px;
+    font-size: 20px;
+    position: relative;
+    top: -.25px;
+}
+.posts .post-content .actions button:hover {
+    color: var(--primary-color);
+    scale: 1.1;
+}
+
+.new-post {
+    position: fixed;
+    bottom: 32px;
+    right: 24px;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    padding: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    transition: var(--tran-05);
+}
+.new-post i {
+    font-size: 32px;
+}
+.new-post:hover{
+    scale: 1.25;
+}
+
+.post-modal {
+    display: none; 
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Prevent scrolling */
+}
+.post-modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 800px;
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+}
+.post-header{
+    display: flex;
+}
+.post-modal-info{
+    margin-left: 8px;
+}
+.post-modal-info h2, .post-modal-info p{
+    margin: 0;
+    font-size: 16px;
+}
+.post-modal-info p{
+    color: var(--text-color3);
+}
+.post-modal-content .post-profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 10%;
+}
+.post-modal-text{
+    margin-right: 16px;
+}
+.post-modal-text textarea {
+    width: 100%;
+    height: 200px;
+    max-height: auto;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: none;
+    outline: none;
+    padding: 8px 8px 8px 8px;
+}
+.post-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    text-align: center;
+}
+.post-modal-footer i{
+    color: var(--text-color1);
+    font-size: 40px;
+    position: relative;
+    top: 4px;
+}
+.post-modal-footer p{
+    font-size: 12px;
+    color: var(--text-color3);
+    max-width: 560px;
+}
+.post-button {
+    padding: 8px 16px;
+    font-size: 16px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.post-button:hover {
+    background-color: var(--primary-color);
+}
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -1,0 +1,120 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", sans-serif;
+}
+:root{
+    --primary-color: #561C24;
+    --secondary-color: #FFAF45;
+    --panel-color: #FFF;
+    --text-color: #000;
+    --text-color2: #fff;
+    --text-color3: #999;
+    --text-color4: #f5f5f5;
+    --black-light-color: #707070;
+    --border-color: #e6e5e5;
+    --toggle-color: #DDD;
+    --title-icon-color: #fff;
+    
+    --tran-05: all 0.5s ease;
+    --tran-03: all 0.3s ease;
+    --tran-03: all 0.2s ease;
+}
+body{
+    background: linear-gradient(to top, #561c24, #9e4d56); 
+    min-height: 100vh;
+}
+section{
+    background-image: url(/imgs/lawminarylogo.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+.container {
+    width: 70%;
+    max-width: 1000px;
+    border: 1px solid #000;
+    border-radius: 8px;
+    padding: 48px 64px 64px 64px ;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background: #f0f0f0;
+}
+.container h1 {
+    text-align: center;
+    margin-bottom: 32px;
+    font-size: 32px;
+}
+.signup-form {
+    display: flex;
+    justify-content: space-between;
+}
+.left-column,
+.middle-column,
+.right-column {
+    width: 30%;
+}
+.line{
+    border: 1px solid;
+    opacity: 50%;
+    height: 250px;
+}
+.form-group {
+    margin-bottom: 15px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group input{
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.middle-column .form-group input, .form-group select{
+    width: 100%;
+    padding: 7.5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.form-group span {
+    font-size: 12px;
+    color: #888;
+}
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 32px;
+}
+.back-home {
+    text-decoration: none;
+    font-weight: 700;
+}
+.buttons button {
+    padding: 16px 20px;
+    margin-left: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    background-color: #000;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    position: relative;
+    left: 16px;
+}

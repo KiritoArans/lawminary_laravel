@@ -1,0 +1,422 @@
+* {
+    font-family: "Montserrat", sans-serif;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+:root {
+    --primary-color: #561C24;
+    --secondary-color: #FFAF45;
+    --panel-color: #FFF;
+    --panel-color2: #FEFBF6;
+    --text-color: #000;
+    --text-color1: #333;
+    --text-color2: #fff;
+    --text-color3: #999;
+    --text-color4: #f5f5f5;
+    --black-light-color: #707070;
+    --border-color: #e6e5e5;
+    --toggle-color: #DDD;
+    --title-icon-color: #fff;
+
+    --tran-05: all 0.5s ease;
+    --tran-03: all 0.3s ease;
+    --tran-03: all 0.2s ease;
+}
+.container {
+    display: flex;
+    height: 100vh;
+}
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 0px 48px 0px 32px;
+}
+header {
+    text-align: center;
+    padding-bottom: 10px;
+}
+header hr {
+    margin-top: 10px;
+    border: 1px solid #b1b1b1;
+}
+main .header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-top img{
+    height: 32px;
+    position: relative;
+    left: -8px;
+}
+.bell-icon {
+    font-size: 24px;
+    margin-right: 8px;
+    color: #333;
+    cursor: pointer;
+}
+.bell-icon:hover {
+    color: var(--primary-color);
+}
+.header-buttons {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 11px;
+}
+.header-buttons button {
+    padding: 10px 20px;
+    background-color: var(--text-color3);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.header-buttons button:hover {
+    background-color: var(--text-color1);
+}
+.current-tab{
+    font-weight: bold;
+    scale: 1.15;
+    margin: 0 8px;
+}
+
+.content-wrapper {
+    display: flex;
+    gap: 20px;
+}
+.forum-left {
+    flex: 1;
+}
+.forum-overview{
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+    background-color: var(--panel-color2);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.forum-section {
+    padding: 8px 24px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.join-button {
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    position: relative;
+    top: -40px;
+}
+.join-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.forum-invitations-wrapper {
+    width: 300px;
+}
+.forum-invitations {
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 600px; 
+    overflow-y: auto;
+    position: relative;
+    top: -40px;
+}
+.forum-invitations h2 {
+    margin-top: 0;
+    font-size: 1.5em;
+    color: var(--primary-color);
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.search-bar input {
+    width: 240px;
+    padding: 10px 10px 10px 32px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.search-bar i{
+    position: absolute;
+    margin-left: 8px;
+}
+
+.forum{
+    border: 1px solid;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+    cursor: pointer;
+}
+.forum-status{
+    display: flex;
+    justify-content: end;
+}
+.forum-status span{
+    padding: 8px;
+}
+.forum-head{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px;
+}
+
+.forum-pagination {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem;
+}
+
+.forum-list{
+    display: flex;
+    justify-content: center;
+}
+
+.posts {
+    flex-grow: 1;
+    margin: 16px 32px;
+}
+.post-content {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.posts .post-content .actions {
+    display: flex;
+    justify-content: space-around;
+    /* gap: 5px; */
+}
+.posts .post-content .actions button {
+    padding: 10px;
+    background-color: transparent;
+    color: var(--text-color1);
+    font-weight: 700;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: var(--tran-05);
+}
+.posts .post-content .actions button i {
+    margin-right: 8px;
+    font-size: 20px;
+    position: relative;
+    top: -.25px;
+}
+.posts .post-content .actions button:hover {
+    color: var(--primary-color);
+    scale: 1.1;
+}
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+}
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.post-info h2 {
+    margin: 0;
+    font-size: 1em;
+}
+.post-info p {
+    margin: 0;
+    color: #999999;
+}
+.post-options i {
+    font-size: 1.25rem;
+    position: relative;
+    top: -16px;
+    color: #aaa;
+    cursor: pointer;
+}
+.options{
+    /* display: none; */
+    /* position: absolute; */
+    /* right: 16px; */
+    /* bottom: 8px; */
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 16px;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.options a{
+    font-size: 1rem;
+    text-decoration: none;
+}
+.post-text {
+    margin: 20px 0;
+}
+.post-text p {
+    margin: 0;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+}
+.actions button {
+    background-color: transparent;
+    border: none;
+    color: var(--primary-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.actions button i {
+    margin-right: 8px;
+    font-size: 20px;
+    position: relative;
+    top: -.25px;
+}
+.actions button:hover {
+    color: var(--secondary-color);
+}
+
+.post-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.post-modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.post-modal-content .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.post-modal-content .close:hover,
+.post-modal-content .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.post-modal-content .post-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.post-modal-content .post-profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.post-modal-content .post-modal-info h2 {
+    margin: 0;
+    font-size: 1em;
+}
+.post-modal-content .post-modal-info p {
+    margin: 0;
+    color: #999999;
+}
+.post-modal-content .post-modal-text textarea {
+    width: 100%;
+    height: 150px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1em;
+    resize: none;
+}
+.post-modal-content .post-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+.post-modal-content .post-modal-footer button {
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+.post-modal-content .post-modal-footer button:hover {
+    background-color: var(--secondary-color);
+}
+.circle {
+    width: 170px;
+    height: 130px;
+    margin-right: 16px;
+    text-align: center;
+  }
+  .circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .forum-name .circle {
+    width: 125px;
+    height: 125px;
+    margin-right: 20px;
+}
+.forum-name .circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.forum-name .forum-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.forum-name h2 {
+    margin: 0 0 10px 0;
+}
+.forum-name p {
+    margin: 0;
+}
