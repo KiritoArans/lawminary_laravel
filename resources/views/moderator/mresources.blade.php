@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lawminary | Resources</title>
     <link rel="icon" href="{{ asset('imgs/lawminarylogo.png') }}" type="image/png">
-    <link rel="stylesheet" href="{{ asset('css/moderator/mdashboardstyle.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/moderator/mrecourcesstyle.css') }}">
     <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/base_admin_table_style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin/base_admin_modal_style.css') }}">
