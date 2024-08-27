@@ -35,3 +35,7 @@ Route::get('/mleaderboards', [ModeratorController::class, 'showMleaderboards']);
 Route::get('/mposts', [ModeratorController::class, 'showMposts']);
 
 Route::get('/mresources', [ModeratorController::class, 'showMresources']);
+
+//user routes
+
+
