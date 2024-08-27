@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tbladdashboard', function (Blueprint $table) {
+        Schema::create('tblresources', function (Blueprint $table) {
             $table->id();
-            $table->int('pending post');
-            $table->int('pending accounts');
-            $table->int('accounts');
-            $table->int('act_id');
-            $table->varchar('act_user');
-            $table->varchar('act_action');
-            $table->varchar('act_date');
+            $table->string('document');
+            $table->string('resource_title');
+            $table->string('content');
+            $table->string('date_uploaded');
             $table->timestamps();
         });
     }
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tbladdashboard');
+        Schema::dropIfExists('tblresources');
     }
 };
