@@ -25,13 +25,13 @@
                 </div>
                 <nav>
                      <ul>
-                        <li><a href="mdashboard"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
-                        <li><a href="mposts" class="current"><i class="fa-solid fa-envelope-open-text"></i><span>Posts</span></a></li>
-                        <li><a href="mleaderboards"><i class="fa-solid fa-chart-simple"></i><span>Leaderboards</span></a></li>
-                        <li><a href="mresources"><i class="fa-solid fa-folder"></i><span>Resources</span></a></li>
-                        <li><a href="maccounts"><i class="fa-solid fa-user-gear"></i><span>Accounts</span></a></li>
-                        <li><a href="mforums"><i class="fa-solid fa-users"></i><span>Forums</span></a></li>
-                        <li><a href="mfaqs"><i class="fa-solid fa-circle-question"></i><span>FAQs</span></a></li>
+                        <li><a href="/moderator/dashboard"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                        <li><a href="/moderator/posts" class="current"><i class="fa-solid fa-envelope-open-text"></i><span>Posts</span></a></li>
+                        <li><a href="/moderator/leaderboards"><i class="fa-solid fa-chart-simple"></i><span>Leaderboards</span></a></li>
+                        <li><a href="/moderator/resources"><i class="fa-solid fa-folder"></i><span>Resources</span></a></li>
+                        <li><a href="/moderator/accounts"><i class="fa-solid fa-user-gear"></i><span>Accounts</span></a></li>
+                        <li><a href="/moderator/forums"><i class="fa-solid fa-users"></i><span>Forums</span></a></li>
+                        <li><a href="/moderator/faqs"><i class="fa-solid fa-circle-question"></i><span>FAQs</span></a></li>
                     </ul>
                 </nav>
             </div>

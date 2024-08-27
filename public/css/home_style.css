@@ -244,7 +244,7 @@ header hr {
     display: none;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Prevent scrolling */
+    overflow: hidden; 
 }
 .post-modal-content {
     background-color: #fefefe;

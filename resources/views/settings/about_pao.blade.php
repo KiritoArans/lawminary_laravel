@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lawminary | Terms of Service</title>
-    <link rel="icon" href="../..imgs/lawminarylogo.png" type="image/png">
-    <link rel="stylesheet" href="../../styles/settings/terms_of_service_style.css">
-    <link rel="stylesheet" href="../../styles/nav_style.css">
+    <title>Lawminary | About PAO</title>
+    <link rel="icon" href="../../imgs/lawminarylogo.png" type="image/png">
+    <link rel="stylesheet" href="{{ asset ('css/about_style.css') }}">
+    <link rel="stylesheet" href="{{ asset ('css/nav_style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -32,11 +32,11 @@
                             <div id="settingsDropdown" class="dropdown-content">
                                 <ul>
                                     <li><a href="about_lawminary.html">About Lawminary</a></li>
-                                    <li><a href="about_pao.html">About PAO</a></li>
+                                    <li><a class="current-settings" href="about_pao.html">About PAO</a></li>
                                     <li><a href="account_settings.html">Account Settings</a></li>
                                     <li><a href="activity_logs.html">Activity Logs</a></li>
                                     <li><a href="provide_feedback.html">Provide Feedback</a></li>
-                                    <li><a class="current-settings" href="tos.html">Terms of Service</a></li>
+                                    <li><a href="tos.html">Terms of Service</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -57,24 +57,11 @@
                 </div>
                 <hr class="divider">
             </header>
-            <content class="tos-section">
-                <h1>Terms of Service</h1>
-                <div class="tos-content">
-                    <h2>1. Introduction</h2>
-                    <p>Welcome to Lawminary! These Terms of Service ("Terms") govern your use of our website located at lawminary.com (together or individually "Service") operated by Lawminary.</p>
-
-                    <h2>2. Accounts</h2>
-                    <p>When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service.</p>
-
-                    <h2>3. Termination</h2>
-                    <p>We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.</p>
-
-                    <h2>4. Changes to Terms</h2>
-                    <p>We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.</p>
-
-                    <h2>5. Contact Us</h2>
-                    <p>If you have any questions about these Terms, please contact us.</p>
-                </div>
+            <content class="about-content">
+                <h2>About PAO</h2>
+                <p>The Public Attorney’s Office (PAO) provides free legal assistance to indigent persons and other qualified clients in accordance with existing laws, rules, and regulations. PAO aims to ensure that no one is deprived of access to justice by reason of poverty.</p>
+                <p>PAO plays a crucial role in the Philippine legal system by offering legal services such as representation in court, legal advice, and assistance in the preparation of legal documents. The office is committed to protecting the rights of individuals and providing equal access to justice.</p>
+                <p>By collaborating with PAO, Lawminary aims to extend its reach and make legal information more accessible to the public, ensuring that everyone has the opportunity to understand and exercise their legal rights.</p>
             </content>
         </main>
     </div>

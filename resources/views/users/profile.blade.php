@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lawminary - Profile</title>
+    <title>Lawminary | Profile</title>
     <link rel="icon" href="../imgs/lawminarylogo.png" type="image/png">
-    <link rel="stylesheet" href="../styles/profile_style.css">
-    <link rel="stylesheet" href="../styles/nav_style.css">
+    <link rel="stylesheet" href="{{ asset ('css/profile_style.css') }}">
+    <link rel="stylesheet" href="{{ asset ('css/nav_style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -23,20 +23,20 @@
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="home.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-                        <li><a href="search.html"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></a></li>
-                        <li><a href="resources.html"><i class="fa-solid fa-folder"></i><span>Resources</span></a></li>
-                        <li><a href="profile.html" class="current" ><i class="fa-solid fa-user"></i><span>Profile</span></a></li>
+                        <li><a href="home"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                        <li><a href="search"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></a></li>
+                        <li><a href="resources"><i class="fa-solid fa-folder"></i><span>Resources</span></a></li>
+                        <li><a href="profile" class="current" ><i class="fa-solid fa-user"></i><span>Profile</span></a></li>
                         <li>
                             <a onclick="toggleDropdown(event)"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
                             <div id="settingsDropdown" class="dropdown-content">
                                 <ul>
-                                    <li><a href="settings/about_lawminary.html">About Lawminary</a></li>
-                                    <li><a href="settings/about_pao.html">About PAO</a></li>
-                                    <li><a href="settings/account_settings.html">Account Settings</a></li>
-                                    <li><a href="settings/activity_logs.html">Activity Logs</a></li>
-                                    <li><a href="settings/provide_feedback.html">Provide Feedback</a></li>
-                                    <li><a href="settings/tos.html">Terms of Service</a></li>
+                                    <li><a href="settings/lawminary">About Lawminary</a></li>
+                                    <li><a href="settings/pao">About PAO</a></li>
+                                    <li><a href="settings/account">Account Settings</a></li>
+                                    <li><a href="settings/activitylogs">Activity Logs</a></li>
+                                    <li><a href="settings/feedback">Provide Feedback</a></li>
+                                    <li><a href="settings/tos">Terms of Service</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -53,7 +53,7 @@
                 <div class="header-top">
                     <img src="../imgs/Lawminary_Logo_2-Gold.png" alt="Lawminary Logo">
                     <div class="notification">
-                        <a href="../frontend/notification.html"><i class="fas fa-bell bell-icon"></i></a>
+                        <a href="notifications"><i class="fas fa-bell bell-icon"></i></a>
                     </div>
                 </div>
                 <hr class="divider">

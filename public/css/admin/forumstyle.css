@@ -83,7 +83,7 @@ header hr {
 }
 
 .custom-button {
-    background-color: #b0b0b0; /* Adjust to your preferred color */
+    background-color: #b0b0b0; 
     border: 1px solid #ccc;
     color: black;
     padding: 10px 20px;
@@ -95,7 +95,6 @@ header hr {
     border-radius: 4px; /* Rounded corners */
     transition: background-color 0.3s ease;
 }
-
 .custom-button:hover {
-    background-color: #a0a0a0; /* Slightly darker shade for hover effect */
+    background-color: #a0a0a0; 
 }

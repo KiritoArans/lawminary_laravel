@@ -3,39 +3,66 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModeratorController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 //admin routes
+Route::get('/admin/dashboard', [AdminController::class, 'showDashboard']);
 
-Route::get('/account', [AdminController::class, 'showAccount']);
+Route::get('/admin/postpage', [AdminController::class, 'showPostPage']);
 
-Route::get('/dashboard', [AdminController::class, 'showDashboard']);
+Route::get('/admin/account', [AdminController::class, 'showAccount']);
 
-Route::get('/forums', [AdminController::class, 'showForums']);
+Route::get('/admin/forums', [AdminController::class, 'showForums']);
 
-Route::get('/postpage', [AdminController::class, 'showPostPage']);
-
-Route::get('/systemcontent', [AdminController::class, 'showSystemContent']);
+Route::get('/admin/systemcontent', [AdminController::class, 'showSystemContent']);
 
 //moderator routes
+Route::get('/moderator/dashboard', [ModeratorController::class, 'showMdashboard']);
 
-Route::get('/maccounts', [ModeratorController::class, 'showMaccounts']);
+Route::get('/moderator/posts', [ModeratorController::class, 'showMposts']);
 
-Route::get('/mdashboard', [ModeratorController::class, 'showMdashboard']);
+Route::get('/moderator/leaderboards', [ModeratorController::class, 'showMleaderboards']);
 
-Route::get('/mfaqs', [ModeratorController::class, 'showMfaqs']);
+Route::get('/moderator/resources', [ModeratorController::class, 'showMresources']);
 
-Route::get('/mforums', [ModeratorController::class, 'showMforums']);
+Route::get('/moderator/accounts', [ModeratorController::class, 'showMaccounts']);
 
-Route::get('/mleaderboards', [ModeratorController::class, 'showMleaderboards']);
+Route::get('/moderator/forums', [ModeratorController::class, 'showMforums']);
 
-Route::get('/mposts', [ModeratorController::class, 'showMposts']);
-
-Route::get('/mresources', [ModeratorController::class, 'showMresources']);
+Route::get('/moderator/faqs', [ModeratorController::class, 'showMfaqs']);
 
 //user routes
+Route::get('/login', [UserController::class, 'showLoginPage']);
 
+Route::get('/signup', [UserController::class, 'showSignupPage']);
 
+Route::get('/home', [UserController::class, 'showHomePage']);
+
+Route::get('/article', [UserController::class, 'showArticlePage']);
+
+Route::get('/forums', [UserController::class, 'showForumsPage']);
+
+Route::get('/notifications', [UserController::class, 'showNotificationPage']);
+
+Route::get('/search', [UserController::class, 'showSearchPage']);
+
+Route::get('/resources', [UserController::class, 'showResourcesPage']);
+
+Route::get('/profile', [UserController::class, 'showProfilePage']);
+
+//settings routing
+Route::get('/settings/lawminary', [UserController::class, 'showAboutLawminaryPage']);
+
+Route::get('/settings/pao', [UserController::class, 'showAboutPAOPage']);
+
+Route::get('/settings/account', [UserController::class, 'showAccountPage']);
+
+Route::get('/settings/activitylogs', [UserController::class, 'showActLogsPage']);
+
+Route::get('/settings/feedback', [UserController::class, 'showFeedbackPage']);
+
+Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
