@@ -18,8 +18,8 @@ return new class extends Migration
             $table->int('accounts');
             $table->int('act_id');
             $table->varchar('act_user');
-            $table->int('act_action');
-            $table->int('act_date');
+            $table->varchar('act_action');
+            $table->varchar('act_date');
             $table->timestamps();
         });
     }
