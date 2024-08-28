@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\data_general_controller\general_controller;
 
 Route::get('/', function () {
@@ -39,9 +40,9 @@ Route::get('/moderator/faqs', [ModeratorController::class, 'showMfaqs']);
 //user routes
 Route::get('/login', [UserController::class, 'showLoginPage']);
 
-Route::get('/signup', [UserController::class, 'showSignupPage']);
+Route::get('/signup', [UserController::class, 'showSignupPage'])->name('signup');
 
-Route::get('/home', [UserController::class, 'showHomePage']);
+Route::get('/home', [UserController::class, 'showHomePage'])->name('home');
 
 Route::get('/article', [UserController::class, 'showArticlePage']);
 
@@ -73,3 +74,10 @@ Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
 Route::get('/admin/dashboard', [general_controller::class, 'showDashboard']);
 Route::get('/admin/forums', [general_controller::class, 'showForums']);
 
+
+
+
+// Backend Routing
+Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');
+
+Route::post('/login', [AuthController::class, 'login'])->name('login');

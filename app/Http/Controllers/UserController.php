@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\UserAccount;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -11,11 +14,39 @@ class UserController extends Controller
     {
         return view('users.login');
     }
-    
+
+    //Signup
     public function showSignupPage()
     {
         return view('users.signup');
     }
+
+    public function createAccount(Request $request){
+        // dd($request);
+        $data = $request->validate([
+            'user_id' => 'nullable',
+            'username' => 'required',
+            'email' => 'required',
+            'password' => 'required|min:8',
+            'firstName' => 'required',
+            'middleName' => 'nullable',
+            'lastName' => 'required',
+            'birthDate' => 'required',
+            'nationality' => 'required',
+            'sex' => 'required',
+            'contactNumber' => 'required',
+            'accountType' => 'nullable',
+            'restrict' => 'nullable',
+            'restrictDays' => 'nullable',
+        ]);
+
+        $data['password'] = Hash::make($data['password']);
+
+        $newAccount = UserAccount::create($data);
+
+        return view('users.login');
+    }
+
 
     //UI
     public function showHomePage()

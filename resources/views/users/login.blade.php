@@ -18,22 +18,32 @@
             </div>
             <div class="line"></div>
             <div class="login-content">
-                <h1>Login</h1>
-                <div class="username">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" placeholder="Type your username">
-                </div>
-                <div class="password">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Type your password">
-                </div>
-                <div class="buttons">
-                    <a class="bn3637 bn36" href="signup">Sign Up</a>
-                    <button class="bn3637 bn37" id="login-btn">Login</button>
-                </div>
-                <div class="forgot">
-                    <a href="#">Forgot Password?</a>
-                </div>
+                <form action="{{ route('login') }}" method="POST">
+                    @csrf
+                    <h1>Login</h1>
+                
+                    @if ($errors->has('loginError'))
+                        <div class="error">
+                            <strong>{{ $errors->first('loginError') }}</strong>
+                        </div>
+                    @endif
+                
+                    <div class="username">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Type your username" value="{{ old('username') }}" required>
+                    </div>
+                    <div class="password">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Type your password" required>
+                    </div>
+                    <div class="buttons">
+                        <a class="bn3637 bn36" id="signup-btn">Sign Up</a>
+                        <button class="bn3637 bn37" id="login-btn" type="submit">Login</button>
+                    </div>
+                    <div class="forgot">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                </form>                           
             </div>
         </div>
     </section>
