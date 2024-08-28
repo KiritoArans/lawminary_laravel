@@ -12,26 +12,27 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tblaccounts', function (Blueprint $table) {
-            $table->id(); 
-            $table->unsignedBigInteger('user_id', 20);
-            $table->string('username', 50)->unique(); 
-            $table->string('email', 100)->notNull();
-            $table->string('password', 100)->notNull();
-            $table->string('firstName', 100)->notNull();
-            $table->string('middleName', 100)->nullable();
-            $table->string('lastName', 100)->notNull();
-            $table->date('birthDate')->notNull();
-            $table->string('nationality', 100)->nullable();
-            $table->string('sex', 10)->notNull();
-            $table->string('contactNumber', 11)->notNull();
-            $table->string('restrict', 50)->nullable();
-            $table->string('restrictDays', 50)->nullable();
-            $table->string('account_type', 50)->nullable();
-            $table->timestamps();
-        });
+            $table->id();
+            $table->string('user_id');
+            $table->string('username');
+            $table->string('email');
+            $table->string('password');
 
-        Schema::table('tblaccounts', function (Blueprint $table) {
-            $table->string('username', 50)->unique()->change();
+            $table->string('firstName');
+            $table->string('middleName');
+            $table->string('lastName');
+            $table->integer('birthDate');
+            $table->string('nationality');
+            $table->string('sex');
+            $table->integer('contactNumber');
+
+            $table->string('userEmail');
+            $table->string('restrict');
+            $table->string('restrictDays');
+
+            $table->string('date_created');
+            $table->string('account_type');
+            $table->timestamps();
         });
     }
     

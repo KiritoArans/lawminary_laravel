@@ -61,11 +61,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     addButton.addEventListener('click', function () {
         addModal.style.display = 'block';
+        addModal.focus();
     });
-
+    
     closeAddModal.addEventListener('click', function () {
         addModal.style.display = 'none';
+        addButton.focus(); // Return focus to the button that opened the modal
     });
+    
 
     window.addEventListener('click', function (event) {
         if (event.target == addModal) {
@@ -74,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     addForm.addEventListener('submit', function (event) {
-        event.preventDefault();
+        event.preventDefault(); 
         const name = document.getElementById('addName').value;
         const email = document.getElementById('addEmail').value;
         const username = document.getElementById('addUsername').value;
@@ -83,14 +86,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
         addAccount(name, email, username, accountType, password);
         addModal.style.display = 'none';
+        this.submit();
     });
 
     function addAccount(name, email, username, accountType, password) {
+        const newId = Math.random().toString(36).substr(2, 9); // Generate a random ID
         const tbody = document.getElementById('accountTableBody');
         const newRow = document.createElement('tr');
         newRow.dataset.type = accountType.toLowerCase();
         newRow.innerHTML = `
-            <td>new-id</td>
+            <td>${newId}</td>
             <td>${username}</td>
             <td>${email}</td>
             <td>${new Date().toLocaleDateString()}</td>
@@ -98,6 +103,15 @@ document.addEventListener('DOMContentLoaded', function () {
         `;
         tbody.appendChild(newRow);
     }
+    
+window.addEventListener('click', function (event) {
+    if (event.target == addModal) {
+        addModal.style.display = 'none';
+    }
+});
+
+    
+    
 });
 
 /edit/
