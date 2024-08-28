@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lawminary | Accounts</title>
+    <title>Lawminary | Admin</title>
     <link rel="icon" href="{{ asset('imgs/lawminarylogo.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/admin/accountstyle.css') }}">
     <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}">
@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-
 </head>
 <body>
     <div class="container-fluid my-4">
@@ -25,12 +24,12 @@
                     </div>
                 </div>
                 <nav>
-                   <ul>
-                        <li><a href="/admin/dashboard"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
-                        <li><a href="/admin/postpage"><i class="fa-solid fa-envelope-open-text"></i><span>Posts</span></a></li>
-                        <li><a href="/admin/account" class="current"><i class="fa-solid fa-user-gear"></i><span>Accounts</span></a></li>
-                        <li><a href="/admin/forums"><i class="fa-solid fa-users"></i><span>Forums</span></a></li>
-                        <li><a href="/admin/systemcontent"><i class="fa-solid fa-display"></i><span>System Content</span></a></li>
+                    <ul>
+                        <li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                        <li><a href="postpage.html"><i class="fa-solid fa-envelope-open-text"></i><span>Posts</span></a></li>
+                        <li><a href="account.html" class="current"><i class="fa-solid fa-user-gear"></i><span>Accounts</span></a></li>
+                        <li><a href="forums.html"><i class="fa-solid fa-users"></i><span>Forums</span></a></li>
+                        <li><a href="systemcontent.html"><i class="fa-solid fa-display"></i><span>System Content</span></a></li>
                     </ul>
                 </nav>
             </div>
@@ -99,69 +98,20 @@
                         </div>
                     </div>
                     <button class="custom-button" id="addButton">Add</button>
-
-                    @if (session('success'))
-                    <div class="alert alert-success">
-                        {{ session('success') }}
-                    </div>
-                    @endif
-
-                    
+                    <div id="addModal" class="modal">
                         <div class="modal-content">
                             <span class="close-button" id="closeAddModal">&times;</span>
                             <h2>Add Account</h2>
-                            <form id="addForm" method="POST" action="{{ route('add-account') }}">
+                            <form id="addForm">
+                                <label for="addName">Name:</label>
+                                <input type="text" id="addName" name="addName" required>
                                 
-                                @csrf <!-- Laravel CSRF protection -->
-                                <!-- First Name -->
-                                <label for="addFirstName">First Name:</label>
-                                <input type="text" id="addFirstName" name="addFirstName" required>
-                                
-                                <!-- Middle Name (Optional) -->
-                                <label for="addMiddleName">Middle Name (Optional):</label>
-                                <input type="text" id="addMiddleName" name="addMiddleName">
-                                
-                                <!-- Last Name -->
-                                <label for="addLastName">Last Name:</label>
-                                <input type="text" id="addLastName" name="addLastName" required>
-                                
-                                <!-- Birth Date -->
-                                <label for="addBirthDate">Birth Date:</label>
-                                <input type="date" id="addBirthDate" name="addBirthDate" required>
-                                
-                                <!-- Nationality -->
-                                <label for="addNationality">Nationality:</label>
-                                <input type="text" id="addNationality" name="addNationality" required>
-                                
-                                <!-- Sex -->
-                                <label for="addSex">Sex:</label>
-                                <select id="addSex" name="addSex" required>
-                                    <option value="" disabled selected>Option</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                </select>
-                                
-                                <!-- Email Address -->
-                                <label for="addEmail">Email Address:</label>
+                                <label for="addEmail">Email:</label>
                                 <input type="email" id="addEmail" name="addEmail" required>
                                 
-                                <!-- Contact Number -->
-                                <label for="addContactNumber">Contact Number:</label>
-                                <input type="tel" id="addContactNumber" name="addContactNumber" required>
-                                
-                                <!-- Username -->
                                 <label for="addUsername">Username:</label>
                                 <input type="text" id="addUsername" name="addUsername" required>
                                 
-                                <!-- Password -->
-                                <label for="addPassword">Password:</label>
-                                <input type="password" id="addPassword" name="addPassword" required>
-                                
-                                <!-- Confirm Password -->
-                                <label for="addConfirmPassword">Confirm Password:</label>
-                                <input type="password" id="addConfirmPassword" name="addConfirmPassword" required>
-                                
-                                <!-- Account Type -->
                                 <label for="addAccountType">Account Type:</label>
                                 <select id="addAccountType" name="addAccountType" required>
                                     <option value="user">User</option>
@@ -169,11 +119,14 @@
                                     <option value="lawyer">Lawyer</option>
                                     <option value="admin">Admin</option>
                                 </select>
-                                <button type="submit" class="custom-button">Create Account</button>
+                                
+                                <label for="addPassword">Password:</label>
+                                <input type="password" id="addPassword" name="addPassword" required>
+                                
+                                <button type="submit" class="custom-button">Add Account</button>
                             </form>
                         </div>
                     </div>
-        
                 </div>
             </section>
             <content class="table-container">
@@ -263,6 +216,7 @@
             </content>
         </main>
     </div>
-    <!--<script src="{{ asset('js/admin_js/accounts_js.js') }}"></script>-->
+    <script src="{{ asset('js/admin_js/accounts_js.js') }}"></script>
+
 </body>
 </html>
