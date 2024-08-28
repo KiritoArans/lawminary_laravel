@@ -2,6 +2,6 @@
 //     window.location.href = 'home';
 //   });
 
-document.getElementById('signup-btn').addEventListener('click', function() {
-  window.location.href = 'signup';
-  });
+// document.getElementById('signup-btn').addEventListener('click', function() {
+//   window.location.href = 'signup';
+//   });

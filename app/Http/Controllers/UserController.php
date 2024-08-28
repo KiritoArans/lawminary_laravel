@@ -27,7 +27,7 @@ class UserController extends Controller
             'user_id' => 'nullable',
             'username' => 'required',
             'email' => 'required',
-            'password' => 'required|min:8',
+            'password' => 'required|min:8|confirmed',
             'firstName' => 'required',
             'middleName' => 'nullable',
             'lastName' => 'required',

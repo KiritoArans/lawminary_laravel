@@ -27,7 +27,6 @@ class AuthController extends Controller
             } else {
                 // If not, verify with the legacy method and re-hash if valid
                 if ($user->password === md5($credentials['password'])) { // Example legacy MD5 check
-                    // Update to Bcrypt
                     $user->password = Hash::make($credentials['password']);
                     $user->save();
                     Auth::login($user);
@@ -35,8 +34,6 @@ class AuthController extends Controller
                 }
             }
         }
-    
-        // Authentication failed; return to login with an error
         return redirect()->back()->withErrors(['loginError' => 'Invalid username or password.'])->withInput();
     }
 }
