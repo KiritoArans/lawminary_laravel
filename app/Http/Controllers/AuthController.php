@@ -35,7 +35,6 @@ class AuthController extends Controller
                 }
             }
         }
-    
         // Authentication failed; return to login with an error
         return redirect()->back()->withErrors(['loginError' => 'Invalid username or password.'])->withInput();
     }
