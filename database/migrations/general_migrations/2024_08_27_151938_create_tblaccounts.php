@@ -13,27 +13,24 @@ return new class extends Migration
     {
         Schema::create('tblaccounts', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id');
-            $table->string('username');
-            $table->string('email');
+            $table->string('user_id')->unique();
+            $table->string('username')->unique();
+            $table->string('email')->unique();
             $table->string('password');
-
             $table->string('firstName');
-            $table->string('middleName');
+            $table->string('middleName')->nullable();
             $table->string('lastName');
-            $table->integer('birthDate');
+            $table->date('birthDate');
             $table->string('nationality');
-            $table->string('sex');
-            $table->integer('contactNumber');
-
-            $table->string('userEmail');
-            $table->string('restrict');
-            $table->string('restrictDays');
-
-            $table->string('date_created');
+            $table->enum('sex', ['male', 'female']);
+            $table->string('contactNumber');
+            $table->boolean('restrict')->default(false);
+            $table->integer('restrictDays')->nullable();
+            $table->timestamp('date_created')->useCurrent();
             $table->string('account_type');
             $table->timestamps();
         });
+        
     }
 
     /**

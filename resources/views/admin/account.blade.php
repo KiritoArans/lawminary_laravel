@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-
 </head>
 <body>
     <div class="container-fluid my-4">
@@ -100,20 +99,69 @@
                         </div>
                     </div>
                     <button class="custom-button" id="addButton">Add</button>
-                    <div id="addModal" class="modal">
+
+                    @if (session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}
+                    </div>
+                    @endif
+
+                    
                         <div class="modal-content">
                             <span class="close-button" id="closeAddModal">&times;</span>
                             <h2>Add Account</h2>
-                            <form id="addForm">
-                                <label for="addName">Name:</label>
-                                <input type="text" id="addName" name="addName" required>
+                            <form id="addForm" method="POST" action="{{ route('add-account') }}">
                                 
-                                <label for="addEmail">Email:</label>
+                                @csrf <!-- Laravel CSRF protection -->
+                                <!-- First Name -->
+                                <label for="addFirstName">First Name:</label>
+                                <input type="text" id="addFirstName" name="addFirstName" required>
+                                
+                                <!-- Middle Name (Optional) -->
+                                <label for="addMiddleName">Middle Name (Optional):</label>
+                                <input type="text" id="addMiddleName" name="addMiddleName">
+                                
+                                <!-- Last Name -->
+                                <label for="addLastName">Last Name:</label>
+                                <input type="text" id="addLastName" name="addLastName" required>
+                                
+                                <!-- Birth Date -->
+                                <label for="addBirthDate">Birth Date:</label>
+                                <input type="date" id="addBirthDate" name="addBirthDate" required>
+                                
+                                <!-- Nationality -->
+                                <label for="addNationality">Nationality:</label>
+                                <input type="text" id="addNationality" name="addNationality" required>
+                                
+                                <!-- Sex -->
+                                <label for="addSex">Sex:</label>
+                                <select id="addSex" name="addSex" required>
+                                    <option value="" disabled selected>Option</option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                                
+                                <!-- Email Address -->
+                                <label for="addEmail">Email Address:</label>
                                 <input type="email" id="addEmail" name="addEmail" required>
                                 
+                                <!-- Contact Number -->
+                                <label for="addContactNumber">Contact Number:</label>
+                                <input type="tel" id="addContactNumber" name="addContactNumber" required>
+                                
+                                <!-- Username -->
                                 <label for="addUsername">Username:</label>
                                 <input type="text" id="addUsername" name="addUsername" required>
                                 
+                                <!-- Password -->
+                                <label for="addPassword">Password:</label>
+                                <input type="password" id="addPassword" name="addPassword" required>
+                                
+                                <!-- Confirm Password -->
+                                <label for="addConfirmPassword">Confirm Password:</label>
+                                <input type="password" id="addConfirmPassword" name="addConfirmPassword" required>
+                                
+                                <!-- Account Type -->
                                 <label for="addAccountType">Account Type:</label>
                                 <select id="addAccountType" name="addAccountType" required>
                                     <option value="user">User</option>
@@ -121,14 +169,11 @@
                                     <option value="lawyer">Lawyer</option>
                                     <option value="admin">Admin</option>
                                 </select>
-                                
-                                <label for="addPassword">Password:</label>
-                                <input type="password" id="addPassword" name="addPassword" required>
-                                
-                                <button type="submit" class="custom-button">Add Account</button>
+                                <button type="submit" class="custom-button">Create Account</button>
                             </form>
                         </div>
                     </div>
+        
                 </div>
             </section>
             <content class="table-container">
@@ -218,6 +263,6 @@
             </content>
         </main>
     </div>
-    <script src="{{ asset('js/admin_js/accounts_js.js') }}"></script>
+    <!--<script src="{{ asset('js/admin_js/accounts_js.js') }}"></script>-->
 </body>
 </html>

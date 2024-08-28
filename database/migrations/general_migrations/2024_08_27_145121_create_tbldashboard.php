@@ -24,13 +24,8 @@ return new class extends Migration
     });
     }
 
-    //dashboard get table
-    public function index()
+    public function down(): void
     {
-        // Fetch data from the `tbldashboard` table
-        $data = ModelModerator::all();
-
-        // Pass the data to the view
-        return view('dashboard.index', compact('data'));
+        Schema::dropIfExists('tblaccounts');
     }
 };
