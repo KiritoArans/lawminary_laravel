@@ -23,20 +23,20 @@
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="../home.html"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
-                        <li><a href="../search.html"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></a></li>
-                        <li><a href="../resources.html"><i class="fa-solid fa-folder"></i><span>Resources</span></a></li>
-                        <li><a href="../profile.html"><i class="fa-solid fa-user"></i><span>Profile</span></a></li>
+                        <li><a href="../home"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
+                        <li><a href="../search"><i class="fa-solid fa-magnifying-glass"></i><span>Search</span></a></li>
+                        <li><a href="../resources"><i class="fa-solid fa-folder"></i><span>Resources</span></a></li>
+                        <li><a href="../profile"><i class="fa-solid fa-user"></i><span>Profile</span></a></li>
                         <li>
                             <a class="current" onclick="toggleDropdown(event)"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
                             <div id="settingsDropdown" class="dropdown-content">
                                 <ul>
-                                    <li><a href="about_lawminary.html">About Lawminary</a></li>
-                                    <li><a href="about_pao.html">About PAO</a></li>
-                                    <li><a href="account_settings.html">Account Settings</a></li>
-                                    <li><a href="activity_logs.html">Activity Logs</a></li>
-                                    <li><a class="current-settings" href="provide_feedback.html">Provide Feedback</a></li>
-                                    <li><a href="tos.html">Terms of Service</a></li>
+                                    <li><a href="lawminary">About Lawminary</a></li>
+                                    <li><a href="pao">About PAO</a></li>
+                                    <li><a href="account">Account Settings</a></li>
+                                    <li><a href="activitylogs">Activity Logs</a></li>
+                                    <li><a href="feedback">Provide Feedback</a></li>
+                                    <li><a href="tos">Terms of Service</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -44,7 +44,7 @@
                 </nav>
             </div>
             <div class="bottom-nav">
-                <a class="logout"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
+                <a class="logout" href="../login"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
             </div>
         </aside>
         <main>

@@ -28,8 +28,8 @@
                     <input type="password" id="password" placeholder="Type your password">
                 </div>
                 <div class="buttons">
-                    <a class="bn3637 bn36" href="signup.html">Sign Up</a>
-                    <button class="bn3637 bn37">Login</button>
+                    <a class="bn3637 bn36" href="signup">Sign Up</a>
+                    <button class="bn3637 bn37" id="login-btn">Login</button>
                 </div>
                 <div class="forgot">
                     <a href="#">Forgot Password?</a>
@@ -37,5 +37,6 @@
             </div>
         </div>
     </section>
+    <script src="js/loginandsignup.js"></script>
 </body>
 </html>

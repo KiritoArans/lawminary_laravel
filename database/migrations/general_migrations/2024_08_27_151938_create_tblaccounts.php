@@ -16,6 +16,20 @@ return new class extends Migration
             $table->string('user_id');
             $table->string('username');
             $table->string('email');
+            $table->string('password');
+
+            $table->string('firstName');
+            $table->string('middleName');
+            $table->string('lastName');
+            $table->integer('birthDate');
+            $table->string('nationality');
+            $table->string('sex');
+            $table->integer('contactNumber');
+
+            $table->string('userEmail');
+            $table->string('restrict');
+            $table->string('restrictDays');
+
             $table->string('date_created');
             $table->string('account_type');
             $table->timestamps();

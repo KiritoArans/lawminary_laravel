@@ -44,7 +44,7 @@
                 </nav>
             </div>
             <div class="bottom-nav">
-                <a class="logout"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
+                <a class="logout" href="login"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
             </div>
         </aside>
         <main>

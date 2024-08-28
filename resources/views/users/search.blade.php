@@ -44,7 +44,7 @@
                 </nav>
             </div>
             <div class="bottom-nav">
-                <a class="logout"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
+                <a class="logout" href="login"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
             </div>
         </aside>
         <main>
@@ -82,7 +82,6 @@
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                             </div>
                         </div>
-                        <!-- delete -->
                         <div class="charges-info">
                             <div class="possible-charges">
                                 <h1>Article Title</h1>

@@ -71,7 +71,7 @@
                             <input type="password" id="confirm-password" name="confirm-password">
                         </div>
                         <div class="buttons">
-                            <a href="login.html" class="back-home">Back to Login</a>
+                            <a href="login" class="back-home">Back to Login</a>
                             <button type="submit">Create Account</button>
                         </div>
                     </div>
