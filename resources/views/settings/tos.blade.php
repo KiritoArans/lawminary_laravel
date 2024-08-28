@@ -52,7 +52,7 @@
                 <div class="header-top">
                     <img src="../../imgs/Lawminary_Logo_2-Gold.png" alt="Lawminary Logo">
                     <div class="notification">
-                        <a href="../../frontend/notification.html"><i class="fas fa-bell bell-icon"></i></a>
+                        <a href="../notifications"><i class="fas fa-bell bell-icon"></i></a>
                     </div>
                 </div>
                 <hr class="divider">

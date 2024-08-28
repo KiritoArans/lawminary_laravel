@@ -158,5 +158,10 @@ aside:not(:hover) ~ main {
     text-decoration: none;
     display: block;
     font-weight: 600;
+}
 
+
+/* error */
+.error{
+    color: red;
 }

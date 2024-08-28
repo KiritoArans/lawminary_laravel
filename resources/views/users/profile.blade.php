@@ -82,7 +82,7 @@
                                         <span>Followers:</span>
                                         <span>0</span>
                                     </div>
-                                    <a href="settings/account_settings.html" class="edit-profile-button">Edit Profile</a>
+                                    <a href="settings/account" class="edit-profile-button">Edit Profile</a>
                                 </div>
                             </div>
                     </div>

@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('restrictDays');
 
             $table->string('date_created');
-            $table->string('account_type');
+            $table->string('accountType');
             $table->timestamps();
         });
     }

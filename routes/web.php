@@ -81,3 +81,5 @@ Route::post('/add-account', [AccountController::class, 'store'])->name('add-acco
 Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+
+// route::get('/profile', [UserController::class, 'showProfilePage'])->middleware('auth')->name('profile');
