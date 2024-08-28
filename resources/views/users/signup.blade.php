@@ -15,15 +15,26 @@
         <div class="wrapper">
             <div class="container">
                 <h1>Sign Up</h1>
-                <form class="signup-form">
+                <div class="error-pointer">
+                    @if($errors->any())
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                    @endif
+                </div>
+                <form class="signup-form" method="post" action="{{route('signup')}}">
+                    @csrf
+                    @method('post')
                     <div class="left-column">
                         <div class="form-group">
                             <label for="first-name">First Name</label>
-                            <input type="text" id="first-name" name="first-name">
+                            <input type="text" id="first-name" name="firstName">
                         </div>
                         <div class="form-group">
                             <label for="last-name">Last Name</label>
-                            <input type="text" id="last-name" name="last-name">
+                            <input type="text" id="last-name" name="lastName">
                         </div>
                         <div class="form-group">
                             <label for="nationality">Nationality</label>
@@ -31,21 +42,21 @@
                         </div>
                         <div class="form-group">
                             <label for="email-address">Email Address</label>
-                            <input type="email" id="email-address" name="email-address">
+                            <input type="email" id="email-address" name="email">
                         </div>
                     </div>
                     <div class="middle-column">
                         <div class="form-group">
                             <label for="middle-name">Middle Name <span>(Optional)</span></label>
-                            <input type="text" id="middle-name" name="middle-name">
+                            <input type="text" id="middle-name" name="middleName">
                         </div>
                         <div class="form-group">
                             <label for="birth-date">Birth Date</label>
-                            <input type="date" id="birth-date" name="birth-date">
+                            <input type="date" id="birth-date" name="birthDate">
                         </div>
                         <div class="form-group">
                             <label for="sex">Sex</label>
-                            <select name="" id="">
+                            <select name="sex" id="">
                                 <option value="">Option</option>
                                 <option value="male">Male</option>
                                 <option value="female">Female</option>
@@ -53,7 +64,7 @@
                         </div>
                         <div class="form-group">
                             <label for="contact-number">Contact Number</label>
-                            <input type="tel" id="contact-number" name="contact-number">
+                            <input type="tel" id="contact-number" name="contactNumber">
                         </div>
                     </div>
                     <div class="line"></div>

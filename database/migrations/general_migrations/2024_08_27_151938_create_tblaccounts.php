@@ -9,29 +9,33 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('tblaccounts', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id')->unique();
-            $table->string('username')->unique();
-            $table->string('email')->unique();
+            $table->string('user_id');
+            $table->string('username');
+            $table->string('email');
             $table->string('password');
+
             $table->string('firstName');
-            $table->string('middleName')->nullable();
+            $table->string('middleName');
             $table->string('lastName');
-            $table->date('birthDate');
+            $table->integer('birthDate');
             $table->string('nationality');
-            $table->enum('sex', ['male', 'female']);
-            $table->string('contactNumber');
-            $table->boolean('restrict')->default(false);
-            $table->integer('restrictDays')->nullable();
-            $table->timestamp('date_created')->useCurrent();
+            $table->string('sex');
+            $table->integer('contactNumber');
+
+            $table->string('userEmail');
+            $table->string('restrict');
+            $table->string('restrictDays');
+
+            $table->string('date_created');
             $table->string('account_type');
             $table->timestamps();
         });
-        
     }
+    
 
     /**
      * Reverse the migrations.
@@ -39,5 +43,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('tblaccounts');
+        
+        Schema::table('tblaccounts', function (Blueprint $table) {
+            $table->dropUnique(['username']);
+        });
     }
 };
