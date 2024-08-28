@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('tblforums', function (Blueprint $table) {
             $table->id();
-            $table->string('forum_id');
             $table->string('forum_name');
             $table->string('forum_desc');
             $table->string('mem_count');
