@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\data_general_controller\general_controller;
 
 Route::get('/', function () {
     return view('welcome');
@@ -66,3 +67,9 @@ Route::get('/settings/activitylogs', [UserController::class, 'showActLogsPage'])
 Route::get('/settings/feedback', [UserController::class, 'showFeedbackPage']);
 
 Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
+
+//routes for dashboard controller
+// Admin routes handled by GeneralController
+Route::get('/admin/dashboard', [general_controller::class, 'showDashboard']);
+Route::get('/admin/forums', [general_controller::class, 'showForums']);
+

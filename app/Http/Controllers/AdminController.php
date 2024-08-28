@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\general_database;
 
 use Illuminate\Http\Request;
 
@@ -31,3 +32,4 @@ class AdminController extends Controller
         return view('admin.systemcontent');
     }
 }
+

@@ -13,22 +13,24 @@ return new class extends Migration
     {
         Schema::create('tbldashboard', function (Blueprint $table) {
             $table->id();
-            $table->string('pending_posts');
-            $table->string('pending_accounts');
-            $table->string('accounts');
+            $table->integer('pending_posts')->default(0);
+            $table->integer('pending_accounts')->default(0);
+            $table->string('accounts')->default('');
             $table->string('act_id');
-            $table->string('act_usernme');
+            $table->string('act_username');
             $table->string('act_action');
             $table->string('act_date');
             $table->timestamps();
-        });
+    });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    //dashboard get table
+    public function index()
     {
-        Schema::dropIfExists('tbldashboard');
+        // Fetch data from the `tbldashboard` table
+        $data = ModelModerator::all();
+
+        // Pass the data to the view
+        return view('dashboard.index', compact('data'));
     }
 };

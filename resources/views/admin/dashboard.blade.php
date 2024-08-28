@@ -74,86 +74,37 @@
                                 <a href="#" class="number"><h1>0</h1></a>
                             </div>
                             <div class="container-table">
-                                <h2>Recent Activities</h2>
-                                <div class="container-table-2">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>
-                                                <th>Username</th>
-                                                <th>Action</th>
-                                                <th>Date</th>
-                                                <th>View</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>user1</td>
-                                                <td>Logged in</td>
-                                                <td>2024-08-04</td>
-                                                <td><button class="btn btn-view btn-sm" data-id="1">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>user2</td>
-                                                <td>Logged out</td>
-                                                <td>2024-08-04</td>
-                                                <td><button class="btn btn-view btn-sm" data-id="2">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td>user3</td>
-                                                <td>User has posted this</td>
-                                                <td>2024-08-04</td>
-                                                <td><button class="btn btn-view btn-sm" data-id="3">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td>user4</td>
-                                                <td>User commented on this</td>
-                                                <td>2024-08-04</td>
-                                                <td><button class="btn btn-view btn-sm" data-id="4">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td>user5</td>
-                                                <td>User liked this</td>
-                                                <td>2024-08-04</td>
-                                                <td><button class="btn btn-view btn-sm" data-id="5">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td>user6</td>
-                                                <td>User has posted this</td>
-                                                <td>2024-08-04</td>
-                                                <td><button class="btn btn-view btn-sm" data-id="6">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                                <td>user7</td>
-                                                <td>Logged in</td>
-                                                <td>2024-08-04</td>
-                                                <td><button class="btn btn-view btn-sm" data-id="7">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                                <td>user8</td>
-                                                <td>Logged out</td>
-                                                <td>2024-08-04</td>
-                                                <td><button class="btn btn-view btn-sm" data-id="8">View</button></td>
-                                            </tr>
-                                            <tr>
-                                                <td>9</td>
-                                                <td>user9</td>
-                                                <td>User commented on this</td>
-                                                <td>2024-08-04</td>
-                                                <td><button class="btn btn-view btn-sm" data-id="9">View</button></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+
+                                <div class="container-table">
+
+                                    <h2>Recent Activities</h2>
+                                    <div class="container-table-2">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Username</th>
+                                                    <th>Action</th>
+                                                    <th>Date</th>
+                                                    <th>View</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($data as $item)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $item->act_username }}</td>
+                                                        <td>{{ $item->act_action }}</td>
+                                                        <td>{{ $item->act_date }}</td>
+                                                        <td><button class="btn btn-view btn-sm" data-id="{{ $item->act_id }}">View</button></td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                        </div>
+
+
                         <div id="viewModal" class="modal">
                             <div class="modal-content">
                                 <span class="close-button">&times;</span>
