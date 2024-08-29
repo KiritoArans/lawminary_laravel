@@ -97,6 +97,7 @@
                             </form>
                         </div>
                     </div>
+                     <!-- add accounts -->
                     <button class="custom-button" id="addButton">Add</button>
                     <div id="addModal" class="modal">
                         <div class="modal-content">
@@ -105,152 +106,89 @@
                           
                             <form id="addForm" method="POST" action="{{ route('add-account') }}">
                             @csrf
+                             <!-- Display validation errors -->
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" name="firstName" value="{{ old('firstName') }}" required>
 
+                        <label for="middleName">Middle Name:</label>
+                        <input type="text" id="middleName" name="middleName" value="{{ old('middleName') }}">
 
-                            <!-- Display validation errors -->
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
-    <label for="firstName">First Name:</label>
-    <input type="text" id="firstName" name="firstName" value="{{ old('firstName') }}" required>
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" name="lastName" value="{{ old('lastName') }}" required>
 
-    <label for="middleName">Middle Name:</label>
-    <input type="text" id="middleName" name="middleName" value="{{ old('middleName') }}">
+                        <label for="birthDate">Birth Date:</label>
+                        <input type="date" id="birthDate" name="birthDate" value="{{ old('birthDate') }}" required>
 
-    <label for="lastName">Last Name:</label>
-    <input type="text" id="lastName" name="lastName" value="{{ old('lastName') }}" required>
+                        <label for="nationality">Nationality:</label>
+                        <input type="text" id="nationality" name="nationality" value="{{ old('nationality') }}" required>
 
-    <label for="birthDate">Birth Date:</label>
-    <input type="date" id="birthDate" name="birthDate" value="{{ old('birthDate') }}" required>
+                        <label for="sex">Sex:</label>
+                        <select id="sex" name="sex" required>
+                            <option value="male" {{ old('sex') == 'male' ? 'selected' : '' }}>Male</option>
+                            <option value="female" {{ old('sex') == 'female' ? 'selected' : '' }}>Female</option>
+                            <option value="other" {{ old('sex') == 'other' ? 'selected' : '' }}>Other</option>
+                        </select>
 
-    <label for="nationality">Nationality:</label>
-    <input type="text" id="nationality" name="nationality" value="{{ old('nationality') }}" required>
+                        <label for="contactNumber">Contact Number:</label>
+                        <input type="tel" id="contactNumber" name="contactNumber" value="{{ old('contactNumber') }}" required>
 
-    <label for="sex">Sex:</label>
-    <select id="sex" name="sex" required>
-        <option value="male" {{ old('sex') == 'male' ? 'selected' : '' }}>Male</option>
-        <option value="female" {{ old('sex') == 'female' ? 'selected' : '' }}>Female</option>
-        <option value="other" {{ old('sex') == 'other' ? 'selected' : '' }}>Other</option>
-    </select>
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" required>
 
-    <label for="contactNumber">Contact Number:</label>
-    <input type="tel" id="contactNumber" name="contactNumber" value="{{ old('contactNumber') }}" required>
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" value="{{ old('username') }}" required>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="{{ old('email') }}" required>
+                        <label for="account_type">Account Type:</label>
+                        <select id="account_type" name="account_type" required>
+                            <option value="user" {{ old('account_type') == 'user' ? 'selected' : '' }}>User</option>
+                            <option value="moderator" {{ old('account_type') == 'moderator' ? 'selected' : '' }}>Moderator</option>
+                            <option value="lawyer" {{ old('account_type') == 'lawyer' ? 'selected' : '' }}>Lawyer</option>
+                            <option value="admin" {{ old('account_type') == 'admin' ? 'selected' : '' }}>Admin</option>
+                        </select>
 
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" value="{{ old('username') }}" required>
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" required>
 
-    <label for="account_type">Account Type:</label>
-    <select id="account_type" name="account_type" required>
-        <option value="user" {{ old('account_type') == 'user' ? 'selected' : '' }}>User</option>
-        <option value="moderator" {{ old('account_type') == 'moderator' ? 'selected' : '' }}>Moderator</option>
-        <option value="lawyer" {{ old('account_type') == 'lawyer' ? 'selected' : '' }}>Lawyer</option>
-        <option value="admin" {{ old('account_type') == 'admin' ? 'selected' : '' }}>Admin</option>
-    </select>
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-
-    <button type="submit" class="custom-button">Add Account</button>
-</form>
-                        
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <content class="table-container">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>E-mail</th>
-                            <th>Date Created</th>
-                            <th>Account Type</th>
-                        </tr>
-                    </thead>
-                    <tbody id="accountTableBody">
-                        <tr data-type="user">
-                            <td>24-0001</td>
-                            <td>Yves Salarond</td>
-                            <td>ys1321@gmail.com</td>
-                            <td>mm/dd/yy</td>
-                            <td>User</td>
-                        </tr>
-                        <tr data-type="moderator">
-                            <td>24-0002</td>
-                            <td>Jane Doe</td>
-                            <td>jane.doe@example.com</td>
-                            <td>01/15/23</td>
-                            <td>Moderator</td>
-                        </tr>
-                        <tr data-type="admin">
-                            <td>24-0003</td>
-                            <td>John Smith</td>
-                            <td>john.smith@example.com</td>
-                            <td>02/28/23</td>
-                            <td>Admin</td>
-                        </tr>
-                        <tr data-type="lawyer">
-                            <td>24-0004</td>
-                            <td>Alice Brown</td>
-                            <td>alice.brown@example.com</td>
-                            <td>03/10/23</td>
-                            <td>Lawyer</td>
-                        </tr>
-                        <tr data-type="user">
-                            <td>24-0005</td>
-                            <td>Michael White</td>
-                            <td>michael.white@example.com</td>
-                            <td>04/22/23</td>
-                            <td>User</td>
-                        </tr>
-                        <tr data-type="lawyer">
-                            <td>24-0006</td>
-                            <td>Linda Green</td>
-                            <td>linda.green@example.com</td>
-                            <td>05/15/23</td>
-                            <td>Lawyer</td>
-                        </tr>
-                        <tr data-type="moderator">
-                            <td>24-0007</td>
-                            <td>Chris Blue</td>
-                            <td>chris.blue@example.com</td>
-                            <td>06/30/23</td>
-                            <td>Moderator</td>
-                        </tr>
-                        <tr data-type="admin">
-                            <td>24-0008</td>
-                            <td>Karen Black</td>
-                            <td>karen.black@example.com</td>
-                            <td>07/08/23</td>
-                            <td>Admin</td>
-                        </tr>
-                        <tr data-type="user">
-                            <td>24-0009</td>
-                            <td>Paul Red</td>
-                            <td>paul.red@example.com</td>
-                            <td>08/01/23</td>
-                            <td>User</td>
-                        </tr>
-                        <tr data-type="lawyer">
-                            <td>24-0010</td>
-                            <td>Susan Yellow</td>
-                            <td>susan.yellow@example.com</td>
-                            <td>09/05/23</td>
-                            <td>Lawyer</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </content>
+                        <button type="submit" class="custom-button">Add Account</button>
+                        </form>             
+                             </div>
+                                 </div>
+                                    </div>
+                                </section>
+                        <!-- display content on table -->
+                                <content class="table-container">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>E-mail</th>
+                                    <th>Date Created</th>
+                                    <th>Account Type</th>
+                                </tr>
+                            </thead>
+                            <tbody id="accountTableBody">
+                                @foreach($accounts as $account)
+                                <tr data-type="{{ strtolower($account->account_type) }}">
+                                    <td>{{ $account->user_id }}</td>
+                                    <td>{{ $account->username }}</td>
+                                    <td>{{ $account->email }}</td>
+                                    <td>{{ $account->created_at->format('m/d/Y') }}</td>
+                                    <td>{{ ucfirst($account->account_type) }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </content>
         </main>
     </div>
     <script src="{{ asset('js/admin_js/accounts_js.js') }}"></script>

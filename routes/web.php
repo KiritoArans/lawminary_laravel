@@ -72,6 +72,8 @@ Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
 
 //add-account routing (create)
 Route::post('/add-account', [AccountController::class, 'store'])->name('add-account');
+//fetch data from db to display to table
+Route::get('/admin/account', [AccountController::class, 'index'])->name('admin.account');
 
 // Backend Routing
 Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');
