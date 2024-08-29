@@ -12,7 +12,7 @@
 
 .modal-content {
     background-color: #fefefe;
-    margin: 15% auto;
+    margin: 10% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
@@ -25,6 +25,9 @@
     float: right;
     font-size: 28px;
     font-weight: bold;
+
+    position: relative;
+    bottom: .75rem;
 }
 
 .close-button:hover,
@@ -35,7 +38,7 @@
 }
 
 .modal-content h2 {
-    margin-top: 0;
+    margin: 0;
 }
 
 .modal-content form {
@@ -44,12 +47,24 @@
 }
 
 .modal-content label {
-    margin-top: 10px;
+    margin-top: 8px;
+    display: flex;
 }
 
 .modal-content input {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
+}
+
+form{
+    margin-left: 1rem;
+}
+
+.form-buttons button{
+    margin-top: 4px;
+    width: 100%;
+    padding: 8px;
+    cursor: pointer;
 }

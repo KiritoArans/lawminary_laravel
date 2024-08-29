@@ -25,7 +25,7 @@ class UserController extends Controller
         // dd($request);
         $data = $request->validate([
             'user_id' => 'nullable',
-            'username' => 'required',
+            'username' => 'required|unique:tblaccounts,username',
             'email' => 'required',
             'password' => 'required|min:8|confirmed',
             'firstName' => 'required',

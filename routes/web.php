@@ -30,7 +30,7 @@ Route::get('/moderator/posts', [ModeratorController::class, 'showMposts']);
 
 Route::get('/moderator/leaderboards', [ModeratorController::class, 'showMleaderboards']);
 
-Route::get('/moderator/resources', [ModeratorController::class, 'showMresources']);
+Route::get('/moderator/resources', [ModeratorController::class, 'showMresources'])->name('moderator.resources');
 
 Route::get('/moderator/accounts', [ModeratorController::class, 'showMaccounts']);
 
@@ -79,4 +79,3 @@ Route::post('/signup', [UserController::class, 'createAccount'])->name('users.cr
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 // route::get('/profile', [UserController::class, 'showProfilePage'])->middleware('auth')->name('profile');
-
