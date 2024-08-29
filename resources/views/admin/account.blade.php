@@ -102,29 +102,66 @@
                         <div class="modal-content">
                             <span class="close-button" id="closeAddModal">&times;</span>
                             <h2>Add Account</h2>
-                            <form id="addForm">
-                                <label for="addName">Name:</label>
-                                <input type="text" id="addName" name="addName" required>
-                                
-                                <label for="addEmail">Email:</label>
-                                <input type="email" id="addEmail" name="addEmail" required>
-                                
-                                <label for="addUsername">Username:</label>
-                                <input type="text" id="addUsername" name="addUsername" required>
-                                
-                                <label for="addAccountType">Account Type:</label>
-                                <select id="addAccountType" name="addAccountType" required>
-                                    <option value="user">User</option>
-                                    <option value="moderator">Moderator</option>
-                                    <option value="lawyer">Lawyer</option>
-                                    <option value="admin">Admin</option>
-                                </select>
-                                
-                                <label for="addPassword">Password:</label>
-                                <input type="password" id="addPassword" name="addPassword" required>
-                                
-                                <button type="submit" class="custom-button">Add Account</button>
-                            </form>
+                          
+                            <form id="addForm" method="POST" action="{{ route('add-account') }}">
+                            @csrf
+
+
+                            <!-- Display validation errors -->
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+    <label for="firstName">First Name:</label>
+    <input type="text" id="firstName" name="firstName" value="{{ old('firstName') }}" required>
+
+    <label for="middleName">Middle Name:</label>
+    <input type="text" id="middleName" name="middleName" value="{{ old('middleName') }}">
+
+    <label for="lastName">Last Name:</label>
+    <input type="text" id="lastName" name="lastName" value="{{ old('lastName') }}" required>
+
+    <label for="birthDate">Birth Date:</label>
+    <input type="date" id="birthDate" name="birthDate" value="{{ old('birthDate') }}" required>
+
+    <label for="nationality">Nationality:</label>
+    <input type="text" id="nationality" name="nationality" value="{{ old('nationality') }}" required>
+
+    <label for="sex">Sex:</label>
+    <select id="sex" name="sex" required>
+        <option value="male" {{ old('sex') == 'male' ? 'selected' : '' }}>Male</option>
+        <option value="female" {{ old('sex') == 'female' ? 'selected' : '' }}>Female</option>
+        <option value="other" {{ old('sex') == 'other' ? 'selected' : '' }}>Other</option>
+    </select>
+
+    <label for="contactNumber">Contact Number:</label>
+    <input type="tel" id="contactNumber" name="contactNumber" value="{{ old('contactNumber') }}" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="{{ old('email') }}" required>
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" value="{{ old('username') }}" required>
+
+    <label for="account_type">Account Type:</label>
+    <select id="account_type" name="account_type" required>
+        <option value="user" {{ old('account_type') == 'user' ? 'selected' : '' }}>User</option>
+        <option value="moderator" {{ old('account_type') == 'moderator' ? 'selected' : '' }}>Moderator</option>
+        <option value="lawyer" {{ old('account_type') == 'lawyer' ? 'selected' : '' }}>Lawyer</option>
+        <option value="admin" {{ old('account_type') == 'admin' ? 'selected' : '' }}>Admin</option>
+    </select>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit" class="custom-button">Add Account</button>
+</form>
+                        
                         </div>
                     </div>
                 </div>
