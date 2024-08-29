@@ -87,6 +87,5 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 // Moderator Routing
 Route::post('/moderator/resources', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');
-
-// route::post('/moderator/resources/view-resource', [ModeratorController::class, 'viewResource'])->name('view.resource');
-// route::get('/view-resource/{id}', [ModeratorController::class, 'show'])->name('viewResource');
+Route::delete('/moderator/{rsrcfile}/destroy', [ModeratorController::class, 'destroyResource'])->name('moderator.destroyResource');
+route::match(['put', 'patch'], '/moderator/resources/{id}', [ModeratorController::class, 'updateResource'])->name('moderator.updateResource');

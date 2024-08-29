@@ -40,22 +40,9 @@ class ModeratorController extends Controller
 
     public function showMresources()
     {
-        // $rsrcfiles = DB::table('tblresources')->get();
         $rsrcfiles = ResourceFile::all();
         return view('moderator.mresources', ['rsrcfiles' => $rsrcfiles]);
     }
-    // public function show($id)
-    // {
-    //     $rsrcfile = ResourceFile::findOrFail($id);
-    //     return view('moderator.mresources', compact('rsrcfile'));
-    // }
-
-    // public function viewResource(Request $request)
-    // {
-    //     // Retrieve the resource file based on the submitted ID
-    //     $rsrcfile = ResourceFile::find($request->id);
-    //     return view('moderator.mresources', ['rsrcfile' => $rsrcfile]);
-    // }
 
     public function uploadResource(Request $request){
         // dd($request);
@@ -65,6 +52,34 @@ class ModeratorController extends Controller
             'documentFile' => 'required',
         ]);
         $newFile = ResourceFile::create($data);
+
+        return $this->showMresources();
+    }
+
+    public function destroyResource(ResourceFile $rsrcfile){
+        $rsrcfile->delete();
+        return $this->showMresources();
+    }
+
+    public function updateResource(Request $request, $id)
+    {
+        $resource = ResourceFile::findOrFail($id);
+    
+        $request->validate([
+            'documentTitle' => 'required|string|max:50',
+            'documentDesc' => 'required|string|max:250',
+            'documentFile' => 'nullable|file',
+        ]);
+    
+        $resource->documentTitle = $request->input('documentTitle');
+        $resource->documentDesc = $request->input('documentDesc');
+    
+        if ($request->hasFile('documentFile')) {
+            $filePath = $request->file('documentFile')->store('documents', 'public'); 
+            $resource->documentFile = $filePath;
+        }
+    
+        $resource->save();    
 
         return $this->showMresources();
     }

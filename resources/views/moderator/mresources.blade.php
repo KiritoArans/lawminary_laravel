@@ -101,12 +101,11 @@
                             <label for="documentDesc">Document Description:</label>
                             <input type="text" id="documentDesc" name="documentDesc" placeholder="Enter Description" required>
 
-
                             <label for="documentFile">Upload File:</label>
                             <input type="file" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" required>
 
                             <div class="form-buttons">
-                                <button type="submit" class="save-button">Save Resource</button>
+                                <button type="submit" class="save-button">Add File</button>
                             </div>
                         </form>
                     </div>
@@ -133,25 +132,58 @@
                                 <td>{{$rsrcfile->documentDesc}}</td>
                                 <td>{{$rsrcfile->documentFile}}</td>
                                 <td>{{$rsrcfile->created_at}}</td>
-                                <td><button class="custom-button view-button">View</button></td>
+                                <td>
+                                    <button type="button" class="custom-button view-button" data-id="{{$rsrcfile->id}}" data-title="{{$rsrcfile->documentTitle}}" data-desc="{{$rsrcfile->documentDesc}}" data-file="{{$rsrcfile->documentFile}}" data-date="{{$rsrcfile->created_at}}">View</button>
+                                    <form method="post" action="{{route('moderator.destroyResource', ['rsrcfile' => $rsrcfile])}}">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="delete-button">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
                 </div>
-
+            
                 <div id="viewModal" class="modal">
                     <div class="modal-content">
-                        <span class="close-button">&times;</span>
+                        <span class="close-button" id="closeButton">&times;</span>
                         <h2>View Resource</h2>
-                        <p>ID:<span id="viewResourceId">{{$rsrcfile->id}}</span></p>
-                        <p>Document Name: <a id="viewResourceDocument" href="#" download>{{$rsrcfile->documentTitle}}</a></p>
-                        <p>Document Desc: <span id="viewResourceTitle">{{$rsrcfile->documentDesc}}</span></p>
-                        <p>File: <span id="viewUploadDate">{{$rsrcfile->documentFile}}</span></p>
-                        <p>Date Uploaded: <span id="viewUploadDate">{{$rsrcfile->created_at}}</span></p>
+                        <div class="error">
+                            @if($errors->any())
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </ul>
+                            @endif
+                        </div>
+                        <form id="editResourceForm" method="POST" action="{{ route('moderator.updateResource', ['id' => $rsrcfile->id]) }}" enctype="multipart/form-data">
+                            @csrf
+                            @method('PATCH')
+                            <label>ID:</label>
+                            <input id="rscrId" name="id" value="" readonly>
+                        
+                            <label>Document Name:</label>
+                            <input type="text" id="rscrDocumentTitle" name="documentTitle" placeholder="Enter Document Name" value="">
+                            
+                            <label>Document Description:</label>
+                            <input type="text" id="rscrDocumentDesc" name="documentDesc" placeholder="Enter Description" value="">
+                        
+                            <label>File:</label>
+                            <input type="file" id="rscrDocumentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" hidden>
+                            <a id="rscrDocumentFileLink" href="" download=""></a>
+                        
+                            <label>Date Uploaded:</label>
+                            <input id="rscrDateUploaded" name="created_at" value="" readonly>
+                        
+                            <button type="submit" class="custom-button">Save</button>
+                        </form>                        
                     </div>
                 </div>
             </content>
+            
         </main>
     </div>
     <script src="{{ asset('js/moderator_js/mresources_js.js') }}"></script>

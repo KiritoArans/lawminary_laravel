@@ -99,30 +99,39 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // /view table button/
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('viewModal');
+    var closeButton = document.getElementById('closeButton');
 
-document.addEventListener('DOMContentLoaded', function() {
-    const viewButtons = document.querySelectorAll('.view-button');
-    const viewModal = document.getElementById('viewModal');
-    const closeButtons = document.querySelectorAll('.close-button');
+    document.querySelectorAll('.view-button').forEach(button => {
+        button.addEventListener('click', function () {
+            var id = this.getAttribute('data-id');
+            var title = this.getAttribute('data-title');
+            var desc = this.getAttribute('data-desc');
+            var file = this.getAttribute('data-file');
+            var date = this.getAttribute('data-date');
 
-    viewButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            viewModal.style.display = 'block';
+            document.getElementById('rscrId').value = id;
+            document.getElementById('rscrDocumentTitle').value = title;
+            document.getElementById('rscrDocumentDesc').value = desc;
+            document.getElementById('rscrDocumentFileLink').textContent = file;
+            document.getElementById('rscrDocumentFileLink').href = file;
+            document.getElementById('rscrDateUploaded').value = date;
+
+            var formAction = `/moderator/resources/${id}`;
+            document.getElementById('editResourceForm').action = formAction;
+
+            modal.style.display = 'block';
         });
     });
 
-    // Close the modal when any close button is clicked
-    closeButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            viewModal.style.display = 'none';
-        });
+    closeButton.addEventListener('click', function () {
+        modal.style.display = 'none';
     });
 
-    // Close the modal when clicking outside of it
-    window.addEventListener('click', function(event) {
-        if (event.target === viewModal) {
-            viewModal.style.display = 'none';
+    window.addEventListener('click', function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
         }
     });
 });
-
