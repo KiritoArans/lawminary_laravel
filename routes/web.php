@@ -73,17 +73,14 @@ Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
 //add-account routing (create)
 Route::post('/add-account', [AccountController::class, 'store'])->name('add-account');
 
-
-
-
-
 // Backend Routing
 Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 // route::get('/profile', [UserController::class, 'showProfilePage'])->middleware('auth')->name('profile');
-
+// Moderator Routing
+Route::post('/moderator/resources', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');
 
 // Moderator Routing
 Route::post('/moderator/resources', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');

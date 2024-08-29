@@ -21,15 +21,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    filterForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const filterId = document.getElementById('filterId').value.toLowerCase();
-        const filterUsername = document.getElementById('filterUsername').value.toLowerCase();
-        const filterEmail = document.getElementById('filterEmail').value.toLowerCase();
-        filterAccounts(filterId, filterUsername, filterEmail);
-        filterModal.style.display = 'none';
+    addForm.addEventListener('submit', function (event) {
+        event.preventDefault(); 
+    
+        const name = document.getElementById('addName').value.trim();
+        const email = document.getElementById('addEmail').value.trim();
+        const username = document.getElementById('addUsername').value.trim();
+        const accountType = document.getElementById('addAccountType').value;
+        const password = document.getElementById('addPassword').value.trim();
+    
+        // Custom validation or additional logic here
+        if (name && email && username && accountType && password) {
+            addAccount(name, email, username, accountType, password);
+            addModal.style.display = 'none';
+            this.submit(); // Proceed with form submission
+        } else {
+            // Handle missing data
+            alert('Please fill in all required fields.');
+        }
     });
-
+    
     function filterAccounts(filterId, filterUsername, filterEmail) {
         const rows = document.querySelectorAll('#accountTableBody tr');
         rows.forEach(row => {
@@ -61,14 +72,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     addButton.addEventListener('click', function () {
         addModal.style.display = 'block';
-        addModal.focus();
     });
-    
+
     closeAddModal.addEventListener('click', function () {
         addModal.style.display = 'none';
-        addButton.focus(); // Return focus to the button that opened the modal
     });
-    
 
     window.addEventListener('click', function (event) {
         if (event.target == addModal) {
@@ -78,40 +86,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     addForm.addEventListener('submit', function (event) {
         event.preventDefault(); 
-        const name = document.getElementById('addName').value;
-        const email = document.getElementById('addEmail').value;
-        const username = document.getElementById('addUsername').value;
-        const accountType = document.getElementById('addAccountType').value;
-        const password = document.getElementById('addPassword').value;
+    
+        const name = document.getElementById('firstName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const username = document.getElementById('username').value.trim();
+        const accountType = document.getElementById('account_type').value;
+        const password = document.getElementById('password').value.trim();
 
-        addAccount(name, email, username, accountType, password);
-        addModal.style.display = 'none';
-        this.submit();
+        // Custom validation or additional logic here
+        if (name && email && username && accountType && password) {
+            // Proceed with form submission
+            addForm.submit();
+        } else {
+            // Handle missing data
+            alert('Please fill in all required fields.');
+        }
     });
-
-    function addAccount(name, email, username, accountType, password) {
-        const newId = Math.random().toString(36).substr(2, 9); // Generate a random ID
-        const tbody = document.getElementById('accountTableBody');
-        const newRow = document.createElement('tr');
-        newRow.dataset.type = accountType.toLowerCase();
-        newRow.innerHTML = `
-            <td>${newId}</td>
-            <td>${username}</td>
-            <td>${email}</td>
-            <td>${new Date().toLocaleDateString()}</td>
-            <td>${accountType.charAt(0).toUpperCase() + accountType.slice(1)}</td>
-        `;
-        tbody.appendChild(newRow);
-    }
-    
-window.addEventListener('click', function (event) {
-    if (event.target == addModal) {
-        addModal.style.display = 'none';
-    }
-});
-
-    
-    
 });
 
 /edit/
@@ -173,4 +163,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
 
