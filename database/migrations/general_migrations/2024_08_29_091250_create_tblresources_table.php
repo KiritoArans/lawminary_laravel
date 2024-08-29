@@ -13,10 +13,9 @@ return new class extends Migration
     {
         Schema::create('tblresources', function (Blueprint $table) {
             $table->id();
-            $table->string('document');
-            $table->string('resource_title');
-            $table->string('content');
-            $table->string('date_uploaded');
+            $table->string('documentTitle');
+            $table->string('documentDesc');
+            $table->binary('documentFile');
             $table->timestamps();
         });
     }
