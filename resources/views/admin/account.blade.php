@@ -150,12 +150,12 @@
                         <label for="username">Username:</label>
                         <input type="text" id="username" name="username" value="{{ old('username') }}" required>
 
-                        <label for="account_type">Account Type:</label>
-                        <select id="account_type" name="account_type" required>
-                            <option value="user" {{ old('account_type') == 'user' ? 'selected' : '' }}>User</option>
-                            <option value="moderator" {{ old('account_type') == 'moderator' ? 'selected' : '' }}>Moderator</option>
-                            <option value="lawyer" {{ old('account_type') == 'lawyer' ? 'selected' : '' }}>Lawyer</option>
-                            <option value="admin" {{ old('account_type') == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <label for="accountType">Account Type:</label>
+                        <select id="accountType" name="accountType" required>
+                            <option value="ser" {{ old('accountType') == 'user' ? 'selected' : '' }}>User</option>
+                            <option value="moderator" {{ old('accountType') == 'moderator' ? 'selected' : '' }}>Moderator</option>
+                            <option value="lawyer" {{ old('accountType') == 'lawyer' ? 'selected' : '' }}>Lawyer</option>
+                            <option value="admin" {{ old('accountType') == 'admin' ? 'selected' : '' }}>Admin</option>
                         </select>
 
                         <label for="password">Password:</label>

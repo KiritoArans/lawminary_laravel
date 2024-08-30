@@ -19,7 +19,7 @@ class Account extends Model
     protected $fillable = [
         'user_id', 'username', 'email', 'password', 'firstName', 'middleName', 
         'lastName', 'birthDate', 'nationality', 'sex', 'contactNumber', 
-        'restrict', 'restrictDays', 'account_type'
+        'restrict', 'restrictDays', 'accountType'
     ];
 
     protected static function boot()
