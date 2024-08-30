@@ -21,25 +21,25 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    addForm.addEventListener('submit', function (event) {
-        event.preventDefault(); 
+    // addForm.addEventListener('submit', function (event) {
+    //     event.preventDefault(); 
     
-        const name = document.getElementById('addName').value.trim();
-        const email = document.getElementById('addEmail').value.trim();
-        const username = document.getElementById('addUsername').value.trim();
-        const accountType = document.getElementById('addAccountType').value;
-        const password = document.getElementById('addPassword').value.trim();
+    //     const name = document.getElementById('addName').value.trim();
+    //     const email = document.getElementById('addEmail').value.trim();
+    //     const username = document.getElementById('addUsername').value.trim();
+    //     const accountType = document.getElementById('addAccountType').value;
+    //     const password = document.getElementById('addPassword').value.trim();
     
-        // Custom validation or additional logic here
-        if (name && email && username && accountType && password) {
-            addAccount(name, email, username, accountType, password);
-            addModal.style.display = 'none';
-            this.submit(); // Proceed with form submission
-        } else {
-            // Handle missing data
-            alert('Please fill in all required fields.');
-        }
-    });
+    //     // Custom validation or additional logic here
+    //     if (name && email && username && accountType && password) {
+    //         addAccount(name, email, username, accountType, password);
+    //         addModal.style.display = 'none';
+    //         this.submit(); // Proceed with form submission
+    //     } else {
+    //         // Handle missing data
+    //         alert('Please fill in all required fields.');
+    //     }
+    // });
     
     function filterAccounts(filterId, filterUsername, filterEmail) {
         const rows = document.querySelectorAll('#accountTableBody tr');
@@ -84,24 +84,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    addForm.addEventListener('submit', function (event) {
-        event.preventDefault(); 
+    // addForm.addEventListener('submit', function (event) {
+    //     event.preventDefault(); 
     
-        const name = document.getElementById('firstName').value.trim();
-        const email = document.getElementById('email').value.trim();
-        const username = document.getElementById('username').value.trim();
-        const accountType = document.getElementById('account_type').value;
-        const password = document.getElementById('password').value.trim();
+    //     const name = document.getElementById('firstName').value.trim();
+    //     const email = document.getElementById('email').value.trim();
+    //     const username = document.getElementById('username').value.trim();
+    //     const accountType = document.getElementById('account_type').value;
+    //     const password = document.getElementById('password').value.trim();
 
-        // Custom validation or additional logic here
-        if (name && email && username && accountType && password) {
-            // Proceed with form submission
-            addForm.submit();
-        } else {
-            // Handle missing data
-            alert('Please fill in all required fields.');
-        }
-    });
+    //     // Custom validation or additional logic here
+    //     if (name && email && username && accountType && password) {
+    //         // Proceed with form submission
+    //         addForm.submit();
+    //     } else {
+    //         // Handle missing data
+    //         alert('Please fill in all required fields.');
+    //     }
+    // });
 });
 
 

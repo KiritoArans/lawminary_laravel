@@ -17,9 +17,20 @@ class Account extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'user_id', 'username', 'email', 'password', 'firstName', 'middleName', 
-        'lastName', 'birthDate', 'nationality', 'sex', 'contactNumber', 
-        'restrict', 'restrictDays', 'accountType'
+        'user_id', 
+        'username', 
+        'email', 
+        'password', 
+        'firstName', 
+        'middleName', 
+        'lastName', 
+        'birthDate', 
+        'nationality', 
+        'sex', 
+        'contactNumber', 
+        'restrict', 
+        'restrictDays', 
+        'accountType'
     ];
 
     protected static function boot()

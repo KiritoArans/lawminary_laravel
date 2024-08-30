@@ -105,11 +105,9 @@
                         <div class="modal-content">
                             <span class="close-button" id="closeAddModal">&times;</span>
                             <h2>Add Account</h2>
-                            <!-- dynamically display errors-->
                             <div id="validationErrors" style="color: red;"></div>
-                            <form id="addForm" method="POST" action="{{ route('add-account') }}">
+                        <form id="addForm" method="POST" action="{{ route('admin.addAccount') }}">
                             @csrf
-                             <!-- Display validation errors -->
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
@@ -161,6 +159,9 @@
                         <label for="password">Password:</label>
                         <input type="password" id="password" name="password" required>
 
+                        <label for="password_confirmation">Confirm Password</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" required>
+
                         <button type="submit" class="custom-button">Add Account</button>
                         </form>             
                              </div>
@@ -168,7 +169,7 @@
                                     </div>
                                 </section>
                         <!-- display content on table -->
-                                <content class="table-container">
+                    <content class="table-container">
                         <table class="table table-striped table-bordered">
                             <thead>
                                 <tr>
@@ -177,6 +178,7 @@
                                     <th>E-mail</th>
                                     <th>Date Created</th>
                                     <th>Account Type</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody id="accountTableBody">
@@ -186,7 +188,15 @@
                                     <td>{{ $account->username }}</td>
                                     <td>{{ $account->email }}</td>
                                     <td>{{ $account->created_at->format('m/d/Y') }}</td>
-                                    <td>{{ ucfirst($account->account_type) }}</td>
+                                    <td>{{ ucfirst($account->accountType) }}</td>
+                                    <td>
+                                        <button type="button" class="custom-button view-button">View</button>
+                                        {{-- <form method="post" action="">
+                                            @csrf
+                                            @method('delete') --}}
+                                            <button type="submit" class="delete-button">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
