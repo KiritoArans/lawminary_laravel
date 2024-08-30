@@ -81,3 +81,10 @@ Route::post('/signup', [UserController::class, 'createAccount'])->name('users.cr
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 // route::get('/profile', [UserController::class, 'showProfilePage'])->middleware('auth')->name('profile');
+// Moderator Routing
+Route::post('/moderator/resources', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');
+
+// Moderator Routing
+Route::post('/moderator/resources', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');
+Route::delete('/moderator/{rsrcfile}/destroy', [ModeratorController::class, 'destroyResource'])->name('moderator.destroyResource');
+route::match(['put', 'patch'], '/moderator/resources/{id}', [ModeratorController::class, 'updateResource'])->name('moderator.updateResource');

@@ -103,6 +103,7 @@ header hr {
     padding: 10px 22px;
 }
 
+
 .custom-button {
     background-color: #999;
     color: white;
@@ -119,4 +120,20 @@ header hr {
 
 .custom-button:hover {
     background-color: #333333;
+}
+.delete-button{
+    background-color: red;
+    color: white;
+    border: 1px solid #ccc;
+    padding: 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+.delete-button:hover {
+    background-color: rgb(174, 0, 0);
 }

@@ -15,6 +15,9 @@ table {
 }
 td:last-child{
     text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 0;
 }
 .table thead th {
     vertical-align: bottom;
