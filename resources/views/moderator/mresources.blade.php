@@ -159,7 +159,7 @@
                             </ul>
                             @endif
                         </div>
-                        <form id="editResourceForm" method="POST" action="{{ route('moderator.updateResource', ['id' => $rsrcfile->id]) }}" enctype="multipart/form-data">
+                        <form id="editResourceForm" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PATCH')
                             <label>ID:</label>
