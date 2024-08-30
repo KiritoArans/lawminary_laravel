@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const filterModal = document.getElementById('filterModal');
     const closeButton = document.querySelector('#filterModal .close-button');
 
-    // Open the modal when the filter button is clicked
     filterButton.addEventListener('click', function () {
         filterModal.style.display = 'block';
     });
@@ -23,6 +22,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('filterForm').addEventListener('submit', function (e) {
         e.preventDefault(); 
 
+        // Get the filter values
         const filterId = document.getElementById('filterId').value;
         const filterDocument = document.getElementById('filterDocument').value;
         const filterTitle = document.getElementById('filterTitle').value;
@@ -34,6 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+
+// add button
 document.addEventListener('DOMContentLoaded', function () {
     const addButton = document.getElementById('addButton');
     const addModal = document.getElementById('addModal');
@@ -43,11 +45,15 @@ document.addEventListener('DOMContentLoaded', function () {
     function openModal() {
         addModal.style.display = 'block';
     }
+
     addButton.addEventListener('click', function () {
+        openModal();
     });
+
     closeButton.addEventListener('click', function () {
         addModal.style.display = 'none';
     });
+
     window.addEventListener('click', function (event) {
         if (event.target === addModal) {
             addModal.style.display = 'none';
