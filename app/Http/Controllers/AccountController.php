@@ -46,6 +46,8 @@ class AccountController extends Controller
 
         // Redirect or return a response
         return redirect()->back()->with('success', 'Account created successfully!');
+
+        return response()->json($account);
     }
 
     //fetch data in database
@@ -57,6 +59,8 @@ class AccountController extends Controller
     // Pass the accounts to the view
     return view('admin.account', ['accounts' => $accounts]);
 }
+    //update the accounts table
+    
 
 }
 

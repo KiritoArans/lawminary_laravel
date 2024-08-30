@@ -55,18 +55,20 @@
                             <h2>Edit Account</h2>
                             <form id="editForm">
                                 <input type="hidden" id="editId" name="editId">
+                                <div id="editValidationErrors" style="color:red;"></div>
+                                
                                 <label for="editName">Name:</label>
                                 <input type="text" id="editName" name="editName" required>
-                                
+
                                 <label for="editEmail">Email:</label>
                                 <input type="email" id="editEmail" name="editEmail" required>
-                                
+
                                 <label for="editUsername">Username:</label>
                                 <input type="text" id="editUsername" name="editUsername" required>
-                                
+
                                 <label for="editPassword">Password:</label>
                                 <input type="password" id="editPassword" name="editPassword">
-                                
+
                                 <button type="submit" class="custom-button">Save Changes</button>
                                 <button type="button" class="custom-button" id="deleteButton">Delete Account</button>
                             </form>
@@ -103,7 +105,8 @@
                         <div class="modal-content">
                             <span class="close-button" id="closeAddModal">&times;</span>
                             <h2>Add Account</h2>
-                          
+                            <!-- dynamically display errors-->
+                            <div id="validationErrors" style="color: red;"></div>
                             <form id="addForm" method="POST" action="{{ route('add-account') }}">
                             @csrf
                              <!-- Display validation errors -->
@@ -191,7 +194,7 @@
                     </content>
         </main>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('js/admin_js/accounts_js.js') }}"></script>
-
 </body>
 </html>

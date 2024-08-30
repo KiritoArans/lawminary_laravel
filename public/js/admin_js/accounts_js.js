@@ -104,6 +104,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+
 /edit/
 
 document.addEventListener('DOMContentLoaded', function () {
