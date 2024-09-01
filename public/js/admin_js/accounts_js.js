@@ -84,58 +84,179 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-//update/edit the table file
-document.addEventListener('DOMContentLoaded', function() {
-    var editButtons = document.querySelectorAll('.edit-button');
-    var editModal = document.getElementById('editAccountModal');
-    var closeEditModalFooter = document.getElementById('closeEditModalFooter');
-    var closeEditModalX = document.getElementById('closeEditModalX');
 
-    editButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var account = JSON.parse(this.getAttribute('data-account'));
+document.addEventListener('DOMContentLoaded', function () {
+    var modal = document.getElementById('editAccountModal');
+    var closeButton = document.getElementById('closeEditModalX');
 
-            // Populate the form fields
-            document.getElementById('editUserId').value = account.user_id;
-            document.getElementById('editUsername').value = account.username;
-            document.getElementById('editEmail').value = account.email;
-            document.getElementById('editPassword').value = '';
-            document.getElementById('editFirstName').value = account.firstName;
-            document.getElementById('editMiddleName').value = account.middleName;
-            document.getElementById('editLastName').value = account.lastName;
-            document.getElementById('editBirthDate').value = account.birthDate;
-            document.getElementById('editNationality').value = account.nationality;
-            document.getElementById('editSexForm').value = account.sex;
-            document.getElementById('editSex').value = account.sex;
-            document.getElementById('editContactNumber').value = account.contactNumber;
-            document.getElementById('editRestrict').checked = account.restrict;
-            document.getElementById('editRestrictDays').value = account.restrictDays;
-            document.getElementById('editAccountType').value = account.accountType;
+    document.querySelectorAll('.edit-button').forEach(button => {
+        button.addEventListener('click', function () {
+            var id = this.getAttribute('data-id');
+            var username = this.getAttribute('data-username');
+            var email = this.getAttribute('data-email');
+            var firstName = this.getAttribute('data-firstName');
+            var middleName = this.getAttribute('data-middleName');
+            var lastName = this.getAttribute('data-lastName');
+            var birthDate = this.getAttribute('data-birthDate');
+            var nationality = this.getAttribute('data-nationality');
+            var sex = this.getAttribute('data-sex');
+            var contactNumber = this.getAttribute('data-contactNumber');
+            var restrict = this.getAttribute('data-restrict');
+            var restrictDays = this.getAttribute('data-restrictDays');
+            var accountType = this.getAttribute('data-accountType');
 
-            // Update the form action URL to include the correct ID
-            document.getElementById('editAccountForm').action = `/admin/account/${account.user_id}`;
+            document.getElementById('editId').value = id;
+            document.getElementById('editUsername').value = username;
+            document.getElementById('editEmail').value = email;
+            document.getElementById('editFirstName').value = firstName;
+            document.getElementById('editMiddleName').value = middleName;
+            document.getElementById('editLastName').value = lastName;
+            document.getElementById('editBirthDate').value = birthDate;
+            document.getElementById('editNationality').value = nationality;
+            document.getElementById('editSexForm').value = sex;
+            document.getElementById('editSex').value = sex;
+            document.getElementById('editContactNumber').value = contactNumber;
+            document.getElementById('editRestrict').checked = restrict;
+            document.getElementById('editRestrictDays').value = restrictDays;
+            document.getElementById('editAccountType').value = accountType;
 
-            // Show the modal by setting its display to block
-            editModal.style.display = "block";
+            var formAction = `/admin/account/${id}`;
+            document.getElementById('editAccountForm').action = formAction;
+
+            modal.style.display = 'block';
         });
     });
 
-    // Close the modal when the user clicks on <span> (x) or footer close button
-    closeEditModalX.addEventListener('click', function() {
-        editModal.style.display = "none";
+    closeButton.addEventListener('click', function () {
+        modal.style.display = 'none';
     });
 
-    closeEditModalFooter.addEventListener('click', function() {
-        editModal.style.display = "none";
-    });
-
-    // Close the modal when the user clicks outside of the modal
-    window.addEventListener('click', function(event) {
-        if (event.target == editModal) {
-            editModal.style.display = "none";
+    window.addEventListener('click', function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
         }
     });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// //update/edit the table file
+// document.addEventListener('DOMContentLoaded', function() {
+//     var editButtons = document.querySelectorAll('.edit-button');
+//     var editModal = document.getElementById('editAccountModal');
+//     var closeEditModalFooter = document.getElementById('closeEditModalFooter');
+//     var closeEditModalX = document.getElementById('closeEditModalX');
+
+//     editButtons.forEach(function(button) {
+//         button.addEventListener('click', function() {
+//             var account = JSON.parse(this.getAttribute('data-account'));
+
+//             document.getElementById('editUserId').value = account.user_id;
+//             document.getElementById('editUsername').value = account.username;
+//             document.getElementById('editEmail').value = account.email;
+//             document.getElementById('editPassword').value = '';
+//             document.getElementById('editFirstName').value = account.firstName;
+//             document.getElementById('editMiddleName').value = account.middleName;
+//             document.getElementById('editLastName').value = account.lastName;
+//             document.getElementById('editBirthDate').value = account.birthDate;
+//             document.getElementById('editNationality').value = account.nationality;
+//             document.getElementById('editSexForm').value = account.sex;
+//             document.getElementById('editSex').value = account.sex;
+//             document.getElementById('editContactNumber').value = account.contactNumber;
+//             document.getElementById('editRestrict').checked = account.restrict;
+//             document.getElementById('editRestrictDays').value = account.restrictDays;
+//             document.getElementById('editAccountType').value = account.accountType;
+
+//             document.getElementById('editAccountForm').action = `/admin/account/${account.user_id}`;
+//             // var formAction = `/admin/account/${id}`;
+//             // document.getElementById('editAccountForm').action = formAction;
+
+//             editModal.style.display = "block";
+
+
+//             // var user_id = this.getAttribute('data-user_id');
+//             // var username = this.getAttribute('data-username');
+//             // var email = this.getAttribute('data-email');
+//             // var firstName = this.getAttribute('data-firstName');
+//             // var middleName = this.getAttribute('data-middleName');
+//             // var lastName = this.getAttribute('data-lastName');
+//             // var birthDate = this.getAttribute('data-birthDate');
+//             // var nationality = this.getAttribute('data-nationality');
+//             // var sex = this.getAttribute('data-sex');
+//             // var contactNumber = this.getAttribute('data-contactNumber');
+//             // var restrict = this.getAttribute('data-restrict');
+//             // var restrictDays = this.getAttribute('data-restrictDays');
+//             // var accountType = this.getAttribute('data-accountType');
+
+//             // document.getElementById('editUserId').value = user_id;
+//             // document.getElementById('editUsername').value = username;
+//             // document.getElementById('editEmail').value = email;
+//             // document.getElementById('editPassword').value = '';
+//             // document.getElementById('editFirstName').value = firstName;
+//             // document.getElementById('editMiddleName').value = middleName;
+//             // document.getElementById('editLastName').value = lastName;
+//             // document.getElementById('editBirthDate').value = birthDate;
+//             // document.getElementById('editNationality').value = nationality;
+//             // document.getElementById('editSexForm').value = sex;
+//             // document.getElementById('editSex').value = sex;
+//             // document.getElementById('editContactNumber').value = contactNumber;
+//             // document.getElementById('editRestrict').checked = restrict;
+//             // document.getElementById('editRestrictDays').value = restrictDays;
+//             // document.getElementById('editAccountType').value = accountType;
+
+//             // var formAction = `/admin/account/${id}`;
+//             // document.getElementById('editAccountForm').action = formAction;
+
+//             // modal.style.display = 'block';
+//         });
+//     });
+
+//     // Close the modal when the user clicks on <span> (x) or footer close button
+//     closeEditModalX.addEventListener('click', function() {
+//         editModal.style.display = "none";
+//     });
+
+//     closeEditModalFooter.addEventListener('click', function() {
+//         editModal.style.display = "none";
+//     });
+
+//     // Close the modal when the user clicks outside of the modal
+//     window.addEventListener('click', function(event) {
+//         if (event.target == editModal) {
+//             editModal.style.display = "none";
+//         }
+//     });
+// });
 
 
 

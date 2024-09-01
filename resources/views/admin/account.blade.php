@@ -158,22 +158,41 @@
                                     <th>ID</th>
                                     <th>Username</th>
                                     <th>E-mail</th>
-                                    <th>Date Created</th>
                                     <th>Account Type</th>
+                                    <th>Restrict</th>
+                                    <th>Restrict Day(s)</th>
+                                    <th>Date Created</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody id="accountTableBody">
                                 @foreach($accounts as $account)
-                                <tr data-type="{{ strtolower($account->account_type) }}">
-                                    <td>{{ $account->user_id }}</td>
+                                <tr>
+                                    <td>{{ $account->id }}</td>
                                     <td>{{ $account->username }}</td>
                                     <td>{{ $account->email }}</td>
-                                    <td>{{ $account->created_at->format('m/d/Y') }}</td>
-                                    <td>{{ ucfirst($account->accountType) }}</td>
+                                    <td>{{ $account->accountType }}</td>
+                                    <td>{{ $account->restrict }}</td>
+                                    <td>{{ $account->restrictDays }}</td>
+                                    <td>{{ $account->created_at }}</td>
                                     <td>
                                     <!--view/edit button-->
-                                    <button type="button" class="custom-button edit-button" data-account="{{ json_encode($account) }}">
+                                    <button type="button" class="custom-button edit-button"
+                                    data-id="{{$account->id}}"
+                                    data-user_id="{{$account->user_id}}"
+                                    data-username="{{$account->username}}"
+                                    data-email="{{$account->email}}"
+                                    data-firstName="{{$account->firstName}}"
+                                    data-middleName="{{$account->middleName}}"
+                                    data-lastName="{{$account->lastName}}"
+                                    data-birthDate="{{$account->birthDate}}"
+                                    data-nationality="{{$account->nationality}}"
+                                    data-sex="{{$account->sex}}"
+                                    data-contactNumber="{{$account->contactNumber}}"
+                                    data-restrict="{{$account->restrict}}"
+                                    data-restrictDays="{{$account->restrictDays}}"
+                                    data-accountType="{{$account->accountType}}"
+                                    >
                                         Edit
                                     </button>
                                     <!-- Modal Structure (Only one modal for all accounts) -->
@@ -181,64 +200,64 @@
                                         <div class="modal-content">
                                             <span class="close-button" id="closeEditModalX">&times;</span>
                                             <h2>Edit Account</h2>
-                                            <form id="editAccountForm" action="{{ url('/admin/account/' . $account->user_id) }}" method="POST">
+                                            @if($errors->any())
+                                            <ul>
+                                                @foreach($errors->all() as $error)
+                                                    <li>{{$error}}</li>
+                                                @endforeach
+                                            </ul>
+                                            @endif
+                                            <form id="editAccountForm" method="POST">
                                                 @csrf
-                                                @method('PUT')
-                                                @if(session('success'))
-                                                    <div class="alert alert-success">
-                                                        {{ session('success') }}
-                                                    </div>
-                                                @endif
-                                                <input type="hidden" id="editUserId" name="user_id">
+                                                @method('PATCH')
+                                                    <input type="hidden" id="editId" name="id" value="">
                                                                                
                                                     <label for="editUsername">Username</label>
-                                                    <input type="text" id="editUsername" name="username" required>
+                                                    <input type="text" id="editUsername" name="username" required value="">
                                          
                                                     <label for="editEmail">Email</label>
-                                                    <input type="email" id="editEmail" name="email" required>
+                                                    <input type="email" id="editEmail" name="email" required value="">
                                           
-                                                    <label for="editPassword">Password</label>
-                                                    <input type="password" id="editPassword" name="password">
+                                                    {{-- <label for="editPassword">Password</label>
+                                                    <input type="password" id="editPassword" name="password" value=""> --}}
                                         
                                                     <label for="editFirstName">First Name</label>
-                                                    <input type="text" id="editFirstName" name="firstName" required>
+                                                    <input type="text" id="editFirstName" name="firstName" required value="">
                                             
                                                     <label for="editMiddleName">Middle Name (optional)</label>
-                                                    <input type="text" id="editMiddleName" name="middleName">
+                                                    <input type="text" id="editMiddleName" name="middleName" value="">
                                          
                                                     <label for="editLastName">Last Name</label>
-                                                    <input type="text" id="editLastName" name="lastName" required>
+                                                    <input type="text" id="editLastName" name="lastName" required value="">
                                           
                                                     <label for="editBirthDate">Birth Date</label>
-                                                    <input type="date" id="editBirthDate" name="birthDate" required>
+                                                    <input type="date" id="editBirthDate" name="birthDate" required value="">
                                           
                                                     <label for="editNationality">Nationality</label>
-                                                    <input type="text" id="editNationality" name="nationality" required>
+                                                    <input type="text" id="editNationality" name="nationality" required value="">
                                             
                                                     <label for="editSex">Sex</label>
-                                                    <input type="text" id="editSexForm" name="sex" readonly>
-                                                    <select id="editSex" name="sex">
+                                                    <input type="text" id="editSexForm" name="sex" readonly value="">
+                                                    <select id="editSex" name="sex" value="">
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
                                                         <option value="Other">Other</option>
                                                     </select>
                                           
                                                     <label for="editContactNumber">Contact Number</label>
-                                                    <input type="text" id="editContactNumber" name="contactNumber" required>
+                                                    <input type="text" id="editContactNumber" name="contactNumber" required value="">
                                            
                                                     <label for="editRestrict">Restrict</label>
-                                                    <input type="checkbox" id="editRestrict" name="restrict">
+                                                    <input type="checkbox" id="editRestrict" name="restrict" value="">
                             
                                                     <label for="editRestrictDays">Restrict Days</label>
-                                                    <input type="number" id="editRestrictDays" name="restrictDays">
+                                                    <input type="number" id="editRestrictDays" name="restrictDays" value="">
                                         
                                                     <label for="editAccountType">Account Type</label>
-                                                    <input type="text" id="editAccountType" name="accountType" required>
+                                                    <input type="text" id="editAccountType" name="accountType" required value="">
 
-                                                <div class="modal-footer">
                                                     <button type="button" class="custom-button" id="closeEditModalFooter">Close</button>
                                                     <button type="submit" class="custom-button">Save Changes</button>
-                                                </div>
                                             </form>
                                         </div>
                                     </div>

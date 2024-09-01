@@ -73,16 +73,11 @@ Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
 // Route::post('/add-account', [AccountController::class, 'store'])->name('add-account');
 // addAccount admin side
 Route::post('/admin/account', [AdminController::class, 'addAccount'])->name('admin.addAccount');
-//delete account admin side
 Route::delete('/admin/account/{id}', [AdminController::class, 'destroy'])->name('account.destroy');
-//view/edit button in accounts table
-Route::PUT('/admin/account/{id}', [AdminController::class, 'updateAccount'])->name('admin.updateAccount');
-//fetch data from db to display to table
-Route::get('/admin/account', [AdminController::class, 'index'])->name('admin.account');
+Route::match(['put', 'patch'], '/admin/account/{id}', [AdminController::class, 'updateAccount'])->name('admin.updateAccount');
 
 // Backend Routing
 Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');
-
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 // route::get('/profile', [UserController::class, 'showProfilePage'])->middleware('auth')->name('profile');

@@ -11,10 +11,6 @@ class Account extends Model
     use HasFactory;
 
     protected $table = 'tblaccounts';
-    protected $primaryKey = 'id';
-    public $incrementing = true;
-    protected $keyType = 'int';
-    public $timestamps = true;
 
     protected $fillable = [
         'user_id', 
