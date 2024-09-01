@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Account;
+// use App\Models\Account;
+
+use App\Models\UserAccount;
 use Illuminate\Support\Facades\Hash;
 use App\Models\general_database;
 
@@ -12,7 +14,7 @@ class AdminController extends Controller
 {
     public function showAccount()
     {
-        $accounts = Account::all();
+        $accounts = UserAccount::all();
         return view('admin.account', ['accounts' => $accounts]);
     }
     public function addAccount(Request $request){
@@ -36,7 +38,7 @@ class AdminController extends Controller
 
     $data['password'] = Hash::make($data['password']);
 
-    $newAccount = Account::create($data);
+    $newAccount = UserAccount::create($data);
 
         return $this->showAccount();
     }
@@ -64,7 +66,7 @@ class AdminController extends Controller
     //view/edit button account
     public function updateAccount(Request $request, $id)
     {
-        $account = Account::findOrFail($id);
+        $account = UserAccount::findOrFail($id);
 
         $request->validate([
             // 'user_id' => 'nullable',
