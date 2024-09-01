@@ -86,7 +86,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 // route::get('/profile', [UserController::class, 'showProfilePage'])->middleware('auth')->name('profile');
 // Moderator Routing
-Route::post('/moderator/resources', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');
+// Route::post('/moderator/resources', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');
 
 
 // Moderator Routing
