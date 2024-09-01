@@ -133,7 +133,13 @@
                                 <td>{{$rsrcfile->documentFile}}</td>
                                 <td>{{$rsrcfile->created_at}}</td>
                                 <td>
-                                    <button type="button" class="custom-button view-button" data-id="{{$rsrcfile->id}}" data-title="{{$rsrcfile->documentTitle}}" data-desc="{{$rsrcfile->documentDesc}}" data-file="{{$rsrcfile->documentFile}}" data-date="{{$rsrcfile->created_at}}">View</button>
+                                    <button type="button" class="custom-button view-button" 
+                                    data-id="{{$rsrcfile->id}}" 
+                                    data-title="{{$rsrcfile->documentTitle}}" 
+                                    data-desc="{{$rsrcfile->documentDesc}}" 
+                                    data-file="{{$rsrcfile->documentFile}}" 
+                                    data-date="{{$rsrcfile->created_at}}"
+                                    >View</button>
                                     <form method="post" action="{{route('moderator.destroyResource', ['rsrcfile' => $rsrcfile])}}">
                                         @csrf
                                         @method('delete')
@@ -161,22 +167,22 @@
                         </div>
                         <form id="editResourceForm" method="POST" enctype="multipart/form-data">
                             @csrf
-                            @method('PATCH')
+                            @method('PUT')
                             <label>ID:</label>
-                            <input id="rscrId" name="id" value="" readonly>
+                            <input id="rsrcId" name="id" value="" readonly>
                         
                             <label>Document Name:</label>
-                            <input type="text" id="rscrDocumentTitle" name="documentTitle" placeholder="Enter Document Name" value="">
+                            <input type="text" id="rsrcDocumentTitle" name="documentTitle" placeholder="Enter Document Name" value="">
                             
                             <label>Document Description:</label>
-                            <input type="text" id="rscrDocumentDesc" name="documentDesc" placeholder="Enter Description" value="">
+                            <input type="text" id="rsrcDocumentDesc" name="documentDesc" placeholder="Enter Description" value="">
                         
                             <label>File:</label>
-                            <input type="file" id="rscrDocumentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" hidden>
-                            <a id="rscrDocumentFileLink" href="" download=""></a>
+                            <input type="file" id="rsrcDocumentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" hidden>
+                            <a id="rsrcDocumentFileLink" href="" download=""></a>
                         
                             <label>Date Uploaded:</label>
-                            <input id="rscrDateUploaded" name="created_at" value="" readonly>
+                            <input id="rsrcDateUploaded" name="created_at" value="" readonly>
                         
                             <button type="submit" class="custom-button">Save</button>
                         </form>                        

@@ -3,15 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\UserAccount;
 use App\Models\ResourceFile;
 use Illuminate\Support\Facades\DB;
 
 class ModeratorController extends Controller
 {
+    // Accounts Page
     public function showMaccounts()
     {
-        return view('moderator.maccounts');
+        $accounts = UserAccount::all();
+        return view('moderator.maccounts', ['accounts' => $accounts]);
     }
+
 
     public function showMdashboard()
     {
@@ -38,14 +42,14 @@ class ModeratorController extends Controller
         return view('moderator.mposts');
     }
 
+
+    // Resources Page
     public function showMresources()
     {
         $rsrcfiles = ResourceFile::all();
         return view('moderator.mresources', ['rsrcfiles' => $rsrcfiles]);
     }
-
     public function uploadResource(Request $request){
-        // dd($request);
         $data = $request->validate([
             'documentTitle' => 'required',
             'documentDesc' => 'nullable',
@@ -55,22 +59,15 @@ class ModeratorController extends Controller
 
         return $this->showMresources();
     }
-
-    public function destroyResource(ResourceFile $rsrcfile){
-        $rsrcfile->delete();
-        return $this->showMresources();
-    }
-
     public function updateResource(Request $request, $id)
     {
         $resource = ResourceFile::findOrFail($id);
-    
         $request->validate([
             'documentTitle' => 'required|string|max:50',
             'documentDesc' => 'required|string|max:250',
             'documentFile' => 'nullable|file',
         ]);
-    
+
         $resource->documentTitle = $request->input('documentTitle');
         $resource->documentDesc = $request->input('documentDesc');
     
@@ -78,9 +75,13 @@ class ModeratorController extends Controller
             $filePath = $request->file('documentFile')->store('documents', 'public'); 
             $resource->documentFile = $filePath;
         }
-    
+        
         $resource->save();    
-
         return $this->showMresources();
     }
+    public function destroyResource(ResourceFile $rsrcfile){
+        $rsrcfile->delete();
+        return $this->showMresources();
+    }
+
 }

@@ -31,7 +31,7 @@ Route::get('/moderator/leaderboards', [ModeratorController::class, 'showMleaderb
 
 Route::get('/moderator/resources', [ModeratorController::class, 'showMresources'])->name('moderator.resources');
 
-Route::get('/moderator/accounts', [ModeratorController::class, 'showMaccounts']);
+Route::get('/moderator/accounts', [ModeratorController::class, 'showMaccounts'])->name('moderator.accounts');
 
 Route::get('/moderator/forums', [ModeratorController::class, 'showMforums']);
 
@@ -75,6 +75,8 @@ Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
 Route::post('/admin/account', [AdminController::class, 'addAccount'])->name('admin.addAccount');
 Route::delete('/admin/account/{id}', [AdminController::class, 'destroy'])->name('account.destroy');
 Route::match(['put', 'patch'], '/admin/account/{id}', [AdminController::class, 'updateAccount'])->name('admin.updateAccount');
+
+// Route::put('/admin/account', [AdminController::class, 'updateAccount'])->name('admin.updateAccount');
 
 // Backend Routing
 Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');

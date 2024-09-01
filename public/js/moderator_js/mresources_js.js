@@ -76,12 +76,12 @@ document.addEventListener('DOMContentLoaded', function () {
             var file = this.getAttribute('data-file');
             var date = this.getAttribute('data-date');
 
-            document.getElementById('rscrId').value = id;
-            document.getElementById('rscrDocumentTitle').value = title;
-            document.getElementById('rscrDocumentDesc').value = desc;
-            document.getElementById('rscrDocumentFileLink').textContent = file;
-            document.getElementById('rscrDocumentFileLink').href = file;
-            document.getElementById('rscrDateUploaded').value = date;
+            document.getElementById('rsrcId').value = id;
+            document.getElementById('rsrcDocumentTitle').value = title;
+            document.getElementById('rsrcDocumentDesc').value = desc;
+            document.getElementById('rsrcDocumentFileLink').textContent = file;
+            document.getElementById('rsrcDocumentFileLink').href = file;
+            document.getElementById('rsrcDateUploaded').value = date;
 
             var formAction = `/moderator/resources/${id}`;
             document.getElementById('editResourceForm').action = formAction;
