@@ -181,9 +181,9 @@
                                         <div class="modal-content">
                                             <span class="close-button" id="closeEditModalX">&times;</span>
                                             <h2>Edit Account</h2>
-                                            <form id="editAccountForm" method="POST" action="{{ route('account.update', ['id' => $account->id]) }}">
+                                            <form id="editAccountForm" action="{{ url('/admin/account/' . $account->user_id) }}" method="POST">
                                                 @csrf
-                                                @method('PATCH')
+                                                @method('PUT')
                                                 @if(session('success'))
                                                     <div class="alert alert-success">
                                                         {{ session('success') }}

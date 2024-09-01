@@ -86,14 +86,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //update/edit the table file
 document.addEventListener('DOMContentLoaded', function() {
-    const editButtons = document.querySelectorAll('.edit-button');
-    const editModal = document.getElementById('editAccountModal');
-    const closeEditModalFooter = document.getElementById('closeEditModalFooter');
-    const closeEditModalX = document.getElementById('closeEditModalX');
+    var editButtons = document.querySelectorAll('.edit-button');
+    var editModal = document.getElementById('editAccountModal');
+    var closeEditModalFooter = document.getElementById('closeEditModalFooter');
+    var closeEditModalX = document.getElementById('closeEditModalX');
 
     editButtons.forEach(function(button) {
         button.addEventListener('click', function() {
-            const account = JSON.parse(this.getAttribute('data-account'));
+            var account = JSON.parse(this.getAttribute('data-account'));
 
             // Populate the form fields
             document.getElementById('editUserId').value = account.user_id;

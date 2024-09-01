@@ -109,7 +109,7 @@ class AdminController extends Controller
         return view('admin.account', ['accounts' => $accounts]);
     }
     //view/edit button account
-    public function update(Request $request, $id)
+    public function updateAccount(Request $request, $id)
 {
     // Find the account by ID
     $account = Account::findOrFail($id);
