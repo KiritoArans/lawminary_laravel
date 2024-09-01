@@ -48,32 +48,6 @@
             <section class="filter-container">
                 <div class="search-bar">
                     <input type="text" id="search" placeholder="Search for posts or key words...">
-                    <button class="custom-button" id="editButton">Edit</button>
-                    <div id="editModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close-button" id="closeEditModal">&times;</span>
-                            <h2>Edit Account</h2>
-                            <form id="editForm">
-                                <input type="hidden" id="editId" name="editId">
-                                <div id="editValidationErrors" style="color:red;"></div>
-                                
-                                <label for="editName">Name:</label>
-                                <input type="text" id="editName" name="editName" required>
-
-                                <label for="editEmail">Email:</label>
-                                <input type="email" id="editEmail" name="editEmail" required>
-
-                                <label for="editUsername">Username:</label>
-                                <input type="text" id="editUsername" name="editUsername" required>
-
-                                <label for="editPassword">Password:</label>
-                                <input type="password" id="editPassword" name="editPassword">
-
-                                <button type="submit" class="custom-button">Save Changes</button>
-                                <button type="button" class="custom-button" id="deleteButton">Delete Account</button>
-                            </form>
-                        </div>
-                    </div>
                 </div>
                 <div class="action-buttons">
                     <button class="custom-button" id="filterButton">Filter</button>
@@ -105,11 +79,11 @@
                         <div class="modal-content">
                             <span class="close-button" id="closeAddModal">&times;</span>
                             <h2>Add Account</h2>
-                            <div id="validationErrors" style="color: red;"></div>
+                            
                         <form id="addForm" method="POST" action="{{ route('admin.addAccount') }}">
                             @csrf
                             @if ($errors->any())
-                                <div class="alert alert-danger">
+                                <div class="error">
                                     <ul>
                                         @foreach ($errors->all() as $error)
                                             <li>{{ $error }}</li>
@@ -120,7 +94,7 @@
                         <label for="firstName">First Name:</label>
                         <input type="text" id="firstName" name="firstName" value="{{ old('firstName') }}" required>
 
-                        <label for="middleName">Middle Name:</label>
+                        <label for="middleName">Middle Name (optional): </label>
                         <input type="text" id="middleName" name="middleName" value="{{ old('middleName') }}">
 
                         <label for="lastName">Last Name:</label>
@@ -167,6 +141,14 @@
                              </div>
                                  </div>
                                     </div>
+                                    @if ($errors->any())
+                                        <script>
+                                            document.addEventListener("DOMContentLoaded", function() {
+                                                // If there are errors, ensure the modal is open
+                                                document.getElementById('addModal').style.display = 'block';
+                                            });
+                                        </script>
+                                    @endif
                                 </section>
                         <!-- display content on table -->
                     <content class="table-container">
@@ -190,10 +172,80 @@
                                     <td>{{ $account->created_at->format('m/d/Y') }}</td>
                                     <td>{{ ucfirst($account->accountType) }}</td>
                                     <td>
-                                        <button type="button" class="custom-button view-button">View</button>
-                                        {{-- <form method="post" action="">
+                                    <!--view/edit button-->
+                                    <button type="button" class="custom-button edit-button" data-account="{{ json_encode($account) }}">
+                                        Edit
+                                    </button>
+                                    <!-- Modal Structure (Only one modal for all accounts) -->
+                                    <div id="editAccountModal" class="modal">
+                                        <div class="modal-content">
+                                            <span class="close-button" id="closeEditModalX">&times;</span>
+                                            <h2>Edit Account</h2>
+                                            <form id="editAccountForm" action="{{ url('/admin/account/' . $account->user_id) }}" method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                @if(session('success'))
+                                                    <div class="alert alert-success">
+                                                        {{ session('success') }}
+                                                    </div>
+                                                @endif
+                                                <input type="hidden" id="editUserId" name="user_id">
+                                                                               
+                                                    <label for="editUsername">Username</label>
+                                                    <input type="text" id="editUsername" name="username" required>
+                                         
+                                                    <label for="editEmail">Email</label>
+                                                    <input type="email" id="editEmail" name="email" required>
+                                          
+                                                    <label for="editPassword">Password</label>
+                                                    <input type="password" id="editPassword" name="password">
+                                        
+                                                    <label for="editFirstName">First Name</label>
+                                                    <input type="text" id="editFirstName" name="firstName" required>
+                                            
+                                                    <label for="editMiddleName">Middle Name (optional)</label>
+                                                    <input type="text" id="editMiddleName" name="middleName">
+                                         
+                                                    <label for="editLastName">Last Name</label>
+                                                    <input type="text" id="editLastName" name="lastName" required>
+                                          
+                                                    <label for="editBirthDate">Birth Date</label>
+                                                    <input type="date" id="editBirthDate" name="birthDate" required>
+                                          
+                                                    <label for="editNationality">Nationality</label>
+                                                    <input type="text" id="editNationality" name="nationality" required>
+                                            
+                                                    <label for="editSex">Sex</label>
+                                                    <input type="text" id="editSexForm" name="sex" readonly>
+                                                    <select id="editSex" name="sex">
+                                                        <option value="Male">Male</option>
+                                                        <option value="Female">Female</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                          
+                                                    <label for="editContactNumber">Contact Number</label>
+                                                    <input type="text" id="editContactNumber" name="contactNumber" required>
+                                           
+                                                    <label for="editRestrict">Restrict</label>
+                                                    <input type="checkbox" id="editRestrict" name="restrict">
+                            
+                                                    <label for="editRestrictDays">Restrict Days</label>
+                                                    <input type="number" id="editRestrictDays" name="restrictDays">
+                                        
+                                                    <label for="editAccountType">Account Type</label>
+                                                    <input type="text" id="editAccountType" name="accountType" required>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="custom-button" id="closeEditModalFooter">Close</button>
+                                                    <button type="submit" class="custom-button">Save Changes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                        <!--delete button-->
+                                        <form action="{{ route('account.destroy', $account->id) }}" method="POST" style="display:inline;">
                                             @csrf
-                                            @method('delete') --}}
+                                            @method('DELETE')
                                             <button type="submit" class="delete-button">Delete</button>
                                         </form>
                                     </td>

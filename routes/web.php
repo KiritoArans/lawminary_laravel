@@ -6,7 +6,6 @@ use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\data_general_controller\general_controller;
-use App\Http\Controllers\AccountController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -70,14 +69,16 @@ Route::get('/settings/feedback', [UserController::class, 'showFeedbackPage']);
 
 Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
 
-//add-account routing (create)
+//add-account routing (create) admin
 // Route::post('/add-account', [AccountController::class, 'store'])->name('add-account');
-
+// addAccount admin side
 Route::post('/admin/account', [AdminController::class, 'addAccount'])->name('admin.addAccount');
-// addAccount
-
+//delete account admin side
+Route::delete('/admin/account/{id}', [AdminController::class, 'destroy'])->name('account.destroy');
+//view/edit button in accounts table
+Route::PUT('/admin/account/{id}', [AdminController::class, 'updateAccount'])->name('admin.updateAccount');
 //fetch data from db to display to table
-Route::get('/admin/account', [AccountController::class, 'index'])->name('admin.account');
+Route::get('/admin/account', [AdminController::class, 'index'])->name('admin.account');
 
 // Backend Routing
 Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');
@@ -93,5 +94,5 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 
 //Moderator Resource Page
 Route::post('/moderator/resources', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');
-route::match(['put', 'patch'], '/moderator/resources/{id}', [ModeratorController::class, 'updateResource'])->name('moderator.updateResource');
+Route::match(['put', 'patch'], '/moderator/resources/{id}', [ModeratorController::class, 'updateResource'])->name('moderator.updateResource');
 Route::delete('/moderator/{rsrcfile}/destroy', [ModeratorController::class, 'destroyResource'])->name('moderator.destroyResource');
