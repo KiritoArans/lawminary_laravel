@@ -29,7 +29,7 @@ class AdminController extends Controller
         'lastName' => 'required',
         'birthDate' => 'required',
         'nationality' => 'required',
-        'sex' => 'required',
+        'sex' => 'nullable',
         'contactNumber' => 'required',
         'accountType' => 'nullable',
         'restrict' => 'nullable',
@@ -80,9 +80,9 @@ class AdminController extends Controller
             'nationality' => 'required|string|max:255',
             'sex' => 'nullable|string',
             'contactNumber' => 'required|string|max:20',
-            'restrict' => 'nullable|boolean',
+            'restrict' => 'nullable|string',
             'restrictDays' => 'nullable|integer|min:1',
-            'accountType' => 'required|string|max:50',
+            'accountType' => 'nullable|string',
         ]);
 
         // $account->user_id = $request->input('user_id');
@@ -94,6 +94,7 @@ class AdminController extends Controller
         $account->lastName = $request->input('lastName');
         $account->birthDate = $request->input('birthDate');
         $account->nationality = $request->input('nationality');
+        $account->sex = $request->input('sex');
         $account->contactNumber = $request->input('contactNumber');
         $account->restrict = $request->input('restrict');
         $account->restrictDays = $request->input('restrictDays');
@@ -107,4 +108,6 @@ class AdminController extends Controller
         $account->save();
         return $this->showAccount();
     }
+    //populate account type
+    
 }

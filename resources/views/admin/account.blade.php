@@ -51,7 +51,7 @@
                 </div>
                 <div class="action-buttons">
                     <button class="custom-button" id="filterButton">Filter</button>
-                    <select class="custom-button" id="accountType">
+                    <select class="custom-button" id="accountType2">
                         <option value="all">Account Type</option>
                         <option value="moderator">Moderator</option>
                         <option value="user">User</option>
@@ -124,7 +124,7 @@
 
                         <label for="accountType">Account Type:</label>
                         <select id="accountType" name="accountType" required>
-                            <option value="ser" {{ old('accountType') == 'user' ? 'selected' : '' }}>User</option>
+                            <option value="user" {{ old('accountType') == 'user' ? 'selected' : '' }}>User</option>
                             <option value="moderator" {{ old('accountType') == 'moderator' ? 'selected' : '' }}>Moderator</option>
                             <option value="lawyer" {{ old('accountType') == 'lawyer' ? 'selected' : '' }}>Lawyer</option>
                             <option value="admin" {{ old('accountType') == 'admin' ? 'selected' : '' }}>Admin</option>
@@ -159,6 +159,7 @@
                                     <th>Username</th>
                                     <th>E-mail</th>
                                     <th>Account Type</th>
+                                    <th>Sex</th>
                                     <th>Restrict</th>
                                     <th>Restrict Day(s)</th>
                                     <th>Date Created</th>
@@ -172,6 +173,7 @@
                                     <td>{{ $account->username }}</td>
                                     <td>{{ $account->email }}</td>
                                     <td>{{ $account->accountType }}</td>
+                                    <td>{{ $account->sex }}</td>
                                     <td>{{ $account->restrict }}</td>
                                     <td>{{ $account->restrictDays }}</td>
                                     <td>{{ $account->created_at }}</td>
@@ -237,24 +239,31 @@
                                                     <input type="text" id="editNationality" name="nationality" required value="">
                                             
                                                     <label for="editSex">Sex</label>
-                                                    <input type="text" id="editSexForm" name="sex" readonly value="">
                                                     <select id="editSex" name="sex" value="">
-                                                        <option value="Male">Male</option>
-                                                        <option value="Female">Female</option>
-                                                        <option value="Other">Other</option>
+                                                        <option value="Male" {{ $account->sex == 'Male' ? 'selected' : '' }}>Male</option>
+                                                        <option value="Female" {{ $account->sex == 'Female' ? 'selected' : '' }}>Female</option>
+                                                        <option value="Other" {{ $account->sex == 'Other' ? 'selected' : '' }}>Other</option>
                                                     </select>
                                           
                                                     <label for="editContactNumber">Contact Number</label>
                                                     <input type="text" id="editContactNumber" name="contactNumber" required value="">
                                            
                                                     <label for="editRestrict">Restrict</label>
-                                                    <input type="checkbox" id="editRestrict" name="restrict" value="">
+                                                    <select id="editRestrict" name="restrict" value="">
+                                                    <option value="Yes" {{ $account->editRestrict == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                    <option value="No" {{ $account->editRestrict == 'No' ? 'selected' : '' }}>No</option>
+                                                    </select>
                             
                                                     <label for="editRestrictDays">Restrict Days</label>
-                                                    <input type="number" id="editRestrictDays" name="restrictDays" value="">
+                                                    <input type="number" id="editRestrictDays" name="restrictDays" value="{{ $account->restrictDays }}" {{ !$account->restrict ? 'disabled' : '' }}>
                                         
                                                     <label for="editAccountType">Account Type</label>
-                                                    <input type="text" id="editAccountType" name="accountType" required value="">
+                                                    <select id="editAccountType" name="accountType" value="">
+                                                        <option value="User" {{ $account->accountType == 'User' ? 'selected' : '' }}>User</option>
+                                                        <option value="Lawyer" {{ $account->accountType == 'Lawyer' ? 'selected' : '' }}>Lawyer</option>
+                                                        <option value="Admin" {{ $account->accountType == 'Admin' ? 'selected' : '' }}>Admin</option>
+                                                        <option value="Moderator" {{ $account->accountType == 'Moderator' ? 'selected' : '' }}>Moderator</option>
+                                                    </select>
 
                                                     <button type="submit" class="custom-button">Save Changes</button>
                                             </form>

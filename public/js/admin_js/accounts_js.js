@@ -113,10 +113,9 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('editLastName').value = lastName;
             document.getElementById('editBirthDate').value = birthDate;
             document.getElementById('editNationality').value = nationality;
-            document.getElementById('editSexForm').value = sex;
             document.getElementById('editSex').value = sex;
             document.getElementById('editContactNumber').value = contactNumber;
-            document.getElementById('editRestrict').checked = restrict;
+            document.getElementById('editRestrict').value = restrict;
             document.getElementById('editRestrictDays').value = restrictDays;
             document.getElementById('editAccountType').value = accountType;
 
@@ -136,6 +135,29 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.style.display = 'none';
         }
     });
+    //enable / disable logic for restrict days
+    document.getElementById('editRestrict').addEventListener('change', function() {
+        var restrictDaysInput = document.getElementById('editRestrictDays');
+    
+        if (this.value === 'Yes') {
+            restrictDaysInput.disabled = false;
+        } else {
+            restrictDaysInput.disabled = true;
+            restrictDaysInput.value = ''; // Optionally clear the value if 'No' is selected
+        }
+    });
+    
+    // Ensure the correct initial state when the page loads
+    window.addEventListener('DOMContentLoaded', function() {
+        var restrictDaysInput = document.getElementById('editRestrictDays');
+        var restrictSelect = document.getElementById('editRestrict');
+    
+        if (restrictSelect.value === 'Yes') {
+            restrictDaysInput.disabled = false;
+        } else {
+            restrictDaysInput.disabled = true;
+        }
+    });    
 });
 
 
