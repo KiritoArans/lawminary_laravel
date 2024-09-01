@@ -76,7 +76,7 @@ Route::post('/admin/account', [AdminController::class, 'addAccount'])->name('adm
 //delete account admin side
 Route::delete('/admin/account/{id}', [AdminController::class, 'destroy'])->name('account.destroy');
 //view/edit button in accounts table
-Route::put('/admin/account/{id}', [AdminController::class, 'update'])->name('admin.account.update');
+Route::patch('/admin/account/{id}', [AdminController::class, 'update'])->name('account.update');
 //fetch data from db to display to table
 Route::get('/admin/account', [AdminController::class, 'index'])->name('admin.account');
 

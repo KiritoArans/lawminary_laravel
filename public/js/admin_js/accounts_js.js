@@ -84,8 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-//update the table file
-
+//update/edit the table file
 document.addEventListener('DOMContentLoaded', function() {
     const editButtons = document.querySelectorAll('.edit-button');
     const editModal = document.getElementById('editAccountModal');
@@ -106,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('editLastName').value = account.lastName;
             document.getElementById('editBirthDate').value = account.birthDate;
             document.getElementById('editNationality').value = account.nationality;
+            document.getElementById('editSexForm').value = account.sex;
             document.getElementById('editSex').value = account.sex;
             document.getElementById('editContactNumber').value = account.contactNumber;
             document.getElementById('editRestrict').checked = account.restrict;

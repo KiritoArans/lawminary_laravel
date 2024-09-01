@@ -94,7 +94,7 @@
                         <label for="firstName">First Name:</label>
                         <input type="text" id="firstName" name="firstName" value="{{ old('firstName') }}" required>
 
-                        <label for="middleName">Middle Name:</label>
+                        <label for="middleName">Middle Name (optional): </label>
                         <input type="text" id="middleName" name="middleName" value="{{ old('middleName') }}">
 
                         <label for="lastName">Last Name:</label>
@@ -181,9 +181,9 @@
                                         <div class="modal-content">
                                             <span class="close-button" id="closeEditModalX">&times;</span>
                                             <h2>Edit Account</h2>
-                                            <form id="editAccountForm" method="POST" action="{{ route('admin.account.update', ['id' => $account->id]) }}">
+                                            <form id="editAccountForm" method="POST" action="{{ route('account.update', ['id' => $account->id]) }}">
                                                 @csrf
-                                                @method('PUT')
+                                                @method('PATCH')
                                                 @if(session('success'))
                                                     <div class="alert alert-success">
                                                         {{ session('success') }}
@@ -203,7 +203,7 @@
                                                     <label for="editFirstName">First Name</label>
                                                     <input type="text" id="editFirstName" name="firstName" required>
                                             
-                                                    <label for="editMiddleName">Middle Name</label>
+                                                    <label for="editMiddleName">Middle Name (optional)</label>
                                                     <input type="text" id="editMiddleName" name="middleName">
                                          
                                                     <label for="editLastName">Last Name</label>
@@ -216,8 +216,8 @@
                                                     <input type="text" id="editNationality" name="nationality" required>
                                             
                                                     <label for="editSex">Sex</label>
-                                                    <input type="text" id="editSex" name="sex" readonly>
-                                                    <select id="editSex" name="sex" required>
+                                                    <input type="text" id="editSexForm" name="sex" readonly>
+                                                    <select id="editSex" name="sex">
                                                         <option value="Male">Male</option>
                                                         <option value="Female">Female</option>
                                                         <option value="Other">Other</option>

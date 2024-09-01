@@ -116,15 +116,15 @@ class AdminController extends Controller
 
     // Validate the request data
     $validated = $request->validate([
-        'username' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255',
+        'username' => 'required|string|max:255|unique:accounts,username,' . $account->id,
+        'email' => 'required|string|email|max:255|unique:accounts,email,' . $account->id,
         'password' => 'sometimes|nullable|string|min:8|confirmed',
         'firstName' => 'required|string|max:255',
         'middleName' => 'nullable|string|max:255',
         'lastName' => 'required|string|max:255',
         'birthDate' => 'required|date',
         'nationality' => 'required|string|max:255',
-        'sex' => 'required|string',
+        'sex' => 'nullable|string',
         'contactNumber' => 'required|string|max:20',
         'restrict' => 'nullable|boolean',
         'restrictDays' => 'nullable|integer|min:1',
