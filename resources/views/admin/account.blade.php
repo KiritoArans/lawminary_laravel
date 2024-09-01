@@ -256,7 +256,6 @@
                                                     <label for="editAccountType">Account Type</label>
                                                     <input type="text" id="editAccountType" name="accountType" required value="">
 
-                                                    <button type="button" class="custom-button" id="closeEditModalFooter">Close</button>
                                                     <button type="submit" class="custom-button">Save Changes</button>
                                             </form>
                                         </div>
