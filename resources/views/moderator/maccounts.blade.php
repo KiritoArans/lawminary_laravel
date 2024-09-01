@@ -143,81 +143,40 @@
                             <th>ID</th>
                             <th>Username</th>
                             <th>E-mail</th>
-                            <th>Date Created</th>
                             <th>Account Type</th>
+                            <th>Restrict</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody id="accountTableBody">
-                        <tr data-type="user">
-                            <td>24-0001</td>
-                            <td>Yves Salarond</td>
-                            <td>ys1321@gmail.com</td>
-                            <td>mm/dd/yy</td>
-                            <td>User</td>
+                        @foreach($accounts as $account)
+                        <tr>
+                            <td>{{ $account->id }}</td>
+                            <td>{{ $account->username }}</td>
+                            <td>{{ $account->email }}</td>
+                            <td>{{ $account->accountType }}</td>
+                            <td>{{ $account->restrict }}</td>
+                            <td>
+                                <button type="button" class="custom-button edit-button"
+                                    data-id="{{$account->id}}"
+                                    data-user_id="{{$account->user_id}}"
+                                    data-username="{{$account->username}}"
+                                    data-email="{{$account->email}}"
+                                    data-firstName="{{$account->firstName}}"
+                                    data-middleName="{{$account->middleName}}"
+                                    data-lastName="{{$account->lastName}}"
+                                    data-birthDate="{{$account->birthDate}}"
+                                    data-nationality="{{$account->nationality}}"
+                                    data-sex="{{$account->sex}}"
+                                    data-contactNumber="{{$account->contactNumber}}"
+                                    data-restrict="{{$account->restrict}}"
+                                    data-restrictDays="{{$account->restrictDays}}"
+                                    data-accountType="{{$account->accountType}}"
+                                >Edit</button>
+                                <button type="submit" class="delete-button">Delete</button>
+                            </td>
                         </tr>
-                        <tr data-type="moderator">
-                            <td>24-0002</td>
-                            <td>Jane Doe</td>
-                            <td>jane.doe@example.com</td>
-                            <td>01/15/23</td>
-                            <td>Moderator</td>
-                        </tr>
-                        <tr data-type="admin">
-                            <td>24-0003</td>
-                            <td>John Smith</td>
-                            <td>john.smith@example.com</td>
-                            <td>02/28/23</td>
-                            <td>Admin</td>
-                        </tr>
-                        <tr data-type="lawyer">
-                            <td>24-0004</td>
-                            <td>Alice Brown</td>
-                            <td>alice.brown@example.com</td>
-                            <td>03/10/23</td>
-                            <td>Lawyer</td>
-                        </tr>
-                        <tr data-type="user">
-                            <td>24-0005</td>
-                            <td>Michael White</td>
-                            <td>michael.white@example.com</td>
-                            <td>04/22/23</td>
-                            <td>User</td>
-                        </tr>
-                        <tr data-type="lawyer">
-                            <td>24-0006</td>
-                            <td>Linda Green</td>
-                            <td>linda.green@example.com</td>
-                            <td>05/15/23</td>
-                            <td>Lawyer</td>
-                        </tr>
-                        <tr data-type="moderator">
-                            <td>24-0007</td>
-                            <td>Chris Blue</td>
-                            <td>chris.blue@example.com</td>
-                            <td>06/30/23</td>
-                            <td>Moderator</td>
-                        </tr>
-                        <tr data-type="admin">
-                            <td>24-0008</td>
-                            <td>Karen Black</td>
-                            <td>karen.black@example.com</td>
-                            <td>07/08/23</td>
-                            <td>Admin</td>
-                        </tr>
-                        <tr data-type="user">
-                            <td>24-0009</td>
-                            <td>Paul Red</td>
-                            <td>paul.red@example.com</td>
-                            <td>08/01/23</td>
-                            <td>User</td>
-                        </tr>
-                        <tr data-type="lawyer">
-                            <td>24-0010</td>
-                            <td>Susan Yellow</td>
-                            <td>susan.yellow@example.com</td>
-                            <td>09/05/23</td>
-                            <td>Lawyer</td>
-                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </content>
