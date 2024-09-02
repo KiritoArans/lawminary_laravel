@@ -72,13 +72,16 @@ Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
 // Admin Backend Routing
 
 // Admin Accounts Page
-Route::post('/admin/account', [AdminController::class, 'addAccount'])->name('admin.addAccount');
+Route::post('/admin/accounts', [AdminController::class, 'addAccount'])->name('admin.addAccount');
 Route::delete('/admin/account/{id}', [AdminController::class, 'destroy'])->name('account.destroy');
 Route::match(['put', 'patch'], '/admin/account/{id}', [AdminController::class, 'updateAccount'])->name('admin.updateAccount');
-//filter accounts
 Route::get('admin/account', [AdminController::class, 'filter'])->name('admin.filter');
 
-
+// Moderator Accounts Page
+Route::post('/moderator/accounts', [ModeratorController::class, 'addAccount'])->name('moderator.addAccount');
+Route::delete('/moderator/accounts/{id}', [ModeratorController::class, 'destroy'])->name('maccounts.destroy');
+Route::match(['put', 'patch'], '/moderator/accounts/{id}', [ModeratorController::class, 'updateAccount'])->name('moderator.updateAccount');
+Route::get('moderator/accounts', [ModeratorController::class, 'filter'])->name('moderator.filter');
 
 // User Backend Routing
 // Logins

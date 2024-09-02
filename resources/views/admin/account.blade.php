@@ -47,7 +47,7 @@
             </header>
             <section class="filter-container">
                 <div class="search-bar">
-                    <input type="text" id="search" placeholder="Search for posts or key words...">
+                    <input type="text" id="search" placeholder="Search for User ID or Username...">
                 </div>
                 <div class="action-buttons">
                     <button class="custom-button" id="filterButton">Filter</button>
@@ -68,7 +68,7 @@
                             
                                 <label for="filterAccountType">Account Type:</label>
                                 <select id="accountType" name="accountType">
-                                    <option value="all" {{ request('accountType') == 'all' ? 'selected' : '' }}>Account Type</option>
+                                    <option value="all" {{ request('accountType') == 'all' ? 'selected' : '' }}>View All</option>
                                     <option value="Moderator" {{ request('accountType') == 'Moderator' ? 'selected' : '' }}>Moderator</option>
                                     <option value="User" {{ request('accountType') == 'User' ? 'selected' : '' }}>User</option>
                                     <option value="Lawyer" {{ request('accountType') == 'Lawyer' ? 'selected' : '' }}>Lawyer</option>
