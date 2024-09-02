@@ -25,11 +25,13 @@
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
-                        <li><a href="postpage.html"><i class="fa-solid fa-envelope-open-text"></i><span>Posts</span></a></li>
-                        <li><a href="account.html" class="current"><i class="fa-solid fa-user-gear"></i><span>Accounts</span></a></li>
-                        <li><a href="forums.html"><i class="fa-solid fa-users"></i><span>Forums</span></a></li>
-                        <li><a href="systemcontent.html"><i class="fa-solid fa-display"></i><span>System Content</span></a></li>
+                        <li><a href="dashboard"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                        <li><a href="posts"><i class="fa-solid fa-envelope-open-text"></i><span>Posts</span></a></li>
+                        <li><a href="leaderboards"><i class="fa-solid fa-chart-simple"></i><span>Leaderboards</span></a></li>
+                        <li><a href="resources"><i class="fa-solid fa-folder"></i><span>Resources</span></a></li>
+                        <li><a href="accounts"  class="current"><i class="fa-solid fa-user-gear"></i><span>Accounts</span></a></li>
+                        <li><a href="forums"><i class="fa-solid fa-users"></i><span>Forums</span></a></li>
+                        <li><a href="faqs"><i class="fa-solid fa-circle-question"></i><span>FAQs</span></a></li>
                     </ul>
                 </nav>
             </div>
@@ -56,7 +58,7 @@
                             <span class="close-button" id="closeFilterModal">&times;</span>
                             <h2>Filter Accounts</h2>
                             <!--filter accounts-->
-                             <form id="filterForm" action="{{ route('moderator.filter') }}" method="GET">
+                             <form id="filterForm" method="GET">
                                 <label for="filterId">ID:</label>
                                 <input type="text" id="filterId" name="filterId" value="{{ request('filterId') }}">
                             

@@ -83,6 +83,7 @@ Route::delete('/moderator/accounts/{id}', [ModeratorController::class, 'destroy'
 Route::match(['put', 'patch'], '/moderator/accounts/{id}', [ModeratorController::class, 'updateAccount'])->name('moderator.updateAccount');
 Route::get('moderator/accounts', [ModeratorController::class, 'filter'])->name('moderator.filter');
 
+
 // User Backend Routing
 // Logins
 Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');
