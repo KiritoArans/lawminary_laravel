@@ -56,7 +56,7 @@
                             <span class="close-button" id="closeFilterModal">&times;</span>
                             <h2>Filter Accounts</h2>
                             <!--filter accounts-->
-                            <form id="filterForm" action="{{ route('account.index') }}" method="GET">
+                             <form id="filterForm" action="{{ route('admin.filter') }}" method="GET">
                                 <label for="filterId">ID:</label>
                                 <input type="text" id="filterId" name="filterId" value="{{ request('filterId') }}">
                             
@@ -76,7 +76,7 @@
                                 </select>
                             
                                 <button type="submit" class="custom-button">Apply Filter</button>
-                            </form>                            
+                            </form>
                         </div>
                     </div>
                      <!-- add accounts -->
@@ -278,11 +278,11 @@
                                         </div>
                                     </div>
                                         <!--delete button-->
-                                        <form action="{{ route('account.destroy', $account->id) }}" method="POST" style="display:inline;">
+                                        <form id="delete-form-{{ $account->id }}" action="{{ route('account.destroy', $account->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="delete-button">Delete</button>
-                                        </form>
+                                            <button type="button" class="delete-button" data-account-id="{{ $account->id }}">Delete</button>
+                                        </form>                                                                               
                                     </td>
                                 </tr>
                                 @endforeach
@@ -293,5 +293,6 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('js/admin_js/accounts_js.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>

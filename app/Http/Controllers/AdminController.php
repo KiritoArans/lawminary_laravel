@@ -126,7 +126,7 @@ class AdminController extends Controller
         // Redirect back to the accounts list with a success message
         return $this->showAccount();
     }
-    public function index(Request $request)
+    public function filter(Request $request)
     {
         // Start with a query builder
         $query = UserAccount::query();
