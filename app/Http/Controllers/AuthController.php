@@ -20,22 +20,31 @@ class AuthController extends Controller
         $user = UserAccount::where('username', $credentials['username'])->first();
     
         if ($user) {
-            // Check if the password is already using Bcrypt
             if (Hash::check($credentials['password'], $user->password)) {
                 Auth::login($user);
-                return redirect()->route('home');
+                return redirect()->route('home')->with('username', $user->username);
             } else {
-                // If not, verify with the legacy method and re-hash if valid
-                if ($user->password === md5($credentials['password'])) { // Example legacy MD5 check
+                if ($user->password === md5($credentials['password'])) {
                     $user->password = Hash::make($credentials['password']);
                     $user->save();
                     Auth::login($user);
-                    return redirect()->route('home');
+                    return redirect()->route('home')->with('username', $user->username);
                 }
             }
         }
         return redirect()->back()->withErrors(['loginError' => 'Invalid username or password.'])->withInput();
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('login');
+    }
+
     
     public function loginAdMod(Request $request)
     {

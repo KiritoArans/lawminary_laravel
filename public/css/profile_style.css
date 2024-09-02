@@ -244,7 +244,7 @@ header hr {
 }
 .posts .post-text{
     margin: 0 0 24px 0;
-    color: #666;
+    color: var(--text-color1);
 }
 
 .posts .post-content .actions {
@@ -323,7 +323,7 @@ header hr {
 }
 .comments .comment-text{
     margin: 0 0 24px 0;
-    color: #666;
+    color: var(--text-color1);
 }
 
 .comments .comment-content .actions {

@@ -13,10 +13,6 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
-postButton.onclick = function() {
-    alert("Post button clicked!");
-    modal.style.display = "none";
-}
 
 document.querySelector('.post-options i').addEventListener('click', function() {
     const options = document.querySelector('.post-options .options');

@@ -18,7 +18,7 @@
           <div class="profile">
             <div class="user-indicator">
               <img src="../imgs/user-img.png" alt="Profile Picture" />
-              <label>@Username</label>
+              <label>@<span>{{ Auth::user()->username }}</span></label>
             </div>
           </div>
           <nav>
@@ -39,7 +39,8 @@
                       <li><a href="settings/tos">Terms of Service</a></li>
                   </ul>
                   </div>
-              </li>            </ul>
+              </li>           
+            </ul>
         </nav>
         </div>
         <div class="bottom-nav">

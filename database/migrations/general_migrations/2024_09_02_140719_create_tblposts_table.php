@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tblpost', function (Blueprint $table) {
+        Schema::create('tblposts', function (Blueprint $table) {
             $table->id();
-            $table->string('post_id');
-            $table->string('concern');
-            $table->string('posted_by');
-            $table->date('date');
-            $table->string('approved_by');
+            $table->string('post_id', 13)->change();
+            $table->string('concern', 255);
+            $table->string('postedBy', 50);
+            $table->string('approved', 10);
+            $table->string('approvedBy', 100);
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tblpost');
+        Schema::dropIfExists('tblposts');
     }
 };

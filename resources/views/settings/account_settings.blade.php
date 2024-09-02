@@ -18,7 +18,7 @@
                 <div class="profile">
                     <div class="user-indicator">
                         <img src="../../imgs/user-img.png" alt="Profile Picture">
-                        <label>@Username</label>
+                        <label>@<span>{{ Auth::user()->username }}</span></label>
                     </div>
                 </div>
                 <nav>
@@ -75,63 +75,132 @@
                                 <button>Reset</button>
                                 <p>Allowed JPG, GIF or PNG. Max size of 800K</p>
                             </div>
-                            <form>
+
+                            <form method="POST" action="{{ route('settings.updateAccountNames') }}">
+                                @csrf
+                                @if(session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                                @endif
+
+                                @if(session('error'))
+                                <div class="error">
+                                    {{ session('error') }}
+                                </div>
+                                @endif
+
+                                @if($errors->any())
+                                <div class="error">
+                                    <ul>
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
+                            
                                 <label for="username">Username</label>
-                                <input type="text" id="username" name="username" value="nmaxwell">
-                                <label for="name">Name</label>
-                                <input type="text" id="name" name="name" value="Nelle Maxwell">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" name="email" value="nmaxwell@mail.com">
-                                <p class="email-confirmation">Your email is not confirmed. Please check your inbox. <a href="#">Resend confirmation</a></p>
-                                <label for="company">Company</label>
-                                <input type="text" id="company" name="company" value="Company Ltd.">
+                                <input type="text" id="username" name="username" value="{{ Auth::user()->username }}">
+                            
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" value="{{ Auth::user()->firstName }}">
+                            
+                                <label for="middleName">Middle Name</label>
+                                <input type="text" id="middleName" name="middleName" value="{{ Auth::user()->middleName }}">
+                            
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" value="{{ Auth::user()->lastName }}">
+                            
                                 <div class="action-button">
-                                    <button type="button">Cancel</button>
+                                    <button type="button" onclick="window.location.href='{{ url()->previous() }}'">Cancel</button>
                                     <button type="submit">Save changes</button>
                                 </div>
                             </form>
+
                         </div>
                         <div id="change-password" class="tab-content">
                             <h2>Change Password</h2>
-                            <form>
+
+                            <form id="password-change-form" method="POST" action="{{ route('settings.changePassword') }}">
+                                @csrf
+                                
+                                @if(session('success'))
+                                <div class="alert alert-success">
+                                    {{ session('success') }}
+                                </div>
+                                @endif
+
+                                @if(session('error'))
+                                <div class="error">
+                                    {{ session('error') }}
+                                </div>
+                                @endif
+
+                                @if($errors->any())
+                                <div class="error">
+                                    <ul>
+                                        @foreach($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
+
                                 <label for="current-password">Current Password</label>
-                                <input type="password" id="current-password" name="current-password">
+                                <input type="password" id="current-password" name="current_password" required>
+                            
                                 <label for="new-password">New Password</label>
-                                <input type="password" id="new-password" name="new-password">
-                                <label for="repeat-password">Repeat New Password</label>
-                                <input type="password" id="repeat-password" name="repeat-password">
+                                <input type="password" id="new-password" name="new_password" required>
+                            
+                                <label for="repeat-password">Confirm New Password</label>
+                                <input type="password" id="repeat-password" name="new_password_confirmation" required>
+                            
                                 <div class="action-button">
-                                    <button type="button">Cancel</button>
+                                    <button type="button" onclick="window.location.href='{{ url()->previous() }}'">Cancel</button>
                                     <button type="submit">Save changes</button>
                                 </div>
                             </form>
+
                         </div>
                         <div id="info" class="tab-content">
                             <h2>Info</h2>
-                            <form>
+                            <form method="POST" action="{{ route('settings.updateAccountInfo') }}">
+                                @csrf
+                            
                                 <label for="bio">Bio</label>
-                                <textarea id="bio" name="bio">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
-                                <label for="birthday">Birthday</label>
-                                <input type="text" id="birthday" name="birthday" value="May 3, 1995">
-                                <label for="country">Country</label>
-                                <select id="country" name="country">
-                                    <option value="canada">Canada</option>
-                                </select>
-                                <label for="phone">Phone</label>
-                                <input type="text" id="phone" name="phone" value="+0 (123) 456 7891">
-                                <label for="website">Website</label>
-                                <input type="text" id="website" name="website">
+                                <textarea id="bio" name="bio">Some Text</textarea>
+                            
+                                <label for="birthDate">Birthday</label>
+                                <input type="date" id="birthDate" name="birthDate" value="{{ Auth::user()->birthDate }}">
+                            
+                                <label for="sex">Sex</label>
+                                <input type="text" id="sex" name="sex" value="{{ Auth::user()->sex }}" readonly>
+                            
+                                <label for="nationality">Nationality</label>
+                                <input type="text" id="nationality" name="nationality" value="{{ Auth::user()->nationality }}">
+                            
+                                <label for="contactNumber">Contact Number</label>
+                                <input type="text" id="contactNumber" name="contactNumber" value="{{ Auth::user()->contactNumber }}">
+
+                                <label for="email">E-mail</label>
+                                <input type="text" id="email" name="email" value="{{ Auth::user()->email }}">
+                            
                                 <div class="action-button">
-                                    <button type="button">Cancel</button>
+                                    <button type="button" onclick="window.location.href='{{ url()->previous() }}'">Cancel</button>
                                     <button type="submit">Save changes</button>
                                 </div>
                             </form>
+                            
                         </div>
                     </div>
                 </div>
             </content>
         </main>
     </div>
+    <script>
+
+    </script>
     <script src="../../js/settings.js"></script>
 </body>
 </html>

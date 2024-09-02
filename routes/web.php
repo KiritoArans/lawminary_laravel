@@ -11,8 +11,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-
 // Admin routes
 Route::get('/admod/login', [AdminController::class, 'showAdModLogin']);
 
@@ -46,7 +44,7 @@ Route::get('/login', [UserController::class, 'showLoginPage']);
 
 Route::get('/signup', [UserController::class, 'showSignupPage'])->name('signup');
 
-Route::get('/home', [UserController::class, 'showHomePage'])->name('home');
+Route::get('/home', [UserController::class, 'showHomePage'])->name('home')->middleware('auth');
 
 Route::get('/article', [UserController::class, 'showArticlePage']);
 
@@ -82,12 +80,23 @@ Route::get('/accounts', [AdminController::class, 'index'])->name('account.index'
 // User Backend Routing
 // Logins
 Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');
+
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name('loginAdMod');
 
-// route::get('/profile', [UserController::class, 'showProfilePage'])->middleware('auth')->name('profile');
-// Moderator Routing
-// Route::post('/moderator/resources', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');
+// Create Post
+Route::post('/home', [UserController::class, 'createPost'])->name('users.createPost');
+
+// Profile Routes
+Route::get('/profile', [UserController::class, 'showProfilePosts'])->name('profile.showProfilePosts');
+
+Route::post('/profile/settings/account/changepass', [UserController::class, 'changePassword'])->name('settings.changePassword');
+Route::post('/profile/settings/account/changeinfo', [UserController::class, 'updateAccountNames'])->name('settings.updateAccountNames');
+Route::post('/profile/settings/account/changeinfo2', [UserController::class, 'updateAccountInfo'])->name('settings.updateAccountInfo');
+
+
 
 
 // Moderator Routing

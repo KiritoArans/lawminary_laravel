@@ -18,9 +18,9 @@
                 <div class="profile">
                     <div class="user-indicator">
                         <img src="../imgs/user-img.png" alt="Profile Picture">
-                        <label>@Username</label>
+                        <label>@<span>{{ Auth::user()->username }}</span></label>
                     </div>
-                </div>
+                </div>                
                 <nav>
                     <ul>
                         <li><a href="home" class="current"><i class="fa-solid fa-house"></i><span>Home</span></a></li>
@@ -44,7 +44,16 @@
                 </nav>
             </div>
             <div class="bottom-nav">
-                <a class="logout" href="login"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
+                <a class="logout" 
+                    href="{{ route('logout') }}" 
+                    onclick="event.preventDefault(); 
+                    document.getElementById('logout-form').submit();">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Log out</span></a>
+            
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </aside>
         
@@ -110,24 +119,28 @@
     <div id="postModal" class="post-modal">
         <div class="post-modal-content">
             <span class="close">&times;</span>
-            <div class="post-header">
-                <img src="../imgs/user-img.png" alt="Profile Picture" class="post-profile-pic">
-                <div class="post-modal-info">
-                    <h2>Name Surname</h2>
-                    <p>@username</p>
+
+            <form action="{{ route('users.createPost') }}" method="POST">
+                @csrf <!-- Laravel CSRF Protection -->
+                <div class="post-header">
+                    <img src="../imgs/user-img.png" alt="Profile Picture" class="post-profile-pic">
+                    <div class="post-modal-info">
+                        <h2>{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h2>
+                        <p>@<span>{{ Auth::user()->username }}</span></p>
+                    </div>                
                 </div>
-            </div>
-            <div class="post-modal-text">
-                <textarea placeholder="Ask concerns..."></textarea>
-            </div>
-            <div class="post-modal-footer">
-                <i class="fa-solid fa-upload"></i>
-                <p>Note: The post will be reviewed first prior to the approval of the moderators to make sure that it follows a certain measure of decency.</p>
-                <button class="post-button">Post</button>
-            </div>
+                <div class="post-modal-text">
+                    <textarea name="concern" placeholder="Ask concerns..." required></textarea>
+                </div>
+                <div class="post-modal-footer">
+                    <i class="fa-solid fa-upload"></i>
+                    <p>Note: The post will be reviewed first prior to the approval of the moderators to make sure that it follows a certain measure of decency.</p>
+                    <button type="submit" class="post-button">Post</button>
+                </div>
+            </form>
+            
         </div>
-    </div>
-    
+    </div>   
     <script src="../js/home_js.js"></script>
     <script src="../js/locator.js"></script>
     <script src="../js/settings.js"></script>

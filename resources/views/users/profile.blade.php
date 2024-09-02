@@ -18,7 +18,7 @@
                 <div class="profile">
                     <div class="user-indicator">
                         <img src="../imgs/user-img.png" alt="Profile Picture">
-                        <label>@Username</label>
+                        <label>@<span>{{ Auth::user()->username }}</span></label>
                     </div>
                 </div>
                 <nav>
@@ -65,8 +65,8 @@
                             <div class="profile-left">
                                 <img src="../imgs/user-img.png" alt="Profile Picture" class="profile-pic">
                                 <div class="profile-info">
-                                    <h2>Firstname Lastname</h2>
-                                    <h4>@username</h4>
+                                    <h2>{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h2>
+                                    <h4>@<span>{{ Auth::user()->username }}</span></h4>
                                     <div class="profile-badge">
                                         <span class="badge">User</span>
                                     </div>
@@ -98,38 +98,45 @@
                 </div>
                 <hr>
                 <div class="profile-content">
+
                     <div class="profile-posts">
                         <div class="posts">
-                            <div class="post-content">
-                                <div class="post-header">
-                                    <div class="user-info">
-                                        <img src="../imgs/user-img.png" alt="Profile Picture" class="profile-pic">
-                                        <div class="post-info">
-                                            <h2>Name Surname</h2>
-                                            <p>@username</p>
+                            @foreach($posts as $post)
+                                @if($posts->isEmpty())
+                                    <p>No posts yet.</p>
+                                @endif
+                                <div class="post-content">
+                                    <div class="post-header">
+                                        <div class="user-info">
+                                            <img src="../imgs/user-img.png" alt="Profile Picture" class="profile-pic">
+                                            <div class="post-info">
+                                                <h2>{{ $user->firstName }} {{ $user->lastName }}</h2>
+                                                <p>@<span>{{ $user->username }}</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="post-options">
+                                            <div class="options">
+                                                <a href="">Delete</a>
+                                                <a href="">Report</a>
+                                            </div>
+                                            <i class="fas fa-ellipsis-v"></i>
                                         </div>
                                     </div>
-                                    <div class="post-options">
-                                        <div class="options">
-                                            <a href="">Delete</a>
-                                            <a href="">Report</a>
-                                        </div>
-                                        <i class="fas fa-ellipsis-v"></i>
+                                    <hr>
+                                    <div class="post-text">
+                                        <p>{{ $post->concern }}</p>
+                                    </div>
+                                    <hr>
+                                    <div class="actions">
+                                        <button><i class="fa-solid fa-gavel"></i> Hit</button>
+                                        <button><i class="fas fa-comment"></i> Comment</button>
+                                        <button><i class="fas fa-bookmark"></i> Bookmark</button>
                                     </div>
                                 </div>
-                                <hr>
-                                <div class="post-text">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                </div>
-                                <hr>
-                                <div class="actions">
-                                    <button><i class="fa-solid fa-gavel"></i> Hit</button>
-                                    <button><i class="fas fa-comment"></i> Comment</button>
-                                    <button><i class="fas fa-bookmark"></i> Bookmark</button>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
-                   </div>
+                    </div>
+                    
                    <div class="profile-comments">
                         <div class="comments">
                             <div class="comment-content">
