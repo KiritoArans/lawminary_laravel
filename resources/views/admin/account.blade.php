@@ -25,11 +25,11 @@
                 </div>
                 <nav>
                     <ul>
-                        <li><a href="dashboard.html"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
-                        <li><a href="postpage.html"><i class="fa-solid fa-envelope-open-text"></i><span>Posts</span></a></li>
-                        <li><a href="account.html" class="current"><i class="fa-solid fa-user-gear"></i><span>Accounts</span></a></li>
-                        <li><a href="forums.html"><i class="fa-solid fa-users"></i><span>Forums</span></a></li>
-                        <li><a href="systemcontent.html"><i class="fa-solid fa-display"></i><span>System Content</span></a></li>
+                        <li><a href="dashboard"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
+                        <li><a href="postpage"><i class="fa-solid fa-envelope-open-text"></i><span>Posts</span></a></li>
+                        <li><a href="account" class="current"><i class="fa-solid fa-user-gear"></i><span>Accounts</span></a></li>
+                        <li><a href="forums"><i class="fa-solid fa-users"></i><span>Forums</span></a></li>
+                        <li><a href="systemcontent"><i class="fa-solid fa-display"></i><span>System Content</span></a></li>
                     </ul>
                 </nav>
             </div>
@@ -47,7 +47,7 @@
             </header>
             <section class="filter-container">
                 <div class="search-bar">
-                    <input type="text" id="search" placeholder="Search for posts or key words...">
+                    <input type="text" id="search" placeholder="Search for User ID or Username...">
                 </div>
                 <div class="action-buttons">
                     <button class="custom-button" id="filterButton">Filter</button>
@@ -56,7 +56,7 @@
                             <span class="close-button" id="closeFilterModal">&times;</span>
                             <h2>Filter Accounts</h2>
                             <!--filter accounts-->
-                            <form id="filterForm" action="{{ route('account.index') }}" method="GET">
+                             <form id="filterForm" action="{{ route('admin.filter') }}" method="GET">
                                 <label for="filterId">ID:</label>
                                 <input type="text" id="filterId" name="filterId" value="{{ request('filterId') }}">
                             
@@ -68,7 +68,7 @@
                             
                                 <label for="filterAccountType">Account Type:</label>
                                 <select id="accountType" name="accountType">
-                                    <option value="all" {{ request('accountType') == 'all' ? 'selected' : '' }}>Account Type</option>
+                                    <option value="all" {{ request('accountType') == 'all' ? 'selected' : '' }}>View All</option>
                                     <option value="Moderator" {{ request('accountType') == 'Moderator' ? 'selected' : '' }}>Moderator</option>
                                     <option value="User" {{ request('accountType') == 'User' ? 'selected' : '' }}>User</option>
                                     <option value="Lawyer" {{ request('accountType') == 'Lawyer' ? 'selected' : '' }}>Lawyer</option>
@@ -76,7 +76,7 @@
                                 </select>
                             
                                 <button type="submit" class="custom-button">Apply Filter</button>
-                            </form>                            
+                            </form>
                         </div>
                     </div>
                      <!-- add accounts -->
@@ -278,11 +278,11 @@
                                         </div>
                                     </div>
                                         <!--delete button-->
-                                        <form action="{{ route('account.destroy', $account->id) }}" method="POST" style="display:inline;">
+                                        <form id="delete-form-{{ $account->id }}" action="{{ route('account.destroy', $account->id) }}" method="POST" style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="delete-button">Delete</button>
-                                        </form>
+                                            <button type="button" class="delete-button" data-account-id="{{ $account->id }}">Delete</button>
+                                        </form>                                                                               
                                     </td>
                                 </tr>
                                 @endforeach
@@ -293,5 +293,6 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('js/admin_js/accounts_js.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
