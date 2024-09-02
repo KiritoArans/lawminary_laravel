@@ -86,7 +86,7 @@
                             <span class="close-button" id="closeAddModal">&times;</span>
                             <h2>Add Account</h2>
                             
-                        <form id="addForm" method="POST" action="{{ route('admin.addAccount') }}">
+                        <form id="addForm" method="POST" action="{{ route('moderator.addAccount') }}">
                             @csrf
                             @if ($errors->any())
                                 <div class="error">

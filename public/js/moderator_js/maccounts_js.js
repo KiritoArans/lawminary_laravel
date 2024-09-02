@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('editRestrictDays').value = restrictDays;
             document.getElementById('editAccountType').value = accountType;
 
-            var formAction = `/moderator/Maccounts/${id}`;
+            var formAction = `/moderator/accounts/${id}`;
             document.getElementById('editAccountForm').action = formAction;
 
             modal.style.display = 'block';
