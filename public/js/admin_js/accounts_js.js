@@ -1,5 +1,6 @@
 
 /filter/
+console.log('JS Loaded');
 
 document.addEventListener('DOMContentLoaded', function () {
     const filterButton = document.getElementById('filterButton');
@@ -84,7 +85,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
 document.addEventListener('DOMContentLoaded', function () {
     var modal = document.getElementById('editAccountModal');
     var closeButton = document.getElementById('closeEditModalX');
@@ -135,6 +135,7 @@ document.addEventListener('DOMContentLoaded', function () {
             modal.style.display = 'none';
         }
     });
+});  
     //enable / disable logic for restrict days
     document.getElementById('editRestrict').addEventListener('change', function() {
         var restrictDaysInput = document.getElementById('editRestrictDays');
@@ -157,8 +158,33 @@ document.addEventListener('DOMContentLoaded', function () {
         } else {
             restrictDaysInput.disabled = true;
         }
-    });    
-});
+    });
+    //search function
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search');
+        const tableBody = document.getElementById('accountTableBody');
+        const rows = tableBody.getElementsByTagName('tr');
+    
+        searchInput.addEventListener('keyup', function () {
+            console.log('Search triggered'); // Check if this appears
+            const searchValue = searchInput.value.toLowerCase();
+            console.log('Search value:', searchValue); // Log the search value
+    
+            for (let i = 0; i < rows.length; i++) {
+                const row = rows[i];
+                let rowText = row.textContent.toLowerCase();
+                console.log('Row text:', rowText); // Log each row's text content
+    
+                if (rowText.includes(searchValue)) {
+                    row.style.display = ''; // Show the row
+                } else {
+                    row.style.display = 'none'; // Hide the row
+                }
+            }
+        });
+    });
+         
+
 
 
 

@@ -10,6 +10,7 @@ use App\Models\general_database;
 
 use Illuminate\Http\Request;
 
+
 class AdminController extends Controller
 {
     public function showAccount()
@@ -108,6 +109,46 @@ class AdminController extends Controller
         $account->save();
         return $this->showAccount();
     }
-    //populate account type
+    //delete account
+    public function destroy($id)
+    {
+        // Find the account by its ID
+        $account = UserAccount::findOrFail($id);
+
+        // Delete the account
+        $account->delete();
+
+        // Redirect back to the accounts list with a success message
+        return $this->showAccount();
+    }
+    public function index(Request $request)
+    {
+        // Start with a query builder
+        $query = UserAccount::query();
+
+        // Apply filters based on the request inputs
+        if ($request->filled('filterId')) {
+            $query->where('id', $request->input('filterId'));
+        }
+
+        if ($request->filled('filterUsername')) {
+            $query->where('username', 'like', '%' . $request->input('filterUsername') . '%');
+        }
+
+        if ($request->filled('filterEmail')) {
+            $query->where('email', 'like', '%' . $request->input('filterEmail') . '%');
+        }
+
+        if ($request->filled('accountType') && $request->input('accountType') !== 'all') {
+            $query->where('accountType', $request->input('accountType'));
+        }
+
+        // Get the filtered results
+        $accounts = $query->get();
+
+        // Return the view with the filtered accounts
+        return view('admin.account', compact('accounts'));
+    }
+
     
 }

@@ -51,26 +51,32 @@
                 </div>
                 <div class="action-buttons">
                     <button class="custom-button" id="filterButton">Filter</button>
-                    <select class="custom-button" id="accountType2">
-                        <option value="all">Account Type</option>
-                        <option value="moderator">Moderator</option>
-                        <option value="user">User</option>
-                        <option value="lawyer">Lawyer</option>
-                        <option value="admin">Admin</option>
-                    </select>
                     <div id="filterModal" class="modal">
                         <div class="modal-content">
                             <span class="close-button" id="closeFilterModal">&times;</span>
                             <h2>Filter Accounts</h2>
-                            <form id="filterForm">
+                            <!--filter accounts-->
+                            <form id="filterForm" action="{{ route('account.index') }}" method="GET">
                                 <label for="filterId">ID:</label>
-                                <input type="text" id="filterId" name="filterId">
+                                <input type="text" id="filterId" name="filterId" value="{{ request('filterId') }}">
+                            
                                 <label for="filterUsername">Username:</label>
-                                <input type="text" id="filterUsername" name="filterUsername">
+                                <input type="text" id="filterUsername" name="filterUsername" value="{{ request('filterUsername') }}">
+                            
                                 <label for="filterEmail">Email:</label>
-                                <input type="text" id="filterEmail" name="filterEmail">
+                                <input type="text" id="filterEmail" name="filterEmail" value="{{ request('filterEmail') }}">
+                            
+                                <label for="filterAccountType">Account Type:</label>
+                                <select id="accountType" name="accountType">
+                                    <option value="all" {{ request('accountType') == 'all' ? 'selected' : '' }}>Account Type</option>
+                                    <option value="Moderator" {{ request('accountType') == 'Moderator' ? 'selected' : '' }}>Moderator</option>
+                                    <option value="User" {{ request('accountType') == 'User' ? 'selected' : '' }}>User</option>
+                                    <option value="Lawyer" {{ request('accountType') == 'Lawyer' ? 'selected' : '' }}>Lawyer</option>
+                                    <option value="Admin" {{ request('accountType') == 'Admin' ? 'selected' : '' }}>Admin</option>
+                                </select>
+                            
                                 <button type="submit" class="custom-button">Apply Filter</button>
-                            </form>
+                            </form>                            
                         </div>
                     </div>
                      <!-- add accounts -->
@@ -202,12 +208,14 @@
                                         <div class="modal-content">
                                             <span class="close-button" id="closeEditModalX">&times;</span>
                                             <h2>Edit Account</h2>
-                                            @if($errors->any())
-                                            <ul>
-                                                @foreach($errors->all() as $error)
-                                                    <li>{{$error}}</li>
-                                                @endforeach
-                                            </ul>
+                                            @if ($errors->any())
+                                                <div class="error2">
+                                                    <ul>
+                                                        @foreach ($errors->all() as $error)
+                                                            <li>{{ $error }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
                                             @endif
                                             <form id="editAccountForm" method="POST">
                                                 @csrf

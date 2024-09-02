@@ -75,6 +75,9 @@ Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
 Route::post('/admin/account', [AdminController::class, 'addAccount'])->name('admin.addAccount');
 Route::delete('/admin/account/{id}', [AdminController::class, 'destroy'])->name('account.destroy');
 Route::match(['put', 'patch'], '/admin/account/{id}', [AdminController::class, 'updateAccount'])->name('admin.updateAccount');
+//filter accounts
+Route::get('/accounts', [AdminController::class, 'index'])->name('account.index');
+
 
 // Route::put('/admin/account', [AdminController::class, 'updateAccount'])->name('admin.updateAccount');
 
