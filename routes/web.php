@@ -11,8 +11,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//admin routes
-Route::get('/admin/dashboard', [AdminController::class, 'showDashboard']);
+
+
+// Admin routes
+Route::get('/admod/login', [AdminController::class, 'showAdModLogin']);
+
+Route::get('/admin/dashboard', [AdminController::class, 'showDashboard'])->name('admin.dashboard');
 
 Route::get('/admin/postpage', [AdminController::class, 'showPostPage']);
 
@@ -22,8 +26,8 @@ Route::get('/admin/forums', [AdminController::class, 'showForums']);
 
 Route::get('/admin/systemcontent', [AdminController::class, 'showSystemContent']);
 
-//moderator routes
-Route::get('/moderator/dashboard', [ModeratorController::class, 'showMdashboard']);
+// Moderator routes
+Route::get('/moderator/dashboard', [ModeratorController::class, 'showMdashboard'])->name('moderator.dashboard');
 
 Route::get('/moderator/posts', [ModeratorController::class, 'showMposts']);
 
@@ -58,20 +62,15 @@ Route::get('/profile', [UserController::class, 'showProfilePage']);
 
 //settings routing
 Route::get('/settings/lawminary', [UserController::class, 'showAboutLawminaryPage']);
-
 Route::get('/settings/pao', [UserController::class, 'showAboutPAOPage']);
-
 Route::get('/settings/account', [UserController::class, 'showAccountPage']);
-
 Route::get('/settings/activitylogs', [UserController::class, 'showActLogsPage']);
-
 Route::get('/settings/feedback', [UserController::class, 'showFeedbackPage']);
-
 Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
 
-//add-account routing (create) admin
-// Route::post('/add-account', [AccountController::class, 'store'])->name('add-account');
-// addAccount admin side
+
+// Admin Backend Routing
+// Admin Accounts Page
 Route::post('/admin/account', [AdminController::class, 'addAccount'])->name('admin.addAccount');
 Route::delete('/admin/account/{id}', [AdminController::class, 'destroy'])->name('account.destroy');
 Route::match(['put', 'patch'], '/admin/account/{id}', [AdminController::class, 'updateAccount'])->name('admin.updateAccount');
@@ -79,11 +78,12 @@ Route::match(['put', 'patch'], '/admin/account/{id}', [AdminController::class, '
 Route::get('/accounts', [AdminController::class, 'index'])->name('account.index');
 
 
-// Route::put('/admin/account', [AdminController::class, 'updateAccount'])->name('admin.updateAccount');
 
-// Backend Routing
+// User Backend Routing
+// Logins
 Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name('loginAdMod');
 
 // route::get('/profile', [UserController::class, 'showProfilePage'])->middleware('auth')->name('profile');
 // Moderator Routing

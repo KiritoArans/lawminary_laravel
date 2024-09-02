@@ -13,6 +13,11 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+    public function showAdModLogin()
+    {
+        return view('admin.admod_login');
+    }
+
     public function showAccount()
     {
         $accounts = UserAccount::all();
