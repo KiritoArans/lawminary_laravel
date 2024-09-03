@@ -17,7 +17,11 @@
             <div class="top-nav">
                 <div class="profile">
                     <div class="user-indicator">
-                        <img src="../../imgs/user-img.png" alt="Profile Picture">
+                        @if(Auth::user()->userPhoto)
+                            <img src="{{ Storage::url(Auth::user()->userPhoto) }}" alt="Profile Picture">
+                        @else
+                            <img src="../../imgs/user-img.png" alt="Profile Picture">
+                        @endif
                         <label>@<span>{{ Auth::user()->username }}</span></label>
                     </div>
                 </div>

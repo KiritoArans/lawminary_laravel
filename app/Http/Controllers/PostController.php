@@ -31,6 +31,7 @@ class PostController extends Controller
 
         return view('users.home');
     }
+    
     public function showProfilePosts()
     {
         $user = Auth::user();

@@ -92,7 +92,6 @@ Route::post('/home', [PostController::class, 'createPost'])->name('users.createP
 
 // Profile Routes
 Route::get('/profile', [PostController::class, 'showProfilePosts'])->name('profile.showProfilePosts');
-
 Route::post('/profile/settings/account/changepass', [AccountController::class, 'changePassword'])->name('settings.changePassword');
 Route::post('/profile/settings/account/changeinfo', [AccountController::class, 'updateAccountNames'])->name('settings.updateAccountNames');
 Route::post('/profile/settings/account/changeinfo2', [AccountController::class, 'updateAccountInfo'])->name('settings.updateAccountInfo');

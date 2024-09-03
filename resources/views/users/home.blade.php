@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="{{ asset('js/library_js/sweetalertV2.js') }}"></script>
 </head>
 <body>
     <div class="container">
@@ -17,7 +18,11 @@
             <div class="top-nav">
                 <div class="profile">
                     <div class="user-indicator">
-                        <img src="../imgs/user-img.png" alt="Profile Picture">
+                        @if(Auth::user()->userPhoto)
+                            <img src="{{ Storage::url(Auth::user()->userPhoto) }}" alt="Profile Picture">
+                        @else
+                            <img src="../../imgs/user-img.png" alt="Profile Picture">
+                        @endif
                         <label>@<span>{{ Auth::user()->username }}</span></label>
                     </div>
                 </div>                
@@ -44,13 +49,11 @@
                 </nav>
             </div>
             <div class="bottom-nav">
-                <a class="logout" 
-                    href="{{ route('logout') }}" 
-                    onclick="event.preventDefault(); 
-                    document.getElementById('logout-form').submit();">
+                <a class="logout" id="logout-link">
                     <i class="fa-solid fa-right-from-bracket"></i>
-                    <span>Log out</span></a>
-            
+                    <span>Log out</span>
+                </a>
+                
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
@@ -89,13 +92,13 @@
                                     <p>@username</p>
                                 </div>
                             </div>
-                                <div class="post-options">
-                                    <div class="options">
-                                        <a href="">Action</a>
-                                        <a href="">Report</a>
-                                    </div>
-                                    <i class="fas fa-ellipsis-v"></i>
+                            <div class="post-options">
+                                <div class="options">
+                                    <a href="">Action</a>
+                                    <a href="">Report</a>
                                 </div>
+                                <i class="fas fa-ellipsis-v"></i>
+                            </div>
                         </div>
                         <hr>
                         <div class="post-text">
@@ -121,7 +124,7 @@
             <span class="close">&times;</span>
 
             <form action="{{ route('users.createPost') }}" method="POST" enctype="multipart/form-data">
-                @csrf <!-- Laravel CSRF Protection -->
+                @csrf 
                 <div class="post-header">
                     <img src="../imgs/user-img.png" alt="Profile Picture" class="post-profile-pic">
                     <div class="post-modal-info">
@@ -133,7 +136,6 @@
                     <textarea name="concern" placeholder="Ask concerns..." required></textarea>
                 </div>
                 <div class="post-modal-footer">
-                    {{-- <i class="fa-solid fa-upload"></i> --}}
                     <label for="file-upload" class="custom-file-upload">
                         <i class="fa-solid fa-file-arrow-up"></i>
                     </label>
@@ -149,5 +151,6 @@
     <script src="../js/home_js.js"></script>
     <script src="../js/locator.js"></script>
     <script src="../js/settings.js"></script>
+    <script src="../js/oneforall.js"></script>
 </body>
 </html>

@@ -17,7 +17,11 @@
             <div class="top-nav">
                 <div class="profile">
                     <div class="user-indicator">
-                        <img src="../imgs/user-img.png" alt="Profile Picture">
+                        @if(Auth::user()->userPhoto)
+                            <img src="{{ Storage::url(Auth::user()->userPhoto) }}" alt="Profile Picture">
+                        @else
+                            <img src="../../imgs/user-img.png" alt="Profile Picture">
+                        @endif
                         <label>@<span>{{ Auth::user()->username }}</span></label>
                     </div>
                 </div>
@@ -63,12 +67,16 @@
                 <div class="profile-header">
                     <div class="profile-details">
                             <div class="profile-left">
-                                <img src="../imgs/user-img.png" alt="Profile Picture" class="profile-pic">
+                                @if(Auth::user()->userPhoto)
+                                    <img src="{{ Storage::url(Auth::user()->userPhoto) }}" class="user-profile-photo" alt="Profile Picture">
+                                @else
+                                    <img src="../../imgs/user-img.png" class="user-profile-photo" alt="Profile Picture">
+                                @endif
                                 <div class="profile-info">
                                     <h2>{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h2>
                                     <h4>@<span>{{ Auth::user()->username }}</span></h4>
                                     <div class="profile-badge">
-                                        <span class="badge">User</span>
+                                        <span class="badge">{{ Auth::user()->accountType }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -108,7 +116,11 @@
                                 <div class="post-content">
                                     <div class="post-header">
                                         <div class="user-info">
-                                            <img src="../imgs/user-img.png" alt="Profile Picture" class="profile-pic">
+                                            @if(Auth::user()->userPhoto)
+                                                <img src="{{ Storage::url(Auth::user()->userPhoto) }}" class="user-profile-photo" alt="Profile Picture">
+                                            @else
+                                                <img src="../../imgs/user-img.png" class="user-profile-photo" alt="Profile Picture">
+                                            @endif
                                             <div class="post-info">
                                                 <h2>{{ $user->firstName }} {{ $user->lastName }}</h2>
                                                 <p>@<span>{{ $user->username }}</span></p>

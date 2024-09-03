@@ -40,12 +40,18 @@ class AccountController extends Controller
         {
             $request->validate([
                 'username' => 'required|string|max:100',
+                'userPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'firstName' => 'required|string|max:100',
                 'middleName' => 'nullable|string|max:100',
                 'lastName' => 'required|string|max:100',
             ]);
 
             $user = Auth::user();
+
+            if ($request->hasFile('userPhoto')) {
+                $userPhotoPath = $request->file('userPhoto')->store('public/files/profile_pics');
+                $user->userPhoto = $userPhotoPath;
+            }
 
             $user->username = $request->username;
             $user->firstName = $request->firstName;

@@ -17,7 +17,11 @@
             <div class="top-nav">
                 <div class="profile">
                     <div class="user-indicator">
-                        <img src="../../imgs/user-img.png" alt="Profile Picture">
+                        @if(Auth::user()->userPhoto)
+                            <img src="{{ Storage::url(Auth::user()->userPhoto) }}" alt="Profile Picture">
+                        @else
+                            <img src="../../imgs/user-img.png" alt="Profile Picture">
+                        @endif
                         <label>@<span>{{ Auth::user()->username }}</span></label>
                     </div>
                 </div>
@@ -69,14 +73,8 @@
                     <div class="settings-content">
                         <div id="general" class="tab-content active">
                             <h2>General</h2>
-                            <div class="profile-pic">
-                                <img src="../../imgs/user-img.png" alt="Profile Picture">
-                                <button>Upload new photo</button>
-                                <button>Reset</button>
-                                <p>Allowed JPG, GIF or PNG. Max size of 800K</p>
-                            </div>
 
-                            <form method="POST" action="{{ route('settings.updateAccountNames') }}">
+                            <form method="POST" action="{{ route('settings.updateAccountNames') }}" enctype="multipart/form-data">
                                 @csrf
                                 @if(session('success'))
                                 <div class="alert alert-success">
@@ -99,6 +97,18 @@
                                     </ul>
                                 </div>
                                 @endif
+                                <div class="profile-pic">
+                                    @if(Auth::user()->userPhoto)
+                                    <img id="profileImagePreview" src="{{ Storage::url(Auth::user()->userPhoto) }}" alt="User Photo">
+                                    @else
+                                        <img id="profileImagePreview" src="../../imgs/user-img.png" alt="Profile Picture">
+                                    @endif
+                                    {{-- <img id="profileImagePreview" src="{{ Storage::url(Auth::user()->userPhoto) }}" alt="User Photo" style="max-width: 150px; height: auto;"> --}}
+                                    
+                                    <input type="file" name="userPhoto" id="userPhotoInput">
+
+                                    <p>Allowed JPG, GIF or PNG. Max size of 800K</p>
+                                </div>
                             
                                 <label for="username">Username</label>
                                 <input type="text" id="username" name="username" value="{{ Auth::user()->username }}">
@@ -198,9 +208,6 @@
             </content>
         </main>
     </div>
-    <script>
-
-    </script>
     <script src="../../js/settings.js"></script>
 </body>
 </html>

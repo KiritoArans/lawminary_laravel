@@ -13,21 +13,21 @@ return new class extends Migration
     {
         Schema::create('tblaccounts', function (Blueprint $table) {
             $table->id();
-            $table->id('user_id');
-            $table->string('username')->unique();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('firstName');
-            $table->string('middleName')->nullable();
-            $table->string('lastName');
+            $table->id('user_id', 20);
+            $table->string('username', 50)->unique();
+            $table->string('email', 100)->unique();
+            $table->string('userPhoto', 255)->nullable();
+            $table->string('password', 100);
+            $table->string('firstName', 100);
+            $table->string('middleName', 100)->nullable();
+            $table->string('lastName', 100);
             $table->date('birthDate');
-            $table->string('nationality');
-            $table->enum('sex', ['male', 'female', 'other']);
-            $table->string('contactNumber');
+            $table->string('nationality', 100);
+            $table->enum('sex', ['male', 'female', 'other'], 100);
+            $table->string('contactNumber', 11);
             $table->boolean('restrict')->default(false);
-            $table->integer('restrictDays')->nullable();
-            $table->timestamp('date_created')->useCurrent();
-            $table->enum('account_type', ['user', 'moderator', 'lawyer', 'admin']);
+            $table->integer('restrictDays', 50)->nullable();
+            $table->enum('account_type', ['user', 'moderator', 'lawyer', 'admin'], 50);
             $table->timestamps();
         });
     }
