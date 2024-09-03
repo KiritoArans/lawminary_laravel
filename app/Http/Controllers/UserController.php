@@ -59,14 +59,21 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'concern' => 'required|string|max:255',
+            'concernPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif', // Ensure it's an image file
         ]);
 
         $post = new Posts;
+
         $post->post_id = uniqid();
         $post->concern = $data['concern'];
         $post->postedBy = Auth::user()->user_id; 
-        // $post->date = now();
-        // $post->approvedBy = null; // Set it to null or handle the approval process as needed
+        // $post->concernPhoto = $data['concernPhoto'];
+
+        if ($request->hasFile('concernPhoto')) {
+            $photoPath = $request->file('concernPhoto')->store('public/files/posts');
+            $post->concernPhoto = $photoPath; // Assign the file path to the model's property
+        }
+
         $post->save();
 
         return $this->showHomePage();
@@ -80,6 +87,7 @@ class UserController extends Controller
         return view('users.profile', compact('user', 'posts'));
         // return $this->showProfilePage($user, $posts);
     }
+    
 
     public function showArticlePage()
     {
@@ -125,7 +133,7 @@ class UserController extends Controller
             $user->firstName = $request->firstName;
             $user->middleName = $request->middleName;
             $user->lastName = $request->lastName;
-
+            // dd($user);
             $user->save();
 
             return redirect()->back()->with('success', 'Your profile has been updated.');

@@ -120,7 +120,7 @@
         <div class="post-modal-content">
             <span class="close">&times;</span>
 
-            <form action="{{ route('users.createPost') }}" method="POST">
+            <form action="{{ route('users.createPost') }}" method="POST" enctype="multipart/form-data">
                 @csrf <!-- Laravel CSRF Protection -->
                 <div class="post-header">
                     <img src="../imgs/user-img.png" alt="Profile Picture" class="post-profile-pic">
@@ -133,7 +133,12 @@
                     <textarea name="concern" placeholder="Ask concerns..." required></textarea>
                 </div>
                 <div class="post-modal-footer">
-                    <i class="fa-solid fa-upload"></i>
+                    {{-- <i class="fa-solid fa-upload"></i> --}}
+                    <label for="file-upload" class="custom-file-upload">
+                        <i class="fa-solid fa-file-arrow-up"></i>
+                    </label>
+                    <input id="file-upload" type="file" name="concernPhoto" style="display: none;">
+                    {{-- <input type="file" name="concernPhoto" id=""> --}}
                     <p>Note: The post will be reviewed first prior to the approval of the moderators to make sure that it follows a certain measure of decency.</p>
                     <button type="submit" class="post-button">Post</button>
                 </div>

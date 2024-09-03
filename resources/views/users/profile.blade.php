@@ -125,6 +125,9 @@
                                     <hr>
                                     <div class="post-text">
                                         <p>{{ $post->concern }}</p>
+                                        @if ($post->concernPhoto)
+                                            <img src="{{ Storage::url($post->concernPhoto) }}" alt="Concern Photo" style="max-width: 25%; height: auto;">
+                                        @endif
                                     </div>
                                     <hr>
                                     <div class="actions">
