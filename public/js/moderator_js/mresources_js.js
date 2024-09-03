@@ -100,3 +100,24 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+function confirmDelete(event) {
+    event.preventDefault(); // Prevent form submission
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to delete this resource? This action cannot be undone!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // If confirmed, submit the form manually
+            event.target.submit();
+        } 
+        // No need to handle 'else', as not confirming will just leave the form unsubmitted
+    });
+}
+

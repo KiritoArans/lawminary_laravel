@@ -82,7 +82,8 @@ Route::match(['put', 'patch'], '/moderator/accounts/{id}', [ModeratorController:
 Route::get('moderator/accounts', [ModeratorController::class, 'filter'])->name('moderator.filter');
 // Moderator Resource Page
 Route::post('/moderator/mresources/upload', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');
-
+Route::match(['put', 'patch'], '/moderator/resources/{id}', [ModeratorController::class, 'updateResource'])->name('moderator.updateResource');
+Route::delete('/moderator/{rsrcfile}/destroy', [ModeratorController::class, 'destroyResource'])->name('moderator.destroyResource');
 // User Backend Routing
 // Logins
 Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');
@@ -101,13 +102,3 @@ Route::get('/profile', [UserController::class, 'showProfilePosts'])->name('profi
 Route::post('/profile/settings/account/changepass', [UserController::class, 'changePassword'])->name('settings.changePassword');
 Route::post('/profile/settings/account/changeinfo', [UserController::class, 'updateAccountNames'])->name('settings.updateAccountNames');
 Route::post('/profile/settings/account/changeinfo2', [UserController::class, 'updateAccountInfo'])->name('settings.updateAccountInfo');
-
-
-
-
-// Moderator Routing
-
-//Moderator Resource Page
-Route::post('/moderator/resources', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');
-Route::match(['put', 'patch'], '/moderator/resources/{id}', [ModeratorController::class, 'updateResource'])->name('moderator.updateResource');
-Route::delete('/moderator/{rsrcfile}/destroy', [ModeratorController::class, 'destroyResource'])->name('moderator.destroyResource');
