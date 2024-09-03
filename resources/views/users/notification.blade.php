@@ -18,9 +18,9 @@
                 <div class="profile">
                     <div class="user-indicator">
                         <img src="../imgs/user-img.png" alt="Profile Picture">
-                        <label>@Username</label>
+                        <label>@<span>{{ Auth::user()->username }}</span></label>
                     </div>
-                </div>
+                </div>     
                 <nav>
                     <ul>
                         <li><a href="home"><i class="fa-solid fa-house"></i><span>Home</span></a></li>

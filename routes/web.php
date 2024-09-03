@@ -1,9 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModeratorController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -40,31 +42,23 @@ Route::get('/moderator/forums', [ModeratorController::class, 'showMforums']);
 Route::get('/moderator/faqs', [ModeratorController::class, 'showMfaqs']);
 
 //user routes
-Route::get('/login', [UserController::class, 'showLoginPage']);
-
-Route::get('/signup', [UserController::class, 'showSignupPage'])->name('signup');
-
-Route::get('/home', [UserController::class, 'showHomePage'])->name('home')->middleware('auth');
-
-Route::get('/article', [UserController::class, 'showArticlePage']);
-
-Route::get('/forums', [UserController::class, 'showForumsPage']);
-
-Route::get('/notifications', [UserController::class, 'showNotificationPage']);
-
-Route::get('/search', [UserController::class, 'showSearchPage']);
-
-Route::get('/resources', [UserController::class, 'showResourcesPage']);
-
-Route::get('/profile', [UserController::class, 'showProfilePage']);
+Route::get('/login', [PageController::class, 'showLoginPage']);
+Route::get('/signup', [PageController::class, 'showSignupPage'])->name('signup');
+Route::get('/home', [PageController::class, 'showHomePage'])->name('home')->middleware('auth');
+Route::get('/article', [PageController::class, 'showArticlePage']);
+Route::get('/forums', [PageController::class, 'showForumsPage']);
+Route::get('/notifications', [PageController::class, 'showNotificationPage']);
+Route::get('/search', [PageController::class, 'showSearchPage']);
+Route::get('/resources', [PageController::class, 'showResourcesPage']);
+Route::get('/profile', [PageController::class, 'showProfilePage']);
 
 //settings routing
-Route::get('/settings/lawminary', [UserController::class, 'showAboutLawminaryPage']);
-Route::get('/settings/pao', [UserController::class, 'showAboutPAOPage']);
-Route::get('/settings/account', [UserController::class, 'showAccountPage']);
-Route::get('/settings/activitylogs', [UserController::class, 'showActLogsPage']);
-Route::get('/settings/feedback', [UserController::class, 'showFeedbackPage']);
-Route::get('/settings/tos', [UserController::class, 'showTOSPage']);
+Route::get('/settings/lawminary', [PageController::class, 'showAboutLawminaryPage']);
+Route::get('/settings/pao', [PageController::class, 'showAboutPAOPage']);
+Route::get('/settings/account', [PageController::class, 'showAccountPage']);
+Route::get('/settings/activitylogs', [PageController::class, 'showActLogsPage']);
+Route::get('/settings/feedback', [PageController::class, 'showFeedbackPage']);
+Route::get('/settings/tos', [PageController::class, 'showTOSPage']);
 
 
 // Admin Backend Routing
@@ -85,7 +79,7 @@ Route::post('/moderator/mresources/upload', [ModeratorController::class, 'upload
 
 // User Backend Routing
 // Logins
-Route::post('/signup', [UserController::class, 'createAccount'])->name('users.createAccount');
+Route::post('/signup', [AccountController::class, 'createAccount'])->name('users.createAccount');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
@@ -93,14 +87,14 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name('loginAdMod');
 
 // Create Post
-Route::post('/home', [UserController::class, 'createPost'])->name('users.createPost');
+Route::post('/home', [PostController::class, 'createPost'])->name('users.createPost');
 
 // Profile Routes
-Route::get('/profile', [UserController::class, 'showProfilePosts'])->name('profile.showProfilePosts');
+Route::get('/profile', [PostController::class, 'showProfilePosts'])->name('profile.showProfilePosts');
 
-Route::post('/profile/settings/account/changepass', [UserController::class, 'changePassword'])->name('settings.changePassword');
-Route::post('/profile/settings/account/changeinfo', [UserController::class, 'updateAccountNames'])->name('settings.updateAccountNames');
-Route::post('/profile/settings/account/changeinfo2', [UserController::class, 'updateAccountInfo'])->name('settings.updateAccountInfo');
+Route::post('/profile/settings/account/changepass', [AccountController::class, 'changePassword'])->name('settings.changePassword');
+Route::post('/profile/settings/account/changeinfo', [AccountController::class, 'updateAccountNames'])->name('settings.updateAccountNames');
+Route::post('/profile/settings/account/changeinfo2', [AccountController::class, 'updateAccountInfo'])->name('settings.updateAccountInfo');
 
 
 
