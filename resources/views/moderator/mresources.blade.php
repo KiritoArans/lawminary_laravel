@@ -94,13 +94,12 @@
                         </div>
                         <form id="resourceForm" enctype="multipart/form-data" method="post" action="{{route('moderator.uploadResource')}}">
                             @csrf
-                            @method('post')
                             <label for="documentTitle">Document Title:</label>
                             <input type="text" id="documentTitle" name="documentTitle" placeholder="Enter Document Name" required>
 
                             <label for="documentDesc">Document Description:</label>
                             <input type="text" id="documentDesc" name="documentDesc" placeholder="Enter Description" required>
-
+    
                             <label for="documentFile">Upload File:</label>
                             <input type="file" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" required>
 
@@ -180,6 +179,9 @@
                             <label>File:</label>
                             <input type="file" id="rsrcDocumentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" hidden>
                             <a id="rsrcDocumentFileLink" href="" download=""></a>
+                            
+                            <label for="newDocumentFile">Upload New File:</label>
+                            <input type="file" id="newDocumentFile" name="documentFile">
                         
                             <label>Date Uploaded:</label>
                             <input id="rsrcDateUploaded" name="created_at" value="" readonly>

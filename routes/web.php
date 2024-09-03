@@ -80,7 +80,8 @@ Route::post('/moderator/accounts', [ModeratorController::class, 'addAccount'])->
 Route::delete('/moderator/accounts/{id}', [ModeratorController::class, 'destroy'])->name('maccounts.destroy');
 Route::match(['put', 'patch'], '/moderator/accounts/{id}', [ModeratorController::class, 'updateAccount'])->name('moderator.updateAccount');
 Route::get('moderator/accounts', [ModeratorController::class, 'filter'])->name('moderator.filter');
-
+// Moderator Resource Page
+Route::post('/moderator/mresources/upload', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');
 
 // User Backend Routing
 // Logins

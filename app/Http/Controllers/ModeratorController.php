@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 // use App\Models\Account;
 
 use App\Models\UserAccount;
+use App\Models\ResourceFile;
 use Illuminate\Support\Facades\Hash;
 use App\Models\general_database;
 
@@ -49,25 +50,39 @@ class moderatorController extends Controller
         return $this->showMaccounts();
     }
 
-    public function showDashboard()
+    public function showMdashboard()
     {
-        return view('moderator.dashboard');
+        return view('moderator.mdashboard');
     }
 
-    public function showForums()
+    public function showMposts()
     {
-        return view('moderator.forums');
+        return view('moderator.mposts');
     }
 
-    public function showPostPage()
+    public function showMleaderboards()
     {
-        return view('moderator.postpage');
+        return view('moderator.mleaderboards');
     }
 
-    public function showSystemContent()
+    public function showMresources()
     {
-        return view('moderator.systemcontent');
+        $rsrcfiles = ResourceFile::all(); 
+        return view('moderator.mresources', compact('rsrcfiles'));
+
     }
+    
+    public function showMforums()
+    {
+        return view('moderator.mforums');
+    }
+    
+    public function showMfaqs()
+    {
+        return view('moderator.mfaqs');
+    }
+    
+    
     
     //view/edit button account
     public function updateAccount(Request $request, $id)
@@ -154,6 +169,77 @@ class moderatorController extends Controller
         // Return the view with the filtered accounts
         return view('moderator.Maccounts', compact('accounts'));
     }
+    //upload resource file
+    public function uploadResource(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'documentTitle' => 'required|string|max:255',
+            'documentDesc' => 'required|string',
+            'documentFile' => 'required|file|mimes:pdf,doc,docx,jpg,png', // Adjust file types as needed
+        ]);
 
-    
+        // Handle file upload
+        if ($request->hasFile('documentFile')) {
+            $filePath = $request->file('documentFile')->store('resources');
+        }
+
+        // Create a new resource record
+        ResourceFile::create([
+            'documentTitle' => $request->input('documentTitle'),
+            'documentDesc' => $request->input('documentDesc'),
+            'documentFile' => $filePath, // Assuming the path is stored
+        ]);
+
+        return redirect()->route('moderator.resources')->with('success', 'Resource uploaded successfully.');
+    }
+
+    //update resource file
+    public function updateResource(Request $request, $id)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'documentTitle' => 'required|string|max:255',
+            'documentDesc' => 'required|string',
+            'documentFile' => 'nullable|file|mimes:pdf,doc,docx,jpg,png,zip', // Adjust file types as needed
+        ]);
+
+        // Find the resource by ID
+        $resource = ResourceFile::findOrFail($id);
+
+        // Update the resource data
+        $resource->documentTitle = $request->input('documentTitle');
+        $resource->documentDesc = $request->input('documentDesc');
+
+        // Handle file upload if a new file is uploaded
+        if ($request->hasFile('documentFile')) {
+            $filePath = $request->file('documentFile')->store('resources');
+            
+            $resource->documentFile = $filePath;
+        }
+
+        // Save the updated resource
+        $resource->save();
+
+        // Redirect back with a success message
+        return redirect()->route('moderator.resources')->with('success', 'Resource updated successfully.');
+    }
+
+    //delete resource file
+    public function destroyResource($id)
+    {
+        // Find the resource by ID
+        $resource = ResourceFile::findOrFail($id);
+
+        // Optionally, delete the file from storage
+        if ($resource->documentFile) {
+            \Storage::delete($resource->documentFile);
+        }
+
+        // Delete the resource record from the database
+        $resource->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('moderator.resources')->with('success', 'Resource deleted successfully.');
+    }
 }
