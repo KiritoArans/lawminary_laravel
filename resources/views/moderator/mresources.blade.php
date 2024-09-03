@@ -7,8 +7,8 @@
     <link rel="icon" href="{{ asset('imgs/lawminarylogo.png') }}" type="image/png">
     <link rel="stylesheet" href="{{ asset('css/moderator/mrecourcesstyle.css') }}">
     <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/base_admin_table_style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin/base_admin_modal_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/moderator/base_moderator_table_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/moderator/base_moderator_modal_style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -69,7 +69,7 @@
                                     <label for="filterDate">Filter by Date Uploaded:</label>
                                     <input type="date" id="filterDate" name="filterDate">
 
-                                    <button type="submit" class="apply-button">Apply Filters</button>
+                                    <button class="custom-button" type="submit" class="apply-button">Apply Filters</button>
                                 </form>
                             </div>
                         </div>
@@ -101,10 +101,10 @@
                             <input type="text" id="documentDesc" name="documentDesc" placeholder="Enter Description" required>
     
                             <label for="documentFile">Upload File:</label>
-                            <input type="file" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" required>
+                            <input class="custom-button "type="file" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" required>
 
                             <div class="form-buttons">
-                                <button type="submit" class="save-button">Add File</button>
+                                <button class="custom-button" type="submit" class="save-button">Add File</button>
                             </div>
                         </form>
                     </div>
@@ -139,7 +139,7 @@
                                     data-file="{{$rsrcfile->documentFile}}" 
                                     data-date="{{$rsrcfile->created_at}}"
                                     >View</button>
-                                    <form method="post" action="{{route('moderator.destroyResource', ['rsrcfile' => $rsrcfile])}}">
+                                    <form method="post" action="{{route('moderator.destroyResource', ['rsrcfile' => $rsrcfile])}}" onsubmit="confirmDelete(event);">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="delete-button">Delete</button>
@@ -195,5 +195,7 @@
         </main>
     </div>
     <script src="{{ asset('js/moderator_js/mresources_js.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>

@@ -15,6 +15,9 @@ table {
 }
 td:last-child{
     text-align: center;
+    display: flex;
+    justify-content: center;
+    margin: 0;
 }
 .table thead th {
     vertical-align: bottom;
@@ -45,6 +48,46 @@ td:last-child{
 .btn-view:hover {
     background-color: #218838;
 }
+
+
+
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 2px;
+}
+
+#editButton {
+    margin-left: auto;
+}
+
+.add-container{
+    display: flex;
+    justify-content: end;
+    margin-right: 2px;
+}
+#addButton{
+    padding: 10px 22px;
+}
+
+.custom-button {
+    background-color: #999;
+    color: white;
+    border: 1px solid #ccc;
+    padding: 8px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.custom-button:hover {
+    background-color: #333333;
+}
 .delete-button{
     background-color: red;
     color: white;
@@ -60,4 +103,12 @@ td:last-child{
 }
 .delete-button:hover {
     background-color: rgb(174, 0, 0);
+}
+
+#rsrcDocumentFileLink {
+    display: inline-block;
+    max-width: 100%; /* Ensure it doesn't exceed the container */
+    white-space: nowrap; /* Prevents the text from wrapping to a new line */
+    overflow: hidden; /* Hides any overflowed text */
+    text-overflow: ellipsis; /* Adds "..." to the truncated text */
 }
