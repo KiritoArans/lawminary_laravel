@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('tblposts', function (Blueprint $table) {
             $table->id();
-            $table->string('post_id', 13)->change();
+            $table->string('post_id', 13);
             $table->string('concern', 255);
+            $table->string('concernPhoto', 255)->nullable();
             $table->string('postedBy', 50);
             $table->string('approved', 10);
             $table->string('approvedBy', 100);

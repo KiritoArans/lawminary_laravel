@@ -148,13 +148,13 @@
                                 @endif
 
                                 <label for="current-password">Current Password</label>
-                                <input type="password" id="current-password" name="current_password" required>
+                                <input type="password" id="current-password" name="current_password" placeholder="Type your old password" required>
                             
                                 <label for="new-password">New Password</label>
-                                <input type="password" id="new-password" name="new_password" required>
+                                <input type="password" id="new-password" name="new_password" placeholder="Type your new password" required>
                             
                                 <label for="repeat-password">Confirm New Password</label>
-                                <input type="password" id="repeat-password" name="new_password_confirmation" required>
+                                <input type="password" id="repeat-password" name="new_password_confirmation" placeholder="Confirm new password" required>
                             
                                 <div class="action-button">
                                     <button type="button" onclick="window.location.href='{{ url()->previous() }}'">Cancel</button>

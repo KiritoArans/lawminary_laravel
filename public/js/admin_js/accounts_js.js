@@ -194,17 +194,17 @@ document.addEventListener('DOMContentLoaded', function () {
     
     function confirmDelete(accountId) {
         Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Delete ID #' + accountId + '?',
+            text: "The data will be deleted in the database.",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'Cancel'
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true,
         }).then((result) => {
             if (result.isConfirmed) {
-                // Submit the form
                 document.getElementById('delete-form-' + accountId).submit();
             }
         });
