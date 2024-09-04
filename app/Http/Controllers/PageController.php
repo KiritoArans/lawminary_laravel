@@ -24,7 +24,9 @@ class PageController extends Controller
     // User Page
     public function showHomePage()
     {
-        $posts = Posts::with('user')->get();
+        $posts = Posts::with('user')
+        ->orderBy('created_at', 'desc')
+        ->get();
         return view('users.home', compact('posts'));
     }
 

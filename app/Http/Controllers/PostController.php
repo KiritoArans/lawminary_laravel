@@ -33,14 +33,18 @@ class PostController extends Controller
 
         $PageController = new PageController();
 
-        return $PageController->showHomePage();
+        // return $PageController->showHomePage();
+
+        return redirect()->back()->with('success', 'Your concern has been posted!');
     }
     
     public function showProfilePosts()
     {
         $user = Auth::user();
 
-        $posts = Posts::where('postedBy', $user->user_id)->get();
+        $posts = Posts::where('postedBy', $user->user_id)
+              ->orderBy('created_at', 'desc')
+              ->get();
 
         return view('users.profile', compact('user', 'posts'));
         // return $this->showProfilePage($user, $posts);

@@ -49,7 +49,13 @@
                 </nav>
             </div>
             <div class="bottom-nav">
-                <a class="logout" href="../login"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
+                <a class="logout" id="logout-link">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Log out</span>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
         </aside>
         <main>
@@ -77,7 +83,7 @@
 
                             <form method="POST" action="{{ route('settings.updateAccountNames') }}" enctype="multipart/form-data">
                                 @csrf
-                                @include('displayError')
+                                @include('inclusions/response')
 
                                 <div class="profile-pic">
                                     @if(Auth::user()->userPhoto)
@@ -115,7 +121,7 @@
 
                             <form id="password-change-form" method="POST" action="{{ route('settings.changePassword') }}">
                                 @csrf
-                                @include('displayError')
+                                @include('inclusions/response')
 
                                 <label for="current-password">Current Password</label>
                                 <input type="password" id="current-password" name="current_password" placeholder="Type your old password" required>
@@ -137,7 +143,7 @@
                             <h2>Info</h2>
                             <form method="POST" action="{{ route('settings.updateAccountInfo') }}">
                                 @csrf
-                                @include('displayError')
+                                @include('inclusions/response')
 
                                 <label for="bio">Bio</label>
                                 <textarea id="bio" name="bio">Some Text</textarea>
@@ -169,6 +175,7 @@
             </content>
         </main>
     </div>
-    <script src="../../js/settings.js"></script>
+    <script src="../js/settings.js"></script>
+    <script src="../js/logout.js"></script>
 </body>
 </html>
