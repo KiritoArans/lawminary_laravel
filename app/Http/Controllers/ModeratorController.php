@@ -64,13 +64,6 @@ class moderatorController extends Controller
     {
         return view('moderator.mleaderboards');
     }
-
-    public function showMresources()
-    {
-        $rsrcfiles = ResourceFile::all(); 
-        return view('moderator.mresources', compact('rsrcfiles'));
-
-    }
     
     public function showMforums()
     {
@@ -242,4 +235,46 @@ class moderatorController extends Controller
         // Redirect back with a success message
         return redirect()->route('moderator.resources')->with('success', 'Resource deleted successfully.');
     }
+
+    //filter function resources
+    public function showMresources(Request $request)
+    {
+        // Build the query based on the filters
+        $query = ResourceFile::query();
+    
+        if ($request->filled('filterId')) {
+            $query->where('id', $request->input('filterId'));
+        }
+    
+        if ($request->filled('filterTitle')) {
+            $query->where('documentTitle', 'LIKE', '%' . $request->input('filterTitle') . '%');
+        }
+    
+        if ($request->filled('filterDesc')) {
+            $query->where('documentDesc', 'LIKE', '%' . $request->input('filterDesc') . '%');
+        }
+    
+        if ($request->filled('filterDate')) {
+            $query->whereDate('created_at', $request->input('filterDate'));
+        }
+    
+        // Get the filtered results
+        $rsrcfiles = $query->get();
+    
+        // Return the view with the filtered resources
+        return view('moderator.mresources', compact('rsrcfiles'));
+    }
+//search function for resources
+    public function searchResources(Request $request)
+        {
+            $searchTerm = $request->input('query');
+
+            $results = ResourceFile::where('documentTitle', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('documentDesc', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('id', 'LIKE', '%' . $searchTerm . '%')
+                ->get();
+
+            return response()->json($results);
+        }
+    
 }

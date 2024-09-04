@@ -47,11 +47,10 @@
                 <hr class="divider">
                 <div class="filter-container">
                     <div class="search-bar">
-                        <input type="text" placeholder="Search posts...">
+                        <input type="text" id='searchInput' placeholder="Search posts...">
                         <div class="filter-btn">
                             <button id="filterButton">Filter</button>
                         </div>
-
                         <div id="filterModal" class="modal">
                             <div class="modal-content">
                                 <span class="close-button">&times;</span>
@@ -60,11 +59,11 @@
                                     <label for="filterId">Filter by ID:</label>
                                     <input type="text" id="filterId" name="filterId">
 
-                                    <label for="filterDocument">Filter by Document:</label>
-                                    <input type="text" id="filterDocument" name="filterDocument">
-
                                     <label for="filterTitle">Filter by Resource Title:</label>
                                     <input type="text" id="filterTitle" name="filterTitle">
+
+                                    <label for="filterDocument">Filter by Document:</label>
+                                    <input type="text" id="filterDocument" name="filterDocument">
 
                                     <label for="filterDate">Filter by Date Uploaded:</label>
                                     <input type="date" id="filterDate" name="filterDate">
@@ -100,8 +99,12 @@
                             <label for="documentDesc">Document Description:</label>
                             <input type="text" id="documentDesc" name="documentDesc" placeholder="Enter Description" required>
     
-                            <label for="documentFile">Upload File:</label>
-                            <input class="custom-button "type="file" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" required>
+                            <label for="documentFile" class="upload-label">Upload File:</label>
+                            <div class="custom-file-upload">
+                                <label for="documentFile" class="custom-button">Choose File</label>
+                                <span id="file-name">No file chosen</span>
+                                <input type="file" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" required>
+                            </div>
 
                             <div class="form-buttons">
                                 <button class="custom-button" type="submit" class="save-button">Add File</button>
@@ -111,46 +114,46 @@
                 </div>
             </header>
             <content>
-                <div class="table">
-                    <table class="resource-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Document Name</th>
-                                <th>Document Desc</th>
-                                <th>File</th>
-                                <th>Date Uploaded</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($rsrcfiles as $rsrcfile)
-                            <tr>
-                                <td>{{$rsrcfile->id}}</td>
-                                <td>{{$rsrcfile->documentTitle}}</td>
-                                <td>{{$rsrcfile->documentDesc}}</td>
-                                <td>{{$rsrcfile->documentFile}}</td>
-                                <td>{{$rsrcfile->created_at}}</td>
-                                <td>
-                                    <button type="button" class="custom-button view-button" 
-                                    data-id="{{$rsrcfile->id}}" 
-                                    data-title="{{$rsrcfile->documentTitle}}" 
-                                    data-desc="{{$rsrcfile->documentDesc}}" 
-                                    data-file="{{$rsrcfile->documentFile}}" 
-                                    data-date="{{$rsrcfile->created_at}}"
-                                    >View</button>
-                                    <form method="post" action="{{route('moderator.destroyResource', ['rsrcfile' => $rsrcfile])}}" onsubmit="confirmDelete(event);">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="delete-button">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                    <div class="table" id="searchResults">
+                        <table class="resource-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Document Name</th>
+                                    <th>Document Desc</th>
+                                    <th>File</th>
+                                    <th>Date Uploaded</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($rsrcfiles as $rsrcfile)
+                                <tr>
+                                    <td>{{$rsrcfile->id}}</td>
+                                    <td>{{$rsrcfile->documentTitle}}</td>
+                                    <td>{{$rsrcfile->documentDesc}}</td>
+                                    <td>{{$rsrcfile->documentFile}}</td>
+                                    <td>{{$rsrcfile->created_at}}</td>
+                                    <td>
+                                        <button type="button" class="custom-button view-button" 
+                                        data-id="{{$rsrcfile->id}}" 
+                                        data-title="{{$rsrcfile->documentTitle}}" 
+                                        data-desc="{{$rsrcfile->documentDesc}}" 
+                                        data-file="{{$rsrcfile->documentFile}}" 
+                                        data-date="{{$rsrcfile->created_at}}"
+                                        >View</button>
+                                        <form method="post" action="{{route('moderator.destroyResource', ['rsrcfile' => $rsrcfile])}}" onsubmit="confirmDelete(event);">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="delete-button">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            
                 <div id="viewModal" class="modal">
                     <div class="modal-content">
                         <span class="close-button" id="closeButton">&times;</span>
