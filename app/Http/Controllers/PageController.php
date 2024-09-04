@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserAccount;
+use App\Models\Posts;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -23,7 +24,8 @@ class PageController extends Controller
     // User Page
     public function showHomePage()
     {
-        return view('users.home');
+        $posts = Posts::with('user')->get();
+        return view('users.home', compact('posts'));
     }
 
     public function showArticlePage()

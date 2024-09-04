@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Posts;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\PageController;
 
 class PostController extends Controller
 {
@@ -29,7 +30,10 @@ class PostController extends Controller
 
         $post->save();
 
-        return view('users.home');
+
+        $PageController = new PageController();
+
+        return $PageController->showHomePage();
     }
     
     public function showProfilePosts()

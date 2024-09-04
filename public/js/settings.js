@@ -31,17 +31,6 @@ window.onclick = function(event) {
 }
 
 
-document.getElementById('password-change-form').addEventListener('submit', function(e) {
-    const newPassword = document.getElementById('new-password').value;
-    const repeatPassword = document.getElementById('repeat-password').value;
-
-    if (newPassword !== repeatPassword) {
-        e.preventDefault();
-        alert('New passwords do not match.');
-    }
-});
-
-
 document.getElementById('userPhotoInput').addEventListener('change', function(event) {
     const file = event.target.files[0];
     if (file) {

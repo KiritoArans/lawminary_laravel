@@ -367,3 +367,174 @@ header hr {
 .profile-bookmarked{
     display: none;
 }
+
+
+
+
+
+
+/* General modal container */
+.comment-modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 9999; /* Always on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    overflow: auto; /* Enable scroll if content overflows */
+    justify-content: center;
+    align-items: center;
+}
+
+.comment-modal.show {
+    display: flex; /* Show modal */
+}
+
+/* Modal content box */
+.clicked-post-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: modalFadeIn 0.3s ease-in-out;
+}
+
+/* Fade-in animation */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* User info section */
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* .user-profile-photo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+} */
+
+.clicked-post-info h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #333;
+}
+
+.clicked-post-info p {
+    margin: 0;
+    font-size: 14px;
+    color: #777;
+}
+
+/* Options (Delete, Report) */
+.clicked-post-options {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.clicked-post-options .options {
+    display: none; /* Hide options by default */
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.clicked-post-options i {
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.clicked-post-options:hover .options {
+    display: block;
+}
+
+/* Post content */
+.clicked-post-text {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.clicked-post-text img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+/* Horizontal divider */
+/* hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 15px 0;
+} */
+
+/* Action buttons (Hit, Comment, Bookmark) */
+.actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+}
+
+.actions button i {
+    margin-right: 5px;
+}
+
+.actions button:hover {
+    color: var(--primary-color);
+}
+
+/* Modal close button */
+.modal .close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+}
+
+.comment-field{
+    display: flex;
+    margin-top: .5rem;
+}
+.comment-field .user-info{
+    margin: 0;
+}
+.comment-field .user-info h4, .user-info label{
+    margin: 0;
+}
+.comment-field form input{
+    width: 100%;
+}
+.comment-field form button{
+    cursor: pointer;
+}

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('concern', 255);
             $table->string('concernPhoto', 255)->nullable();
             $table->string('postedBy', 50);
-            $table->string('approved', 10);
-            $table->string('approvedBy', 100);
+            $table->string('approved', 10)->nullable();
+            $table->string('approvedBy', 100)->nullable();
             $table->timestamps();
         });
     }

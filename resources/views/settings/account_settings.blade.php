@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="{{ asset('js/library_js/sweetalertV2.js') }}"></script>
 </head>
 <body>
     <div class="container">
@@ -76,34 +77,14 @@
 
                             <form method="POST" action="{{ route('settings.updateAccountNames') }}" enctype="multipart/form-data">
                                 @csrf
-                                @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                                @endif
+                                @include('displayError')
 
-                                @if(session('error'))
-                                <div class="error">
-                                    {{ session('error') }}
-                                </div>
-                                @endif
-
-                                @if($errors->any())
-                                <div class="error">
-                                    <ul>
-                                        @foreach($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                @endif
                                 <div class="profile-pic">
                                     @if(Auth::user()->userPhoto)
                                     <img id="profileImagePreview" src="{{ Storage::url(Auth::user()->userPhoto) }}" alt="User Photo">
                                     @else
                                         <img id="profileImagePreview" src="../../imgs/user-img.png" alt="Profile Picture">
                                     @endif
-                                    {{-- <img id="profileImagePreview" src="{{ Storage::url(Auth::user()->userPhoto) }}" alt="User Photo" style="max-width: 150px; height: auto;"> --}}
                                     
                                     <input type="file" name="userPhoto" id="userPhotoInput">
 
@@ -134,28 +115,7 @@
 
                             <form id="password-change-form" method="POST" action="{{ route('settings.changePassword') }}">
                                 @csrf
-                                
-                                @if(session('success'))
-                                <div class="alert alert-success">
-                                    {{ session('success') }}
-                                </div>
-                                @endif
-
-                                @if(session('error'))
-                                <div class="error">
-                                    {{ session('error') }}
-                                </div>
-                                @endif
-
-                                @if($errors->any())
-                                <div class="error">
-                                    <ul>
-                                        @foreach($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                @endif
+                                @include('displayError')
 
                                 <label for="current-password">Current Password</label>
                                 <input type="password" id="current-password" name="current_password" placeholder="Type your old password" required>
@@ -177,7 +137,8 @@
                             <h2>Info</h2>
                             <form method="POST" action="{{ route('settings.updateAccountInfo') }}">
                                 @csrf
-                            
+                                @include('displayError')
+
                                 <label for="bio">Bio</label>
                                 <textarea id="bio" name="bio">Some Text</textarea>
                             

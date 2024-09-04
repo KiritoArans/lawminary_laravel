@@ -83,35 +83,54 @@
             </header>
             <content>
                 <div class="posts">
-                    <div class="post-content">
-                        <div class="post-header">
-                            <div class="user-info">
-                                <img src="../imgs/user-img.png" alt="Profile Picture" class="profile-pic">
-                                <div class="post-info">
-                                    <h2>Name Surname</h2>
-                                    <p>@username</p>
+                    @foreach($posts as $post)
+                        <div class="post-content">
+                            <div class="post-header">
+                                <div class="user-info">
+                                    <!-- Check if the user exists before trying to access userPhoto -->
+                                    @if($post->user)
+                                        <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="profile-pic">
+                                        <div class="post-info">
+                                            <h2>{{ $post->user->firstName }} {{ $post->user->lastName }}</h2>
+                                            <p>@<span>{{ $post->user->username }}</span></p>
+                                        </div>
+                                    @else
+                                        <!-- Fallback if the user doesn't exist -->
+                                        <img src="../imgs/user-img.png" alt="Default Profile Picture" class="profile-pic">
+                                        <div class="post-info">
+                                            <h2>Unknown User</h2>
+                                            <p>@unknown</p>
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="post-options">
+                                    <div class="options">
+                                        <a href="#">Action</a>
+                                        <a href="#">Report</a>
+                                    </div>
+                                    <i class="fas fa-ellipsis-v"></i>
                                 </div>
                             </div>
-                            <div class="post-options">
-                                <div class="options">
-                                    <a href="">Action</a>
-                                    <a href="">Report</a>
-                                </div>
-                                <i class="fas fa-ellipsis-v"></i>
+                            <hr>
+                            <div class="post-text">
+                                <p>{{ $post->concern }}</p>
+                
+                                <!-- Check for post image -->
+                                @if($post->concernPhoto)
+                                    <img src="{{ Storage::url($post->concernPhoto) }}" alt="Post Image" style="max-width: 100%; height: auto;">
+                                @endif
+                            </div>
+                            <hr>
+                            <div class="actions">
+                                <button><i class="fa-solid fa-gavel"></i> Hit</button>
+                                <button class="btn-comment" data-post-id="{{ $post->post_id }}"><i class="fas fa-comment"></i> Comment</button>
+                                <button><i class="fas fa-bookmark"></i> Bookmark</button>
                             </div>
                         </div>
-                        <hr>
-                        <div class="post-text">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                        </div>
-                        <hr>
-                        <div class="actions">
-                            <button><i class="fa-solid fa-gavel"></i> Hit</button>
-                            <button><i class="fas fa-comment"></i> Comment</button>
-                            <button><i class="fas fa-bookmark"></i> Bookmark</button>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
+                
+                
                 <div class="new-post">
                     <i class="fas fa-edit"></i>
                 </div>

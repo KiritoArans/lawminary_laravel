@@ -17,4 +17,13 @@ class Posts extends Model
         'postedBy', 
         'approvedBy',
     ];
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'post_id', 'post_id'); // Assuming 'post_id' is the key used in both tables
+    }
+    public function user()
+    {
+        return $this->belongsTo(UserAccount::class, 'postedBy', 'user_id');
+    }
 }

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\AuthController;
@@ -92,6 +93,8 @@ Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name('loginAd
 
 // Create Post
 Route::post('/home', [PostController::class, 'createPost'])->name('users.createPost');
+
+Route::post('/comment', [CommentController::class, 'createComment'])->name('users.createComment');
 
 // Profile Routes
 Route::get('/profile', [PostController::class, 'showProfilePosts'])->name('profile.showProfilePosts');
