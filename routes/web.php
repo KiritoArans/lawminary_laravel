@@ -74,7 +74,7 @@ Route::get('admin/account', [AdminController::class, 'filter'])->name('admin.fil
 Route::post('/moderator/accounts', [ModeratorController::class, 'addAccount'])->name('moderator.addAccount');
 Route::delete('/moderator/accounts/{id}', [ModeratorController::class, 'destroy'])->name('maccounts.destroy');
 Route::match(['put', 'patch'], '/moderator/accounts/{id}', [ModeratorController::class, 'updateAccount'])->name('moderator.updateAccount');
-Route::get('/moderator/accounts', [ModeratorController::class, 'filter'])->name('moderator.filter');
+Route::get('/moderator/accounts/filter', [ModeratorController::class, 'filter'])->name('moderator.filter');
 
 // Moderator Resource Page
 Route::post('/moderator/resources/upload', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');

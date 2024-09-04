@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="{{ asset('js/library_js/sweetalertV2.js') }}"></script>
 </head>
 <body>
     <div class="container-fluid my-4">
@@ -58,7 +59,8 @@
                             <span class="close-button" id="closeFilterModal">&times;</span>
                             <h2>Filter Accounts</h2>
                             <!--filter accounts-->
-                             <form id="filterForm" method="GET">
+                            <form id="filterForm" method="GET" action="{{ route('moderator.filter') }}">
+
                                 <label for="filterId">ID:</label>
                                 <input type="text" id="filterId" name="filterId" value="{{ request('filterId') }}">
                             
@@ -90,15 +92,7 @@
                             
                         <form id="addForm" method="POST" action="{{ route('moderator.addAccount') }}">
                             @csrf
-                            @if ($errors->any())
-                                <div class="error">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+                            @include('displayError')
                         <label for="firstName">First Name:</label>
                         <input type="text" id="firstName" name="firstName" value="{{ old('firstName') }}" required>
 
@@ -219,9 +213,9 @@
                                                     </ul>
                                                 </div>
                                             @endif
-                                            <form id="editAccountForm" method="POST">
+                                            <form id="editAccountForm" method="POST" aenctype="multipart/form-data">
                                                 @csrf
-                                                @method('PATCH')
+                                                @method('PUT')
                                                     <input type="hidden" id="editId" name="id" value="">
                                                                                
                                                     <label for="editUsername">Username</label>
@@ -276,7 +270,7 @@
                                                     </select>
 
                                                     <button type="submit" class="custom-button">Save Changes</button>
-                                            </form>
+                                                </form>
                                         </div>
                                     </div>
                                         <!--delete button-->
@@ -296,5 +290,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('js/moderator_js/maccounts_js.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 </html>

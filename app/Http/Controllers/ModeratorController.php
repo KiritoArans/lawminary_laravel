@@ -8,7 +8,7 @@ use App\Models\UserAccount;
 use App\Models\ResourceFile;
 use Illuminate\Support\Facades\Hash;
 use App\Models\general_database;
-
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 
@@ -24,31 +24,60 @@ class moderatorController extends Controller
         $accounts = UserAccount::all();
         return view('moderator.Maccounts', ['accounts' => $accounts]);
     }
-    public function addAccount(Request $request){
-       //dd($request);
-       $data = $request->validate([
-        'user_id' => 'nullable',
-        'username' => 'required|unique:tblaccounts,username',
-        'email' => 'required|unique:tblaccounts,email',
-        'password' => 'required|min:8|confirmed',
-        'firstName' => 'required',
-        'middleName' => 'nullable',
-        'lastName' => 'required',
-        'birthDate' => 'required',
-        'nationality' => 'required',
-        'sex' => 'nullable',
-        'contactNumber' => 'required',
-        'accountType' => 'nullable',
-        'restrict' => 'nullable',
-        'restrictDays' => 'nullable',
-    ]);
-
-    $data['password'] = Hash::make($data['password']);
-
-    $newAccount = UserAccount::create($data);
-
-        return $this->showMaccounts();
+    
+    public function addAccount(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'nullable',
+            'username' => 'required|unique:tblaccounts,username',
+            'email' => 'required|unique:tblaccounts,email',
+            'password' => 'required|min:8|confirmed',
+            'firstName' => 'required',
+            'middleName' => 'nullable',
+            'lastName' => 'required',
+            'birthDate' => 'required',
+            'nationality' => 'required',
+            'sex' => 'nullable',
+            'contactNumber' => 'required',
+            'accountType' => 'nullable',
+            'restrict' => 'nullable',
+            'restrictDays' => 'nullable',
+        ]);
+    
+        if ($validator->fails()) {
+            return redirect()->route('moderator.accounts')
+                ->withErrors($validator)
+                ->withInput();
+        }
+    
+        // Collect all data from the request except for password
+        $data = $request->only([
+            'user_id',
+            'username',
+            'email',
+            'firstName',
+            'middleName',
+            'lastName',
+            'birthDate',
+            'nationality',
+            'sex',
+            'contactNumber',
+            'accountType',
+            'restrict',
+            'restrictDays',
+        ]);
+    
+        // Hash the password and include it in the data
+        $data['password'] = Hash::make($request->password);
+    
+        // Create the user account
+        UserAccount::create($data);
+    
+        return redirect()->route('moderator.accounts')
+            ->with('success', 'Account created successfully');
     }
+    
+    
+      
 
     public function showMdashboard()
     {
@@ -75,18 +104,14 @@ class moderatorController extends Controller
         return view('moderator.mfaqs');
     }
     
-    
-    
     //view/edit button account
     public function updateAccount(Request $request, $id)
     {
-        $account = UserAccount::findOrFail($id);
-
+    
+        // Validate the incoming request data
         $request->validate([
-            // 'user_id' => 'nullable',
             'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
-            // 'password' => 'nullable|string|min:8|confirmed',
             'firstName' => 'required|string|max:255',
             'middleName' => 'nullable|string|max:255',
             'lastName' => 'required|string|max:255',
@@ -99,10 +124,11 @@ class moderatorController extends Controller
             'accountType' => 'nullable|string',
         ]);
 
-        // $account->user_id = $request->input('user_id');
+        $account = UserAccount::findOrFail($id);
+    
+        // Update the account details
         $account->username = $request->input('username');
         $account->email = $request->input('email');
-        // $account->password = $request->input('password');
         $account->firstName = $request->input('firstName');
         $account->middleName = $request->input('middleName');
         $account->lastName = $request->input('lastName');
@@ -113,15 +139,16 @@ class moderatorController extends Controller
         $account->restrict = $request->input('restrict');
         $account->restrictDays = $request->input('restrictDays');
         $account->accountType = $request->input('accountType');
-        // if ($request->filled('password')) {
-        //     $validated['password'] = bcrypt($request->input('password'));
-        // } else {
-        //     unset($validated['password']);
-        // }
-
+    
+        // Save the updated account
         $account->save();
+    
+        // Redirect back to the accounts list WITHOUT the ID in the URL
+        //return redirect()->route('moderator.accounts')->with('success', 'Account updated successfully.');
         return $this->showMaccounts();
     }
+
+    
     //delete account
     public function destroy($id)
     {
