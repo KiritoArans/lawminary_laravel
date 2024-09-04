@@ -62,8 +62,8 @@
                                     <label for="filterTitle">Filter by Resource Title:</label>
                                     <input type="text" id="filterTitle" name="filterTitle">
 
-                                    <label for="filterDocument">Filter by Document:</label>
-                                    <input type="text" id="filterDocument" name="filterDocument">
+                                    <label for="filterDesc">Filter by Document:</label>
+                                    <input type="text" id="filterDesc" name="filterDesc">
 
                                     <label for="filterDate">Filter by Date Uploaded:</label>
                                     <input type="date" id="filterDate" name="filterDate">
@@ -99,12 +99,8 @@
                             <label for="documentDesc">Document Description:</label>
                             <input type="text" id="documentDesc" name="documentDesc" placeholder="Enter Description" required>
     
-                            <label for="documentFile" class="upload-label">Upload File:</label>
-                            <div class="custom-file-upload">
-                                <label for="documentFile" class="custom-button">Choose File</label>
-                                <span id="file-name">No file chosen</span>
-                                <input type="file" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" required>
-                            </div>
+                            <label for="documentFile">Upload File:</label>
+                            <input class="custom-button "type="file" id="documentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" required>
 
                             <div class="form-buttons">
                                 <button class="custom-button" type="submit" class="save-button">Add File</button>
@@ -179,13 +175,10 @@
                             <label>Document Description:</label>
                             <input type="text" id="rsrcDocumentDesc" name="documentDesc" placeholder="Enter Description" value="">
                         
-                            <label>File:</label>
-                            <input type="file" id="rsrcDocumentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip" hidden>
+                            <label for="newDocumentFile">Upload New File:</label>
+                            <input type="file" id="newDocumentFile" name="documentFile" accept=".pdf,.doc,.docx,.jpg,.png,.zip">
                             <a id="rsrcDocumentFileLink" href="" download=""></a>
                             
-                            <label for="newDocumentFile">Upload New File:</label>
-                            <input type="file" id="newDocumentFile" name="documentFile">
-                        
                             <label>Date Uploaded:</label>
                             <input id="rsrcDateUploaded" name="created_at" value="" readonly>
                         
