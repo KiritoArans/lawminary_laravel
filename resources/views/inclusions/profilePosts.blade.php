@@ -1,6 +1,6 @@
 <div class="profile-posts">
-    <div class="posts">
-        @foreach($posts as $post)
+    @foreach($posts as $post)
+        <div class="posts">
             @if($posts->isEmpty())
                 <p>No posts yet.</p>
             @endif
@@ -78,6 +78,7 @@
                     <div class="comment-section">
                         <div class="comment-area">
                         @foreach($post->comments as $comment)
+
                             <div class="user-comment">
                                 <div>
                                     @if($comment->user && $comment->user->userPhoto)
@@ -104,35 +105,33 @@
                                     </div>
                                 </div>
                             </div>
-                                    @foreach($comment->reply as $reply)
+                            @foreach($comment->reply as $reply)
 
-                                        <div class="user-reply">
-                                            <div>
-                                                @if($reply->user && $reply->user->userPhoto)
-                                                    <img src="{{ Storage::url($reply->user->userPhoto) }}" alt="User Profile Picture" class="user-profile-photo">
-                                                @else
-                                                    <img src="../../imgs/user-img.png" alt="Default User Image" class="user-profile-photo">
-                                                @endif
-                                            </div>
-                                            <div class="user-reply-content">
-                                                <span>{{ $reply->user ? $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}</span>
-                                                <label>replied to 
-                                                    <span>{{ $comment->user ? $comment->user->firstName: 'Unknown User' }}</span>'s comment.
-                                                </label>
-                                                <p>{{ $reply->reply }}</p>
-                                                <div class="date-reply">
-                                                    <p class="comment-time">{{ $reply->created_at->diffForHumans() }}</p>
-                                                </div>
-                                            </div>
+                                <div class="user-reply">
+                                    <div>
+                                        @if($reply->user && $reply->user->userPhoto)
+                                            <img src="{{ Storage::url($reply->user->userPhoto) }}" alt="User Profile Picture" class="user-profile-photo">
+                                        @else
+                                            <img src="../../imgs/user-img.png" alt="Default User Image" class="user-profile-photo">
+                                        @endif
+                                    </div>
+                                    <div class="user-reply-content">
+                                        <span>{{ $reply->user ? $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}</span>
+                                        <label>replied to 
+                                            <span>{{ $comment->user ? $comment->user->firstName: 'Unknown User' }}</span>'s comment.
+                                        </label>
+                                        <p>{{ $reply->reply }}</p>
+                                        <div class="date-reply">
+                                            <p class="comment-time">{{ $reply->created_at->diffForHumans() }}</p>
                                         </div>
+                                    </div>
+                                </div>
 
-                                    @endforeach
+                            @endforeach
 
                         @endforeach
-                    </div>
-            
+                        </div>
                         <hr>
-            
                         <div class="comment-field">
                             <form method="POST" action="{{ route('users.createComment') }}">
                                 @csrf
@@ -149,6 +148,6 @@
                     </div>
                 </div>
             </div>
-        @endforeach
-    </div>
+        </div>
+    @endforeach
 </div>

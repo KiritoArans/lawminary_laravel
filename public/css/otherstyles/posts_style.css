@@ -358,12 +358,12 @@
 }
 
 /* Action buttons (Hit, Comment, Bookmark) */
-.actions {
+.clicked-post-content .actions {
     display: flex;
     justify-content: space-around;
 }
 
-.actions button {
+.clicked-post-content .actions button {
     background: none;
     border: none;
     cursor: pointer;
@@ -373,13 +373,19 @@
     align-items: center;
 }
 
-.actions button i {
+.clicked-post-content .actions button i {
     margin-right: 5px;
 }
 
-.actions button:hover {
+.clicked-post-content .actions button:nth-child(2) {
+    color: var(--primary-color);
+    font-weight: 800;
+}
+
+.clicked-post-content .actions button:hover {
     color: var(--primary-color);
 }
+
 
 /* Modal close button */
 .modal .close {
@@ -391,6 +397,8 @@
     cursor: pointer;
 }
 
+
+/* Comment CSS */
 .comment-area{
     display: flex;
     flex-direction: column;
@@ -419,6 +427,7 @@
 }
 
 
+/* Reply CSS */
 .user-reply{
     margin-left: 4rem;
     display: flex;
