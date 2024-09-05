@@ -26,4 +26,9 @@ class Posts extends Model
     {
         return $this->belongsTo(UserAccount::class, 'postedBy', 'user_id');
     }
+    public function reply()
+    {
+        return $this->hasMany(Reply::class, 'comment_id', 'comment_id');
+    }
+
 }

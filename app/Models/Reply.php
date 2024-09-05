@@ -5,16 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class Reply extends Model
 {
     use HasFactory;
-
-    protected $table = 'tblcomments';
+    protected $table = 'tblreplies';
 
     protected $fillable = [
-        'comment', 
+        'reply', 
         'user_id', 
         'post_id',
+        'comment_id',
     ];
 
     public function post()
@@ -26,11 +26,9 @@ class Comment extends Model
     {
         return $this->belongsTo(UserAccount::class, 'user_id', 'user_id');
     }
-    public function reply()
+
+    public function comment()
     {
-        return $this->hasMany(Reply::class, 'comment_id', 'comment_id');
+        return $this->belongsTo(Comment::class, 'user_id', 'user_id');
     }
-
-    
 }
-

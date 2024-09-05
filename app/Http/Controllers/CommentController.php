@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Models\Reply;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
@@ -28,6 +29,28 @@ class CommentController extends Controller
             'post_id' => $request->post_id, // Pass the post ID to keep the modal open
             'new_comment' => $comment,      // Pass the new comment
         ]);
+    }
+    
+
+    // Reply Function
+    public function createReply(Request $request)
+    {
+        $request->validate([
+            'reply' => 'required|string|max:2500',
+            'post_id' => 'required|exists:tblposts,post_id',
+            'comment_id' => 'required|exists:tblcomments,comment_id',
+        ]);
+
+        $reply = new Reply();
+        $reply->reply_id = uniqid();
+        $reply->comment_id = $request->input('comment_id');
+        $reply->post_id = $request->input('post_id');
+        $reply->user_id = Auth::user()->user_id;
+        $reply->reply = $request->input('reply');
+        $reply->save();
+
+        // Redirect back or return a response
+        return redirect()->back()->with('success', 'Replied posted');
     }
 }
 

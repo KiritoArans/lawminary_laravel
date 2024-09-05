@@ -96,6 +96,8 @@ Route::post('/home', [PostController::class, 'createPost'])->name('users.createP
 
 Route::post('/comment', [CommentController::class, 'createComment'])->name('users.createComment');
 
+route::post('/reply', [CommentController::class, 'createReply'])->name('users.createReply');
+
 // Profile Routes
 Route::get('/profile', [PostController::class, 'showProfilePosts'])->name('profile.showProfilePosts');
 Route::post('/profile/settings/account/changepass', [AccountController::class, 'changePassword'])->name('settings.changePassword');
