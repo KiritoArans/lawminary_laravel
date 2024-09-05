@@ -2,8 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountsController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModeratorController;
@@ -21,7 +22,7 @@ Route::get('/admin/dashboard', [AdminController::class, 'showDashboard'])->name(
 
 Route::get('/admin/postpage', [AdminController::class, 'showPostPage']);
 
-Route::get('/admin/account', [AdminController::class, 'showAccount']);
+Route::get('/admin/account', [AdminController::class, 'showAccount'])->name('admin.account');
 
 Route::get('/admin/forums', [AdminController::class, 'showForums']);
 
@@ -65,16 +66,17 @@ Route::get('/settings/tos', [PageController::class, 'showTOSPage']);
 // Admin Backend Routing
 
 // Admin Accounts Page
-Route::post('/admin/accounts', [AdminController::class, 'addAccount'])->name('admin.addAccount');
-Route::delete('/admin/account/{id}', [AdminController::class, 'destroy'])->name('account.destroy');
-Route::match(['put', 'patch'], '/admin/account/{id}', [AdminController::class, 'updateAccount'])->name('admin.updateAccount');
-Route::get('admin/account', [AdminController::class, 'filter'])->name('admin.filter');
+Route::post('/admin/account', [AccountsController::class, 'addAccount'])->name('admin.addAccount');
+Route::delete('/admin/account/{id}', [AccountsController::class, 'destroyAccount'])->name('admin.destroyAccount');
+Route::match(['put', 'patch'], '/admin/account/{id}', [AccountsController::class, 'updateAccount'])->name('admin.updateAccount');
+Route::get('admin/account/filter', [AccountsController::class, 'filterAccount'])->name('admin.filterAccount');
 
 // Moderator Accounts Page
-Route::post('/moderator/accounts', [ModeratorController::class, 'addAccount'])->name('moderator.addAccount');
-Route::delete('/moderator/accounts/{id}', [ModeratorController::class, 'destroy'])->name('maccounts.destroy');
-Route::match(['put', 'patch'], '/moderator/accounts/{id}', [ModeratorController::class, 'updateAccount'])->name('moderator.updateAccount');
-Route::get('/moderator/accounts/filter', [ModeratorController::class, 'filter'])->name('moderator.filter');
+Route::post('/moderator/accounts', [AccountsController::class, 'addAccount'])->name('moderator.addAccount');
+Route::delete('/moderator/accounts/{id}', [AccountsController::class, 'destroyAccount'])->name('moderator.destroyAccount');
+Route::match(['put', 'patch'], '/moderator/accounts/{id}', [AccountsController::class, 'updateAccount'])->name('moderator.updateAccount');
+Route::get('/moderator/accounts/filter', [AccountsController::class, 'filterAccount'])->name('moderator.filterAccount');
+
 
 // Moderator Resource Page
 Route::post('/moderator/resources/upload', [ModeratorController::class, 'uploadResource'])->name('moderator.uploadResource');

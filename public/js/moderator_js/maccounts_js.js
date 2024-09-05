@@ -119,9 +119,10 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('editRestrictDays').value = restrictDays;
             document.getElementById('editAccountType').value = accountType;
 
-            var formAction = `/moderator/accounts/${id}`;
+            var formAction = window.location.pathname.includes('admin') 
+            ? `/admin/account/${id}` 
+            : `/moderator/accounts/${id}`;
             document.getElementById('editAccountForm').action = formAction;
-
             modal.style.display = 'block';
         });
     });

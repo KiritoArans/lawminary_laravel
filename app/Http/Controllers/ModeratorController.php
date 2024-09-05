@@ -24,60 +24,6 @@ class moderatorController extends Controller
         $accounts = UserAccount::all();
         return view('moderator.Maccounts', ['accounts' => $accounts]);
     }
-    
-    public function addAccount(Request $request) {
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'nullable',
-            'username' => 'required|unique:tblaccounts,username',
-            'email' => 'required|unique:tblaccounts,email',
-            'password' => 'required|min:8|confirmed',
-            'firstName' => 'required',
-            'middleName' => 'nullable',
-            'lastName' => 'required',
-            'birthDate' => 'required',
-            'nationality' => 'required',
-            'sex' => 'nullable',
-            'contactNumber' => 'required',
-            'accountType' => 'nullable',
-            'restrict' => 'nullable',
-            'restrictDays' => 'nullable',
-        ]);
-    
-        if ($validator->fails()) {
-            return redirect()->route('moderator.accounts')
-                ->withErrors($validator)
-                ->withInput();
-        }
-    
-        // Collect all data from the request except for password
-        $data = $request->only([
-            'user_id',
-            'username',
-            'email',
-            'firstName',
-            'middleName',
-            'lastName',
-            'birthDate',
-            'nationality',
-            'sex',
-            'contactNumber',
-            'accountType',
-            'restrict',
-            'restrictDays',
-        ]);
-    
-        // Hash the password and include it in the data
-        $data['password'] = Hash::make($request->password);
-    
-        // Create the user account
-        UserAccount::create($data);
-    
-        return redirect()->route('moderator.accounts')
-            ->with('success', 'Account created successfully');
-    }
-    
-    
-      
 
     public function showMdashboard()
     {
@@ -161,34 +107,7 @@ class moderatorController extends Controller
         // Redirect back to the accounts list with a success message
         return $this->showMaccounts();
     }
-    public function filter(Request $request)
-    {
-        // Start with a query builder
-        $query = UserAccount::query();
-
-        // Apply filters based on the request inputs
-        if ($request->filled('filterId')) {
-            $query->where('id', $request->input('filterId'));
-        }
-
-        if ($request->filled('filterUsername')) {
-            $query->where('username', 'like', '%' . $request->input('filterUsername') . '%');
-        }
-
-        if ($request->filled('filterEmail')) {
-            $query->where('email', 'like', '%' . $request->input('filterEmail') . '%');
-        }
-
-        if ($request->filled('accountType') && $request->input('accountType') !== 'all') {
-            $query->where('accountType', $request->input('accountType'));
-        }
-
-        // Get the filtered results
-        $accounts = $query->get();
-
-        // Return the view with the filtered accounts
-        return view('moderator.Maccounts', compact('accounts'));
-    }
+    
     //upload resource file
     public function uploadResource(Request $request)
     {
