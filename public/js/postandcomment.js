@@ -56,12 +56,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Reply
 document.addEventListener('DOMContentLoaded', function () {
-    const replyButtons = document.querySelectorAll('.reply-btn');
+    let replyButtons = document.querySelectorAll('.reply-btn');
 
     replyButtons.forEach(function (button) {
         button.addEventListener('click', function () {
-            const commentId = this.getAttribute('data-comment-id');
-            const replyField = document.getElementById('reply-field-' + commentId);
+            let commentId = this.getAttribute('data-comment-id');
+            let replyField = document.getElementById('reply-field-' + commentId);
 
             // Toggle the display of the reply field
             if (replyField.style.display === 'none' || replyField.style.display === '') {

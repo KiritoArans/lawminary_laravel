@@ -50,7 +50,8 @@ class CommentController extends Controller
         $reply->save();
 
         // Redirect back or return a response
-        return redirect()->back()->with('success', 'Replied posted');
+        // return redirect()->back()->with('success', 'Replied posted');
+        return redirect()->back();
     }
 }
 

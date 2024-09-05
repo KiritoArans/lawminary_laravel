@@ -248,7 +248,7 @@
 }
 
 
-
+/* Open Comments Modal*/
 .comment-modal {
     display: none; /* Hidden by default */
     position: fixed;
@@ -276,9 +276,12 @@
     border-radius: 8px;
     width: 90%;
     max-width: 600px;
+    /* max-height: 600px; */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     position: relative;
     animation: modalFadeIn 0.3s ease-in-out;
+    overflow: hidden;
+    /* overflow: auto; */
 }
 .clicked-post-content hr{
     margin-bottom: .25rem;
@@ -385,9 +388,6 @@
 .clicked-post-content .actions button:hover {
     color: var(--primary-color);
 }
-
-
-/* Modal close button */
 .modal .close {
     position: absolute;
     top: 10px;
@@ -402,7 +402,11 @@
 .comment-area{
     display: flex;
     flex-direction: column;
-}
+    max-height: 400px;
+    overflow: auto;
+}::-webkit-scrollbar {
+        /* width: 1rem;  */
+    }
 .user-comment{
     display: flex;
     margin-top: .5rem;
@@ -486,6 +490,10 @@
 }
 
 
+/* Comment Field */
+.comment-field{
+    display: block;
+}
 .comment-field form{
     display: flex;
     margin-top: .5rem;

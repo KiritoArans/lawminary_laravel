@@ -8,10 +8,7 @@
     <link rel="stylesheet" href="{{ asset ('css/profile_style.css') }}">
     <link rel="stylesheet" href="{{ asset ('css/nav_style.css') }}">
     <link rel="stylesheet" href="{{ asset ('css/otherstyles/posts_style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <script src="{{ asset('js/library_js/sweetalertV2.js') }}"></script>
+    @include('inclusions/libraryLinks')
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -122,34 +119,7 @@
 
                     @include('inclusions/createPostModal')
                     
-                   <div class="profile-comments">
-                        <div class="comments">
-                            <div class="comment-content">
-                                <div class="comment-header">
-                                    <div class="user-info">
-                                        <img src="../imgs/user-img.png" alt="Profile Picture" class="user-profile-photo">
-                                        <div class="comment-info">
-                                            <h2>Name Surname</h2>
-                                            <p>@username</p>
-                                        </div>
-                                    </div>
-                                        <div class="comment-options">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </div>
-                                </div>
-                                <hr>
-                                <div class="comment-text">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                </div>
-                                <hr>
-                                <div class="actions">
-                                    <button><i class="fa-solid fa-gavel"></i> Hit</button>
-                                    <button><i class="fas fa-comments"></i> Reply</button>
-                                    <button><i class="fas fa-bookmark"></i> Bookmark</button>
-                                </div>
-                            </div>
-                        </div>
-                   </div>
+                    @include('inclusions/profileCommsReps')
 
                    <div class="profile-liked">
                         <div class="posts">

@@ -97,7 +97,7 @@
                                     <div class="reply-field" id="reply-field-{{ $comment->id }}">
                                         <form action="{{ route('users.createReply') }}" method="POST">
                                             @csrf
-                                            <textarea name="reply" id="reply-textarea-{{ $comment->id }}"></textarea>
+                                            <textarea name="reply" id="reply-textarea-{{ $comment->id }}" placeholder="Replying to {{ $comment->user ? $comment->user->firstName : 'Unknown User' }}"></textarea>
                                             <input type="hidden" name="post_id" value="{{ $post->post_id }}">
                                             <input type="hidden" name="comment_id" value="{{ $comment->comment_id }}">
                                             <button type="submit">Send</button>
@@ -133,6 +133,7 @@
                         </div>
                         <hr>
                         <div class="comment-field">
+                            @include('inclusions/response')
                             <form method="POST" action="{{ route('users.createComment') }}">
                                 @csrf
                                 @if(Auth::user()->userPhoto)

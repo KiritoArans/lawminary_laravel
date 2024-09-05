@@ -8,10 +8,7 @@
     <link rel="stylesheet" href="{{ asset ('css/home_style.css') }}">
     <link rel="stylesheet" href="{{ asset ('css/nav_style.css') }}">
     <link rel="stylesheet" href="{{ asset ('css/otherstyles/posts_style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <script src="{{ asset('js/library_js/sweetalertV2.js') }}"></script>
+    @include('inclusions/libraryLinks')
 </head>
 <body>
     <div class="container">
@@ -127,7 +124,6 @@
                             </div>
                         </div>
                        
-                        
                         <div class="comment-modal" id="commentModal-{{ $post->post_id }}" style="display:none;">
                             <div class="clicked-post-content">
                                 <div class="clicked-post-header">
@@ -150,6 +146,7 @@
                                     </div>
                                 </div>
                                 <hr>
+
                                 <div class="clicked-post-text">
                                     <p id="modalPostText">{{ $post->concern }}</p>
                                     @if ($post->concernPhoto)
@@ -162,68 +159,64 @@
                                     <button><i class="fas fa-comment"></i> Comment</button>
                                     <button><i class="fas fa-bookmark"></i> Bookmark</button>
                                 </div>
-            
                                 <hr>
-            
+
                                 <div class="comment-section">
                                     <div class="comment-area">
                                         @foreach($post->comments as $comment)
-
-                                        <div class="user-comment">
-                                            <div>
-                                                @if($comment->user && $comment->user->userPhoto)
-                                                    <img src="{{ Storage::url($comment->user->userPhoto) }}" alt="User Profile Picture" class="user-profile-photo">
-                                                @else
-                                                    <img src="../../imgs/user-img.png" alt="Default User Image" class="user-profile-photo">
-                                                @endif
-                                            </div>
-                                            <div class="user-comment-content">
-                                                <span>{{ $comment->user ? $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}</span>
-                                                <p>{{ $comment->comment }}</p>
-                                                <div class="date-reply">
-                                                    <p class="comment-time">{{ $comment->created_at->diffForHumans() }}</p>
-                                                    <a href="javascript:void(0);" class="reply-btn" data-comment-id="{{ $comment->id }}">Reply</a>
+                                            <div class="user-comment">
+                                                <div>
+                                                    @if($comment->user && $comment->user->userPhoto)
+                                                        <img src="{{ Storage::url($comment->user->userPhoto) }}" alt="User Profile Picture" class="user-profile-photo">
+                                                    @else
+                                                        <img src="../../imgs/user-img.png" alt="Default User Image" class="user-profile-photo">
+                                                    @endif
                                                 </div>
-                                                
-                                                <div class="reply-field" id="reply-field-{{ $comment->id }}">
-                                                    <form action="{{ route('users.createReply') }}" method="POST">
-                                                        @csrf
-                                                        <textarea name="reply" id="reply-textarea-{{ $comment->id }}"></textarea>
-                                                        <input type="hidden" name="post_id" value="{{ $post->post_id }}">
-                                                        <input type="hidden" name="comment_id" value="{{ $comment->comment_id }}">
-                                                        <button type="submit">Send</button>
-                                                    </form>
+                                                <div class="user-comment-content">
+                                                    <span>{{ $comment->user ? $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}</span>
+                                                    <p>{{ $comment->comment }}</p>
+                                                    <div class="date-reply">
+                                                        <p class="comment-time">{{ $comment->created_at->diffForHumans() }}</p>
+                                                        <a href="javascript:void(0);" class="reply-btn" data-comment-id="{{ $comment->id }}">Reply</a>
+                                                    </div>
+                                                    
+                                                    <div class="reply-field" id="reply-field-{{ $comment->id }}">
+                                                        <form action="{{ route('users.createReply') }}" method="POST">
+                                                            @csrf
+                                                            <textarea name="reply" id="reply-textarea-{{ $comment->id }}" placeholder="Replying to {{ $comment->user ? $comment->user->firstName : 'Unknown User' }}"></textarea>
+                                                            <input type="hidden" name="post_id" value="{{ $post->post_id }}">
+                                                            <input type="hidden" name="comment_id" value="{{ $comment->comment_id }}">
+                                                            <button type="submit">Send</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                                @foreach($comment->reply as $reply)
+                                            @foreach($comment->reply as $reply)
 
-                                                    <div class="user-reply">
-                                                        <div>
-                                                            @if($reply->user && $reply->user->userPhoto)
-                                                                <img src="{{ Storage::url($reply->user->userPhoto) }}" alt="User Profile Picture" class="user-profile-photo">
-                                                            @else
-                                                                <img src="../../imgs/user-img.png" alt="Default User Image" class="user-profile-photo">
-                                                            @endif
-                                                        </div>
-                                                        <div class="user-reply-content">
-                                                            <span>{{ $reply->user ? $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}</span>
-                                                            <label>replied to 
-                                                                <span>{{ $comment->user ? $comment->user->firstName: 'Unknown User' }}</span>'s comment.
-                                                            </label>
-                                                            <p>{{ $reply->reply }}</p>
-                                                            <div class="date-reply">
-                                                                <p class="comment-time">{{ $reply->created_at->diffForHumans() }}</p>
-                                                            </div>
+                                                <div class="user-reply">
+                                                    <div>
+                                                        @if($reply->user && $reply->user->userPhoto)
+                                                            <img src="{{ Storage::url($reply->user->userPhoto) }}" alt="User Profile Picture" class="user-profile-photo">
+                                                        @else
+                                                            <img src="../../imgs/user-img.png" alt="Default User Image" class="user-profile-photo">
+                                                        @endif
+                                                    </div>
+                                                    <div class="user-reply-content">
+                                                        <span>{{ $reply->user ? $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}</span>
+                                                        <label>replied to 
+                                                            <span>{{ $comment->user ? $comment->user->firstName: 'Unknown User' }}</span>'s comment.
+                                                        </label>
+                                                        <p>{{ $reply->reply }}</p>
+                                                        <div class="date-reply">
+                                                            <p class="comment-time">{{ $reply->created_at->diffForHumans() }}</p>
                                                         </div>
                                                     </div>
-
-                                                @endforeach
-
+                                                </div>
+                                            @endforeach
                                         @endforeach
                                     </div>
                                     <hr>
-                                    <div class="comment-field">
+                                    <div class="comment-field" id="comment-field">
                                         <form id="commentForm" method="POST" action="{{ route('users.createComment') }}">
                                             @csrf
                                             @if(Auth::user()->userPhoto)
@@ -245,12 +238,9 @@
             </content>
         </main>
     </div>
-
     <script src="js/postandcomment.js"></script>
     <script src="js/homelocator.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/logout.js"></script>
-    <script>
-    </script>
 </body>
 </html>
