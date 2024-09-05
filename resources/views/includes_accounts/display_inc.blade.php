@@ -1,4 +1,5 @@
 <table class="table table-striped table-bordered">
+    
     <thead>
         <tr>
             <th>ID</th>
@@ -12,6 +13,7 @@
             <th>Action</th>
         </tr>
     </thead>
+
     <tbody id="accountTableBody">
         @foreach($accounts as $account)
         <tr>
@@ -24,6 +26,7 @@
             <td>{{ $account->restrictDays }}</td>
             <td>{{ $account->created_at }}</td>
             <td>
+                
             <!--view/edit button-->
             <button type="button" class="custom-button edit-button"
             data-id="{{$account->id}}"
@@ -43,23 +46,17 @@
             >
                 Edit
             </button>
+
             <!-- Modal Structure (Only one modal for all accounts) -->
             <div id="editAccountModal" class="modal">
                 <div class="modal-content">
                     <span class="close-button" id="closeEditModalX">&times;</span>
                     <h2>Edit Account</h2>
-                    @if ($errors->any())
-                        <div class="error2">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                  
                     @include('includes_accounts.edit_inc')
                 </div>
             </div>
+            
                 <!--delete button-->
                 @include('includes_accounts.delete_inc')                                                                             
             </td>

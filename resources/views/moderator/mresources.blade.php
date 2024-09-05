@@ -23,17 +23,8 @@
                         <label>@Username</label>
                     </div>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a href="/moderator/dashboard"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
-                        <li><a href="/moderator/posts"><i class="fa-solid fa-envelope-open-text"></i><span>Posts</span></a></li>
-                        <li><a href="/moderator/leaderboards"><i class="fa-solid fa-chart-simple"></i><span>Leaderboards</span></a></li>
-                        <li><a href="/moderator/resources"  class="current"><i class="fa-solid fa-folder"></i><span>Resources</span></a></li>
-                        <li><a href="/moderator/accounts"><i class="fa-solid fa-user-gear"></i><span>Accounts</span></a></li>
-                        <li><a href="/moderator/forums"><i class="fa-solid fa-users"></i><span>Forums</span></a></li>
-                        <li><a href="/moderator/faqs"><i class="fa-solid fa-circle-question"></i><span>FAQs</span></a></li>
-                    </ul>
-                </nav>
+                {{-- navigation for moderator --}}
+                @include('includes_accounts.mod_nav_inc')
             </div>
             <div class="bottom-nav">
                 <a class="logout"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>

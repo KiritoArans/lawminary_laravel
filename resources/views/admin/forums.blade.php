@@ -23,15 +23,8 @@
                         <label>@Username</label>
                     </div>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a href="/admin/dashboard"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
-                        <li><a href="/admin/postpage"><i class="fa-solid fa-envelope-open-text"></i><span>Posts</span></a></li>
-                        <li><a href="/admin/account"><i class="fa-solid fa-user-gear"></i><span>Accounts</span></a></li>
-                        <li><a href="/admin/forums" class="current"><i class="fa-solid fa-users"></i><span>Forums</span></a></li>
-                        <li><a href="/admin/systemcontent"><i class="fa-solid fa-display"></i><span>System Content</span></a></li>
-                    </ul>
-                </nav>
+                 {{-- navigation --}}
+            @include('includes_accounts.nav_inc')
             </div>
             <div class="bottom-nav">
                 <a class="logout"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>

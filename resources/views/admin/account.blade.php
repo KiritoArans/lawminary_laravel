@@ -25,15 +25,8 @@
                         <label>@Username</label>
                     </div>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a href="dashboard"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a></li>
-                        <li><a href="postpage"><i class="fa-solid fa-envelope-open-text"></i><span>Posts</span></a></li>
-                        <li><a href="account" class="current"><i class="fa-solid fa-user-gear"></i><span>Accounts</span></a></li>
-                        <li><a href="forums"><i class="fa-solid fa-users"></i><span>Forums</span></a></li>
-                        <li><a href="systemcontent"><i class="fa-solid fa-display"></i><span>System Content</span></a></li>
-                    </ul>
-                </nav>
+            {{-- navigation --}}
+            @include('includes_accounts.nav_inc')
             </div>
             <div class="bottom-nav">
                 <a class="logout"><i class="fa-solid fa-right-from-bracket"></i><span>Log out</span></a>
@@ -71,14 +64,6 @@
                              </div>
                                  </div>
                                     </div>
-                                    @if ($errors->any())
-                                        <script>
-                                            document.addEventListener("DOMContentLoaded", function() {
-                                                // If there are errors, ensure the modal is open
-                                                document.getElementById('addModal').style.display = 'block';
-                                            });
-                                        </script>
-                                    @endif
                                 </section>
                         <!-- display content on table -->
                     <content class="table-container">
@@ -88,6 +73,5 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ asset('js/admin_js/accounts_js.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
