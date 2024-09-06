@@ -38,15 +38,15 @@ class PostController extends Controller
         return redirect()->back()->with('success', 'Your concern has been posted!');
     }
     
-    public function showProfilePosts()
-    {
-        $user = Auth::user();
+    // public function showProfilePosts()
+    // {
+    //     $user = Auth::user();
 
-        $posts = Posts::where('postedBy', $user->user_id)
-              ->orderBy('created_at', 'desc')
-              ->get();
+    //     $posts = Posts::where('postedBy', $user->user_id)
+    //         ->orderBy('created_at', 'desc')
+    //         ->get();
 
-        return view('users.profile', compact('user', 'posts'));
-        // return $this->showProfilePage($user, $posts);
-    }
+    //     return view('users.profile', compact('user', 'posts'));
+    //     // return $this->showProfilePage($user, $posts);
+    // }
 }

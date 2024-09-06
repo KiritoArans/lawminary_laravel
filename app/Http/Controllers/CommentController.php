@@ -25,12 +25,10 @@ class CommentController extends Controller
         $comment->save();
 
         return redirect()->back()->with([
-            // 'success' => 'Your comment has been posted!',
-            'post_id' => $request->post_id, // Pass the post ID to keep the modal open
-            'new_comment' => $comment,      // Pass the new comment
+            'post_id' => $request->post_id, 
+            'new_comment' => $comment,   
         ]);
     }
-    
 
     // Reply Function
     public function createReply(Request $request)

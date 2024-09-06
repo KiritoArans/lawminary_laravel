@@ -38,7 +38,6 @@ main {
 }
 header {
     text-align: center;
-    padding-bottom: 10px;
 }
 header hr {
     margin-top: 10px;
@@ -67,7 +66,6 @@ main .header-top {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-top: 11px;
 }
 .header-buttons button {
     padding: 10px 20px;

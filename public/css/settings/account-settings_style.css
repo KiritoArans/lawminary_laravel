@@ -113,6 +113,7 @@ header hr {
     background-color: #fff;
     transition: background-color 0.3s, color 0.3s;
     text-align: center; 
+    cursor: pointer;
 }
 
 .settings-menu ul li a:hover,
@@ -157,16 +158,14 @@ header hr {
     margin-right: 20px;
 }
 
-.profile-pic button {
-    margin-right: 10px;
-    padding: 5px 10px;
-    border: 1px solid #ccc;
-    background-color: #f8f8f8;
-    cursor: pointer;
+.profile-pic-info input{
+    border: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
 }
 
-.profile-pic p {
-    margin-top: 10px;
+.profile-pic-info p {
+    margin: 0;
     color: #777;
 }
 

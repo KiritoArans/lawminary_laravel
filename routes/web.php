@@ -46,20 +46,20 @@ Route::get('/moderator/faqs', [ModeratorController::class, 'showMfaqs'])->name('
 Route::get('/login', [PageController::class, 'showLoginPage']);
 Route::get('/signup', [PageController::class, 'showSignupPage'])->name('signup');
 Route::get('/home', [PageController::class, 'showHomePage'])->name('home')->middleware('auth');
-Route::get('/article', [PageController::class, 'showArticlePage']);
-Route::get('/forums', [PageController::class, 'showForumsPage']);
+route::get('/article', [PageController::class, 'showArticlePage'])->name('article');
+Route::get('/forums', [PageController::class, 'showForumsPage'])->name('forums');
 Route::get('/notifications', [PageController::class, 'showNotificationPage']);
 Route::get('/search', [PageController::class, 'showSearchPage']);
 Route::get('/resources', [PageController::class, 'showResourcesPage']);
 Route::get('/profile', [PageController::class, 'showProfilePage']);
 
 //settings routing
-Route::get('/settings/lawminary', [PageController::class, 'showAboutLawminaryPage']);
-Route::get('/settings/pao', [PageController::class, 'showAboutPAOPage']);
-Route::get('/settings/account', [PageController::class, 'showAccountPage']);
-Route::get('/settings/activitylogs', [PageController::class, 'showActLogsPage']);
-Route::get('/settings/feedback', [PageController::class, 'showFeedbackPage']);
-Route::get('/settings/tos', [PageController::class, 'showTOSPage']);
+Route::get('/about-lawminary', [PageController::class, 'showAboutLawminaryPage']);
+Route::get('/about-pao', [PageController::class, 'showAboutPAOPage']);
+Route::get('/account-settings', [PageController::class, 'showAccountPage']);
+Route::get('/activitylogs', [PageController::class, 'showActLogsPage']);
+Route::get('/provide-feedback', [PageController::class, 'showFeedbackPage']);
+Route::get('/terms-of-service', [PageController::class, 'showTOSPage']);
 
 
 // Admin Backend Routing
@@ -95,12 +95,18 @@ Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name('loginAd
 // Create Post
 Route::post('/home', [PostController::class, 'createPost'])->name('users.createPost');
 
+// Create Comment
 Route::post('/comment', [CommentController::class, 'createComment'])->name('users.createComment');
 
+//Create Reply
 route::post('/reply', [CommentController::class, 'createReply'])->name('users.createReply');
 
-// Profile Routes
-Route::get('/profile', [PostController::class, 'showProfilePosts'])->name('profile.showProfilePosts');
+// // Profile Routes// Route for profile posts
+// Route::get('/profile/posts', [PostController::class, 'showProfilePosts'])->name('profile.showProfilePosts');
+// // Route for profile comments
+// Route::get('/profile/comments', [CommentController::class, 'showProfileComments'])->name('profile.showProfileComments');
+
+
 Route::post('/profile/settings/account/changepass', [AccountController::class, 'changePassword'])->name('settings.changePassword');
 Route::post('/profile/settings/account/changeinfo', [AccountController::class, 'updateAccountNames'])->name('settings.updateAccountNames');
 Route::post('/profile/settings/account/changeinfo2', [AccountController::class, 'updateAccountInfo'])->name('settings.updateAccountInfo');
