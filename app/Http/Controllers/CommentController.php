@@ -13,6 +13,7 @@ class CommentController extends Controller
     {
         $validated = $request->validate([
             'comment' => 'required|string|max:255',
+
             'post_id' => 'required|string|max:100',
         ]);
 
@@ -24,13 +25,14 @@ class CommentController extends Controller
 
         $comment->save();
 
-        return redirect()->back()->with([
-            // 'success' => 'Your comment has been posted!',
-            'post_id' => $request->post_id, // Pass the post ID to keep the modal open
-            'new_comment' => $comment,      // Pass the new comment
-        ]);
+        return redirect()
+            ->back()
+            ->with([
+                // 'success' => 'Your comment has been posted!',
+                'post_id' => $request->post_id, // Pass the post ID to keep the modal open
+                'new_comment' => $comment, // Pass the new comment
+            ]);
     }
-    
 
     // Reply Function
     public function createReply(Request $request)
@@ -54,4 +56,3 @@ class CommentController extends Controller
         return redirect()->back();
     }
 }
-

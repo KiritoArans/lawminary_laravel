@@ -4,12 +4,17 @@ body {
     background-color: #f4f4f4;
     height: 120vh;
 }
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
 main {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    margin: 0px 48px 0px 32px;
+    margin: 0px 32px; /* Reduce left and right margin */
 }
 header {
     text-align: center;
@@ -25,7 +30,7 @@ header h1 {
     justify-content: space-between;
     align-items: center;
 }
-.header-top img{
+.header-top img {
     height: 32px;
     position: relative;
     left: -8px;
@@ -71,48 +76,68 @@ header hr {
     align-items: center;
     margin-left: 10px;
 }
-
-.box-content .boxes{
+.boxes-row {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    flex-wrap: wrap;
+    margin-bottom: 20px; /* Space between rows */
 }
-.box-content .boxes .box{
+
+.boxes-row .box {
+    flex: 1 1 calc(33.33% - 20px); /* Each box takes 1/3 of the row */
+    margin: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
     border-radius: 12px;
-    width: calc(100% / 3 - 10px);
-    padding: 20px 0px;
-    background-color: #7895CB;
+    padding: 20px 0;
+    background-color: #f75757;
     transition: var(--tran-05);
 }
-.boxes .box i{
+
+.box i {
     font-size: 35px;
-    color: #F6F5F2;
-}
-.boxes .box .text{
-    white-space: nowrap;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #F6F5F2;
-}
-.boxes .box .number{
-    text-decoration: none;
-    font-size: 2rem;
-    font-weight: 400;
-    color: #F6F5F2;
-}
-.boxes .box.box2{
-    background-color: #597445;
-}
-.boxes .box.box3{
-    background-color: #EB5B00;
+    color: #f6f5f2;
 }
 
-.container-table h2 {
-    width: 100%;
-    margin: 1rem 0 .5rem 0;
-    box-sizing: border-box;
+/* Text inside boxes */
+.box .text {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #f6f5f2;
+}
+
+/* Number inside boxes */
+.box .number {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #f6f5f2;
+    text-decoration: none;
+}
+
+/* Adjustments for small screens */
+@media (max-width: 768px) {
+    .boxes-row .box {
+        flex: 1 1 calc(50% - 20px); /* 2 boxes per row on smaller screens */
+    }
+}
+
+@media (max-width: 500px) {
+    .boxes-row .box {
+        flex: 1 1 100%; /* Single box per row on very small screens */
+    }
+}
+.boxes .box.box2 {
+    background-color: #ca8d31;
+}
+.boxes .box.box3 {
+    background-color: #1ed5db;
+}
+.boxes .box.box4 {
+    background-color: #27af62;
+}
+.boxes .box.box5 {
+    background-color: #3b83a7;
+}
+.boxes .box.box6 {
+    background-color: #a62ac5;
 }

@@ -1,0 +1,16 @@
+{
+    "plugins": ["@prettier/plugin-php", "prettier-plugin-blade"],
+    "tabWidth": 4,
+    "singleQuote": true,
+    "trailingComma": "none",
+    "htmlWhitespaceSensitivity": "ignore",
+    "printWidth": 80,
+    "overrides": [
+        {
+            "files": "*.blade.php",
+            "options": {
+                "parser": "blade"
+            }
+        }
+    ]
+}

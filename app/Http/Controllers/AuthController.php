@@ -16,23 +16,33 @@ class AuthController extends Controller
             'username' => 'required|string',
             'password' => 'required|string',
         ]);
-    
-        $user = UserAccount::where('username', $credentials['username'])->first();
-    
+
+        $user = UserAccount::where(
+            'username',
+            $credentials['username']
+        )->first();
+
         if ($user) {
             if (Hash::check($credentials['password'], $user->password)) {
                 Auth::login($user);
-                return redirect()->route('home')->with('username', $user->username);
+                return redirect()
+                    ->route('home')
+                    ->with('username', $user->username);
             } else {
                 if ($user->password === md5($credentials['password'])) {
                     $user->password = Hash::make($credentials['password']);
                     $user->save();
                     Auth::login($user);
-                    return redirect()->route('home')->with('username', $user->username);
+                    return redirect()
+                        ->route('home')
+                        ->with('username', $user->username);
                 }
             }
         }
-        return redirect()->back()->withErrors(['loginError' => 'Invalid username or password.'])->withInput();
+        return redirect()
+            ->back()
+            ->withErrors(['loginError' => 'Invalid username or password.'])
+            ->withInput();
     }
 
     public function logout(Request $request)
@@ -45,7 +55,6 @@ class AuthController extends Controller
         return redirect('login');
     }
 
-    
     public function loginAdMod(Request $request)
     {
         $credentials = $request->validate([
@@ -53,52 +62,80 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-        $user = UserAccount::where('username', $credentials['username'])->first();
-    
+        $user = UserAccount::where(
+            'username',
+            $credentials['username']
+        )->first();
+
         if ($user) {
             if (Hash::check($credentials['password'], $user->password)) {
                 Auth::login($user);
-    
+
                 if ($request->has('is_moderator')) {
                     if ($user->accountType === 'Moderator') {
                         return redirect()->route('moderator.dashboard');
                     } else {
                         Auth::logout();
-                        return redirect()->back()->withErrors(['loginError' => 'Unauthorized access as Moderator.'])->withInput();
+                        return redirect()
+                            ->back()
+                            ->withErrors([
+                                'loginError' =>
+                                    'Unauthorized access as Moderator.',
+                            ])
+                            ->withInput();
                     }
-                } else { 
+                } else {
                     if ($user->accountType === 'Admin') {
                         return redirect()->route('admin.dashboard');
                     } else {
                         Auth::logout();
-                        return redirect()->back()->withErrors(['loginError' => 'Unauthorized access as Admin.'])->withInput();
+                        return redirect()
+                            ->back()
+                            ->withErrors([
+                                'loginError' => 'Unauthorized access as Admin.',
+                            ])
+                            ->withInput();
                     }
                 }
-                
             } else {
                 if ($user->password === md5($credentials['password'])) {
                     $user->password = Hash::make($credentials['password']);
                     $user->save();
                     Auth::login($user);
-    
+
                     if ($request->has('is_moderator')) {
                         if ($user->accountType === 'Moderator' || 'moderator') {
                             return redirect()->route('moderator.dashboard');
                         } else {
                             Auth::logout();
-                            return redirect()->back()->withErrors(['loginError' => 'Unauthorized access as Moderator.'])->withInput();
+                            return redirect()
+                                ->back()
+                                ->withErrors([
+                                    'loginError' =>
+                                        'Unauthorized access as Moderator.',
+                                ])
+                                ->withInput();
                         }
                     } else {
                         if ($user->accountType === 'Admin' || 'admin') {
                             return redirect()->route('admin.dashboard');
                         } else {
                             Auth::logout();
-                            return redirect()->back()->withErrors(['loginError' => 'Unauthorized access as Admin.'])->withInput();
+                            return redirect()
+                                ->back()
+                                ->withErrors([
+                                    'loginError' =>
+                                        'Unauthorized access as Admin.',
+                                ])
+                                ->withInput();
                         }
                     }
                 }
             }
         }
-        return redirect()->back()->withErrors(['loginError' => 'Invalid username or password.'])->withInput();
+        return redirect()
+            ->back()
+            ->withErrors(['loginError' => 'Invalid username or password.'])
+            ->withInput();
     }
 }
