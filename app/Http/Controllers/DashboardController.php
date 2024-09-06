@@ -8,49 +8,30 @@ use App\Models\Dashboard;
 
 class DashboardController extends Controller
 {
-    public function recentAct()
+    // Helper function to get common dashboard data (boxes)
+    private function getDashboardData()
     {
-        // Fetch counts for pending posts, pending accounts, and accounts
-        $pendingPosts = DB::table('tblposts')
-            ->where('status', 'pending')
-            ->count();
-
-        $pendingAccounts = DB::table('tblaccounts')
-            ->where('status', 'pending')
-            ->count();
-
-        $accountsCount = DB::table('tblaccounts')->count();
-
-        $postsCount = DB::table('tblposts')->count();
-
-        $commentsCount = DB::table('tblcomments')->count();
-
-        $forumsCount = DB::table('tblforums')->count();
-
-        // Fetch recent activities for the dashboard
-        $recentActivities = DB::table('tbldashboard')
-            ->orderBy('act_date', 'desc')
-            ->get();
-
-        // Return the view with the data for both pending counts and recent activities
-        return view('admin.dashboard', [
-            'pendingPosts' => $pendingPosts,
-            'pendingAccounts' => $pendingAccounts,
-            'accountsCount' => $accountsCount,
-            'recentActivities' => $recentActivities,
-            'postsCount' => $postsCount,
-            'commentsCount' => $commentsCount,
-            'forumsCount' => $forumsCount,
-        ]);
+        return [
+            'pendingPosts' => DB::table('tblposts')
+                ->where('status', 'pending')
+                ->count(),
+            'pendingAccounts' => DB::table('tblaccounts')
+                ->where('status', 'pending')
+                ->count(),
+            'accountsCount' => DB::table('tblaccounts')->count(),
+            'postsCount' => DB::table('tblposts')->count(),
+            'commentsCount' => DB::table('tblcomments')->count(),
+            'forumsCount' => DB::table('tblforums')->count(),
+        ];
     }
 
-    //filter dashboard
-    public function filterDashboard(Request $request)
+    // Fetch recent activities with or without filters
+    public function dashboard(Request $request)
     {
-        // Start with a query builder for filtering recent activities
-        $query = Dashboard::query();
+        // Start with a query builder for recent activities
+        $query = DB::table('tbldashboard')->orderBy('act_date', 'desc');
 
-        // Apply filters based on the request inputs
+        // Apply filters based on the request inputs (if any)
         if ($request->filled('filterId')) {
             $query->where('act_id', $request->input('filterId'));
         }
@@ -79,33 +60,22 @@ class DashboardController extends Controller
             );
         }
 
-        // Fetch filtered activities
+        // Fetch recent activities
         $recentActivities = $query->get();
 
-        // Also fetch data for the boxes
-        $pendingPosts = DB::table('tblposts')
-            ->where('status', 'pending')
-            ->count();
-        $pendingAccounts = DB::table('tblaccounts')
-            ->where('status', 'pending')
-            ->count();
-        $accountsCount = DB::table('tblaccounts')->count();
+        // Get the common dashboard data (for boxes)
+        $dashboardData = $this->getDashboardData();
 
-        $postsCount = DB::table('tblposts')->count();
-
-        $commentsCount = DB::table('tblcomments')->count();
-
-        $forumsCount = DB::table('tblforums')->count();
-
-        // Return the view with both filtered and unfiltered data
-        return view('admin.dashboard', [
+        // Merge the recent activities with dashboard data
+        $data = array_merge($dashboardData, [
             'recentActivities' => $recentActivities,
-            'pendingPosts' => $pendingPosts,
-            'pendingAccounts' => $pendingAccounts,
-            'accountsCount' => $accountsCount,
-            'postsCount' => $postsCount,
-            'commentsCount' => $commentsCount,
-            'forumsCount' => $forumsCount,
         ]);
+
+        // Render the correct view based on the route (admin or moderator)
+        if (request()->is('admin*')) {
+            return view('admin.dashboard', $data);
+        } elseif (request()->is('moderator*')) {
+            return view('moderator.mdashboard', $data);
+        }
     }
 }

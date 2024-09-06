@@ -11,7 +11,6 @@ use App\Models\general_database;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
-
 class moderatorController extends Controller
 {
     public function showAdModLogin()
@@ -39,15 +38,20 @@ class moderatorController extends Controller
     {
         return view('moderator.mleaderboards');
     }
-    
+
     public function showMforums()
     {
         return view('moderator.mforums');
     }
-    
+
     public function showMfaqs()
     {
         return view('moderator.mfaqs');
     }
-    
+    public function showMresources()
+    {
+        $rsrcfiles = ResourceFile::all(); // Assuming 'ResourceFile' is your model
+
+        return view('moderator.mresources', compact('rsrcfiles'));
+    }
 }
