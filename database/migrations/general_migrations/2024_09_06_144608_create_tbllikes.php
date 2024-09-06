@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tblresources', function (Blueprint $table) {
+        Schema::create('tbllikes', function (Blueprint $table) {
             $table->id();
-            $table->string('documentTitle', 100);
-            $table->string('documentDesc', 255);
-            $table->binary('documentFile', 255);
+            $table->string('liked_id', 20);
+            $table->boolean('like', 1);
+            $table->string('post_id', 20);
+            $table->string('user_id', 20);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tblresources');
+        Schema::dropIfExists('tbllikes');
     }
 };

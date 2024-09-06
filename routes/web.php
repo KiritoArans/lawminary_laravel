@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
@@ -92,18 +91,18 @@ Route::get('/resources', [PageController::class, 'showResourcesPage']);
 Route::get('/profile', [PageController::class, 'showProfilePage']);
 
 //settings routing
-Route::get('/settings/lawminary', [
+Route::get('/about-lawminary', [
     PageController::class,
     'showAboutLawminaryPage',
 ]);
-Route::get('/settings/pao', [PageController::class, 'showAboutPAOPage']);
-Route::get('/settings/account', [PageController::class, 'showAccountPage']);
-Route::get('/settings/activitylogs', [
+Route::get('/about-pao', [PageController::class, 'showAboutPAOPage']);
+Route::get('/account-settings', [PageController::class, 'showAccountPage']);
+Route::get('/activitylogs', [
     PageController::class,
     'showActLogsPage',
 ]);
-Route::get('/settings/feedback', [PageController::class, 'showFeedbackPage']);
-Route::get('/settings/tos', [PageController::class, 'showTOSPage']);
+Route::get('/provide-feedback', [PageController::class, 'showFeedbackPage']);
+Route::get('/terms-of-service', [PageController::class, 'showTOSPage']);
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -208,19 +207,20 @@ Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name(
 Route::post('/home', [PostController::class, 'createPost'])->name(
     'users.createPost'
 );
+// Like Post
+Route::post('/home/like-post', [LikeController::class, 'likePost'])->name('users.likePost');
 
+// Create Comment
 Route::post('/comment', [CommentController::class, 'createComment'])->name(
     'users.createComment'
 );
 
+// Create Reply
 route::post('/reply', [CommentController::class, 'createReply'])->name(
     'users.createReply'
 );
 
-// Profile Routes
-Route::get('/profile', [PostController::class, 'showProfilePosts'])->name(
-    'profile.showProfilePosts'
-);
+
 Route::post('/profile/settings/account/changepass', [
     AccountController::class,
     'changePassword',

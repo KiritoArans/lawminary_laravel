@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lawminary | Home</title>
     <link rel="icon" href="../imgs/lawminarylogo.png" type="image/png">
@@ -72,7 +73,9 @@
                             </div>
                             <hr>
                             <div class="actions">
-                                <button><i class="fa-solid fa-gavel"></i> Hit</button>
+                                <button class="btn-hit" data-post-id="{{ $post->post_id }}" data-user-id="{{ Auth::id() }}">
+                                    <i class="fa-solid fa-gavel"></i> Hit
+                                </button>
                                 <button class="btn-comment" data-post-id="{{ $post->post_id }}">
                                     <i class="fas fa-comment"></i> Comment
                                 </button>

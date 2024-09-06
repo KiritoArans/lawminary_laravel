@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('lastName', 100);
             $table->date('birthDate');
             $table->string('nationality', 100);
-            $table->enum('sex', ['male', 'female', 'other'], 100);
+            $table->enum('sex', ['Male', 'Female', 'Other'], 100);
             $table->string('contactNumber', 11);
             $table->boolean('restrict')->default(false);
             $table->integer('restrictDays', 50)->nullable();
