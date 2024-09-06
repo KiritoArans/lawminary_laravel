@@ -21,7 +21,6 @@ class Comment extends Model
     {
         return $this->belongsTo(Posts::class, 'post_id', 'post_id'); // Ensure it uses the correct key
     }
-
     public function user()
     {
         return $this->belongsTo(UserAccount::class, 'user_id', 'user_id');
@@ -31,6 +30,5 @@ class Comment extends Model
         return $this->hasMany(Reply::class, 'comment_id', 'comment_id');
     }
 
-    
 }
 

@@ -19,9 +19,13 @@
     --tran-03: all 0.3s ease;
     --tran-03: all 0.2s ease;
 }
-.current{
+/* .current{
     color: #561C24;
+} */
+nav ul li a.active {
+    color: var(--primary-color);
 }
+
 aside {
     position: fixed; 
     top: 0;

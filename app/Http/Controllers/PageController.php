@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserAccount;
 use App\Models\Posts;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
@@ -57,7 +58,17 @@ class PageController extends Controller
 
     public function showProfilePage()
     {
-        return view('users.profile');
+        $user = Auth::user();
+
+        $posts = Posts::where('postedBy', $user->user_id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $comments = Comment::where('user_id', $user->user_id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('users.profile', compact('user', 'posts', 'comments'));
     }
 
     // Settings

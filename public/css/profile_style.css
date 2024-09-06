@@ -228,6 +228,9 @@ header hr {
     font-size: 16px;
     color: var(--text-color1);
 }
+.comments .comment-content .comment-header .comment-info label {
+    color: #666;
+}
 .comment-content hr{
     margin-bottom: 16px;
     opacity: 50%;
@@ -243,9 +246,14 @@ header hr {
     color: #aaa;
 }
 .comments .comment-text{
-    /* margin: 0 0 24px 0; */
     margin: auto;
     color: var(--text-color1);
+    text-align: center;
+}
+.comments .comment-text .date-time p{
+    margin: 0;
+    color: var(--text-color3);
+    font-size: .75rem;
 }
 
 .comments .comment-content .actions {

@@ -48,7 +48,7 @@
                     <div class="clicked-post-header">
                         <div class="user-info">
                             @if(Auth::user()->userPhoto)
-                            <img src="{{ Storage::url(Auth::user()->userPhoto) }}" class="user-profile-photo" alt="Profile Picture">
+                                <img src="{{ Storage::url(Auth::user()->userPhoto) }}" class="user-profile-photo" alt="Profile Picture">
                             @else
                                 <img src="../../imgs/user-img.png" class="user-profile-photo" alt="Profile Picture">
                             @endif

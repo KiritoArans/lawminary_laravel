@@ -1,6 +1,6 @@
 @foreach($posts as $post)
 <div class="profile-comments">
-    @foreach($post->comments as $comment)
+    @foreach($comments as $comment)
     <div class="comments">
         <div class="comment-content">
             <div class="comment-header">
@@ -13,7 +13,6 @@
                     <div class="comment-info">
                         <h2>{{ $user->firstName }} {{ $user->lastName }}</h2>
                         <label>@<span>{{ $user->username }}</span></label>
-                        <p for="">Commented: {{ $comment->created_at->diffForHumans() }}</p>
                     </div>
                 </div>
                     {{-- <div class="comment-options">
@@ -23,14 +22,16 @@
             <hr>
             <div class="comment-text">
                 <p>{{ $comment->comment }}</p>
+                <div class="date-time">
+                    <p for="">{{ $comment->created_at->diffForHumans() }}</p>
+                </div>
             </div>
             <hr>
             <div class="actions">
-                {{-- <button><i class="fa-solid fa-gavel"></i> Hit</button>
-                <button><i class="fas fa-comments"></i> Reply</button>
-                <button><i class="fas fa-bookmark"></i> Bookmark</button> --}}
-                <button>View Post</button>
-            </div>
+                <button class="btn-comment" data-post-id="{{ $comment->post_id }}">
+                    View Post
+                </button>
+            </div>            
         </div>
     </div>
     @endforeach
