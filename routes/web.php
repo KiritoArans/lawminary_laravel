@@ -127,12 +127,12 @@ Route::post('admin/account/filter', [
 ])->name('admin.filterAccount');
 
 // Admin Dashboard Page
-Route::get('/admin/dashboard', [DashboardController::class, 'recentAct'])->name(
+Route::get('admin/dashboard', [DashboardController::class, 'dashboard'])->name(
     'admin.dashboard'
 );
 Route::post('admin/dashboard/filter', [
     DashboardController::class,
-    'filterDashboard',
+    'dashboard',
 ])->name('admin.filterDashboard');
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -156,6 +156,15 @@ Route::post('/moderator/accounts/filter', [
 ])->name('moderator.filterAccount');
 
 //moderator Dashboard Page
+Route::get('moderator/dashboard', [
+    DashboardController::class,
+    'dashboard',
+])->name('moderator.dashboard');
+
+Route::post('moderator/dashboard/filter', [
+    DashboardController::class,
+    'dashboard',
+])->name('moderator.filterDashboard');
 
 // Moderator Resource Page
 Route::post('/moderator/resources/upload', [
