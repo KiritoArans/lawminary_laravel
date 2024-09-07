@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lawminary | Home</title>
     <link rel="icon" href="../imgs/lawminarylogo.png" type="image/png">
@@ -43,7 +44,12 @@
                                     @if($post->user)
                                         <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
                                         <div class="post-info">
-                                            <h2>{{ $post->user->firstName }} {{ $post->user->lastName }}</h2>
+                                            <h2>
+                                            {{-- <h2>{{ $post->user->firstName }} {{ $post->user->lastName }}</h2> --}}
+                                            <a href="{{ route('visit-profile', ['username' => $post->user->username]) }}">
+                                                {{ $post->user->firstName }} {{ $post->user->lastName }}
+                                            </a>
+                                            </h2>
                                             <label>@<span>{{ $post->user->username }}</span></label>
                                             <p for="">Posted: {{ $post->created_at->diffForHumans() }}</p>
                                         </div>
@@ -72,7 +78,9 @@
                             </div>
                             <hr>
                             <div class="actions">
-                                <button><i class="fa-solid fa-gavel"></i> Hit</button>
+                                <button class="btn-hit" data-post-id="{{ $post->post_id }}" data-user-id="{{ Auth::id() }}">
+                                    <i class="fa-solid fa-gavel"></i> Hit
+                                </button>
                                 <button class="btn-comment" data-post-id="{{ $post->post_id }}">
                                     <i class="fas fa-comment"></i> Comment
                                 </button>

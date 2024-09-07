@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
@@ -84,26 +83,38 @@ Route::get('/signup', [PageController::class, 'showSignupPage'])->name(
 Route::get('/home', [PageController::class, 'showHomePage'])
     ->name('home')
     ->middleware('auth');
-Route::get('/article', [PageController::class, 'showArticlePage']);
+Route::get('/article', [PageController::class, 'showArticlePage'])
+    ->middleware('auth');
 Route::get('/forums', [PageController::class, 'showForumsPage']);
-Route::get('/notifications', [PageController::class, 'showNotificationPage']);
-Route::get('/search', [PageController::class, 'showSearchPage']);
-Route::get('/resources', [PageController::class, 'showResourcesPage']);
-Route::get('/profile', [PageController::class, 'showProfilePage']);
+Route::get('/notifications', [PageController::class, 'showNotificationPage'])
+    ->middleware('auth');
+Route::get('/search', [PageController::class, 'showSearchPage'])
+    ->middleware('auth');
+Route::get('/resources', [PageController::class, 'showResourcesPage'])
+    ->middleware('auth');
+Route::get('/profile', [PageController::class, 'showProfilePage'])
+    ->middleware('auth');
+
+// Route::get('/visit_profile', [PageController::class, 'showVisitProfilePage']);
+route::get('/visit-profile/{username}', [PageController::class, 'showVisitProfilePage'])->name('visit-profile');
 
 //settings routing
-Route::get('/settings/lawminary', [
+Route::get('/about-lawminary', [
     PageController::class,
-    'showAboutLawminaryPage',
-]);
-Route::get('/settings/pao', [PageController::class, 'showAboutPAOPage']);
-Route::get('/settings/account', [PageController::class, 'showAccountPage']);
-Route::get('/settings/activitylogs', [
+    'showAboutLawminaryPage',])
+    ->middleware('auth');
+Route::get('/about-pao', [PageController::class, 'showAboutPAOPage'])
+    ->middleware('auth');
+Route::get('/account-settings', [PageController::class, 'showAccountPage'])
+    ->middleware('auth');
+Route::get('/activitylogs', [
     PageController::class,
-    'showActLogsPage',
-]);
-Route::get('/settings/feedback', [PageController::class, 'showFeedbackPage']);
-Route::get('/settings/tos', [PageController::class, 'showTOSPage']);
+    'showActLogsPage',])
+    ->middleware('auth');
+Route::get('/provide-feedback', [PageController::class, 'showFeedbackPage'])
+    ->middleware('auth');
+Route::get('/terms-of-service', [PageController::class, 'showTOSPage'])
+    ->middleware('auth');
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -217,19 +228,20 @@ Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name(
 Route::post('/home', [PostController::class, 'createPost'])->name(
     'users.createPost'
 );
+// Like Post
+Route::post('/home/like-post', [LikeController::class, 'likePost'])->name('users.likePost');
 
+// Create Comment
 Route::post('/comment', [CommentController::class, 'createComment'])->name(
     'users.createComment'
 );
 
+// Create Reply
 route::post('/reply', [CommentController::class, 'createReply'])->name(
     'users.createReply'
 );
 
-// Profile Routes
-Route::get('/profile', [PostController::class, 'showProfilePosts'])->name(
-    'profile.showProfilePosts'
-);
+
 Route::post('/profile/settings/account/changepass', [
     AccountController::class,
     'changePassword',

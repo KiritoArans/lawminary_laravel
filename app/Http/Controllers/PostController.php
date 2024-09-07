@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Posts;
+use App\Models\Like;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PageController;
 
@@ -21,11 +22,10 @@ class PostController extends Controller
         $post->post_id = uniqid();
         $post->concern = $data['concern'];
         $post->postedBy = Auth::user()->user_id; 
-        // $post->concernPhoto = $data['concernPhoto'];
 
         if ($request->hasFile('concernPhoto')) {
             $photoPath = $request->file('concernPhoto')->store('public/files/posts');
-            $post->concernPhoto = $photoPath; // Assign the file path to the model's property
+            $post->concernPhoto = $photoPath;
         }
 
         $post->save();
@@ -33,20 +33,33 @@ class PostController extends Controller
 
         $PageController = new PageController();
 
-        // return $PageController->showHomePage();
-
         return redirect()->back()->with('success', 'Your concern has been posted!');
     }
-    
-    // public function showProfilePosts()
+
+    // public function likePost(Request $request)
     // {
-    //     $user = Auth::user();
+    //     $validated = $request->validate([
+    //         'post_id' => 'required|exists:tblposts,post_id',
+    //         'user_id' => 'required|exists:tblaccounts,user_id',
+    //         'like' => 'required|boolean',
+    //     ]);
 
-    //     $posts = Posts::where('postedBy', $user->user_id)
-    //         ->orderBy('created_at', 'desc')
-    //         ->get();
+    //     // Check if the user has already liked this post
+    //     $existingLike = Like::where('post_id', $validated['post_id'])
+    //                         ->where('user_id', $validated['user_id'])
+    //                         ->first();
 
-    //     return view('users.profile', compact('user', 'posts'));
-    //     // return $this->showProfilePage($user, $posts);
+    //     if ($existingLike) {
+    //         return response()->json(['success' => false, 'message' => 'You have already liked this post.']);
+    //     }
+
+    //     // Create a new like entry
+    //     $like = new Like();
+    //     $like->post_id = $validated['post_id'];
+    //     $like->user_id = $validated['user_id'];
+    //     $like->like = $validated['like'];
+    //     $like->save();
+
+    //     return response()->json(['success' => true, 'message' => 'Post liked successfully!']);
     // }
 }

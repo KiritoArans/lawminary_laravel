@@ -70,6 +70,27 @@ class PageController extends Controller
 
         return view('users.profile', compact('user', 'posts', 'comments'));
     }
+    public function showVisitProfilePage()
+    {
+        // $user = Auth::user();
+
+        // $posts = Posts::where('postedBy', $user->user_id)
+        //     ->orderBy('created_at', 'desc')
+        //     ->get();
+
+        // $comments = Comment::where('user_id', $user->user_id)
+        //     ->orderBy('created_at', 'desc')
+        //     ->get();
+
+        // return view('users.profile', compact('user', 'posts', 'comments'));
+
+        // return view('users.visit_profile');
+            // Fetch the user by username
+        $user = UserAccount::where('username', $username)->firstOrFail();
+
+        // Pass the user data to the view
+        return view('visit-profile', compact('user'));
+    }
 
     // Settings
     public function showAboutLawminaryPage()
