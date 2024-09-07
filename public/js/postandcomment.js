@@ -1,20 +1,3 @@
-// Post Modal
-var modal = document.getElementById("postModal");
-var btn = document.querySelector(".new-post");
-var span = document.getElementsByClassName("close")[0];
-var postButton = document.querySelector(".post-button");
-btn.onclick = function() {
-    modal.style.display = "flex";
-}
-span.onclick = function() {
-    modal.style.display = "none";
-}
-window.onclick = function(event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}
-
 // Option Button
 document.querySelectorAll('.post-options i').forEach(function (button) {
     button.addEventListener('click', function () {
@@ -33,101 +16,79 @@ document.querySelectorAll('.post-options i').forEach(function (button) {
 
 
 
-// // Comments
-// document.addEventListener('DOMContentLoaded', function () {
-//     document.querySelectorAll('.btn-comment').forEach(function (button) {
-//         button.addEventListener('click', function () {
-//             const postId = this.getAttribute('data-post-id');
-//             const modal = document.getElementById('commentModal-' + postId);
-
-//             if (modal) {
-//                 // Hide all other modals
-//                 document.querySelectorAll('.comment-modal').forEach(function (modal) {
-//                     modal.style.display = 'none';
-//                 });
-//                     modal.style.display = 'block';
-//             }
-//         });
-//     });
-//     // Hide the modal when clicking outside of it
-//     window.addEventListener('click', function (event) {
-//         document.querySelectorAll('.comment-modal').forEach(function (modal) {
-//             if (event.target === modal) {
-//                 modal.style.display = 'none';
-//             }
-//         });
-//     });
-// });
-
-// // Reply
-// document.addEventListener('DOMContentLoaded', function () {
-//     let replyButtons = document.querySelectorAll('.reply-btn');
-
-//     replyButtons.forEach(function (button) {
-//         button.addEventListener('click', function () {
-//             let commentId = this.getAttribute('data-comment-id');
-//             let replyField = document.getElementById('reply-field-' + commentId);
-
-//             // Toggle the display of the reply field
-//             if (replyField.style.display === 'none' || replyField.style.display === '') {
-//                 replyField.style.display = 'block';
-//             } else {
-//                 replyField.style.display = 'none';
-//             }
-//         });
-//     });
-// });
-
-// Wait for the DOM to load before running scripts
+// Comment Button
 document.addEventListener('DOMContentLoaded', function () {
-    // Function to handle opening and closing post modals
     function setupPostModal() {
-        // Get all the "View Post" buttons
-        document.querySelectorAll('.btn-comment').forEach(function (button) {
-            button.addEventListener('click', function () {
-                const postId = this.getAttribute('data-post-id'); // Get post ID from button
-                const modal = document.getElementById('commentModal-' + postId); // Get the correct modal
+        // Event delegation for handling clicks on comment buttons
+        document.body.addEventListener('click', function (event) {
+            // Check if the clicked element has the class 'btn-comment'
+            if (event.target.closest('.btn-comment')) {
+                // Get the button element
+                const commentBtn = event.target.closest('.btn-comment');
+                const postId = commentBtn.getAttribute('data-post-id'); // Get post ID from button
+                const commentModal = document.getElementById('commentModal-' + postId); // Get the correct modal by ID
 
-                if (modal) {
+                if (commentModal) {
+                    console.log('Opening modal for post ID:', postId); // Debugging log
                     // Hide all other modals before showing the selected one
-                    document.querySelectorAll('.comment-modal').forEach(function (modal) {
-                        modal.style.display = 'none';
+                    document.querySelectorAll('.comment-modal').forEach(function (commentModal) {
+                        commentModal.style.display = 'none';
                     });
                     // Display the correct modal
-                    modal.style.display = 'block';
-                }
-            });
-        });
-
-        window.addEventListener('click', function (event) {
-            document.querySelectorAll('.comment-modal').forEach(function (modal) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                }
-            });
-        });
-    }
-
-    // Function to handle replies for comments
-    function setupReplyButtons() {
-        let replyButtons = document.querySelectorAll('.reply-btn');
-
-        replyButtons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                let commentId = this.getAttribute('data-comment-id');
-                let replyField = document.getElementById('reply-field-' + commentId);
-
-                // Toggle the display of the reply field
-                if (replyField.style.display === 'none' || replyField.style.display === '') {
-                    replyField.style.display = 'block';
+                    commentModal.style.display = 'block';
                 } else {
-                    replyField.style.display = 'none';
+                    console.log('Modal not found for post ID:', postId); // Debugging log if modal not found
+                }
+            }
+        });
+
+        // Close modal if clicked outside the modal content
+        window.addEventListener('click', function (event) {
+            document.querySelectorAll('.comment-modal').forEach(function (commentModal) {
+                if (event.target === commentModal) {
+                    commentModal.style.display = 'none';
                 }
             });
         });
     }
+    // Function to handle reply buttons
+    function setupReplyButtons() {
+        document.body.addEventListener('click', function (event) {
+            if (event.target.closest('.reply-btn')) {
+                const replyBtn = event.target.closest('.reply-btn');
+                const commentId = replyBtn.getAttribute('data-comment-id');
+                const replyField = document.getElementById('reply-field-' + commentId);
 
-    // Call the setup functions to activate modals and replies
+                if (replyField) {
+                    // Toggle the display of the reply field
+                    if (replyField.style.display === 'none' || replyField.style.display === '') {
+                        replyField.style.display = 'block';
+                    } else {
+                        replyField.style.display = 'none';
+                    }
+                }
+            }
+        });
+    }
+    // Initialize both functions
     setupPostModal();
     setupReplyButtons();
 });
+
+
+// Post Modal
+var newPostModal = document.getElementById("postModal");
+var createPostBtn = document.querySelector(".new-post");
+var span = document.getElementsByClassName("close")[0];
+var postButton = document.querySelector(".post-button");
+createPostBtn.onclick = function() {
+    newPostModal.style.display = "flex";
+}
+span.onclick = function() {
+    newPostModal.style.display = "none";
+}
+window.onclick = function(event) {
+    if (event.target == newPostModal) {
+        newPostModal.style.display = "none";
+    }
+}

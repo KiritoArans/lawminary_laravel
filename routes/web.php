@@ -93,23 +93,23 @@ Route::get('/search', [PageController::class, 'showSearchPage'])
 Route::get('/resources', [PageController::class, 'showResourcesPage'])
     ->middleware('auth');
 Route::get('/profile', [PageController::class, 'showProfilePage'])
+    ->name('profile')
     ->middleware('auth');
 
 // Route::get('/visit_profile', [PageController::class, 'showVisitProfilePage']);
-route::get('/visit-profile/{username}', [PageController::class, 'showVisitProfilePage'])->name('visit-profile');
+route::get('/user-{user_id}', [PageController::class, 'showVisitProfilePage'])
+    ->name('visit-profile')
+    ->middleware('auth');
 
 //settings routing
 Route::get('/about-lawminary', [
-    PageController::class,
-    'showAboutLawminaryPage',])
+    PageController::class, 'showAboutLawminaryPage'])
     ->middleware('auth');
 Route::get('/about-pao', [PageController::class, 'showAboutPAOPage'])
     ->middleware('auth');
 Route::get('/account-settings', [PageController::class, 'showAccountPage'])
     ->middleware('auth');
-Route::get('/activitylogs', [
-    PageController::class,
-    'showActLogsPage',])
+Route::get('/activitylogs', [PageController::class,'showActLogsPage'])
     ->middleware('auth');
 Route::get('/provide-feedback', [PageController::class, 'showFeedbackPage'])
     ->middleware('auth');
