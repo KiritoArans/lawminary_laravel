@@ -44,7 +44,12 @@
                                     @if($post->user)
                                         <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
                                         <div class="post-info">
-                                            <h2>{{ $post->user->firstName }} {{ $post->user->lastName }}</h2>
+                                            <h2>
+                                            {{-- <h2>{{ $post->user->firstName }} {{ $post->user->lastName }}</h2> --}}
+                                            <a href="{{ route('visit-profile', ['username' => $post->user->username]) }}">
+                                                {{ $post->user->firstName }} {{ $post->user->lastName }}
+                                            </a>
+                                            </h2>
                                             <label>@<span>{{ $post->user->username }}</span></label>
                                             <p for="">Posted: {{ $post->created_at->diffForHumans() }}</p>
                                         </div>
