@@ -1,17 +1,5 @@
 <div class="search-bar">
-    <form
-        id="searchForm"
-        method="GET"
-        action="{{ route('admin.searchPosts') }}"
-    >
-        <input
-            type="text"
-            placeholder="Search for posts"
-            id="searchInput"
-            name="searchQuery"
-        />
-        <button type="submit" class="custom-button">Search</button>
-    </form>
+    <input type="text" id="search" placeholder="Search for Posts" />
 </div>
 
 <!-- <div class="search-bar">

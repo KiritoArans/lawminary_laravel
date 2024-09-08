@@ -10,7 +10,7 @@
             <th>Date</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="postTableBody">
         @if ($recentActivities->isEmpty())
             <tr>
                 <td colspan="7">No results found.</td>
