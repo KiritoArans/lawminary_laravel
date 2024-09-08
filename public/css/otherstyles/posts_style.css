@@ -1,3 +1,6 @@
+.posts .post-info h2 a:hover, .posts a:hover{
+    color: var(--primary-color);
+}
 .posts .post-content {
     background-color: #ffffff;
     border: 1px solid #ddd;
@@ -268,6 +271,11 @@
     display: flex; /* Show modal */
 }
 
+.comment-modal a{
+    text-decoration: none;
+    color: var(--text-color1);
+}
+
 /* Modal content box */
 .clicked-post-content {
     background-color: #fff;
@@ -446,6 +454,7 @@
 }
 .user-reply span{
     font-weight: bold;
+    color: var(--text-color1);
 }
 .user-reply p{
     margin: .25rem .25rem;

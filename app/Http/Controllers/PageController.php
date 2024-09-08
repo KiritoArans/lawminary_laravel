@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\UserAccount;
 use App\Models\Posts;
 use App\Models\Comment;
@@ -70,26 +71,19 @@ class PageController extends Controller
 
         return view('users.profile', compact('user', 'posts', 'comments'));
     }
-    public function showVisitProfilePage()
+    public function showVisitProfilePage($user_id)
     {
-        // $user = Auth::user();
+        $user = UserAccount::where('user_id', $user_id)->firstOrFail();
 
-        // $posts = Posts::where('postedBy', $user->user_id)
-        //     ->orderBy('created_at', 'desc')
-        //     ->get();
+        $posts = Posts::where('postedBy', $user->user_id)
+            ->latest()
+            ->get();
 
-        // $comments = Comment::where('user_id', $user->user_id)
-        //     ->orderBy('created_at', 'desc')
-        //     ->get();
-
-        // return view('users.profile', compact('user', 'posts', 'comments'));
-
-        // return view('users.visit_profile');
-            // Fetch the user by username
-        $user = UserAccount::where('username', $username)->firstOrFail();
-
-        // Pass the user data to the view
-        return view('visit-profile', compact('user'));
+        $comments = Comment::where('user_id', $user->user_id)
+            ->latest()
+            ->get();
+    
+        return view('users.visit_profile', compact('user', 'posts', 'comments'));
     }
 
     // Settings
