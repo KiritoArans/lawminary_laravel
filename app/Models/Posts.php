@@ -12,10 +12,14 @@ class Posts extends Model
     protected $table = 'tblposts';
 
     protected $fillable = [
-        'post_id', 
-        'concern', 
-        'postedBy', 
+        'post_id',
+        'concern',
+        'postedBy',
         'approvedBy',
+        'status',
+        'tags',
+        'created_by',
+        'updated_by',
     ];
 
     public function comments()
@@ -30,5 +34,4 @@ class Posts extends Model
     {
         return $this->hasMany(Reply::class, 'comment_id', 'comment_id');
     }
-
 }

@@ -3,7 +3,7 @@ table {
     margin-bottom: 1rem;
     color: #212529;
     border-collapse: collapse;
-    table-layout: fixed; 
+    table-layout: fixed;
     font-size: 1rem;
 }
 .table th,
@@ -11,9 +11,9 @@ table {
     padding: 0.5rem;
     vertical-align: top;
     border: 1px solid #dee2e6;
-    word-wrap: break-word; 
+    word-wrap: break-word;
 }
-td:last-child{
+td:last-child {
     text-align: center;
     display: flex;
     justify-content: center;
@@ -49,8 +49,29 @@ td:last-child{
     background-color: #218838;
 }
 
+.btn-view-approve {
+    background-color: #28a745;
+    border-radius: 3px;
+    border: none;
+    padding: 5%;
+    margin: 10%;
+    margin-right: 50px;
+}
+.btn-view-approve:hover {
+    background-color: #178b30;
+}
 
-
+.btn-view-reject {
+    background-color: #ec2720;
+    border-radius: 3px;
+    border: none;
+    padding: 5%;
+    margin: 10%;
+    margin-right: 50px;
+}
+.btn-view-reject:hover {
+    background-color: #bb0e0e;
+}
 
 .action-buttons {
     display: flex;
@@ -62,15 +83,14 @@ td:last-child{
     margin-left: auto;
 }
 
-.add-container{
+.add-container {
     display: flex;
     justify-content: end;
     margin-right: 2px;
 }
-#addButton{
+#addButton {
     padding: 10px 22px;
 }
-
 
 .custom-button {
     background-color: #999;
@@ -89,7 +109,8 @@ td:last-child{
 .custom-button:hover {
     background-color: #333333;
 }
-.delete-button{
+
+.delete-button {
     background-color: red;
     color: white;
     border: 1px solid #ccc;

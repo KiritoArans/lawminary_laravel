@@ -8,6 +8,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostpageController;
+
 use App\Http\Controllers\data_general_controller\general_controller;
 
 Route::get('/', function () {
@@ -83,38 +85,56 @@ Route::get('/signup', [PageController::class, 'showSignupPage'])->name(
 Route::get('/home', [PageController::class, 'showHomePage'])
     ->name('home')
     ->middleware('auth');
-Route::get('/article', [PageController::class, 'showArticlePage'])
-    ->middleware('auth');
+Route::get('/article', [PageController::class, 'showArticlePage'])->middleware(
+    'auth'
+);
 Route::get('/forums', [PageController::class, 'showForumsPage']);
-Route::get('/notifications', [PageController::class, 'showNotificationPage'])
-    ->middleware('auth');
-Route::get('/search', [PageController::class, 'showSearchPage'])
-    ->middleware('auth');
-Route::get('/resources', [PageController::class, 'showResourcesPage'])
-    ->middleware('auth');
-Route::get('/profile', [PageController::class, 'showProfilePage'])
-    ->middleware('auth');
+Route::get('/notifications', [
+    PageController::class,
+    'showNotificationPage',
+])->middleware('auth');
+Route::get('/search', [PageController::class, 'showSearchPage'])->middleware(
+    'auth'
+);
+Route::get('/resources', [
+    PageController::class,
+    'showResourcesPage',
+])->middleware('auth');
+Route::get('/profile', [PageController::class, 'showProfilePage'])->middleware(
+    'auth'
+);
 
 // Route::get('/visit_profile', [PageController::class, 'showVisitProfilePage']);
-route::get('/visit-profile/{username}', [PageController::class, 'showVisitProfilePage'])->name('visit-profile');
+route::get('/visit-profile/{username}', [
+    PageController::class,
+    'showVisitProfilePage',
+])->name('visit-profile');
 
 //settings routing
 Route::get('/about-lawminary', [
     PageController::class,
-    'showAboutLawminaryPage',])
-    ->middleware('auth');
-Route::get('/about-pao', [PageController::class, 'showAboutPAOPage'])
-    ->middleware('auth');
-Route::get('/account-settings', [PageController::class, 'showAccountPage'])
-    ->middleware('auth');
+    'showAboutLawminaryPage',
+])->middleware('auth');
+Route::get('/about-pao', [
+    PageController::class,
+    'showAboutPAOPage',
+])->middleware('auth');
+Route::get('/account-settings', [
+    PageController::class,
+    'showAccountPage',
+])->middleware('auth');
 Route::get('/activitylogs', [
     PageController::class,
-    'showActLogsPage',])
-    ->middleware('auth');
-Route::get('/provide-feedback', [PageController::class, 'showFeedbackPage'])
-    ->middleware('auth');
-Route::get('/terms-of-service', [PageController::class, 'showTOSPage'])
-    ->middleware('auth');
+    'showActLogsPage',
+])->middleware('auth');
+Route::get('/provide-feedback', [
+    PageController::class,
+    'showFeedbackPage',
+])->middleware('auth');
+Route::get('/terms-of-service', [
+    PageController::class,
+    'showTOSPage',
+])->middleware('auth');
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -145,6 +165,25 @@ Route::post('admin/dashboard/filter', [
     DashboardController::class,
     'dashboard',
 ])->name('admin.filterDashboard');
+
+// Admin Post page
+Route::get('admin/postpage', [PostpageController::class, 'postpage'])->name(
+    'admin.postpage'
+);
+Route::match(['get', 'post'], '/admin/postpage', [
+    PostpageController::class,
+    'postpage',
+])->name('admin.postpage');
+
+Route::get('/admin/filter-posts', [
+    PostpageController::class,
+    'filterPosts',
+])->name('admin.filterPosts');
+
+Route::get('admin/search-posts', [
+    PostpageController::class,
+    'searchPosts',
+])->name('admin.searchPosts');
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -229,7 +268,9 @@ Route::post('/home', [PostController::class, 'createPost'])->name(
     'users.createPost'
 );
 // Like Post
-Route::post('/home/like-post', [LikeController::class, 'likePost'])->name('users.likePost');
+Route::post('/home/like-post', [LikeController::class, 'likePost'])->name(
+    'users.likePost'
+);
 
 // Create Comment
 Route::post('/comment', [CommentController::class, 'createComment'])->name(
@@ -240,7 +281,6 @@ Route::post('/comment', [CommentController::class, 'createComment'])->name(
 route::post('/reply', [CommentController::class, 'createReply'])->name(
     'users.createReply'
 );
-
 
 Route::post('/profile/settings/account/changepass', [
     AccountController::class,
