@@ -180,7 +180,7 @@ Route::get('/admin/filter-posts', [
     'filterPosts',
 ])->name('admin.filterPosts');
 
-Route::get('admin/search-posts', [
+Route::get('/admin/search-posts', [
     PostpageController::class,
     'searchPosts',
 ])->name('admin.searchPosts');

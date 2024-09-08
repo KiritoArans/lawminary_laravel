@@ -1,4 +1,20 @@
 <div class="search-bar">
+    <form
+        id="searchForm"
+        method="GET"
+        action="{{ route('admin.searchPosts') }}"
+    >
+        <input
+            type="text"
+            placeholder="Search for posts"
+            id="searchInput"
+            name="searchQuery"
+        />
+        <button type="submit" class="custom-button">Search</button>
+    </form>
+</div>
+
+<!-- <div class="search-bar">
     <input type="text" placeholder="Search for posts" />
     <button class="custom-button" id="editButton">Edit</button>
     <div id="editModal" class="modal">
@@ -37,4 +53,4 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->

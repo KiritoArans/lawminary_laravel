@@ -117,4 +117,28 @@ class PostpageController extends Controller
                 ->get(),
         ]);
     }
+
+    //search function
+
+    public function searchPosts(Request $request)
+    {
+        $searchQuery = $request->input('searchQuery');
+
+        // Use a query to search for posts that match the search term
+        $posts = DB::table('tblposts')
+            ->where('concern', 'like', '%' . $searchQuery . '%')
+            ->orWhere('post_id', 'like', '%' . $searchQuery . '%')
+            ->orWhere('postedBy', 'like', '%' . $searchQuery . '%')
+            ->orWhere('approvedBy', 'like', '%' . $searchQuery . '%')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
+        // Pass the filtered posts to the view
+        return view('admin.postpage', [
+            'recentActivities' => $posts,
+            'pendingPosts' => DB::table('tblposts')
+                ->where('status', 'Pending')
+                ->get(),
+        ]);
+    }
 }
