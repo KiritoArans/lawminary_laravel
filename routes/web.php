@@ -91,21 +91,21 @@ Route::get('/article', [PageController::class, 'showArticlePage'])->middleware(
 Route::get('/forums', [PageController::class, 'showForumsPage']);
 Route::get('/notifications', [
     PageController::class,
-    'showNotificationPage',
-])->middleware('auth');
-Route::get('/search', [PageController::class, 'showSearchPage'])->middleware(
-    'auth'
-);
+    'showNotificationPage',])
+    ->middleware('auth');
+Route::get('/search', [PageController::class, 'showSearchPage'])
+    ->middleware('auth');
+
 Route::get('/resources', [
     PageController::class,
     'showResourcesPage',
 ])->middleware('auth');
-Route::get('/profile', [PageController::class, 'showProfilePage'])->middleware(
-    'auth'
-);
 
-// Route::get('/visit_profile', [PageController::class, 'showVisitProfilePage']);
-route::get('/visit-profile/{username}', [
+Route::get('/profile', [PageController::class, 'showProfilePage'])
+    ->name('profile')
+    ->middleware('auth');
+
+route::get('/profile-{user_id}', [
     PageController::class,
     'showVisitProfilePage',
 ])->name('visit-profile');
@@ -268,9 +268,13 @@ Route::post('/home', [PostController::class, 'createPost'])->name(
     'users.createPost'
 );
 // Like Post
-Route::post('/home/like-post', [LikeController::class, 'likePost'])->name(
-    'users.likePost'
-);
+// Route::post('/home/like-post', [LikeController::class, 'likePost'])->name(
+//     'users.likePost'
+// );
+
+// web.php
+Route::post('/home-liked', [PostController::class, 'likePost'])->name('post.like');
+
 
 // Create Comment
 Route::post('/comment', [CommentController::class, 'createComment'])->name(

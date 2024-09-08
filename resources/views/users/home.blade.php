@@ -83,9 +83,21 @@
                             </div>
                             <hr>
                             <div class="actions">
-                                <button class="btn-hit" data-post-id="{{ $post->post_id }}" data-user-id="{{ Auth::id() }}">
-                                    <i class="fa-solid fa-gavel"></i> Hit
-                                </button>
+                                @php
+                                    // Check if the current user has liked this post
+                                    $hasLiked = \App\Models\Like::where('user_id', Auth::user()->user_id)
+                                                ->where('post_id', $post->post_id)
+                                                ->exists();
+                                @endphp
+                                <form action="{{ route('post.like') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="post_id" value="{{ $post->post_id }}">
+                                
+                                    <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : "" }}">
+                                        <i class="fa-solid fa-gavel"></i>Hit
+                                    </button>
+                                </form>
+                                
                                 <button class="btn-comment" data-post-id="{{ $post->post_id }}">
                                     <i class="fas fa-comment"></i> Comment
                                 </button>
