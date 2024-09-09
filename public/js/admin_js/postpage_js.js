@@ -47,94 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Let the form submit normally, no need for JS filtering here
 });
 
-/edit button/;
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Edit Modal Elements
-    const editButton = document.getElementById('editButton');
-    const editModal = document.getElementById('editModal');
-    const closeEditModal = document.getElementById('closeEditModal');
-    const editForm = document.getElementById('editForm');
-    const deleteButton = document.getElementById('deleteButton');
-    let currentRow = null;
-
-    editButton.addEventListener('click', function () {
-        const selectedRowId = prompt(
-            'Enter the ID of the post you want to edit:'
-        );
-        if (selectedRowId) {
-            const rows = document.querySelectorAll('#postsTableBody tr');
-            rows.forEach((row) => {
-                if (
-                    row.querySelector('td:nth-child(1)').textContent ===
-                    selectedRowId
-                ) {
-                    currentRow = row;
-                    document.getElementById('editPostId').value = selectedRowId;
-                    document.getElementById('editContent').value =
-                        row.querySelector('td:nth-child(2)').textContent;
-                    document.getElementById('editStatus').value = row
-                        .querySelector('td:nth-child(3)')
-                        .textContent.toLowerCase();
-                    document.getElementById('editTags').value =
-                        row.querySelector('td:nth-child(4)').textContent;
-                    editModal.style.display = 'block';
-                }
-            });
-        }
-    });
-
-    closeEditModal.addEventListener('click', function () {
-        editModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (event) {
-        if (event.target == editModal) {
-            editModal.style.display = 'none';
-        }
-    });
-
-    editForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const content = document.getElementById('editContent').value;
-        const status = document.getElementById('editStatus').value;
-        const tags = document.getElementById('editTags').value;
-        const restrictDays = document.getElementById('restrictUser').value;
-        const notifyUser = document.getElementById('notifyUser').checked;
-
-        if (currentRow) {
-            currentRow.querySelector('td:nth-child(2)').textContent = content;
-            currentRow.querySelector('td:nth-child(3)').textContent =
-                status.charAt(0).toUpperCase() + status.slice(1);
-            lector('td:nth-child(3)').textContent =
-                status.charAt(0).toUpperCase() + status.slice(1);
-            lector('td:nth-child(3)').textContent =
-                status.charAt(0).toUpperCase() + status.slice(1);
-            lector('td:nth-child(3)').textContent =
-                status.charAt(0).toUpperCase() + status.slice(1);
-            currentRow.querySelector('td:nth-child(4)').textContent = tags;
-
-            // Add logic to handle user restriction and notification
-            if (restrictDays) {
-                console.log(`User restricted for ${restrictDays} days`);
-            }
-            if (notifyUser) {
-                console.log('User notified');
-            }
-
-            editModal.style.display = 'none';
-        }
-    });
-
-    deleteButton.addEventListener('click', function () {
-        if (currentRow) {
-            y;
-            currentRow.remove();
-            editModal.style.display = 'none';
-        }
-    });
-});
-
 //search function
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -157,6 +69,56 @@ document.addEventListener('DOMContentLoaded', function () {
             } else {
                 row.style.display = 'none'; // Hide the row
             }
+        }
+    });
+});
+
+//edit and update function
+
+document.addEventListener('DOMContentLoaded', function () {
+    const editButtons = document.querySelectorAll('.editButton');
+    const editModal = document.getElementById('editModal');
+    const closeModal = document.querySelector('.close-button');
+
+    const postIdInput = document.getElementById('editPostId');
+    const concernInput = document.getElementById('editConcern');
+    const statusInput = document.getElementById('editStatus');
+    const tagsInput = document.getElementById('editTags');
+    const postedByInput = document.getElementById('editPostedBy');
+    const approvedByInput = document.getElementById('editApprovedBy');
+
+    // Open modal and fill in the form with the correct data
+    editButtons.forEach((button) => {
+        button.addEventListener('click', function () {
+            const postId = button.getAttribute('data-id');
+            const concern = button.getAttribute('data-concern');
+            const status = button.getAttribute('data-status');
+            const tags = button.getAttribute('data-tags');
+            const postedBy = button.getAttribute('data-postedby');
+            const approvedBy = button.getAttribute('data-approvedby');
+
+            // Fill the form
+            postIdInput.value = postId;
+            concernInput.value = concern;
+            statusInput.value = status;
+            tagsInput.value = tags;
+            postedByInput.value = postedBy;
+            approvedByInput.value = approvedBy;
+
+            // Show modal
+            editModal.style.display = 'block';
+        });
+    });
+
+    // Close the modal when clicking the close button
+    closeModal.addEventListener('click', function () {
+        editModal.style.display = 'none';
+    });
+
+    // Close the modal when clicking outside of the modal content
+    window.addEventListener('click', function (event) {
+        if (event.target == editModal) {
+            editModal.style.display = 'none';
         }
     });
 });

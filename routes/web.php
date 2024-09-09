@@ -185,6 +185,17 @@ Route::get('/admin/search-posts', [
     'searchPosts',
 ])->name('admin.searchPosts');
 
+// edit and update buttons
+Route::get('includes_postpage/post_edit_inc/{id}', [
+    PostpageController::class,
+    'post_edit_inc',
+])->name('post_edit_inc');
+
+// Route for updating a post
+Route::post('admin/update', [PostpageController::class, 'update'])->name(
+    'update'
+);
+
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Moderator Accounts Page

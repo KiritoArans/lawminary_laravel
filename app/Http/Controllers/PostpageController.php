@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Posts;
 
 class PostpageController extends Controller
 {
@@ -47,6 +48,8 @@ class PostpageController extends Controller
             'pendingPosts' => $pendingPosts,
         ]);
     }
+
+    //filter function
 
     public function filterPosts(Request $request)
     {
@@ -126,11 +129,11 @@ class PostpageController extends Controller
 
         // Use a query to search for posts that match the search term
         $posts = DB::table('tblposts')
-            ->where('concern', 'like', '%' . $searchQuery . '%')
+            // ->where('concern', 'like', '%' . $searchQuery . '%')
             ->orWhere('post_id', 'like', '%' . $searchQuery . '%')
-            ->orWhere('postedBy', 'like', '%' . $searchQuery . '%')
-            ->orWhere('approvedBy', 'like', '%' . $searchQuery . '%')
-            ->orderBy('updated_at', 'desc')
+            // ->orWhere('postedBy', 'like', '%' . $searchQuery . '%')
+            // ->orWhere('approvedBy', 'like', '%' . $searchQuery . '%')
+            // ->orderBy('updated_at', 'desc')
             ->get();
 
         // Pass the filtered posts to the view
@@ -140,5 +143,42 @@ class PostpageController extends Controller
                 ->where('status', 'Pending')
                 ->get(),
         ]);
+    }
+
+    //edit and update function
+
+    // Show the edit form
+    public function post_edit_inc($id)
+    {
+        // Fetch the post based on its ID
+        $post = Posts::findOrFail($id);
+
+        // Return the view with the post data
+        return view('includes_postpage.post_edit_inc', ['post' => $post]);
+    }
+
+    // Handle the form submission and update the post
+    public function update(Request $request)
+    {
+        $post = Posts::find($request->post_id);
+
+        // Validate the input data
+        $request->validate([
+            'concern' => 'required|string|max:255',
+            'status' => 'required|in:pending,approved,disregarded',
+            'tags' => 'nullable|string|max:255',
+            'postedBy' => 'required|string|max:255',
+            'approvedBy' => 'nullable|string|max:255',
+        ]);
+
+        // Update the post
+        $post->concern = $request->concern;
+        $post->status = $request->status;
+        $post->tags = $request->tags;
+        $post->postedBy = $request->postedBy;
+        $post->approvedBy = $request->approvedBy;
+        $post->save();
+
+        return redirect()->back()->with('success', 'Post updated successfully');
     }
 }

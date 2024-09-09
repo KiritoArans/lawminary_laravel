@@ -96,3 +96,28 @@ header hr {
 .custom-button:hover {
     background-color: #a0a0a0;
 }
+
+.form-control {
+    width: 96%;
+}
+
+.editButton,
+.btn-primary {
+    background-color: #b0b0b0;
+    border: 1px solid #ccc;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+#editStatus {
+    width: 100%;
+}
+.tdportrait {
+}

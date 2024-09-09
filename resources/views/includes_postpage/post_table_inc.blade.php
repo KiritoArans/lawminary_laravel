@@ -8,6 +8,7 @@
             <th>Posted By</th>
             <th>Approved by</th>
             <th>Date</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody id="postTableBody">
@@ -27,8 +28,24 @@
                     <td>
                         {{ \Carbon\Carbon::parse($activity->updated_at)->format('Y-m-d') }}
                     </td>
+                    <td>
+                        <button
+                            class="btn btn-warning editButton"
+                            data-id="{{ $activity->id }}"
+                            data-concern="{{ $activity->concern }}"
+                            data-status="{{ $activity->status }}"
+                            data-tags="{{ $activity->tags }}"
+                            data-postedby="{{ $activity->postedBy }}"
+                            data-approvedby="{{ $activity->approvedBy }}"
+                        >
+                            Edit
+                        </button>
+                    </td>
                 </tr>
             @endforeach
         @endif
     </tbody>
 </table>
+
+<!-- Edit Modal -->
+@include('includes_postpage.post_edit_inc')
