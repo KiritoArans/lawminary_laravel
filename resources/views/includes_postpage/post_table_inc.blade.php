@@ -1,3 +1,5 @@
+<meta name="csrf-token" content="{{ csrf_token() }}" />
+
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
@@ -40,6 +42,7 @@
                         >
                             Edit
                         </button>
+                        @include('includes_postpage.post_edit_inc', ['postDelete' => $activity])
                     </td>
                 </tr>
             @endforeach
@@ -48,4 +51,3 @@
 </table>
 
 <!-- Edit Modal -->
-@include('includes_postpage.post_edit_inc')

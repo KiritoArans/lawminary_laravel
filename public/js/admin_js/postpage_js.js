@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
     const editButtons = document.querySelectorAll('.editButton');
     const editModal = document.getElementById('editModal');
-    const closeModal = document.querySelector('.close-button');
+    const closeModal = document.querySelector('.close-buttonEdit');
 
     const postIdInput = document.getElementById('editPostId');
     const concernInput = document.getElementById('editConcern');
@@ -120,5 +120,80 @@ document.addEventListener('DOMContentLoaded', function () {
         if (event.target == editModal) {
             editModal.style.display = 'none';
         }
+    });
+});
+
+//delete function
+
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.deleteButton');
+
+    deleteButtons.forEach((button) => {
+        button.addEventListener('click', function () {
+            const postId = button.getAttribute('data-id'); // Get the post ID from the button attribute
+
+            // SweetAlert confirmation dialog
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Once deleted, you will not be able to recover this post!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // If user confirms deletion, send the DELETE request
+                    fetch(`/posts/${postId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': document
+                                .querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content')
+                        }
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.success) {
+                                // SweetAlert2 success notification
+                                Swal.fire(
+                                    'Deleted!',
+                                    'The post has been deleted successfully.',
+                                    'success'
+                                ).then(() => {
+                                    // Reload the page after SweetAlert is closed
+                                    window.location.reload();
+                                });
+
+                                // Check if the post row exists before removing it
+                                const postRow = document.querySelector(
+                                    `#post-${postId}`
+                                );
+                                if (postRow) {
+                                    postRow.remove();
+                                } else {
+                                    console.warn(
+                                        `Post row with ID #post-${postId} not found in the DOM.`
+                                    );
+                                }
+                            } else {
+                                Swal.fire(
+                                    'Failed!',
+                                    'Failed to delete the post. Please try again.',
+                                    'error'
+                                );
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred. Please try again.',
+                                'error'
+                            );
+                        });
+                }
+            });
+        });
     });
 });

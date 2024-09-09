@@ -91,10 +91,11 @@ Route::get('/article', [PageController::class, 'showArticlePage'])->middleware(
 Route::get('/forums', [PageController::class, 'showForumsPage']);
 Route::get('/notifications', [
     PageController::class,
-    'showNotificationPage',])
-    ->middleware('auth');
-Route::get('/search', [PageController::class, 'showSearchPage'])
-    ->middleware('auth');
+    'showNotificationPage',
+])->middleware('auth');
+Route::get('/search', [PageController::class, 'showSearchPage'])->middleware(
+    'auth'
+);
 
 Route::get('/resources', [
     PageController::class,
@@ -196,6 +197,12 @@ Route::post('admin/update', [PostpageController::class, 'update'])->name(
     'update'
 );
 
+//route for delete a post
+
+Route::delete('/posts/{id}', [PostpageController::class, 'destroy'])->name(
+    'posts.destroy'
+);
+
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Moderator Accounts Page
@@ -284,8 +291,9 @@ Route::post('/home', [PostController::class, 'createPost'])->name(
 // );
 
 // web.php
-Route::post('/home-liked', [PostController::class, 'likePost'])->name('post.like');
-
+Route::post('/home-liked', [PostController::class, 'likePost'])->name(
+    'post.like'
+);
 
 // Create Comment
 Route::post('/comment', [CommentController::class, 'createComment'])->name(

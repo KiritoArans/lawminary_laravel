@@ -1,6 +1,6 @@
 <div id="editModal" class="modal">
     <div class="modal-content">
-        <span class="close-button">&times;</span>
+        <span class="close-buttonEdit">&times;</span>
         <h2>Edit Post</h2>
         <form id="editForm" method="POST" action="{{ route('update') }}">
             @csrf
@@ -50,6 +50,13 @@
                 />
             </div>
             <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button
+                type="button"
+                class="deleteButton"
+                data-id="{{ $postDelete->id }}"
+            >
+                Delete
+            </button>
         </form>
     </div>
 </div>

@@ -181,4 +181,17 @@ class PostpageController extends Controller
 
         return redirect()->back()->with('success', 'Post updated successfully');
     }
+
+    // delete function
+    public function destroy($id)
+    {
+        $post = Posts::find($id);
+
+        if ($post) {
+            $post->delete();
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false], 404); // Return an error if post not found
+        }
+    }
 }
