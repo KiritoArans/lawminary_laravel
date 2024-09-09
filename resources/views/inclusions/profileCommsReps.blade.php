@@ -1,5 +1,5 @@
-<div class="profile-comments">
-    @foreach($posts as $post)
+@foreach($posts as $post)
+    <div class="profile-comments">
         @foreach($comments as $comment)
         <div class="comments">
             <div class="comment-content">
@@ -36,5 +36,5 @@
             </div>
         </div>
         @endforeach
-    @endforeach
-</div>
+    </div>
+@endforeach
