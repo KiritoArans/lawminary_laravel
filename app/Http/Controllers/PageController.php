@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserAccount;
 use App\Models\Posts;
+use App\Models\Like;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,9 +27,12 @@ class PageController extends Controller
     // User Page
     public function showHomePage()
     {
+        $user = Auth::user();
+
         $posts = Posts::with('user')
         ->orderBy('created_at', 'desc')
         ->get();
+
         return view('users.home', compact('posts'));
     }
 

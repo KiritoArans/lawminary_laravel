@@ -251,9 +251,9 @@
         </main>
     </div>
 
-    <script src="js/postandcomment.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/profile.js"></script>
-    <script src="js/logout.js"></script>
+    <script src="/js/postandcomment.js"></script>
+    <script src="/js/settings.js"></script>
+    <script src="/js/profile.js"></script>
+    <script src="/js/logout.js"></script>
 </body>
 </html>

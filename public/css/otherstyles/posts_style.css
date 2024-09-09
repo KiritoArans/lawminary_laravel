@@ -6,6 +6,8 @@
     border: 1px solid #ddd;
     padding: 20px 20px 8px 20px;
     margin: 20px 0;
+    /* margin: 20px 280px 20px 212px; */
+    margin: 20px 180px 20px 112px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
@@ -68,6 +70,8 @@
 
 .posts .post-text{
     margin: .75rem 0 .5rem 0;
+    /* display: flex;
+    justify-content: space-between; */
 }
 .posts .post-text p{
     margin: 0;
@@ -77,6 +81,7 @@
     object-fit: cover;
     max-width: 50%;
     height: auto;
+    /* max-height: 20rem; */
     border-radius: 5px;
     margin-top: 10px;
 }
@@ -98,6 +103,9 @@
     display: flex;
     align-items: center;
     transition: var(--tran-05);
+}
+.posts .post-content .actions .btn-hitted {
+    color: var(--primary-color);
 }
 .posts .post-content .actions button i {
     margin-right: 8px;
@@ -527,3 +535,5 @@
     color: white;
     background-color: var(--primary-color);
 }
+
+

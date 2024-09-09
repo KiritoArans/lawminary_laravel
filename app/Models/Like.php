@@ -12,19 +12,17 @@ class Like extends Model
     protected $table = 'tbllikes';
 
     protected $fillable = [
-        'reply', 
         'user_id', 
         'post_id',
-        'comment_id',
     ];
 
     public function post()
     {
-        return $this->belongsTo(Posts::class, 'post_id', 'post_id'); // Ensure it uses the correct key
+        return $this->belongsTo(Post::class);
     }
 
     public function user()
     {
-        return $this->belongsTo(UserAccount::class, 'user_id', 'user_id');
+        return $this->belongsTo(UserAccount::class);
     }
 }
