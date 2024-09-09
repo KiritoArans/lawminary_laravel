@@ -9,6 +9,7 @@ use App\Models\Posts;
 use App\Models\Like;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -73,8 +74,21 @@ class PageController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('users.profile', compact('user', 'posts', 'comments'));
+        $likedPosts = DB::table('tbllikes')
+        ->join('tblposts', 'tbllikes.post_id', '=', 'tblposts.post_id')
+        ->join('tblaccounts', 'tblposts.postedBy', '=', 'tblaccounts.user_id') // Join with tblaccounts to get user info
+        ->where('tbllikes.user_id', $user->user_id)
+        ->orderBy('tbllikes.created_at', 'desc')
+        ->select('tblposts.*', 
+            'tblaccounts.firstName', 
+            'tblaccounts.lastName', 
+            'tblaccounts.username', 
+            'tblaccounts.userPhoto') 
+        ->get();
+
+        return view('users.profile', compact('user', 'posts', 'comments', 'likedPosts'));
     }
+    
     public function showVisitProfilePage($user_id)
     {
         $user = UserAccount::where('user_id', $user_id)->firstOrFail();

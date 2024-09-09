@@ -41,5 +41,10 @@ class UserAccount extends Authenticatable
             $model->accountType = $model->accountType ?? 'User';
         });
     }
+
+    // public function likedPosts()
+    // {
+    //     return $this->belongsTo(Posts::class, 'postedBy', 'user_id');
+    // }
 }
 

@@ -201,10 +201,8 @@ class AccountController extends Controller
     {
         // Validate the incoming request data
         $request->validate([
-            'username' =>
-                'required|string|max:255|unique:tblaccounts,username,' . $id,
-            'email' =>
-                'required|string|email|max:255|unique:tblaccounts,email,' . $id,
+            'username' =>'required|string|max:255|unique:tblaccounts,username,' . $id,
+            'email' =>'required|string|email|max:255|unique:tblaccounts,email,' . $id,
             'firstName' => 'required|string|max:255',
             'middleName' => 'nullable|string|max:255',
             'lastName' => 'required|string|max:255',

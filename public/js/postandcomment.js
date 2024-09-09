@@ -37,7 +37,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Display the correct modal
                     commentModal.style.display = 'block';
                 } else {
-                    console.log('Modal not found for post ID:', postId); // Debugging log if modal not found
+                    Swal.fire({
+                        title: 'Post Unavailable',
+                        text: 'Concern might have been deleted by the owner.',
+                        icon: 'error',
+                        confirmButtonText: 'Okay'
+                    });
                 }
             }
         });

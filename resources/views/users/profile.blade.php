@@ -73,37 +73,44 @@
                     @include('inclusions/profilePosts')
 
                     @include('inclusions/createPostModal')
-                    
+
+                    @include('inclusions/openComments')
+
                     @include('inclusions/profileCommsReps')
 
-                   <div class="profile-liked">
-                        <div class="posts">
-                            <div class="post-content">
-                                <div class="post-header">
-                                    <div class="user-info">
-                                        <img src="../imgs/user-img.png" alt="Profile Picture" class="user-profile-photo">
-                                        <div class="post-info">
-                                            <h2>Name Surname</h2>
-                                            <p>@username</p>
+                    <div class="profile-liked">
+                        @foreach($likedPosts as $post)
+                            <div class="posts">
+                                <div class="post-content">
+                                    <div class="post-header">
+                                        <div class="user-info">
+                                            <img src="{{ $post->userPhoto ? Storage::url($post->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
+                                            <div class="post-info">
+                                                <h2>{{ $post->firstName ?? 'Unknown User' }} {{ $post->lastName }}</h2>
+                                                <label>@<span>{{ $post->username ?? 'username' }}</span></label>
+                                                <p>Posted: {{ \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</p>
+                                            </div>
                                         </div>
-                                    </div>
                                         <div class="post-options">
                                             <i class="fas fa-ellipsis-v"></i>
                                         </div>
-                                </div>
-                                <hr>
-                                <div class="post-text">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                </div>
-                                <hr>
-                                <div class="actions">
-                                    <button><i class="fa-solid fa-gavel"></i> Hit</button>
-                                    <button><i class="fas fa-comment"></i> Comment</button>
-                                    <button><i class="fas fa-bookmark"></i> Bookmark</button>
+                                    </div>
+                                    <hr>
+                                    <div class="post-text">
+                                        <p>{{ $post->concern ?? 'No content available' }}</p> <!-- Post content -->
+                                    </div>
+                                    <hr>
+                                    <div class="actions">
+                                        <button><i class="fa-solid fa-gavel"></i> Hit</button>
+                                        <button><i class="fas fa-comment"></i> Comment</button>
+                                        <button><i class="fas fa-bookmark"></i> Bookmark</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                   </div>
+                        @endforeach
+                    </div>
+                    
+                    
 
                    <div class="profile-bookmarked">
                         <div class="posts">
