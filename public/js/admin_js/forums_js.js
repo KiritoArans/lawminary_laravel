@@ -1,4 +1,6 @@
-/filter button/
+console.log('JavaScript is loaded'); // Add this to the top of your forums_js.js file.
+
+/filter button/;
 
 document.addEventListener('DOMContentLoaded', function () {
     const filterButton = document.getElementById('filterButton');
@@ -22,31 +24,71 @@ document.addEventListener('DOMContentLoaded', function () {
 
     filterForm.addEventListener('submit', function (event) {
         event.preventDefault();
-        const filterForumId = document.getElementById('filterForumId').value.toLowerCase();
-        const filterForumName = document.getElementById('filterForumName').value.toLowerCase();
-        const filterForumDescription = document.getElementById('filterForumDescription').value.toLowerCase();
-        const filterMembersCount = document.getElementById('filterMembersCount').value;
-        const filterDateCreated = document.getElementById('filterDateCreated').value;
-        filterForums(filterForumId, filterForumName, filterForumDescription, filterMembersCount, filterDateCreated);
+        const filterForumId = document
+            .getElementById('filterForumId')
+            .value.toLowerCase();
+        const filterForumName = document
+            .getElementById('filterForumName')
+            .value.toLowerCase();
+        const filterForumDescription = document
+            .getElementById('filterForumDescription')
+            .value.toLowerCase();
+        const filterMembersCount =
+            document.getElementById('filterMembersCount').value;
+        const filterDateCreated =
+            document.getElementById('filterDateCreated').value;
+        filterForums(
+            filterForumId,
+            filterForumName,
+            filterForumDescription,
+            filterMembersCount,
+            filterDateCreated
+        );
         filterModal.style.display = 'none';
     });
 
-    function filterForums(filterForumId, filterForumName, filterForumDescription, filterMembersCount, filterDateCreated) {
+    function filterForums(
+        filterForumId,
+        filterForumName,
+        filterForumDescription,
+        filterMembersCount,
+        filterDateCreated
+    ) {
         const rows = document.querySelectorAll('#forumsTableBody tr');
-        rows.forEach(row => {
-            const forumId = row.querySelector('td:nth-child(1)').textContent.toLowerCase();
-            const forumName = row.querySelector('td:nth-child(2)').textContent.toLowerCase();
-            const forumDescription = row.querySelector('td:nth-child(3)').textContent.toLowerCase();
-            const membersCount = row.querySelector('td:nth-child(4)').textContent;
-            const dateCreated = row.querySelector('td:nth-child(5)').textContent;
+        rows.forEach((row) => {
+            const forumId = row
+                .querySelector('td:nth-child(1)')
+                .textContent.toLowerCase();
+            const forumName = row
+                .querySelector('td:nth-child(2)')
+                .textContent.toLowerCase();
+            const forumDescription = row
+                .querySelector('td:nth-child(3)')
+                .textContent.toLowerCase();
+            const membersCount =
+                row.querySelector('td:nth-child(4)').textContent;
+            const dateCreated =
+                row.querySelector('td:nth-child(5)').textContent;
 
-            const matchesForumId = !filterForumId || forumId.includes(filterForumId);
-            const matchesForumName = !filterForumName || forumName.includes(filterForumName);
-            const matchesForumDescription = !filterForumDescription || forumDescription.includes(filterForumDescription);
-            const matchesMembersCount = !filterMembersCount || membersCount === filterMembersCount;
-            const matchesDateCreated = !filterDateCreated || dateCreated === filterDateCreated;
+            const matchesForumId =
+                !filterForumId || forumId.includes(filterForumId);
+            const matchesForumName =
+                !filterForumName || forumName.includes(filterForumName);
+            const matchesForumDescription =
+                !filterForumDescription ||
+                forumDescription.includes(filterForumDescription);
+            const matchesMembersCount =
+                !filterMembersCount || membersCount === filterMembersCount;
+            const matchesDateCreated =
+                !filterDateCreated || dateCreated === filterDateCreated;
 
-            if (matchesForumId && matchesForumName && matchesForumDescription && matchesMembersCount && matchesDateCreated) {
+            if (
+                matchesForumId &&
+                matchesForumName &&
+                matchesForumDescription &&
+                matchesMembersCount &&
+                matchesDateCreated
+            ) {
                 row.style.display = '';
             } else {
                 row.style.display = 'none';
@@ -55,7 +97,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-/add forum button/
+/add forum button/;
 
 document.addEventListener('DOMContentLoaded', function () {
     // Add Forum Modal Elements
@@ -83,11 +125,20 @@ document.addEventListener('DOMContentLoaded', function () {
         event.preventDefault();
         const forumName = document.getElementById('addForumName').value;
         const forumIssue = document.getElementById('addForumIssue').value;
-        const forumDescription = document.getElementById('addForumDescription').value;
+        const forumDescription = document.getElementById(
+            'addForumDescription'
+        ).value;
         const membersCount = document.getElementById('addMembersCount').value;
         const dateCreated = document.getElementById('addDateCreated').value;
 
-        addForum(forumIdCounter++, forumName, forumIssue, forumDescription, membersCount, dateCreated);
+        addForum(
+            forumIdCounter++,
+            forumName,
+            forumIssue,
+            forumDescription,
+            membersCount,
+            dateCreated
+        );
         addForumModal.style.display = 'none';
         addForumForm.reset();
     });
@@ -107,101 +158,80 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-/edit button/
+/edit button/;
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Edit Forum Modal Elements
-    const editButton = document.getElementById('editButton');
-    const editForumModal = document.getElementById('editForumModal');
-    const closeEditForumModal = document.getElementById('closeEditForumModal');
-    const editForumForm = document.getElementById('editForumForm');
-    const deleteForumButton = document.getElementById('deleteForumButton');
-    let currentRow = null;
+    const editButtons = document.querySelectorAll('.editButton');
+    const editModal = document.getElementById('editModal');
+    const editForm = document.getElementById('editForm');
+    const closeModal = document.querySelector('.close-buttonEdit');
 
-    editButton.addEventListener('click', function () {
-        const selectedForumId = prompt("Enter the ID of the forum you want to edit:");
-        if (selectedForumId) {
-            const rows = document.querySelectorAll('#forumsTableBody tr');
-            rows.forEach(row => {
-                if (row.querySelector('td:nth-child(1)').textContent === selectedForumId) {
-                    currentRow = row;
-                    document.getElementById('editForumId').value = selectedForumId;
-                    document.getElementById('editForumName').value = row.querySelector('td:nth-child(2)').textContent;
-                    document.getElementById('editForumIssue').value = row.querySelector('td:nth-child(3)').textContent;
-                    document.getElementById('editForumDescription').value = row.querySelector('td:nth-child(3)').textContent;
-                    document.getElementById('editMembersCount').value = row.querySelector('td:nth-child(4)').textContent;
-                    document.getElementById('editDateCreated').value = row.querySelector('td:nth-child(5)').textContent;
-                    editForumModal.style.display = 'block';
-                }
-            });
+    const editIdField = document.getElementById('editId');
+    const editNameField = document.getElementById('editName');
+    const editDescField = document.getElementById('editDesc');
+    const editMembersField = document.getElementById('editMembers');
+
+    editButtons.forEach((button) => {
+        button.addEventListener('click', function () {
+            // Get data from the button (from table row)
+            const id = this.getAttribute('data-id');
+            const name = this.getAttribute('data-name');
+            const desc = this.getAttribute('data-desc');
+            const members = this.getAttribute('data-members');
+
+            // Populate the form fields
+            editIdField.value = id;
+            editNameField.value = name;
+            editDescField.value = desc;
+            editMembersField.value = members;
+
+            // Update form action to include ID
+            editForm.action = `/admin/forums/update/${id}`;
+
+            // Show the modal
+            editModal.style.display = 'block';
+        });
+    });
+
+    // Close the modal
+    closeModal.addEventListener('click', function () {
+        editModal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside of it
+    window.onclick = function (event) {
+        if (event.target === editModal) {
+            editModal.style.display = 'none';
         }
-    });
-
-    closeEditForumModal.addEventListener('click', function () {
-        editForumModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (event) {
-        if (event.target == editForumModal) {
-            editForumModal.style.display = 'none';
-        }
-    });
-
-    editForumForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const forumName = document.getElementById('editForumName').value;
-        const forumIssue = document.getElementById('editForumIssue').value;
-        const forumDescription = document.getElementById('editForumDescription').value;
-        const membersCount = document.getElementById('editMembersCount').value;
-        const dateCreated = document.getElementById('editDateCreated').value;
-        const restrictAccess = document.getElementById('restrictForumAccess').checked;
-        const archiveForum = document.getElementById('archiveForum').checked;
-
-        if (currentRow) {
-            currentRow.querySelector('td:nth-child(2)').textContent = forumName;
-            currentRow.querySelector('td:nth-child(3)').textContent = forumDescription;
-            currentRow.querySelector('td:nth-child(4)').textContent = membersCount;
-            currentRow.querySelector('td:nth-child(5)').textContent = dateCreated;
-
-            // Add logic to handle restrict access and archive forum
-            if (restrictAccess) {
-                console.log('Forum access restricted');
-            }
-            if (archiveForum) {
-                console.log('Forum archived');
-            }
-
-            editForumModal.style.display = 'none';
-        }
-    });
-
-    deleteForumButton.addEventListener('click', function () {
-        if (currentRow) {
-            currentRow.remove();
-            editForumModal.style.display = 'none';
-        }
-    });
+    };
 });
 
-
-/view modal button/
+/view modal button/;
 
 document.addEventListener('DOMContentLoaded', function () {
     // View Forum Modal Elements
     const viewForumModal = document.getElementById('viewForumModal');
     const closeViewForumModal = document.getElementById('closeViewForumModal');
 
-    document.querySelectorAll('.action-button').forEach(button => {
+    document.querySelectorAll('.action-button').forEach((button) => {
         button.addEventListener('click', function () {
             const forumId = this.getAttribute('data-forum-id');
-            const row = document.querySelector(`tr[data-forum-id="${forumId}"]`);
+            const row = document.querySelector(
+                `tr[data-forum-id="${forumId}"]`
+            );
 
-            document.getElementById('viewForumId').textContent = row.querySelector('td:nth-child(1)').textContent;
-            document.getElementById('viewForumName').textContent = row.querySelector('td:nth-child(2)').textContent;
-            document.getElementById('viewForumIssue').textContent = row.querySelector('td:nth-child(3)').textContent;
-            document.getElementById('viewForumDescription').textContent = row.querySelector('td:nth-child(3)').textContent;
-            document.getElementById('viewMembersCount').textContent = row.querySelector('td:nth-child(4)').textContent;
-            document.getElementById('viewDateCreated').textContent = row.querySelector('td:nth-child(5)').textContent;
+            document.getElementById('viewForumId').textContent =
+                row.querySelector('td:nth-child(1)').textContent;
+            document.getElementById('viewForumName').textContent =
+                row.querySelector('td:nth-child(2)').textContent;
+            document.getElementById('viewForumIssue').textContent =
+                row.querySelector('td:nth-child(3)').textContent;
+            document.getElementById('viewForumDescription').textContent =
+                row.querySelector('td:nth-child(3)').textContent;
+            document.getElementById('viewMembersCount').textContent =
+                row.querySelector('td:nth-child(4)').textContent;
+            document.getElementById('viewDateCreated').textContent =
+                row.querySelector('td:nth-child(5)').textContent;
 
             viewForumModal.style.display = 'block';
         });

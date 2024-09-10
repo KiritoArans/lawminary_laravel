@@ -10,6 +10,7 @@ use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostpageController;
 use App\Http\Controllers\SystemContentController;
+use App\Http\Controllers\ForumController;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -222,6 +223,21 @@ Route::get('admin/systemcontent/search', [
 ])->name('admin.systemcontent.search');
 
 //admin forums route
+
+Route::get('/admin/forums', [ForumController::class, 'index'])->name(
+    'admin.forums'
+);
+Route::post('/admin/forums/add', [ForumController::class, 'store'])->name(
+    'admin.forums.add'
+);
+Route::post('/admin/forums/update/{id}', [
+    ForumController::class,
+    'update',
+])->name('admin.forums.update');
+Route::delete('/admin/forums/delete/{id}', [
+    ForumController::class,
+    'destroy',
+])->name('admin.forums.delete');
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
