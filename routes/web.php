@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostpageController;
+use App\Http\Controllers\SystemContentController;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -202,6 +203,25 @@ Route::post('admin/update', [PostpageController::class, 'update'])->name(
 Route::delete('/posts/{id}', [PostpageController::class, 'destroy'])->name(
     'posts.destroy'
 );
+
+//admin system content route
+
+Route::get('admin/systemcontent', [
+    SystemContentController::class,
+    'index',
+])->name('admin.systemcontent');
+
+Route::match(['put', 'post'], '/admin/systemcontent/update/{id}', [
+    SystemContentController::class,
+    'update',
+])->name('admin.systemcontent.update');
+
+Route::get('admin/systemcontent/search', [
+    SystemContentController::class,
+    'search',
+])->name('admin.systemcontent.search');
+
+//admin forums route
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

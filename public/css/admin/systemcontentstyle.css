@@ -31,7 +31,7 @@ header h1 {
     justify-content: space-between;
     align-items: center;
 }
-.header-top img{
+.header-top img {
     height: 32px;
     position: relative;
     left: -8px;
@@ -78,14 +78,13 @@ header hr {
     border: 1px solid #ccc;
 }
 
-section h1{
-    margin: 0 0 .5rem 0;
+section h1 {
+    margin: 0 0 0.5rem 0;
     font-size: 2em;
     color: var(--primary-color);
 }
 
-
-button{
+button {
     background-color: #b0b0b0;
     border: 1px solid #ccc;
     color: black;
@@ -96,8 +95,30 @@ button{
     font-size: 14px;
     cursor: pointer;
     border-radius: 4px;
-    transition: background-color 0.3s ease;  
+    transition: background-color 0.3s ease;
 }
 button:hover {
-    background-color: #a0a0a0; 
+    background-color: #a0a0a0;
+}
+
+.form-control {
+    width: 95%;
+}
+
+.search-bar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+.search-bar input {
+    width: 450px;
+    padding: 10px 10px 10px 32px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.search-bar i {
+    position: absolute;
+    left: 8px;
+    color: var(--primary-color);
 }
