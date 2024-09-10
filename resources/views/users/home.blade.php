@@ -44,15 +44,9 @@
                                     <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
                                     <div class="post-info">
                                         <h2>
-                                        @if (Auth::check() && Auth::user()->user_id == $post->user->user_id)
-                                            <a href="{{ route('profile') }}">
+                                            <a href="{{ Auth::check() && Auth::user()->user_id == $post->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $post->user->user_id]) }}">
                                                 {{ $post->user->firstName }} {{ $post->user->lastName }}
                                             </a>
-                                        @else
-                                        <a href="{{ route('visit-profile', ['user_id' => $post->user->user_id]) }}">
-                                            {{ $post->user->firstName ?? 'Unkown' }} {{ $post->user->lastName ?? 'User' }}
-                                        </a>
-                                        @endif
                                         </h2>
                                         <label>@<span>{{ $post->user->username ?? 'unknownuser' }}</span></label>
                                         <p>Posted: {{ $post->created_at->diffForHumans() }}</p>
@@ -75,6 +69,7 @@
                             </div>
                             <hr>
                             <div class="actions">
+                                
                                 @php
                                     $hasLiked = \App\Models\Like::where('user_id', Auth::user()->user_id)
                                                 ->where('post_id', $post->post_id)
@@ -105,6 +100,7 @@
                                         <i class="fas fa-bookmark"></i> Bookmark
                                     </button>
                                 </form>
+
                             </div>
                         </div>
                        
@@ -115,15 +111,9 @@
                                         <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
                                         <div class="clicked-post-info">
                                             <h2 id="modalUserName">
-                                                @if (Auth::check() && Auth::user()->user_id == $post->user->user_id)
-                                                    <a href="{{ route('profile') }}">
-                                                        {{ $post->user->firstName }} {{ $post->user->lastName }}
-                                                    </a>
-                                                @else
-                                                    <a href="{{ route('visit-profile', ['user_id' => $post->user->user_id]) }}">
-                                                        {{ $post->user->firstName ?? 'Unknown' }} {{ $post->user->lastName ?? 'User' }}
-                                                    </a>
-                                                @endif
+                                                <a href="{{ Auth::check() && Auth::user()->user_id == $post->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $post->user->user_id]) }}">
+                                                    {{ $post->user->firstName }} {{ $post->user->lastName }}
+                                                </a>
                                             </h2>
                                             <label>@<span id="modalUserUsername">{{ $post->user->username ?? 'username' }}</span></label>
                                             <p class="comment-time"> {{ $post->created_at->format('M d, Y H:i A') }}</p>
@@ -155,15 +145,9 @@
                                                 </div>
                                                 <div class="user-comment-content">
                                                     <span>
-                                                        @if (Auth::check() && Auth::user()->user_id == $comment->user->user_id)
-                                                            <a href="{{ route('profile') }}">
-                                                                {{ $comment->user ? $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
-                                                            </a>
-                                                        @else
-                                                            <a href="{{ route('visit-profile', ['user_id' => $comment->user->user_id]) }}">
-                                                                {{ $comment->user ? $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
-                                                            </a>
-                                                        @endif
+                                                        <a href="{{ Auth::check() && Auth::user()->user_id == $comment->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $comment->user->user_id]) }}">
+                                                            {{ $comment->user ? $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
+                                                        </a>                                                        
                                                     </span>
                                                     <p>{{ $comment->comment }}</p>
                                                     <div class="date-reply">
@@ -190,15 +174,9 @@
                                                     </div>
                                                     <div class="user-reply-content">
                                                         <span>
-                                                            @if (Auth::check() && Auth::user()->user_id == $reply->user->user_id)
-                                                                <a href="{{ route('profile') }}">
-                                                                    {{ $reply->user ? $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}
-                                                                </a>
-                                                            @else
-                                                                <a href="{{ route('visit-profile', ['user_id' => $reply->user->user_id]) }}">
-                                                                    {{ $reply->user ? $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}
-                                                                </a>
-                                                            @endif
+                                                            <a href="{{ Auth::check() && Auth::user()->user_id == $reply->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $reply->user->user_id]) }}">
+                                                                {{ $reply->user ? $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}
+                                                            </a>                                                            
                                                         </span>
                                                         <label>replied to 
                                                             <span>{{ $comment->user ? $comment->user->firstName: 'Unknown User' }}</span>'s comment.

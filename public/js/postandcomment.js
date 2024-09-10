@@ -47,7 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Close modal if clicked outside the modal content
         window.addEventListener('click', function (event) {
             document.querySelectorAll('.comment-modal').forEach(function (commentModal) {
                 if (event.target === commentModal) {
@@ -56,6 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+
     // Function to handle reply buttons
     function setupReplyButtons() {
         document.body.addEventListener('click', function (event) {
@@ -65,7 +65,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 const replyField = document.getElementById('reply-field-' + commentId);
 
                 if (replyField) {
-                    // Toggle the display of the reply field
                     if (replyField.style.display === 'none' || replyField.style.display === '') {
                         replyField.style.display = 'block';
                     } else {
@@ -85,15 +84,20 @@ document.addEventListener('DOMContentLoaded', function () {
 var newPostModal = document.getElementById("postModal");
 var createPostBtn = document.querySelector(".new-post");
 var span = document.getElementsByClassName("close")[0];
-var postButton = document.querySelector(".post-button");
+
+// Open modal when the button is clicked
 createPostBtn.onclick = function() {
     newPostModal.style.display = "flex";
 }
+
+// Close modal when 'X' is clicked
 span.onclick = function() {
     newPostModal.style.display = "none";
 }
+
+// Close modal when clicking outside the modal content
 window.onclick = function(event) {
-    if (event.target == newPostModal) {
+    if (event.target === newPostModal) {
         newPostModal.style.display = "none";
     }
 }

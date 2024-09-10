@@ -29,7 +29,6 @@
                 <hr>
                 <div class="actions">
                     <button class="btn-comment" data-post-id="{{ $comment->post_id }}">
-                    {{-- <button class="btn-comment" data-post-id="{{ $post->post_id }}"> --}}
                         View Post
                     </button>
                 </div>            

@@ -18,11 +18,11 @@ class Bookmark extends Model
 
     public function post()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Posts::class, 'post_id', 'post_id');
     }
 
     public function user()
     {
-        return $this->belongsTo(UserAccount::class);
+        return $this->belongsTo(UserAccount::class, 'user_id', 'user_id');
     }
 }

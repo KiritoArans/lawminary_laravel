@@ -64,8 +64,8 @@
                     <ul>
                         <li><a id="posts-link">Posts</a></li>
                         <li><a id="comments-link">Comments and Replies</a></li>
-                        <li><a id="liked-link">Liked</a></li>
-                        <li><a id="bookmarked-link">Bookmarked</a></li>
+                        <li><a id="liked-link">Likes</a></li>
+                        <li><a id="bookmarked-link">Bookmarks</a></li>
                     </ul>
                 </div>
                 <hr>

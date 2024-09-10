@@ -30,11 +30,7 @@
                 <div class="profile-header">
                     <div class="profile-details">
                             <div class="profile-left">
-                                @if(Auth::user()->userPhoto)
-                                    <img src="{{ Storage::url(Auth::user()->userPhoto) }}" class="profile-photo" alt="Profile Picture">
-                                @else
-                                    <img src="../../imgs/user-img.png" class="profile-photo" alt="Profile Picture">
-                                @endif
+                                <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="profile-photo" alt="Profile Picture">
                                 <div class="profile-info">
                                     <h2>{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h2>
                                     <h4>@<span>{{ Auth::user()->username }}</span></h4>
@@ -63,83 +59,26 @@
                     <ul>
                         <li><a id="posts-link">Posts</a></li>
                         <li><a id="comments-link">Comments and Replies</a></li>
-                        <li><a id="liked-link">Liked</a></li>
-                        <li><a id="bookmarked-link">Bookmarked</a></li>
+                        <li><a id="liked-link">Likes</a></li>
+                        <li><a id="bookmarked-link">Bookmarks</a></li>
                     </ul>
                 </div>
                 <hr>
                 <div class="profile-content">
                     
-                    @include('inclusions/profilePosts')
+                    @include('inclusions/profile/profilePosts')
 
                     @include('inclusions/createPostModal')
 
                     @include('inclusions/openComments')
 
-                    @include('inclusions/profileCommsReps')
+                    @include('inclusions/profile/profileCommsReps')
 
-                    <div class="profile-liked">
-                        @foreach($likedPosts as $post)
-                            <div class="posts">
-                                <div class="post-content">
-                                    <div class="post-header">
-                                        <div class="user-info">
-                                            <img src="{{ $post->userPhoto ? Storage::url($post->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
-                                            <div class="post-info">
-                                                <h2>{{ $post->firstName ?? 'Unknown User' }} {{ $post->lastName }}</h2>
-                                                <label>@<span>{{ $post->username ?? 'username' }}</span></label>
-                                                <p>Posted: {{ \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</p>
-                                            </div>
-                                        </div>
-                                        <div class="post-options">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="post-text">
-                                        <p>{{ $post->concern ?? 'No content available' }}</p> <!-- Post content -->
-                                    </div>
-                                    <hr>
-                                    <div class="actions">
-                                        <button><i class="fa-solid fa-gavel"></i> Hit</button>
-                                        <button><i class="fas fa-comment"></i> Comment</button>
-                                        <button><i class="fas fa-bookmark"></i> Bookmark</button>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                    
-                    
+                    @include('inclusions/profile/profileLikes')
 
-                   <div class="profile-bookmarked">
-                        <div class="posts">
-                            <div class="post-content">
-                                <div class="post-header">
-                                    <div class="user-info">
-                                        <img src="../imgs/user-img.png" alt="Profile Picture" class="user-profile-photo">
-                                        <div class="post-info">
-                                            <h2>Name Surname</h2>
-                                            <p>@username</p>
-                                        </div>
-                                    </div>
-                                        <div class="post-options">
-                                            <i class="fas fa-ellipsis-v"></i>
-                                        </div>
-                                </div>
-                                <hr>
-                                <div class="post-text">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                                </div>
-                                <hr>
-                                <div class="actions">
-                                    <button><i class="fa-solid fa-gavel"></i> Hit</button>
-                                    <button><i class="fas fa-comment"></i> Comment</button>
-                                    <button><i class="fas fa-bookmark"></i> Bookmark</button>
-                                </div>
-                            </div>
-                        </div>
-                   </div>
+                    @include('inclusions/profile/profileBookmarks')
+
+
                 </div>
             </content>
         </main>

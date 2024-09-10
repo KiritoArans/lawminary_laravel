@@ -18,7 +18,7 @@ class Like extends Model
 
     public function post()
     {
-        return $this->belongsTo(Posts::class, 'post_id', 'post_id'); // Ensure it uses the correct key
+        return $this->belongsTo(Posts::class, 'post_id', 'post_id');
     }
 
     public function user()

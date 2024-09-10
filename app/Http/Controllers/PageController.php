@@ -74,19 +74,31 @@ class PageController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $likedPosts = DB::table('tbllikes')
-        ->join('tblposts', 'tbllikes.post_id', '=', 'tblposts.post_id')
-        ->join('tblaccounts', 'tblposts.postedBy', '=', 'tblaccounts.user_id') // Join with tblaccounts to get user info
-        ->where('tbllikes.user_id', $user->user_id)
-        ->orderBy('tbllikes.created_at', 'desc')
-        ->select('tblposts.*', 
-            'tblaccounts.firstName', 
-            'tblaccounts.lastName', 
-            'tblaccounts.username', 
-            'tblaccounts.userPhoto') 
-        ->get();
+        $likes = DB::table('tbllikes')
+            ->join('tblposts', 'tbllikes.post_id', '=', 'tblposts.post_id')
+            ->join('tblaccounts', 'tblposts.postedBy', '=', 'tblaccounts.user_id') // Join with tblaccounts to get user info
+            ->where('tbllikes.user_id', $user->user_id)
+            ->orderBy('tbllikes.created_at', 'desc')
+            ->select('tblposts.*', 
+                'tblaccounts.firstName', 
+                'tblaccounts.lastName', 
+                'tblaccounts.username', 
+                'tblaccounts.userPhoto') 
+            ->get();
 
-        return view('users.profile', compact('user', 'posts', 'comments', 'likedPosts'));
+        $bookmarks = DB::table('tblbookmarks')
+            ->join('tblposts', 'tblbookmarks.post_id', '=', 'tblposts.post_id')
+            ->join('tblaccounts', 'tblposts.postedBy', '=', 'tblaccounts.user_id') // Join with tblaccounts to get user info
+            ->where('tblbookmarks.user_id', $user->user_id)
+            ->orderBy('tblbookmarks.created_at', 'desc')
+            ->select('tblposts.*',
+                'tblaccounts.firstName', 
+                'tblaccounts.lastName', 
+                'tblaccounts.username', 
+                'tblaccounts.userPhoto') 
+            ->get();
+
+        return view('users.profile', compact('user', 'posts', 'comments', 'likes', 'bookmarks'));
     }
     
     public function showVisitProfilePage($user_id)
