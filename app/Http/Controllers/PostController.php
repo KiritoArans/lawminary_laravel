@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Posts;
 use App\Models\Like;
+use App\Models\Bookmark;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\PageController;
 
@@ -30,7 +31,6 @@ class PostController extends Controller
 
         $post->save();
 
-
         $PageController = new PageController();
 
         return redirect()->back()->with('success', 'Your concern has been posted!');
@@ -43,24 +43,15 @@ class PostController extends Controller
             'post_id' => 'required|exists:tblposts,post_id',
         ]);
     
-        // Check if the user has already liked the post
         $like = Like::where('user_id', $user->user_id)
                     ->where('post_id', $data['post_id'])
                     ->first();
-
-        // $hasLiked = Like::where('user_id', $user->user_id)
-        //             ->where('post_id', $like->post_id)
-        //             ->exists();
-
-        // return response()->json(['hasLiked' => $hasLiked]);
     
         if ($like) {
-            // If already liked, unlike the post by deleting the entry
             $like->delete();
-            return redirect()->back()->with('success', 'You unliked the post!');
+            return redirect()->back()->with('success', 'Post unliked.');
         }
     
-        // Create a new like entry
         $newLike = new Like();
         $newLike->liked_id = uniqid();
         $newLike->post_id = $data['post_id'];
@@ -68,6 +59,31 @@ class PostController extends Controller
         $newLike->like = 1;
         $newLike->save();
     
-        return redirect()->back()->with('success', 'Post liked successfully!');
+        return redirect()->back()->with('success', 'Post liked!');
+    }
+
+    public function bookmarkPost(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->validate([
+            'post_id' => 'required|exists:tblposts,post_id',
+        ]);
+    
+        $bookmark = Bookmark::where('user_id', $user->user_id)
+                    ->where('post_id', $data['post_id'])
+                    ->first();
+    
+        if ($bookmark) {
+            $bookmark->delete();
+            return redirect()->back()->with('success', 'Post unbookmarked.');
+        }
+    
+        $newBookmark = new Bookmark();
+        $newBookmark->post_id = $data['post_id'];
+        $newBookmark->user_id = $user->user_id;
+        $newBookmark->bookmark = 1;
+        $newBookmark->save();
+    
+        return redirect()->back()->with('success', 'Post bookmarked!');
     }
 }

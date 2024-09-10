@@ -5,9 +5,9 @@
     background-color: #ffffff;
     border: 1px solid #ddd;
     padding: 20px 20px 8px 20px;
-    margin: 20px 0;
-    /* margin: 20px 280px 20px 212px; */
-    margin: 20px 180px 20px 112px;
+    /* margin: 20px 0; */
+    margin: 20px 280px 20px 212px;
+    /* margin: 20px 120px 20px 160px; */
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
@@ -69,7 +69,7 @@
 }
 
 .posts .post-text{
-    margin: .75rem 0 .5rem 0;
+    margin: .75rem 0 1rem 0;
     /* display: flex;
     justify-content: space-between; */
 }
@@ -104,7 +104,7 @@
     align-items: center;
     transition: var(--tran-05);
 }
-.posts .post-content .actions .btn-hitted {
+.posts .post-content .actions .btn-hitted, .posts .post-content .actions .btn-bookmarked {
     color: var(--primary-color);
 }
 .posts .post-content .actions button i {
@@ -322,7 +322,13 @@
     display: flex;
     align-items: center;
 }
-
+.clicked-post-header img, .user-profile-photo, .comment-field img{
+    object-fit: cover;
+    border-radius: 10%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
 .clicked-post-info h2 {
     margin: 0;
     font-size: 1rem;
@@ -535,5 +541,3 @@
     color: white;
     background-color: var(--primary-color);
 }
-
-

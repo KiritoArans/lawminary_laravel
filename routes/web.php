@@ -306,13 +306,12 @@ Route::post('/home', [PostController::class, 'createPost'])->name(
     'users.createPost'
 );
 // Like Post
-// Route::post('/home/like-post', [LikeController::class, 'likePost'])->name(
-//     'users.likePost'
-// );
-
-// web.php
 Route::post('/home-liked', [PostController::class, 'likePost'])->name(
     'post.like'
+);
+// Bookmark Post
+Route::post('/home-bookmarked', [PostController::class, 'bookmarkPost'])->name(
+    'post.bookmark'
 );
 
 // Create Comment

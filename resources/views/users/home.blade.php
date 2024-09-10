@@ -41,30 +41,22 @@
                         <div class="post-content">
                             <div class="post-header">
                                 <div class="user-info">
-                                    @if($post->user)
-                                        <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
-                                        <div class="post-info">
-                                            <h2>
-                                            @if (Auth::check() && Auth::user()->user_id == $post->user->user_id)
-                                                <a href="{{ route('profile') }}">
-                                                    {{ $post->user->firstName }} {{ $post->user->lastName }}
-                                                </a>
-                                            @else
-                                            <a href="{{ route('visit-profile', ['user_id' => $post->user->user_id]) }}">
+                                    <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
+                                    <div class="post-info">
+                                        <h2>
+                                        @if (Auth::check() && Auth::user()->user_id == $post->user->user_id)
+                                            <a href="{{ route('profile') }}">
                                                 {{ $post->user->firstName }} {{ $post->user->lastName }}
                                             </a>
-                                            @endif
-                                            </h2>
-                                            <label>@<span>{{ $post->user->username }}</span></label>
-                                            <p for="">Posted: {{ $post->created_at->diffForHumans() }}</p>
-                                        </div>
-                                    @else
-                                        <img src="../imgs/user-img.png" alt="Default Profile Picture" class="user-profile-photo">
-                                        <div class="post-info">
-                                            <h2>Unknown User</h2>
-                                            <p>@unknown</p>
-                                        </div>
-                                    @endif
+                                        @else
+                                        <a href="{{ route('visit-profile', ['user_id' => $post->user->user_id]) }}">
+                                            {{ $post->user->firstName ?? 'Unkown' }} {{ $post->user->lastName ?? 'User' }}
+                                        </a>
+                                        @endif
+                                        </h2>
+                                        <label>@<span>{{ $post->user->username ?? 'unknownuser' }}</span></label>
+                                        <p>Posted: {{ $post->created_at->diffForHumans() }}</p>
+                                    </div>
                                 </div>
                                 <div class="post-options">
                                     <div class="options">
@@ -84,8 +76,11 @@
                             <hr>
                             <div class="actions">
                                 @php
-                                    // Check if the current user has liked this post
                                     $hasLiked = \App\Models\Like::where('user_id', Auth::user()->user_id)
+                                                ->where('post_id', $post->post_id)
+                                                ->exists();
+
+                                    $hasBookmarked = \App\Models\Bookmark::where('user_id', Auth::user()->user_id)
                                                 ->where('post_id', $post->post_id)
                                                 ->exists();
                                 @endphp
@@ -94,14 +89,22 @@
                                     <input type="hidden" name="post_id" value="{{ $post->post_id }}">
                                 
                                     <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : "" }}">
-                                        <i class="fa-solid fa-gavel"></i>Hit
+                                        <i class="fa-solid fa-gavel"></i> Hit
                                     </button>
                                 </form>
                                 
                                 <button class="btn-comment" data-post-id="{{ $post->post_id }}">
                                     <i class="fas fa-comment"></i> Comment
                                 </button>
-                                <button><i class="fas fa-bookmark"></i> Bookmark</button>
+
+                                <form action="{{ route('post.bookmark') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="post_id" value="{{ $post->post_id }}">
+                                
+                                    <button type="submit" class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : "" }}">
+                                        <i class="fas fa-bookmark"></i> Bookmark
+                                    </button>
+                                </form>
                             </div>
                         </div>
                        
@@ -109,32 +112,22 @@
                             <div class="clicked-post-content">
                                 <div class="clicked-post-header">
                                     <div class="user-info">
-                                        @if($post->user)
-                                            <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
-                                            <div class="clicked-post-info">
-                                                {{-- <h2 id="modalUserName">{{ $post->user->firstName }} {{ $post->user->lastName }}</h2> --}}
-                                                <h2 id="modalUserName">
-                                                    @if (Auth::check() && Auth::user()->user_id == $post->user->user_id)
-                                                        <a href="{{ route('profile') }}">
-                                                            {{ $post->user->firstName }} {{ $post->user->lastName }}
-                                                        </a>
-                                                    @else
-                                                        <a href="{{ route('visit-profile', ['user_id' => $post->user->user_id]) }}">
-                                                            {{ $post->user->firstName }} {{ $post->user->lastName }}
-                                                        </a>
-                                                    @endif
-                                                </h2>
-                                                <label>@<span id="modalUserUsername">{{ $post->user->username }}</span></label>
-                                                <p class="comment-time"> {{ $post->created_at->format('M d, Y H:i A') }}</p>
-                                            </div>
-                                        @else
-                                            <img src="../imgs/user-img.png" alt="Default Profile Picture" class="user-profile-photo">
-                                            <div class="clicked-post-info">
-                                                <h2>Unknown User</h2>
-                                                <p>@unknown</p>
-                                            </div>
-                                        @endif
-                                        
+                                        <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
+                                        <div class="clicked-post-info">
+                                            <h2 id="modalUserName">
+                                                @if (Auth::check() && Auth::user()->user_id == $post->user->user_id)
+                                                    <a href="{{ route('profile') }}">
+                                                        {{ $post->user->firstName }} {{ $post->user->lastName }}
+                                                    </a>
+                                                @else
+                                                    <a href="{{ route('visit-profile', ['user_id' => $post->user->user_id]) }}">
+                                                        {{ $post->user->firstName ?? 'Unknown' }} {{ $post->user->lastName ?? 'User' }}
+                                                    </a>
+                                                @endif
+                                            </h2>
+                                            <label>@<span id="modalUserUsername">{{ $post->user->username ?? 'username' }}</span></label>
+                                            <p class="comment-time"> {{ $post->created_at->format('M d, Y H:i A') }}</p>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
@@ -158,14 +151,9 @@
                                         @foreach($post->comments as $comment)
                                             <div class="user-comment">
                                                 <div>
-                                                    @if($comment->user && $comment->user->userPhoto)
-                                                        <img src="{{ Storage::url($comment->user->userPhoto) }}" alt="User Profile Picture" class="user-profile-photo">
-                                                    @else
-                                                        <img src="../../imgs/user-img.png" alt="Default User Image" class="user-profile-photo">
-                                                    @endif
+                                                    <img src="{{ $comment->user->userPhoto ? Storage::url($comment->user->userPhoto) : '../imgs/user-img.png' }}" alt="User Profile Picture" class="user-profile-photo">
                                                 </div>
                                                 <div class="user-comment-content">
-                                                    {{-- <span>{{ $comment->user ? $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}</span> --}}
                                                     <span>
                                                         @if (Auth::check() && Auth::user()->user_id == $comment->user->user_id)
                                                             <a href="{{ route('profile') }}">
@@ -198,14 +186,9 @@
 
                                                 <div class="user-reply">
                                                     <div>
-                                                        @if($reply->user && $reply->user->userPhoto)
-                                                            <img src="{{ Storage::url($reply->user->userPhoto) }}" alt="User Profile Picture" class="user-profile-photo">
-                                                        @else
-                                                            <img src="../../imgs/user-img.png" alt="Default User Image" class="user-profile-photo">
-                                                        @endif
+                                                        <img src="{{ $reply->user->userPhoto ? Storage::url($reply->user->userPhoto) : '../imgs/user-img.png' }}" alt="User Profile Picture" class="user-profile-photo">
                                                     </div>
                                                     <div class="user-reply-content">
-                                                        {{-- <span>{{ $reply->user ? $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}</span> --}}
                                                         <span>
                                                             @if (Auth::check() && Auth::user()->user_id == $reply->user->user_id)
                                                                 <a href="{{ route('profile') }}">
@@ -233,11 +216,7 @@
                                     <div class="comment-field" id="comment-field">
                                         <form id="commentForm" method="POST" action="{{ route('users.createComment') }}">
                                             @csrf
-                                            @if(Auth::user()->userPhoto)
-                                                <img src="{{ Storage::url(Auth::user()->userPhoto) }}" class="user-profile-photo" alt="Profile Picture">
-                                            @else
-                                                <img src="../../imgs/user-img.png" class="user-profile-photo" alt="Profile Picture">
-                                            @endif
+                                            <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture">
                                             <input type="hidden" name="post_id" value="{{ $post->post_id }}">
                                             <textarea name="comment" placeholder="Write a comment..." required></textarea>
                                             <button type="submit">Send</button>

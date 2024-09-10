@@ -50,12 +50,12 @@
                     </a>
                     <div id="settingsDropdown" class="dropdown-content">
                         <ul>
-                            <li><a href="about-lawminary">About Lawminary</a></li>
-                            <li><a href="about-pao">About PAO</a></li>
-                            <li><a href="account-settings">Account Settings</a></li>
-                            <li><a href="activitylogs">Activity Logs</a></li>
-                            <li><a href="provide-feedback">Provide Feedback</a></li>
-                            <li><a href="terms-of-service">Terms of Service</a></li>
+                            <li><a href="about-lawminary" class="{{ Request::is('about-lawminary') ? 'active' : '' }}">About Lawminary</a></li>
+                            <li><a href="about-pao" class="{{ Request::is('about-pao') ? 'active' : '' }}">About PAO</a></li>
+                            <li><a href="account-settings" class="{{ Request::is('account-settings') ? 'active' : '' }}">Account Settings</a></li>
+                            <li><a href="activitylogs" class="{{ Request::is('activitylogs') ? 'active' : '' }}">Activity Logs</a></li>
+                            <li><a href="provide-feedback" class="{{ Request::is('provide-feedback') ? 'active' : '' }}">Provide Feedback</a></li>
+                            <li><a href="terms-of-service" class="{{ Request::is('terms-of-service') ? 'active' : '' }}">Terms of Service</a></li>
                         </ul>
                     </div>
                 </li>                    

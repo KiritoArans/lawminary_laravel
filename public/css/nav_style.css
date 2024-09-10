@@ -19,12 +19,6 @@
     --tran-03: all 0.3s ease;
     --tran-03: all 0.2s ease;
 }
-/* .current{
-    color: #561C24;
-} */
-nav ul li a.active {
-    color: var(--primary-color);
-}
 
 aside {
     position: fixed; 
@@ -93,8 +87,12 @@ aside nav ul li a {
     align-items: center;
     text-decoration: none;
     color: #333;
-    font-weight: 800;
+    font-weight: 700;
     transition: var(--tran-05);
+}
+aside nav ul li a.active {
+    color: var(--primary-color);
+    font-weight: 800;
 }
 nav i {
     font-size: 24px;
