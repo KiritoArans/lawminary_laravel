@@ -130,12 +130,36 @@
                                 </div>
                                 <hr>
                                 <div class="actions">
-                                    <button><i class="fa-solid fa-gavel"></i> Hit</button>
+                                    @php
+                                    $hasLiked = \App\Models\Like::where('user_id', Auth::user()->user_id)
+                                                ->where('post_id', $post->post_id)
+                                                ->exists();
+                    
+                                    $hasBookmarked = \App\Models\Bookmark::where('user_id', Auth::user()->user_id)
+                                                ->where('post_id', $post->post_id)
+                                                ->exists();
+                                    @endphp
+                                    <form action="{{ route('post.like') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="post_id" value="{{ $post->post_id }}">
+                                    
+                                        <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : "" }}">
+                                            <i class="fa-solid fa-gavel"></i> Hit
+                                        </button>
+                                    </form>
+                                    
                                     <button><i class="fas fa-comment"></i> Comment</button>
-                                    <button><i class="fas fa-bookmark"></i> Bookmark</button>
+                        
+                                    <form action="{{ route('post.bookmark') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="post_id" value="{{ $post->post_id }}">
+                                    
+                                        <button type="submit" class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : "" }}">
+                                            <i class="fas fa-bookmark"></i> Bookmark
+                                        </button>
+                                    </form>
                                 </div>
                                 <hr>
-
                                 <div class="comment-section">
                                     <div class="comment-area">
                                         @foreach($post->comments as $comment)

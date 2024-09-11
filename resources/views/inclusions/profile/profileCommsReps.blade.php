@@ -5,11 +5,7 @@
             <div class="comment-content">
                 <div class="comment-header">
                     <div class="user-info">
-                        @if(Auth::user()->userPhoto)
-                            <img src="{{ Storage::url(Auth::user()->userPhoto) }}" class="user-profile-photo" alt="Profile Picture">
-                        @else
-                            <img src="../../imgs/user-img.png" class="user-profile-photo" alt="Profile Picture">
-                        @endif
+                        <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
                         <div class="comment-info">
                             <h2>{{ $user->firstName }} {{ $user->lastName }}</h2>
                             <label>@<span>{{ $user->username }}</span></label>

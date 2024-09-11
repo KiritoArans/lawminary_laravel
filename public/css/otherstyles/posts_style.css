@@ -94,8 +94,9 @@
 .posts .post-content .actions button {
     padding: 10px;
     background-color: transparent;
-    color: var(--text-color1);
-    font-weight: 700;
+    color: var(--text-color3);
+    /* color: #666; */
+    font-weight: 600;
     font-size: 16px;
     border: none;
     border-radius: 5px;
@@ -104,8 +105,12 @@
     align-items: center;
     transition: var(--tran-05);
 }
-.posts .post-content .actions .btn-hitted, .posts .post-content .actions .btn-bookmarked {
+.posts .post-content .actions .btn-hitted, 
+.posts .post-content .actions .btn-bookmarked, 
+.clicked-post-content .actions .btn-hitted, 
+.clicked-post-content .actions .btn-bookmarked {
     color: var(--primary-color);
+    font-weight: 800;
 }
 .posts .post-content .actions button i {
     margin-right: 8px;

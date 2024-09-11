@@ -62,11 +62,12 @@ class PageController extends Controller
         return view('users.resources');
     }
 
-    public function showProfilePage()
-    {
-        $user = Auth::user();
-
+    public function profilePageFunctions($user){
         $posts = Posts::where('postedBy', $user->user_id)
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        $allPosts = Posts::with('user', 'comments', 'comments.user', 'comments.reply.user')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -97,23 +98,25 @@ class PageController extends Controller
                 'tblaccounts.username', 
                 'tblaccounts.userPhoto') 
             ->get();
+        
+        return compact('posts', 'allPosts', 'comments', 'likes', 'bookmarks');
+    }
+    public function showProfilePage()
+    {
+        $user = Auth::user();
 
-        return view('users.profile', compact('user', 'posts', 'comments', 'likes', 'bookmarks'));
+        $profileFunctions = $this->profilePageFunctions($user);
+
+        return view('users.profile', array_merge(['user' => $user], $profileFunctions));
     }
     
     public function showVisitProfilePage($user_id)
     {
         $user = UserAccount::where('user_id', $user_id)->firstOrFail();
 
-        $posts = Posts::where('postedBy', $user->user_id)
-            ->latest()
-            ->get();
+        $profileFunctions = $this->profilePageFunctions($user);
 
-        $comments = Comment::where('user_id', $user->user_id)
-            ->latest()
-            ->get();
-    
-        return view('users.visit_profile', compact('user', 'posts', 'comments'));
+        return view('users.visit_profile', array_merge(['user' => $user], $profileFunctions));
     }
 
     // Settings
