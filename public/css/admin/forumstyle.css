@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    height: 100vh; 
+    height: 100vh;
 }
 main {
     flex-grow: 1;
@@ -24,7 +24,7 @@ header h1 {
     justify-content: space-between;
     align-items: center;
 }
-.header-top img{
+.header-top img {
     height: 32px;
     position: relative;
     left: -8px;
@@ -50,7 +50,6 @@ header hr {
     left: 8px;
     color: var(--primary-color);
 }
-
 
 .filter-container {
     width: 100%;
@@ -83,7 +82,7 @@ header hr {
 }
 
 .custom-button {
-    background-color: #b0b0b0; 
+    background-color: #b0b0b0;
     border: 1px solid #ccc;
     color: black;
     padding: 10px 20px;
@@ -96,5 +95,49 @@ header hr {
     transition: background-color 0.3s ease;
 }
 .custom-button:hover {
-    background-color: #a0a0a0; 
+    background-color: #a0a0a0;
+}
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+.input-group input {
+    width: 100%;
+    padding: 10px 10px 10px 32px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.input-group i {
+    position: absolute;
+    left: 8px;
+    color: var(--primary-color);
+}
+.form-group,
+#editName,
+#editDesc,
+#editMembers {
+    width: 98%;
+}
+
+.btn-info,
+.btn-success,
+.btn-primary,
+.btn-danger {
+    background-color: #b0b0b0;
+    border: 1px solid #ccc;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.form-control {
+    width: 98%;
 }

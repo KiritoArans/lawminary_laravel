@@ -239,6 +239,14 @@ Route::delete('/admin/forums/delete/{id}', [
     'destroy',
 ])->name('admin.forums.delete');
 
+Route::get('/admin/forums', [ForumController::class, 'search'])->name(
+    'admin.forums'
+);
+
+Route::get('/admin/forums/filter', [ForumController::class, 'filter'])->name(
+    'admin.forums.filter'
+);
+
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Moderator Accounts Page

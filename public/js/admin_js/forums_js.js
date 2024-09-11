@@ -3,98 +3,27 @@ console.log('JavaScript is loaded'); // Add this to the top of your forums_js.js
 /filter button/;
 
 document.addEventListener('DOMContentLoaded', function () {
+    // Filter Modal Elements
     const filterButton = document.getElementById('filterButton');
     const filterModal = document.getElementById('filterModal');
-    const closeButton = document.getElementById('closeFilterModal');
-    const filterForm = document.getElementById('filterForm');
+    const closeFilterModal = document.querySelector('.close-buttonFilter');
 
+    // Open the filter modal when the filter button is clicked
     filterButton.addEventListener('click', function () {
         filterModal.style.display = 'block';
     });
 
-    closeButton.addEventListener('click', function () {
+    // Close the filter modal when the close button is clicked
+    closeFilterModal.addEventListener('click', function () {
         filterModal.style.display = 'none';
     });
 
+    // Close the modal when clicking outside of it
     window.addEventListener('click', function (event) {
         if (event.target == filterModal) {
             filterModal.style.display = 'none';
         }
     });
-
-    filterForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const filterForumId = document
-            .getElementById('filterForumId')
-            .value.toLowerCase();
-        const filterForumName = document
-            .getElementById('filterForumName')
-            .value.toLowerCase();
-        const filterForumDescription = document
-            .getElementById('filterForumDescription')
-            .value.toLowerCase();
-        const filterMembersCount =
-            document.getElementById('filterMembersCount').value;
-        const filterDateCreated =
-            document.getElementById('filterDateCreated').value;
-        filterForums(
-            filterForumId,
-            filterForumName,
-            filterForumDescription,
-            filterMembersCount,
-            filterDateCreated
-        );
-        filterModal.style.display = 'none';
-    });
-
-    function filterForums(
-        filterForumId,
-        filterForumName,
-        filterForumDescription,
-        filterMembersCount,
-        filterDateCreated
-    ) {
-        const rows = document.querySelectorAll('#forumsTableBody tr');
-        rows.forEach((row) => {
-            const forumId = row
-                .querySelector('td:nth-child(1)')
-                .textContent.toLowerCase();
-            const forumName = row
-                .querySelector('td:nth-child(2)')
-                .textContent.toLowerCase();
-            const forumDescription = row
-                .querySelector('td:nth-child(3)')
-                .textContent.toLowerCase();
-            const membersCount =
-                row.querySelector('td:nth-child(4)').textContent;
-            const dateCreated =
-                row.querySelector('td:nth-child(5)').textContent;
-
-            const matchesForumId =
-                !filterForumId || forumId.includes(filterForumId);
-            const matchesForumName =
-                !filterForumName || forumName.includes(filterForumName);
-            const matchesForumDescription =
-                !filterForumDescription ||
-                forumDescription.includes(filterForumDescription);
-            const matchesMembersCount =
-                !filterMembersCount || membersCount === filterMembersCount;
-            const matchesDateCreated =
-                !filterDateCreated || dateCreated === filterDateCreated;
-
-            if (
-                matchesForumId &&
-                matchesForumName &&
-                matchesForumDescription &&
-                matchesMembersCount &&
-                matchesDateCreated
-            ) {
-                row.style.display = '';
-            } else {
-                row.style.display = 'none';
-            }
-        });
-    }
 });
 
 /add forum button/;
@@ -104,59 +33,45 @@ document.addEventListener('DOMContentLoaded', function () {
     const addForumButton = document.getElementById('addForumButton');
     const addForumModal = document.getElementById('addForumModal');
     const closeAddForumModal = document.getElementById('closeAddForumModal');
-    const addForumForm = document.getElementById('addForumForm');
-    let forumIdCounter = 3; // Adjust based on existing forums
 
+    // Show the modal when the Add Forum button is clicked
     addForumButton.addEventListener('click', function () {
         addForumModal.style.display = 'block';
     });
 
+    // Close the modal when the close button is clicked
     closeAddForumModal.addEventListener('click', function () {
         addForumModal.style.display = 'none';
     });
 
+    // Close the modal when clicking outside of it
     window.addEventListener('click', function (event) {
         if (event.target == addForumModal) {
             addForumModal.style.display = 'none';
         }
     });
 
-    addForumForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const forumName = document.getElementById('addForumName').value;
-        const forumIssue = document.getElementById('addForumIssue').value;
-        const forumDescription = document.getElementById(
-            'addForumDescription'
-        ).value;
-        const membersCount = document.getElementById('addMembersCount').value;
-        const dateCreated = document.getElementById('addDateCreated').value;
+    // Allow form submission to go through to Laravel backend (No event.preventDefault)
+    // The backend will handle adding the new forum and then reload the page
+}); // SweetAlert for successful form submission
+document
+    .getElementById('addForumForm')
+    .addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
 
-        addForum(
-            forumIdCounter++,
-            forumName,
-            forumIssue,
-            forumDescription,
-            membersCount,
-            dateCreated
-        );
-        addForumModal.style.display = 'none';
-        addForumForm.reset();
+        const form = this; // Reference to the form
+
+        // Submit the form via AJAX or let Laravel handle it via a normal request
+        form.submit();
+
+        // Show SweetAlert success notification
+        Swal.fire({
+            title: 'Success!',
+            text: 'The forum has been created    successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
     });
-
-    function addForum(id, name, issue, description, members, date) {
-        const tbody = document.getElementById('forumsTableBody');
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>${id}</td>
-            <td>${name}</td>
-            <td>${description}</td>
-            <td>${members}</td>
-            <td>${date}</td>
-            <td><button class="action-button">View</button></td>
-        `;
-        tbody.appendChild(newRow);
-    }
-});
 
 /edit button/;
 
@@ -205,45 +120,48 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 });
+// SweetAlert for successful form submission
+document.getElementById('editForm').addEventListener('submit', function (e) {
+    e.preventDefault(); // Prevent default form submission
 
-/view modal button/;
+    const form = this; // Reference to the form
 
+    // Submit the form via AJAX or let Laravel handle it via a normal request
+    form.submit();
+
+    // Show SweetAlert success notification
+    Swal.fire({
+        title: 'Success!',
+        text: 'The forum has been updated successfully.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+    });
+});
+
+//delete sweet alert
 document.addEventListener('DOMContentLoaded', function () {
-    // View Forum Modal Elements
-    const viewForumModal = document.getElementById('viewForumModal');
-    const closeViewForumModal = document.getElementById('closeViewForumModal');
+    // Add event listener to all delete buttons
+    document.querySelectorAll('.deleteButton').forEach(function (button) {
+        button.addEventListener('click', function (e) {
+            e.preventDefault();
 
-    document.querySelectorAll('.action-button').forEach((button) => {
-        button.addEventListener('click', function () {
-            const forumId = this.getAttribute('data-forum-id');
-            const row = document.querySelector(
-                `tr[data-forum-id="${forumId}"]`
-            );
+            const form = this.closest('form'); // Get the form related to the delete button
 
-            document.getElementById('viewForumId').textContent =
-                row.querySelector('td:nth-child(1)').textContent;
-            document.getElementById('viewForumName').textContent =
-                row.querySelector('td:nth-child(2)').textContent;
-            document.getElementById('viewForumIssue').textContent =
-                row.querySelector('td:nth-child(3)').textContent;
-            document.getElementById('viewForumDescription').textContent =
-                row.querySelector('td:nth-child(3)').textContent;
-            document.getElementById('viewMembersCount').textContent =
-                row.querySelector('td:nth-child(4)').textContent;
-            document.getElementById('viewDateCreated').textContent =
-                row.querySelector('td:nth-child(5)').textContent;
-
-            viewForumModal.style.display = 'block';
+            // Show SweetAlert confirmation
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form if the user confirms
+                    form.submit();
+                }
+            });
         });
-    });
-
-    closeViewForumModal.addEventListener('click', function () {
-        viewForumModal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (event) {
-        if (event.target == viewForumModal) {
-            viewForumModal.style.display = 'none';
-        }
     });
 });

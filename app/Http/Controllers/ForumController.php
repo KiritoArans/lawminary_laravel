@@ -26,7 +26,7 @@ class ForumController extends Controller
         Forums::create($validated);
 
         return redirect()
-            ->route('forums.index')
+            ->route('admin.forums')
             ->with('success', 'Forum created successfully!');
     }
 
@@ -65,5 +65,80 @@ class ForumController extends Controller
         return redirect()
             ->route('admin.forums')
             ->with('success', 'Forum deleted successfully!');
+    }
+    //add a forum
+
+    public function add(Request $request)
+    {
+        // Validate the incoming request
+        $validated = $request->validate([
+            'forum_name' => 'required|string|max:255',
+            'forum_desc' => 'required|string|max:255',
+            'mem_count' => 'required|integer',
+        ]);
+
+        // Insert the new forum into the database
+        Forums::create($validated);
+
+        // Redirect back to the forums page with a success message
+        return redirect()
+            ->route('admin.forums')
+            ->with('success', 'Forum added successfully!');
+    }
+    public function search(Request $request)
+    {
+        $search = $request->input('search'); // Capture the search query
+
+        if ($search) {
+            // Filter forums based on the search query (forum name or description)
+            $forums = Forums::where('forum_name', 'LIKE', '%' . $search . '%')
+                ->orWhere('forum_desc', 'LIKE', '%' . $search . '%')
+                ->get();
+        } else {
+            // If no search term, show all forums
+            $forums = Forums::all();
+        }
+
+        return view('admin.forums', compact('forums'));
+    }
+    //filter function
+    public function filter(Request $request)
+    {
+        $query = Forums::query();
+
+        // Filter by members count
+        if ($request->input('members')) {
+            $members = $request->input('members');
+            if ($members == '1-10') {
+                $query
+                    ->where('mem_count', '>=', 1)
+                    ->where('mem_count', '<=', 10);
+            } elseif ($members == '11-50') {
+                $query
+                    ->where('mem_count', '>=', 11)
+                    ->where('mem_count', '<=', 50);
+            } elseif ($members == '51-100') {
+                $query
+                    ->where('mem_count', '>=', 51)
+                    ->where('mem_count', '<=', 100);
+            } elseif ($members == '101') {
+                $query->where('mem_count', '>', 100);
+            }
+        }
+
+        // Filter by date created
+        if ($request->input('date_created')) {
+            $query->whereDate(
+                'created_at',
+                '=',
+                $request->input('date_created')
+            );
+        }
+
+        // Get the filtered results
+        $forums = $query->get();
+
+        // Return view with filtered results
+        return view('admin.forums', compact('forums'));
     }
 }
