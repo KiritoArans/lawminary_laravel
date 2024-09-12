@@ -1,6 +1,6 @@
 <form
     id="filterForm"
-    method="POST"
+    method="GET"
     action="{{ request()->is('moderator*') ? route('moderator.filterDashboard') : route('admin.filterDashboard') }}"
 >
     @csrf

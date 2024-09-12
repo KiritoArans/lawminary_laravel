@@ -165,7 +165,7 @@ Route::post('admin/account/filter', [
 Route::get('admin/dashboard', [DashboardController::class, 'dashboard'])->name(
     'admin.dashboard'
 );
-Route::post('admin/dashboard/filter', [
+Route::get('admin/dashboard/filter', [
     DashboardController::class,
     'dashboard',
 ])->name('admin.filterDashboard');

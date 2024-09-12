@@ -71,6 +71,8 @@ class DashboardController extends Controller
         // Get the common dashboard data (for boxes, pending posts, accounts, etc.)
         $dashboardCounts = $this->getDashboardData();
 
+        $dashboardData = $query->paginate(10);
+
         // Merge the recent activities with dashboard counts
         $data = array_merge($dashboardCounts, [
             'dashboardData' => $dashboardData,

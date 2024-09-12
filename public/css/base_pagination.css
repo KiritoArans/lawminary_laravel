@@ -1,0 +1,23 @@
+.pagination .page-item {
+    display: inline;
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    color: #000;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.pagination .page-link:hover {
+    background-color: #f0f0f0;
+}
+
+.pagination .page-link svg {
+    width: 14px; /* Adjust icon size */
+    height: 14px;
+    vertical-align: middle;
+}

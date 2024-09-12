@@ -31,6 +31,46 @@
         @endforeach
     </tbody>
 </table>
+<ul class="pagination">
+    <li
+        class="page-item {{ $dashboardData->currentPage() == 1 ? 'disabled' : '' }}"
+        aria-disabled="{{ $dashboardData->currentPage() == 1 }}"
+    >
+        <a
+            class="page-link"
+            href="{{ $dashboardData->appends(request()->input())->previousPageUrl() }}"
+            rel="prev"
+        >
+            &laquo;
+        </a>
+    </li>
+
+    @for ($i = 1; $i <= $dashboardData->lastPage(); $i++)
+        <li
+            class="page-item {{ $dashboardData->currentPage() == $i ? 'active' : '' }}"
+        >
+            <a
+                class="page-link"
+                href="{{ $dashboardData->appends(request()->input())->url($i) }}"
+            >
+                {{ $i }}
+            </a>
+        </li>
+    @endfor
+
+    <li
+        class="page-item {{ $dashboardData->hasMorePages() ? '' : 'disabled' }}"
+        aria-disabled="{{ ! $dashboardData->hasMorePages() }}"
+    >
+        <a
+            class="page-link"
+            href="{{ $dashboardData->appends(request()->input())->nextPageUrl() }}"
+            rel="next"
+        >
+            &raquo;
+        </a>
+    </li>
+</ul>
 
 <!-- Modal Structure -->
 <div id="viewModal" class="modal">
