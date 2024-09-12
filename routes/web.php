@@ -161,6 +161,7 @@ Route::post('admin/account/filter', [
 ])->name('admin.filterAccount');
 
 // Admin Dashboard Page
+
 Route::get('admin/dashboard', [DashboardController::class, 'dashboard'])->name(
     'admin.dashboard'
 );
@@ -168,6 +169,11 @@ Route::post('admin/dashboard/filter', [
     DashboardController::class,
     'dashboard',
 ])->name('admin.filterDashboard');
+
+Route::get('/admin/dashboard/search', [
+    DashboardController::class,
+    'search',
+])->name('admin.search');
 
 // Admin Post page
 Route::get('admin/postpage', [PostpageController::class, 'postpage'])->name(

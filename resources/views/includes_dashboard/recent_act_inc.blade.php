@@ -9,10 +9,11 @@
             <th>View</th>
         </tr>
     </thead>
+    <h1>Recent Activities</h1>
     <tbody>
-        @foreach ($recentActivities as $activity)
+        @foreach ($dashboardData as $activity)
             <tr>
-                <td>{{ $activity->id }}</td>
+                <td>{{ $activity->act_id }}</td>
                 <td>{{ $activity->act_username }}</td>
                 <td>{{ $activity->act_action }}</td>
                 <td>

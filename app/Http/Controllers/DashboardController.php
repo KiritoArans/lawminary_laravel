@@ -19,13 +19,12 @@ class DashboardController extends Controller
                 ->where('status', 'pending')
                 ->count(),
             'accountsCount' => DB::table('tblaccounts')->count(),
-            'postsCount' => DB::table('tblposts')->count(),
-            'commentsCount' => DB::table('tblcomments')->count(),
             'forumsCount' => DB::table('tblforums')->count(),
         ];
     }
 
     // Fetch recent activities with or without filters
+    // Fetch recent activities with or without filters and search
     public function dashboard(Request $request)
     {
         // Start with a query builder for recent activities
@@ -53,22 +52,28 @@ class DashboardController extends Controller
         }
 
         if ($request->filled('filterDate')) {
-            $query->where(
-                'act_date',
-                'like',
-                '%' . $request->input('filterDate') . '%'
-            );
+            $query->whereDate('act_date', $request->input('filterDate'));
         }
 
-        // Fetch recent activities
-        $recentActivities = $query->get();
+        // Apply search functionality based on the 'search' input
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($query) use ($search) {
+                $query
+                    ->where('act_username', 'LIKE', '%' . $search . '%')
+                    ->orWhere('act_action', 'LIKE', '%' . $search . '%');
+            });
+        }
 
-        // Get the common dashboard data (for boxes)
-        $dashboardData = $this->getDashboardData();
+        // Fetch the filtered and/or searched results
+        $dashboardData = $query->get();
 
-        // Merge the recent activities with dashboard data
-        $data = array_merge($dashboardData, [
-            'recentActivities' => $recentActivities,
+        // Get the common dashboard data (for boxes, pending posts, accounts, etc.)
+        $dashboardCounts = $this->getDashboardData();
+
+        // Merge the recent activities with dashboard counts
+        $data = array_merge($dashboardCounts, [
+            'dashboardData' => $dashboardData,
         ]);
 
         // Render the correct view based on the route (admin or moderator)
@@ -77,5 +82,38 @@ class DashboardController extends Controller
         } elseif (request()->is('moderator*')) {
             return view('moderator.mdashboard', $data);
         }
+    }
+
+    //search function
+    public function search(Request $request)
+    {
+        $search = $request->input('search'); // Capture the search query
+
+        // Perform the search
+        if ($search) {
+            // Filter dashboard activities based on the search query (username or action)
+            $dashboardData = Dashboard::where(
+                'act_action',
+                'LIKE',
+                '%' . $search . '%'
+            )
+                ->orWhere('act_username', 'LIKE', '%' . $search . '%')
+                ->get();
+        } else {
+            // If no search term, show all activities
+            $dashboardData = Dashboard::all();
+        }
+
+        // Fetch the additional dashboard data
+        $dashboardCounts = $this->getDashboardData();
+
+        // Pass both the search results and the dashboard counts to the view
+        return view('admin.dashboard', [
+            'dashboardData' => $dashboardData,
+            'pendingPosts' => $dashboardCounts['pendingPosts'],
+            'pendingAccounts' => $dashboardCounts['pendingAccounts'],
+            'accountsCount' => $dashboardCounts['accountsCount'],
+            'forumsCount' => $dashboardCounts['forumsCount'],
+        ]);
     }
 }

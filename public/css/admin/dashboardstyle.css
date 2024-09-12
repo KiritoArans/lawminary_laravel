@@ -2,24 +2,16 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    height: 120vh;
-}
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    height: 100vh;
 }
 main {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     padding: 20px;
-    margin: 0px 32px; /* Reduce left and right margin */
+    margin: 0px 48px 0px 32px;
 }
-header {
-    text-align: center;
-    padding-bottom: 10px;
-}
+
 header h1 {
     margin: 0;
     font-size: 2em;
@@ -39,43 +31,120 @@ header hr {
     margin-top: 10px;
     border: 1px solid #b1b1b1;
 }
-.header-line {
+
+.search-bar {
+    position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+}
+.search-bar input {
+    width: 450px;
+    padding: 10px 10px 10px 32px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.search-bar i {
+    position: absolute;
+    left: 8px;
+    color: var(--primary-color);
 }
 
-.header-ttl {
+.filter-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+#filterButton {
+    width: 10%;
+}
+
+.search-bar {
     display: flex;
     align-items: center;
     gap: 10px;
 }
-.header-ttl h1 {
-    margin: 0;
-    font-size: 2rem;
-    color: var(--primary-color);
-}
 
-.filter-btn button {
-    padding: 10px 20px;
-    background-color: var(--text-color3);
-    color: white;
-    border: none;
+.search-bar input {
+    flex: 1;
+    padding: 10px;
     border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+#addForumButton {
+    margin-left: auto;
+}
+
+.custom-button {
+    background-color: #b0b0b0;
+    border: 1px solid #ccc;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
     cursor: pointer;
+    border-radius: 4px; /* Rounded corners */
+    transition: background-color 0.3s ease;
 }
-
-.filter-btn button:hover {
-    background-color: var(--text-color1);
+.custom-button:hover {
+    background-color: #a0a0a0;
 }
-
-.filter-btn {
+.input-group {
     position: relative;
     display: flex;
     align-items: center;
-    margin-left: 10px;
+    margin: 10px;
 }
+.input-group input {
+    width: 100%;
+    padding: 10px 10px 10px 32px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+.input-group i {
+    position: absolute;
+    left: 8px;
+    color: var(--primary-color);
+}
+.form-group,
+#editName,
+#editDesc,
+#editMembers {
+    width: 98%;
+}
+
+.btn-info,
+.btn-success,
+.btn-primary,
+.btn-danger {
+    background-color: #b0b0b0;
+    border: 1px solid #ccc;
+    color: black;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.form-control {
+    width: 98%;
+    margin: 10px;
+}
+
 .boxes-row {
     display: flex;
     justify-content: space-between;
