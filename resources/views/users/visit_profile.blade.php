@@ -43,17 +43,25 @@
                             <div class="profile-stats">
                                 <div class="following-count">
                                     <span>Following:</span>
-                                    <span>{{ $user->following_count }}</span>
-                                </div>
+                                    <span>{{ $followingCount }}</span>
+                                </div>                                    
                                 <div class="follower-count">
                                     <span>Followers:</span>
-                                    <span>{{ $user->followers_count }}</span>
+                                    <span>{{ $followerCount }}</span>
                                 </div>
-                                @if(Auth::id() === $user->id)
-                                    <a href="{{ route('settings.account') }}" class="edit-profile-button">Edit Profile</a>
-                                @else
-                                    <a class="follow-profile-button">Follow</a>
-                                @endif
+                                @php
+                                    $haveFollowed = \App\Models\Follow::where('follower', Auth::user()->user_id)
+                                        ->where('following', $user->user_id)
+                                        ->exists();
+                                @endphp
+                                <form action="{{ route('followUser') }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <input type="hidden" name="following" value="{{ $user->user_id }}">
+                                    
+                                    <button class="edit-profile-button">
+                                        {{ $haveFollowed ? 'Unfollow' : 'Follow' }}
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>

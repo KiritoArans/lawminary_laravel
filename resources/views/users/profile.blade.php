@@ -29,56 +29,56 @@
             <content class="profile-section">
                 <div class="profile-header">
                     <div class="profile-details">
-                            <div class="profile-left">
-                                <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="profile-photo" alt="Profile Picture">
-                                <div class="profile-info">
-                                    <h2>{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h2>
-                                    <h4>@<span>{{ Auth::user()->username }}</span></h4>
-                                    <div class="profile-badge">
-                                        <span class="badge">{{ Auth::user()->accountType }}</span>
-                                    </div>
+                        <div class="profile-left">
+                            <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="profile-photo" alt="Profile Picture">
+                            <div class="profile-info">
+                                <h2>{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h2>
+                                <h4>@<span>{{ Auth::user()->username }}</span></h4>
+                                <div class="profile-badge">
+                                    <span class="badge">{{ Auth::user()->accountType }}</span>
                                 </div>
+                            </div>
                             </div>
                             <div class="profile-right">
                                 <div class="profile-stats">
                                     <div class="following-count">
                                         <span>Following:</span>
-                                        <span>0</span>
-                                    </div>
+                                        <span>{{ $followingCount }}</span>
+                                    </div>                                    
                                     <div class="follower-count">
                                         <span>Followers:</span>
-                                        <span>0</span>
+                                        <span>{{ $followerCount }}</span>
                                     </div>
                                     <a href="account-settings" class="edit-profile-button">Edit Profile</a>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                </div>
-                <hr>
-                <div class="profile-nav">
-                    <ul>
-                        <li><a id="posts-link">Posts</a></li>
-                        <li><a id="comments-link">Comments and Replies</a></li>
-                        <li><a id="liked-link">Likes</a></li>
-                        <li><a id="bookmarked-link">Bookmarks</a></li>
-                    </ul>
-                </div>
-                <hr>
-                <div class="profile-content">
-                    
-                    @include('inclusions/profile/profilePosts')
+                    <hr>
+                    <div class="profile-nav">
+                        <ul>
+                            <li><a id="posts-link">Posts</a></li>
+                            <li><a id="comments-link">Comments and Replies</a></li>
+                            <li><a id="liked-link">Likes</a></li>
+                            <li><a id="bookmarked-link">Bookmarks</a></li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <div class="profile-content">
+                        
+                        @include('inclusions/profile/profilePosts')
 
-                    @include('inclusions/createPostModal')
+                        @include('inclusions/createPostModal')
 
-                    @include('inclusions/openComments')
+                        @include('inclusions/openComments')
 
-                    @include('inclusions/profile/profileCommsReps')
+                        @include('inclusions/profile/profileCommsReps')
 
-                    @include('inclusions/profile/profileLikes')
+                        @include('inclusions/profile/profileLikes')
 
-                    @include('inclusions/profile/profileBookmarks')
+                        @include('inclusions/profile/profileBookmarks')
 
-                </div>
+                    </div>
             </content>
         </main>
     </div>

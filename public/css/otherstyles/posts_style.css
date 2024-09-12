@@ -26,6 +26,21 @@
     height: 50px;
     margin-right: 10px;
 }
+.posts .name-follow{
+    display: flex;
+    cursor: pointer;
+}
+.posts .name-follow label{
+    padding: 0 1rem;
+}
+.posts .name-follow button{
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
 .posts .post-header .post-info h2, .posts .post-header .post-info a{
     margin: 0;
     font-size: 1rem;
@@ -519,6 +534,13 @@
 
 
 /* Comment Field */
+.comment-warning {
+    display: block; /* Ensures label behaves as a block */
+    text-align: center; /* Centers text horizontally */
+    font-weight: bold; /* Optional: Make the warning more prominent */
+    color: var(--primary-color); /* Optional: Set warning text color */
+    margin-top: 1rem;
+}
 .comment-field{
     display: block;
 }

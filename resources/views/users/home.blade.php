@@ -36,6 +36,14 @@
                 </div>
             </div>
             <content>
+                <div class="filter-post">
+                    <form action="{{ route('home') }}" method="GET" class="filter-form">
+                        <select name="filter" id="filter" onchange="this.form.submit()">
+                            <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All</option>
+                            <option value="following" {{ request('filter') == 'following' ? 'selected' : '' }}>Following</option>
+                        </select>
+                    </form>
+                </div>
                 <div class="posts">
                     @foreach($posts as $post)
                         <div class="post-content">
@@ -43,11 +51,31 @@
                                 <div class="user-info">
                                     <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
                                     <div class="post-info">
-                                        <h2>
-                                            <a href="{{ Auth::check() && Auth::user()->user_id == $post->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $post->user->user_id]) }}">
-                                                {{ $post->user->firstName }} {{ $post->user->lastName }}
-                                            </a>
-                                        </h2>
+                                        <div class="name-follow">
+                                            <h2>
+                                                <a href="{{ Auth::check() && Auth::user()->user_id == $post->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $post->user->user_id]) }}">
+                                                    {{ $post->user->firstName }} {{ $post->user->lastName }}
+                                                </a>
+                                            </h2>
+                                            @if(Auth::user()->user_id != $post->user->user_id)
+                                                <label>|</label>
+                                                @php
+                                                    $haveFollowed = \App\Models\Follow::where('follower', Auth::user()->user_id)
+                                                        ->where('following', $post->postedBy)
+                                                        ->exists();
+                                                @endphp
+                                                <form action="{{ route('followUser') }}" method="POST" style="display:inline;">
+                                                    @csrf
+                                                    @include('inclusions/response')
+                                                    <input type="hidden" name="following" value="{{ $post->user->user_id }}">
+                                                    
+                                                    <button class="btn-follow {{ $haveFollowed ? 'following' : '' }}">
+                                                        {{ $haveFollowed ? 'Unfollow' : 'Follow' }}
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>                                        
+
                                         <label>@<span>{{ $post->user->username ?? 'unknownuser' }}</span></label>
                                         <p>Posted: {{ $post->created_at->diffForHumans() }}</p>
                                     </div>
@@ -180,13 +208,22 @@
                                                     </div>
                                                     
                                                     <div class="reply-field" id="reply-field-{{ $comment->id }}">
-                                                        <form action="{{ route('users.createReply') }}" method="POST">
-                                                            @csrf
-                                                            <textarea name="reply" id="reply-textarea-{{ $comment->id }}" placeholder="Replying to {{ $comment->user ? $comment->user->firstName : 'Unknown User' }}"></textarea>
-                                                            <input type="hidden" name="post_id" value="{{ $post->post_id }}">
-                                                            <input type="hidden" name="comment_id" value="{{ $comment->comment_id }}">
-                                                            <button type="submit">Send</button>
-                                                        </form>
+                                                        @php
+                                                            $attorneyCommented = $post->comments->contains(function ($comment) {
+                                                                return $comment->user->accountType === 'Attorney';
+                                                            });
+                                                        @endphp
+                                                        @if ($attorneyCommented && Auth::user()->accountType === 'Attorney')
+                                                        <div></div>
+                                                        @else
+                                                            <form action="{{ route('users.createReply') }}" method="POST">
+                                                                @csrf
+                                                                <textarea name="reply" id="reply-textarea-{{ $comment->id }}" placeholder="Replying to {{ $comment->user ? $comment->user->firstName : 'Unknown User' }}"></textarea>
+                                                                <input type="hidden" name="post_id" value="{{ $post->post_id }}">
+                                                                <input type="hidden" name="comment_id" value="{{ $comment->comment_id }}">
+                                                                <button type="submit">Send</button>
+                                                            </form>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -216,14 +253,25 @@
                                     </div>
                                     <hr>
                                     <div class="comment-field" id="comment-field">
-                                        <form id="commentForm" method="POST" action="{{ route('users.createComment') }}">
-                                            @csrf
-                                            <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture">
-                                            <input type="hidden" name="post_id" value="{{ $post->post_id }}">
-                                            <textarea name="comment" placeholder="Write a comment..." required></textarea>
-                                            <button type="submit">Send</button>
-                                        </form>
+                                        @php
+                                            $attorneyCommented = $post->comments->contains(function ($comment) {
+                                                return $comment->user->accountType === 'Attorney';
+                                            });
+                                        @endphp
+                                    
+                                        @if ($attorneyCommented && Auth::user()->accountType === 'Attorney')
+                                            <label class="comment-warning">An attorney has already commented on this post.</label>
+                                        @else
+                                            <form id="commentForm" method="POST" action="{{ route('users.createComment') }}">
+                                                @csrf
+                                                <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture">
+                                                <input type="hidden" name="post_id" value="{{ $post->post_id }}">
+                                                <textarea name="comment" placeholder="Write a comment..." required></textarea>
+                                                <button type="submit">Send</button>
+                                            </form>
+                                        @endif
                                     </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -233,6 +281,7 @@
             </content>
         </main>
     </div>
+
     <script src="js/postandcomment.js"></script>
     <script src="js/homelocator.js"></script>
     <script src="js/settings.js"></script>

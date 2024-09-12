@@ -26,16 +26,29 @@ class PageController extends Controller
 
 
     // User Page
-    public function showHomePage()
+    public function showHomePage(Request $request)
     {
         $user = Auth::user();
 
-        $posts = Posts::with('user')
-        ->orderBy('created_at', 'desc')
-        ->get();
+        $filter = $request->input('filter', 'all');
+
+        if ($filter === 'following') {
+            $followingUserIds = \App\Models\Follow::where('follower', $user->user_id)
+                                ->pluck('following');
+
+            $posts = Posts::with('user')
+                ->whereIn('postedBy', $followingUserIds)
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } else {
+            $posts = Posts::with('user')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
 
         return view('users.home', compact('posts'));
     }
+
 
     public function showArticlePage()
     {
@@ -63,6 +76,10 @@ class PageController extends Controller
     }
 
     public function profilePageFunctions($user){
+
+        $followingCount = \App\Models\Follow::where('follower', $user->user_id)->count();
+        $followerCount = \App\Models\Follow::where('following', $user->user_id)->count();
+
         $posts = Posts::where('postedBy', $user->user_id)
         ->orderBy('created_at', 'desc')
         ->get();
@@ -99,7 +116,7 @@ class PageController extends Controller
                 'tblaccounts.userPhoto') 
             ->get();
         
-        return compact('posts', 'allPosts', 'comments', 'likes', 'bookmarks');
+        return compact('posts', 'allPosts', 'comments', 'likes', 'bookmarks', 'followingCount', 'followerCount');
     }
     public function showProfilePage()
     {
@@ -116,7 +133,13 @@ class PageController extends Controller
 
         $profileFunctions = $this->profilePageFunctions($user);
 
-        return view('users.visit_profile', array_merge(['user' => $user], $profileFunctions));
+        // $profileUser = \App\Models\User::find($userId);
+
+        $isFollowing = \App\Models\Follow::where('follower', $user->user_id)
+                        ->where('following', $user->user_id)
+                        ->exists();
+
+        return view('users.visit_profile', array_merge(['user' => $user], $profileFunctions), compact('isFollowing'));
     }
 
     // Settings

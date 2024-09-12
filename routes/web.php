@@ -2,9 +2,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\AccountController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\FollowController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ModeratorController;
 use App\Http\Controllers\AuthController;
@@ -334,24 +335,29 @@ Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name(
 // Create Post
 Route::post('/home', [PostController::class, 'createPost'])->name(
     'users.createPost'
-);
-// Like Post
-Route::post('/home-liked', [PostController::class, 'likePost'])->name(
-    'post.like'
-);
-// Bookmark Post
-Route::post('/home-bookmarked', [PostController::class, 'bookmarkPost'])->name(
-    'post.bookmark'
+    );
+    // Like Post
+    Route::post('/home-liked', [PostController::class, 'likePost'])->name(
+        'post.like'
+    );
+    // Bookmark Post
+    Route::post('/home-bookmarked', [PostController::class, 'bookmarkPost'])->name(
+        'post.bookmark'
+    );
+
+    // Create Comment
+    Route::post('/comment', [CommentController::class, 'createComment'])->name(
+        'users.createComment'
+    );
+
+    // Create Reply
+    route::post('/reply', [CommentController::class, 'createReply'])->name(
+        'users.createReply'
 );
 
-// Create Comment
-Route::post('/comment', [CommentController::class, 'createComment'])->name(
-    'users.createComment'
-);
-
-// Create Reply
-route::post('/reply', [CommentController::class, 'createReply'])->name(
-    'users.createReply'
+// Follow User
+Route::post('/home-followed', [FollowController::class, 'followUser'])->name(
+    'followUser'
 );
 
 Route::post('/profile/settings/account/changepass', [
