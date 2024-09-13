@@ -8,9 +8,9 @@
                     <div class="clicked-post-info">
                         <h2 id="modalUserName">
                             <a href="{{ Auth::check() && Auth::user()->user_id == $post->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $post->user->user_id]) }}">
-                                {{ $post->user->firstName }} {{ $post->user->lastName }}
+                                {{ $post->user ? ($post->user->accountType === 'Attorney' ? 'Atty. ' : '') . $post->user->firstName . ' ' . $post->user->lastName : 'Unknown User' }}
                             </a>
-                        </h2>
+                        </h2>  
                         <label>@<span id="modalUserUsername">{{ $post->user->username }}</span></label>
                         <p> {{ $post->created_at->format('M d, Y H:i A') }}</p>
                     </div>
@@ -66,23 +66,41 @@
                         <div class="user-comment-content">
                             <span>
                                 <a href="{{ Auth::check() && Auth::user()->user_id == $comment->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $comment->user->user_id]) }}">
-                                    {{ $comment->user ? $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
-                                </a> 
-                            </span>                                    
+                                    {{ $comment->user ? ($comment->user->accountType === 'Attorney' ? 'Atty. ' : '') . $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
+                                </a>
+                            </span>                                     
                             <p>{{ $comment->comment }}</p>
                             <div class="date-reply">
                                 <p class="comment-time">{{ $comment->created_at->diffForHumans() }}</p>
                                 <a href="javascript:void(0);" class="reply-btn" data-comment-id="{{ $comment->id }}">Reply</a>
                             </div>
                             <div class="reply-field" id="reply-field-{{ $comment->id }}">
-                                <form action="{{ route('users.createReply') }}" method="POST">
-                                    @csrf
-                                    <textarea name="reply" id="reply-textarea-{{ $comment->id }}" placeholder="Replying to {{ $comment->user ? $comment->user->firstName : 'Unknown User' }}"></textarea>
-                                    <input type="hidden" name="post_id" value="{{ $post->post_id }}">
-                                    <input type="hidden" name="comment_id" value="{{ $comment->comment_id }}">
-                                    <button type="submit">Send</button>
-                                </form>
-                            </div>
+                                @php
+                                    $attorneyComments = $post->comments->filter(function ($comment) {
+                                        return $comment->user->accountType === 'Attorney';
+                                    });
+                            
+                                    $isSameAttorney = $attorneyComments->contains(function ($comment) {
+                                        return $comment->user->user_id === Auth::user()->user_id;
+                                    });
+                            
+                                    $isAttorney = Auth::user()->accountType === 'Attorney';
+                            
+                                    $isPostOwner = $post->user->user_id === Auth::user()->user_id;
+                                @endphp
+                            
+                                @if ($attorneyComments->isNotEmpty() && $isAttorney && !$isSameAttorney && !$isPostOwner)
+                                    <label class="comment-warning">Comments and Replies are not accomodated by this post anymore.</label>
+                                @else
+                                    <form action="{{ route('users.createReply') }}" method="POST">
+                                        @csrf
+                                        <textarea name="reply" id="reply-textarea-{{ $comment->id }}" placeholder="Replying to {{ $comment->user ? $comment->user->firstName : 'Unknown User' }}"></textarea>
+                                        <input type="hidden" name="post_id" value="{{ $post->post_id }}">
+                                        <input type="hidden" name="comment_id" value="{{ $comment->comment_id }}">
+                                        <button type="submit">Send</button>
+                                    </form>
+                                @endif
+                            </div>      
                         </div>
                     </div>
                     @foreach($comment->reply as $reply)
@@ -93,9 +111,9 @@
                             <div class="user-reply-content">
                                 <span>
                                     <a href="{{ Auth::check() && Auth::user()->user_id == $reply->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $reply->user->user_id]) }}">
-                                        {{ $reply->user ? $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}
-                                    </a> 
-                                </span>                                        
+                                        {{ $reply->user ? ($reply->user->accountType === 'Attorney' ? 'Atty. ' : '') . $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}
+                                    </a>
+                                </span>                                         
                                 <label>replied to 
                                     <span>{{ $comment->user ? $comment->user->firstName: 'Unknown User' }}</span>'s comment.
                                 </label>
@@ -109,20 +127,33 @@
                 @endforeach
                 </div>
                 <hr>
-                <div class="comment-field">
-                    @include('inclusions/response')
-                    <form method="POST" action="{{ route('users.createComment') }}">
-                        @csrf
-                        @if(Auth::user()->userPhoto)
-                            <img src="{{ Storage::url(Auth::user()->userPhoto) }}" class="user-profile-photo" alt="Profile Picture">
-                        @else
-                            <img src="../../imgs/user-img.png" class="user-profile-photo" alt="Profile Picture">
-                        @endif
-                        <input type="hidden" name="post_id" value="{{ $post->post_id }}">
-                        <textarea name="comment" placeholder="Write a comment..." required></textarea>
-                        <button type="submit">Send</button>
-                    </form>
-                </div>
+                <div class="comment-field" id="comment-field">
+                    @php
+                        $attorneyComments = $post->comments->filter(function ($comment) {
+                            return $comment->user->accountType === 'Attorney';
+                        });
+                
+                        $isSameAttorney = $attorneyComments->contains(function ($comment) {
+                            return $comment->user->user_id === Auth::user()->user_id;
+                        });
+                
+                        $isAttorney = Auth::user()->accountType === 'Attorney';
+                
+                        $isPostOwner = $post->user->user_id === Auth::user()->user_id;
+                    @endphp
+                
+                    @if ($attorneyComments->isNotEmpty() && $isAttorney && !$isSameAttorney && !$isPostOwner)
+                        <label class="comment-warning">An attorney has already commented on this post.</label>
+                    @else
+                        <form id="commentForm" method="POST" action="{{ route('users.createComment') }}">
+                            @csrf
+                            <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture">
+                            <input type="hidden" name="post_id" value="{{ $post->post_id }}">
+                            <textarea name="comment" placeholder="Write a comment..." required></textarea>
+                            <button type="submit">Send</button>
+                        </form>
+                    @endif
+                </div>                                    
             </div>
         </div>
     </div>

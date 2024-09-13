@@ -26,6 +26,21 @@
     height: 50px;
     margin-right: 10px;
 }
+.posts .name-follow{
+    display: flex;
+    cursor: pointer;
+}
+.posts .name-follow label{
+    padding-left: 0.5rem;
+}
+.posts .name-follow button{
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
 .posts .post-header .post-info h2, .posts .post-header .post-info a{
     margin: 0;
     font-size: 1rem;
@@ -519,6 +534,13 @@
 
 
 /* Comment Field */
+.comment-warning {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 1rem;
+}
 .comment-field{
     display: block;
 }

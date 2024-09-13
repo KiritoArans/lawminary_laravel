@@ -38,14 +38,8 @@
                             <form method="POST" action="{{ route('settings.updateAccountNames') }}" enctype="multipart/form-data">
                                 @csrf
                                 @include('inclusions/response')
-
                                 <div class="profile-pic">
-                                    @if(Auth::user()->userPhoto)
-                                    <img id="profileImagePreview" src="{{ Storage::url(Auth::user()->userPhoto) }}" alt="User Photo">
-                                    @else
-                                        <img id="profileImagePreview" src="../../imgs/user-img.png" alt="Profile Picture">
-                                    @endif
-                                    
+                                    <img id="profileImagePreview" src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" alt="Profile Picture">
                                     <div class="profile-pic-info">
                                         <input type="file" name="userPhoto" id="userPhotoInput">
                                         <p>Allowed JPG, GIF or PNG. Max size of 800K</p>

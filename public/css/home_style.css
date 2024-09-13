@@ -117,3 +117,28 @@ header hr {
 .bell-icon:hover {
     color: var(--primary-color);
 }
+
+
+/* .filter-post{
+    margin-bottom: 3.5rem;
+} */
+.filter-form {
+    display: flex;
+    justify-content: flex-start;
+    position: absolute;
+    align-items: center;
+    /* margin: 8px 280px 20px 212px; */
+    margin-top: .5rem;
+}
+.filter-form select {
+    padding: 4px;
+    border: 2px solid var(--text-color3);
+    border-radius: 5px;
+    background-color: #f8f9fa;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+.filter-form select:focus {
+    outline: none;
+    border-color: maroon;
+}

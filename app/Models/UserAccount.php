@@ -42,8 +42,13 @@ class UserAccount extends Authenticatable
         });
     }
 
-    // public function likedPosts()
+    // UserAccount.php (Model)
+    // public function isFollowing($userId)
     // {
-    //     return $this->belongsTo(Posts::class, 'postedBy', 'user_id');
+    //     return Follow::where('follower', $this->user_id)
+    //                 ->where('following', $userId)
+    //                 ->exists();
     // }
+
+
 }

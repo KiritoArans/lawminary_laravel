@@ -11,9 +11,9 @@
                         <div class="post-info">
                             <h2>
                                 <a href="{{ Auth::check() && Auth::user()->user_id == $post->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $post->user->user_id]) }}">
-                                    {{ $post->user->firstName }} {{ $post->user->lastName }}
+                                    {{ $post->user ? ($post->user->accountType === 'Attorney' ? 'Atty. ' : '') . $post->user->firstName . ' ' . $post->user->lastName : 'Unknown User' }}
                                 </a>                                
-                            </h2>                            
+                            </h2>                           
                             <label>@<span>{{ $user->username }}</span></label>
                             <p for="">Posted: {{ $post->created_at->diffForHumans() }}</p>
                         </div>
