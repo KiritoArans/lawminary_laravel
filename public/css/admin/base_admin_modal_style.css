@@ -71,3 +71,7 @@ form {
     padding: 8px;
     cursor: pointer;
 }
+.paginationContent {
+    display: flex;
+    justify-content: center;
+}

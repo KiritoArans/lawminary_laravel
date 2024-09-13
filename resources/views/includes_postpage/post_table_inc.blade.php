@@ -14,12 +14,12 @@
         </tr>
     </thead>
     <tbody id="postTableBody">
-        @if ($recentActivities->isEmpty())
+        @if ($posts->isEmpty())
             <tr>
                 <td colspan="7">No results found.</td>
             </tr>
         @else
-            @foreach ($recentActivities as $activity)
+            @foreach ($posts as $activity)
                 <tr>
                     <td>{{ $activity->post_id }}</td>
                     <td>{{ $activity->concern }}</td>
@@ -50,4 +50,55 @@
     </tbody>
 </table>
 
-<!-- Edit Modal -->
+<div class="paginationContent">
+    <ul class="pagination">
+        <li
+            class="page-item {{ $posts->currentPage() == 1 ? 'disabled' : '' }}"
+            aria-disabled="{{ $posts->currentPage() == 1 }}"
+        >
+            <a
+                class="page-link"
+                href="{{ $posts->appends(request()->input())->previousPageUrl() }}"
+                rel="prev"
+            >
+                &laquo;
+            </a>
+        </li>
+
+        @for ($i = 1; $i <= $posts->lastPage(); $i++)
+            <li
+                class="page-item {{ $posts->currentPage() == $i ? 'active' : '' }}"
+            >
+                <a
+                    class="page-link"
+                    href="{{ $posts->appends(request()->input())->url($i) }}"
+                >
+                    {{ $i }}
+                </a>
+            </li>
+        @endfor
+
+        <li
+            class="page-item {{ $posts->hasMorePages() ? '' : 'disabled' }}"
+            aria-disabled="{{ ! $posts->hasMorePages() }}"
+        >
+            <a
+                class="page-link"
+                href="{{ $posts->appends(request()->input())->nextPageUrl() }}"
+                rel="next"
+            >
+                &raquo;
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div id="viewModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" id="closeModal">&times;</span>
+        <h2>Activity Details</h2>
+        <div id="modalContent">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+</div>

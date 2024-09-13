@@ -32,10 +32,7 @@ class PostpageController extends Controller
             }
         }
 
-        // If it's a GET request (normal page load), fetch all posts
-        $recentActivities = DB::table('tblposts')
-            ->orderBy('updated_at', 'desc')
-            ->get();
+        $posts = Posts::orderBy('updated_at', 'desc')->paginate(10);
 
         // Fetch pending posts for displaying in the modal or list
         $pendingPosts = DB::table('tblposts')
@@ -44,7 +41,7 @@ class PostpageController extends Controller
 
         // Return the view with both recent activities and pending posts
         return view('admin.postpage', [
-            'recentActivities' => $recentActivities,
+            'posts' => $posts,
             'pendingPosts' => $pendingPosts,
         ]);
     }
@@ -112,9 +109,11 @@ class PostpageController extends Controller
         // Fetch the filtered posts
         $filteredPosts = $query->get();
 
+        $filteredPosts = $query->paginate(10);
+
         // Return the same view with the filtered posts
         return view('admin.postpage', [
-            'recentActivities' => $filteredPosts,
+            'posts' => $filteredPosts,
             'pendingPosts' => DB::table('tblposts')
                 ->where('status', 'Pending')
                 ->get(),
@@ -125,23 +124,30 @@ class PostpageController extends Controller
 
     public function searchPosts(Request $request)
     {
-        $searchQuery = $request->input('searchQuery');
+        // Start a query for the Posts model
+        $query = Posts::query();
 
-        // Use a query to search for posts that match the search term
-        $posts = DB::table('tblposts')
-            // ->where('concern', 'like', '%' . $searchQuery . '%')
-            ->orWhere('post_id', 'like', '%' . $searchQuery . '%')
-            // ->orWhere('postedBy', 'like', '%' . $searchQuery . '%')
-            // ->orWhere('approvedBy', 'like', '%' . $searchQuery . '%')
-            // ->orderBy('updated_at', 'desc')
-            ->get();
+        // Check if there's a search term in the request
+        if ($request->filled('search')) {
+            $searchTerm = $request->input('search');
 
-        // Pass the filtered posts to the view
+            // Search in multiple fields: concern, postedBy, tags, status
+            $query
+                ->where('concern', 'like', '%' . $searchTerm . '%')
+                ->orWhere('postedBy', 'like', '%' . $searchTerm . '%')
+                ->orWhere('tags', 'like', '%' . $searchTerm . '%')
+                ->orWhere('status', 'like', '%' . $searchTerm . '%');
+        }
+
+        // Execute the query and get the results
+        $posts = $query->get();
+
+        $posts = $query->paginate(10);
+
+        // Return the view with the search results
         return view('admin.postpage', [
-            'recentActivities' => $posts,
-            'pendingPosts' => DB::table('tblposts')
-                ->where('status', 'Pending')
-                ->get(),
+            'posts' => $posts, // Pass the results to the view
+            'pendingPosts' => Posts::where('status', 'Pending')->get(), // You can keep this for the pending posts
         ]);
     }
 
