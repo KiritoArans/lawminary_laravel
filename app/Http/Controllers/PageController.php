@@ -101,6 +101,7 @@ class PageController extends Controller
                 'tblaccounts.firstName', 
                 'tblaccounts.lastName', 
                 'tblaccounts.username', 
+                'tblaccounts.accountType', 
                 'tblaccounts.userPhoto') 
             ->get();
 
@@ -113,6 +114,7 @@ class PageController extends Controller
                 'tblaccounts.firstName', 
                 'tblaccounts.lastName', 
                 'tblaccounts.username', 
+                'tblaccounts.accountType', 
                 'tblaccounts.userPhoto') 
             ->get();
         

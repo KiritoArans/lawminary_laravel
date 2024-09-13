@@ -7,7 +7,7 @@
                     <div class="user-info">
                         <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
                         <div class="comment-info">
-                            <h2>{{ $user->firstName }} {{ $user->lastName }}</h2>
+                            <h2>{{ $user->accountType === 'Attorney' ? 'Atty. ' : '' }}{{ $user->firstName }} {{ $user->lastName }}</h2>
                             <label>@<span>{{ $user->username }}</span></label>
                         </div>
                     </div>

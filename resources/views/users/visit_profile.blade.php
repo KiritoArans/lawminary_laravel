@@ -32,7 +32,7 @@
                         <div class="profile-left">
                             <img src="{{ $user->userPhoto ? Storage::url($user->userPhoto) : '../../imgs/user-img.png' }}" class="profile-photo" alt="Profile Picture">
                             <div class="profile-info">
-                                <h2>{{ $user->firstName }} {{ $user->lastName }}</h2>
+                                <h2>{{ $user->accountType === 'Attorney' ? 'Atty. ' : '' }}{{ $user->firstName }} {{ $user->lastName }}</h2>
                                 <h4>@<span>{{ $user->username }}</span></h4>
                                 <div class="profile-badge">
                                     <span class="badge">{{ $user->accountType }}</span>

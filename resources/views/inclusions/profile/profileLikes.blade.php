@@ -8,9 +8,9 @@
                         <div class="post-info">
                             <h2>
                                 <a href="{{ Auth::check() && Auth::user()->user_id == $post->postedBy ? route('profile') : route('visit-profile', ['user_id' => $post->postedBy]) }}">
-                                    {{ $post->firstName }} {{ $post->lastName }}
+                                    {{ $post->accountType === 'Attorney' ? 'Atty. ' : '' }}{{ $post->firstName }} {{ $post->lastName }}
                                 </a>
-                            </h2>
+                            </h2>                            
                             <label>@<span>{{ $post->username ?? 'username' }}</span></label>
                             <p>Posted: {{ \Carbon\Carbon::parse($post->created_at)->diffForHumans() }}</p>
                         </div>
