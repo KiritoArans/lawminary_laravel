@@ -236,7 +236,12 @@
                                                     </div>                       
                                                 </div> 
                                             </div>
-                                            {{-- <a href="">View Replies</a> --}}
+                                            @if($comment->reply->isNotEmpty())
+                                                <div class="view-reply">
+                                                    <a href="javascript:void(0);" onclick="toggleReplies({{ $comment->id }}, this)">View Replies</a>
+                                                </div>
+                                            @endif
+                                            <div id="replies-{{ $comment->id }}" style="display: none;">
                                             @foreach($comment->reply as $reply)
                                                 <div class="user-reply">
                                                     <div>
@@ -258,6 +263,7 @@
                                                     </div>
                                                 </div>
                                             @endforeach
+                                            </div>
                                         @endforeach
                                     </div>
                                     <hr>
@@ -299,7 +305,6 @@
             </content>
         </main>
     </div>
-
     <script src="js/postandcomment.js"></script>
     <script src="js/homelocator.js"></script>
     <script src="js/settings.js"></script>

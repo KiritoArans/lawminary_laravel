@@ -20,4 +20,14 @@ class Follow extends Model
     {
         return $this->belongsTo(UserAccount::class, 'follower', 'user_id');
     }
+    public function followedUser()
+    {
+        return $this->belongsTo(UserAccount::class, 'following', 'user_id');
+    }
+
+    public function followerUser()
+    {
+        return $this->belongsTo(UserAccount::class, 'follower', 'user_id');
+    }
+
 }
