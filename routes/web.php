@@ -164,7 +164,7 @@ Route::match(['put', 'patch'], '/admin/account/{id}', [
     AccountController::class,
     'updateAccount',
 ])->name('admin.updateAccount');
-Route::post('admin/account/filter', [
+Route::get('admin/account/filter', [
     AccountController::class,
     'filterAccount',
 ])->name('admin.filterAccount');
@@ -349,24 +349,24 @@ Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name(
 // Create Post
 Route::post('/home', [PostController::class, 'createPost'])->name(
     'users.createPost'
-    );
-    // Like Post
-    Route::post('/home-liked', [PostController::class, 'likePost'])->name(
-        'post.like'
-    );
-    // Bookmark Post
-    Route::post('/home-bookmarked', [PostController::class, 'bookmarkPost'])->name(
-        'post.bookmark'
-    );
+);
+// Like Post
+Route::post('/home-liked', [PostController::class, 'likePost'])->name(
+    'post.like'
+);
+// Bookmark Post
+Route::post('/home-bookmarked', [PostController::class, 'bookmarkPost'])->name(
+    'post.bookmark'
+);
 
-    // Create Comment
-    Route::post('/comment', [CommentController::class, 'createComment'])->name(
-        'users.createComment'
-    );
+// Create Comment
+Route::post('/comment', [CommentController::class, 'createComment'])->name(
+    'users.createComment'
+);
 
-    // Create Reply
-    route::post('/reply', [CommentController::class, 'createReply'])->name(
-        'users.createReply'
+// Create Reply
+route::post('/reply', [CommentController::class, 'createReply'])->name(
+    'users.createReply'
 );
 
 // Follow User

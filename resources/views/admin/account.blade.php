@@ -75,9 +75,7 @@
                     <hr class="divider" />
                 </header>
                 <section class="filter-container">
-                    {{-- search function --}}
                     @include('includes_accounts.search_inc')
-                    @include('includes_accounts.pending_inc')
                     <div class="action-buttons">
                         <button class="custom-button" id="filterButton">
                             Filter
@@ -96,6 +94,7 @@
                             </div>
                         </div>
                         <!-- add accounts -->
+                        @include('includes_accounts.pending_inc')
                         <button class="custom-button" id="addButton">
                             Add
                         </button>

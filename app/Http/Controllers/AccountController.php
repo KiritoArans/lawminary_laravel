@@ -189,7 +189,7 @@ class AccountController extends Controller
         if (request()->is('admin*')) {
             return redirect()
                 ->route('admin.account')
-                ->with('success', 'Account updated successfully');
+                ->with('success', 'Account created successfully');
         } else {
             return redirect()
                 ->route('moderator.accounts')
@@ -308,11 +308,19 @@ class AccountController extends Controller
 
         $accounts = $query->paginate(10);
 
+        $pendingAcc = UserAccount::where('status', 'Pending')->paginate(10);
+
         // Return the view with the filtered accounts
         if (request()->is('admin*')) {
-            return view('admin.account', compact('accounts'));
+            return view('admin.account', [
+                'accounts' => $accounts,
+                'pendingAcc' => $pendingAcc, // Pass the pending accounts too
+            ]);
         } else {
-            return view('moderator.maccounts', compact('accounts'));
+            return view('moderator.maccounts', [
+                'accounts' => $accounts,
+                'pendingAcc' => $pendingAcc, // Pass the pending accounts too
+            ]);
         }
     }
 
@@ -340,9 +348,12 @@ class AccountController extends Controller
 
         $accounts = $query->paginate(10);
 
+        $pendingAcc = UserAccount::where('status', 'Pending')->paginate(10);
+
         // Return the view with the search results
         return view('admin.account', [
-            'accounts' => $accounts, // Pass the results to the view
+            'accounts' => $accounts,
+            'pendingAcc' => $pendingAcc, // Pass the results to the view
         ]);
     }
 
