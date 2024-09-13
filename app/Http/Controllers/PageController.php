@@ -8,6 +8,7 @@ use App\Models\UserAccount;
 use App\Models\Posts;
 use App\Models\Like;
 use App\Models\Comment;
+use App\Models\Follow;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -76,9 +77,12 @@ class PageController extends Controller
     }
 
     public function profilePageFunctions($user){
+        $following = Follow::where('follower', $user->user_id)->with('followedUser')->get();
+        $followers = Follow::where('following', $user->user_id)->with('followerUser')->get();
 
-        $followingCount = \App\Models\Follow::where('follower', $user->user_id)->count();
-        $followerCount = \App\Models\Follow::where('following', $user->user_id)->count();
+        $followingCount = Follow::where('follower', $user->user_id)->count();
+        $followerCount = Follow::where('following', $user->user_id)->count();
+        
 
         $posts = Posts::where('postedBy', $user->user_id)
         ->orderBy('created_at', 'desc')
@@ -118,7 +122,7 @@ class PageController extends Controller
                 'tblaccounts.userPhoto') 
             ->get();
         
-        return compact('posts', 'allPosts', 'comments', 'likes', 'bookmarks', 'followingCount', 'followerCount');
+        return compact('posts', 'allPosts', 'comments', 'likes', 'bookmarks', 'following', 'followers','followingCount', 'followerCount');
     }
     public function showProfilePage()
     {

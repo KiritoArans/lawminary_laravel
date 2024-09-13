@@ -103,27 +103,34 @@
                             </div>      
                         </div>
                     </div>
-                    @foreach($comment->reply as $reply)
-                        <div class="user-reply">
-                            <div>
-                                <img src="{{ $reply->user->userPhoto ? Storage::url($reply->user->userPhoto) : '../imgs/user-img.png' }}" alt="User Profile Picture" class="user-profile-photo">
-                            </div>
-                            <div class="user-reply-content">
-                                <span>
-                                    <a href="{{ Auth::check() && Auth::user()->user_id == $reply->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $reply->user->user_id]) }}">
-                                        {{ $reply->user ? ($reply->user->accountType === 'Attorney' ? 'Atty. ' : '') . $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}
-                                    </a>
-                                </span>                                         
-                                <label>replied to 
-                                    <span>{{ $comment->user ? $comment->user->firstName: 'Unknown User' }}</span>'s comment.
-                                </label>
-                                <p>{{ $reply->reply }}</p>
-                                <div class="date-reply">
-                                    <p class="comment-time">{{ $reply->created_at->diffForHumans() }}</p>
+                    @if($comment->reply->isNotEmpty())
+                        <div class="view-reply">
+                            <a href="javascript:void(0);" onclick="toggleReplies({{ $comment->id }}, this)">View Replies</a>
+                        </div>
+                    @endif
+                    <div id="replies-{{ $comment->id }}" style="display: none;">
+                        @foreach($comment->reply as $reply)
+                            <div class="user-reply">
+                                <div>
+                                    <img src="{{ $reply->user->userPhoto ? Storage::url($reply->user->userPhoto) : '../imgs/user-img.png' }}" alt="User Profile Picture" class="user-profile-photo">
+                                </div>
+                                <div class="user-reply-content">
+                                    <span>
+                                        <a href="{{ Auth::check() && Auth::user()->user_id == $reply->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $reply->user->user_id]) }}">
+                                            {{ $reply->user ? ($reply->user->accountType === 'Attorney' ? 'Atty. ' : '') . $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}
+                                        </a>
+                                    </span>                                                        
+                                    <label>replied to 
+                                        <span>{{ $comment->user ? $comment->user->firstName: 'Unknown User' }}</span>'s comment.
+                                    </label>
+                                    <p>{{ $reply->reply }}</p>
+                                    <div class="date-reply">
+                                        <p class="comment-time">{{ $reply->created_at->diffForHumans() }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 @endforeach
                 </div>
                 <hr>

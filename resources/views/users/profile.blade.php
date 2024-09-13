@@ -79,9 +79,111 @@
                         @include('inclusions/profile/profileBookmarks')
 
                     </div>
+
+                    <div id="followModal" class="followModal">
+                        <div class="followModal-content">
+                            <span class="close">&times;</span>
+                            <h2 class="modal-title">Followers and Following</h2>
+                            <div class="modal-nav">
+                                <span id="followers-tab" class="active">Followers</span>
+                                <span id="following-tab">Following</span>
+                            </div>
+                            <div class="search-bar">
+                                <input type="text" placeholder="Search">
+                            </div>
+                            
+                            <!-- Followers List -->
+                            <ul id="followers-list" class="user-list">
+                                @foreach($followers as $follower)
+                                <li>
+                                    <img src="{{ $follower->followerUser->userPhoto ? Storage::url($follower->followerUser->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Photo" class="user-profile-photo">
+                                    <div class="user-info">
+                                        <span class="fullname">{{ $follower->followerUser->firstName }} {{ $follower->followerUser->lastName }}</span>
+                                    </div>
+                                    <button class="follow-btn">Following</button>
+                                </li>
+                                @endforeach
+                            </ul>
+                    
+                            <!-- Following List -->
+                            <ul id="following-list" class="user-list" style="display: none;">
+                                @foreach($following as $follow)
+                                <li>
+                                    <img src="{{ $follow->followedUser->userPhoto ? Storage::url($follow->followedUser->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Photo" class="user-profile-photo">
+                                    <div class="user-info">
+                                        <span class="fullname">{{ $follow->followedUser->firstName }} {{ $follow->followedUser->lastName }}</span>
+                                    </div>
+                                    <button class="follow-btn">Following</button>
+                                </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    
+                    
             </content>
         </main>
     </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const followersTab = document.getElementById('followers-tab');
+    const followingTab = document.getElementById('following-tab');
+    const followersList = document.getElementById('followers-list');
+    const followingList = document.getElementById('following-list');
+    
+    const profileStatsDiv = document.querySelector('.profile-stats'); // Profile stats div
+    const followModal = document.getElementById('followModal'); // Modal element
+    const closeModal = document.querySelector('.followModal .close'); // Close button
+
+    // By default, show followers and set the active tab
+    followersTab.classList.add('active-tab');
+    
+    // Function to handle tab switching
+    function showFollowers() {
+        followersTab.classList.add('active-tab');
+        followingTab.classList.remove('active-tab');
+        followersList.style.display = 'block';
+        followingList.style.display = 'none';
+    }
+
+    function showFollowing() {
+        followersTab.classList.remove('active-tab');
+        followingTab.classList.add('active-tab');
+        followersList.style.display = 'none';
+        followingList.style.display = 'block';
+    }
+
+    // Event listeners for switching tabs
+    followersTab.addEventListener('click', function (e) {
+        e.preventDefault();
+        showFollowers();
+    });
+
+    followingTab.addEventListener('click', function (e) {
+        e.preventDefault();
+        showFollowing();
+    });
+
+    profileStatsDiv.addEventListener('click', function () {
+        followModal.style.display = 'flex'; // Make the modal visible only when clicked
+    });
+
+    // Close modal when close button is clicked
+    closeModal.addEventListener('click', function () {
+        followModal.style.display = 'none'; // Hide the modal
+    });
+
+    // Close modal if user clicks outside the modal content
+    window.addEventListener('click', function (event) {
+        if (event.target === followModal) {
+            followModal.style.display = 'none';
+        }
+    });
+});
+
+    </script>
+    
     <script src="js/postandcomment.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/profile.js"></script>
