@@ -16,7 +16,12 @@
             </div>
             <div class="form-group">
                 <label for="editStatus">Status:</label>
-                <select id="editStatus" name="status" class="form-control">
+                <select
+                    id="editStatus"
+                    name="status"
+                    class="form-control"
+                    required
+                >
                     <option value="pending">Pending</option>
                     <option value="approved">Approved</option>
                     <option value="disregarded">Disregarded</option>

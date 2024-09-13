@@ -182,6 +182,7 @@ class AccountController extends Controller
         // Hash the password and include it in the data
         $data['password'] = Hash::make($request->password);
 
+        $data['status'] = 'Pending';
         // Create the user account
         UserAccount::create($data);
 
@@ -201,8 +202,10 @@ class AccountController extends Controller
     {
         // Validate the incoming request data
         $request->validate([
-            'username' =>'required|string|max:255|unique:tblaccounts,username,' . $id,
-            'email' =>'required|string|email|max:255|unique:tblaccounts,email,' . $id,
+            'username' =>
+                'required|string|max:255|unique:tblaccounts,username,' . $id,
+            'email' =>
+                'required|string|email|max:255|unique:tblaccounts,email,' . $id,
             'firstName' => 'required|string|max:255',
             'middleName' => 'nullable|string|max:255',
             'lastName' => 'required|string|max:255',
@@ -233,6 +236,7 @@ class AccountController extends Controller
 
         // Save the updated account
         $account->save();
+
         // Redirect back to the accounts list WITHOUT the ID in the URL
         if (request()->is('admin*')) {
             return redirect()
@@ -301,7 +305,8 @@ class AccountController extends Controller
         }
 
         // Get the filtered results
-        $accounts = $query->get();
+
+        $accounts = $query->paginate(10);
 
         // Return the view with the filtered accounts
         if (request()->is('admin*')) {
@@ -309,5 +314,68 @@ class AccountController extends Controller
         } else {
             return view('moderator.maccounts', compact('accounts'));
         }
+    }
+
+    public function searchAccounts(Request $request)
+    {
+        // Start a query for the Posts model
+        $query = UserAccount::query();
+
+        // Check if there's a search term in the request
+        if ($request->filled('search')) {
+            $searchTerm = $request->input('search');
+
+            // Search in multiple fields: concern, postedBy, tags, status
+            $query
+                ->where('user_id', 'like', '%' . $searchTerm . '%')
+                ->orWhere('username', 'like', '%' . $searchTerm . '%')
+                ->orWhere('email', 'like', '%' . $searchTerm . '%')
+                ->orWhere('status', 'like', '%' . $searchTerm . '%')
+                ->orWhere('firstName', 'like', '%' . $searchTerm . '%')
+                ->orWhere('middleName', 'like', '%' . $searchTerm . '%')
+                ->orWhere('lastName', 'like', '%' . $searchTerm . '%');
+        }
+
+        // Execute the query and get the results
+
+        $accounts = $query->paginate(10);
+
+        // Return the view with the search results
+        return view('admin.account', [
+            'accounts' => $accounts, // Pass the results to the view
+        ]);
+    }
+
+    public function index(Request $request)
+    {
+        // Query to get all accounts (pending and approved)
+        $accounts = UserAccount::orderBy('created_at', 'desc')->paginate(10); // Paginate with 10 results per page
+
+        // Query to get only pending accounts
+        $pendingAcc = UserAccount::where('status', 'Pending')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // Return the view with both paginated accounts and pending accounts
+        return view('admin.account', [
+            'accounts' => $accounts,
+            'pendingAcc' => $pendingAcc, // Pass both all accounts and pending accounts
+        ]);
+    }
+
+    public function approveAccount($id)
+    {
+        $account = UserAccount::find($id);
+
+        if (!$account) {
+            return redirect()->back()->with('error', 'Account not found.');
+        }
+
+        $account->status = 'Approved';
+        $account->save();
+
+        return redirect()
+            ->back()
+            ->with('success', 'Account approved successfully.');
     }
 }

@@ -13,6 +13,7 @@
             rel="stylesheet"
             href="{{ asset('css/admin/postpagestyle.css') }}"
         />
+        <link rel="stylesheet" href="{{ asset('css/base_pagination.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
         <link
             rel="stylesheet"

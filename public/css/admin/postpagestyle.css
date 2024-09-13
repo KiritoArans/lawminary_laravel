@@ -34,23 +34,6 @@ header hr {
     border: 1px solid #b1b1b1;
 }
 
-.search-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-.search-bar input {
-    width: 450px;
-    padding: 10px 10px 10px 32px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-.search-bar i {
-    position: absolute;
-    left: 8px;
-    color: var(--primary-color);
-}
-
 .filter-container {
     width: 100%;
     display: flex;
@@ -59,10 +42,9 @@ header hr {
     margin-bottom: 1rem;
 }
 
-.search-bar {
+.search-bar-content {
     display: flex;
     align-items: center;
-    gap: 10px;
 }
 
 .search-bar input {
@@ -70,6 +52,9 @@ header hr {
     padding: 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
+}
+.search-bar {
+    width: 100%;
 }
 
 .action-buttons {
@@ -120,4 +105,10 @@ header hr {
 
 #editStatus {
     width: 100%;
+}
+
+.paginationContent {
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically, if needed */
 }

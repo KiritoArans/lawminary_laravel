@@ -144,6 +144,14 @@ Route::get('/terms-of-service', [
 // Admin Backend Routing
 
 // Admin Accounts Page
+Route::get('/admin/account', [AccountController::class, 'index'])->name(
+    'admin.account'
+);
+Route::get('/admin/pending-accounts', [
+    AccountController::class,
+    'pendingAcc',
+])->name('admin.pendingAcc');
+
 Route::post('/admin/account', [AccountController::class, 'addAccount'])->name(
     'admin.addAccount'
 );
@@ -159,6 +167,16 @@ Route::post('admin/account/filter', [
     AccountController::class,
     'filterAccount',
 ])->name('admin.filterAccount');
+
+Route::get('/admin/account/searchAccounts', [
+    AccountController::class,
+    'searchAccounts',
+])->name('admin.searchAccounts');
+
+Route::post('/admin/approveAccount/{id}', [
+    AccountController::class,
+    'approveAccount',
+])->name('admin.approveAccount');
 
 // Admin Dashboard Page
 
@@ -189,10 +207,9 @@ Route::get('/admin/filter-posts', [
     'filterPosts',
 ])->name('admin.filterPosts');
 
-Route::get('/admin/search-posts', [
-    PostpageController::class,
-    'searchPosts',
-])->name('admin.searchPosts');
+Route::get('/admin/postpage', [PostpageController::class, 'searchPosts'])->name(
+    'admin.searchPosts'
+);
 
 // edit and update buttons
 Route::get('includes_postpage/post_edit_inc/{id}', [
@@ -200,12 +217,9 @@ Route::get('includes_postpage/post_edit_inc/{id}', [
     'post_edit_inc',
 ])->name('post_edit_inc');
 
-// Route for updating a post
 Route::post('admin/update', [PostpageController::class, 'update'])->name(
     'update'
 );
-
-//route for delete a post
 
 Route::delete('/posts/{id}', [PostpageController::class, 'destroy'])->name(
     'posts.destroy'

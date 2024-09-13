@@ -8,7 +8,6 @@ use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-
 class UserAccount extends Authenticatable
 {
     use HasFactory, Notifiable;
@@ -29,6 +28,7 @@ class UserAccount extends Authenticatable
         'accountType',
         'restrict',
         'restrictDays',
+        'status',
     ];
 
     protected static function boot()
@@ -47,4 +47,3 @@ class UserAccount extends Authenticatable
     //     return $this->belongsTo(Posts::class, 'postedBy', 'user_id');
     // }
 }
-
