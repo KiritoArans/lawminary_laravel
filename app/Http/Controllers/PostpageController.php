@@ -40,10 +40,18 @@ class PostpageController extends Controller
             ->get();
 
         // Return the view with both recent activities and pending posts
-        return view('admin.postpage', [
-            'posts' => $posts,
-            'pendingPosts' => $pendingPosts,
-        ]);
+
+        if (request()->is('admin*')) {
+            return view('admin.postpage', [
+                'posts' => $posts,
+                'pendingPosts' => $pendingPosts,
+            ]);
+        } elseif (request()->is('moderator*')) {
+            return view('moderator.postpage', [
+                'posts' => $posts,
+                'pendingPosts' => $pendingPosts,
+            ]);
+        }
     }
 
     //filter function
@@ -112,12 +120,21 @@ class PostpageController extends Controller
         $filteredPosts = $query->paginate(10);
 
         // Return the same view with the filtered posts
-        return view('admin.postpage', [
-            'posts' => $filteredPosts,
-            'pendingPosts' => DB::table('tblposts')
-                ->where('status', 'Pending')
-                ->get(),
-        ]);
+        if (request()->is('admin*')) {
+            return view('admin.postpage', [
+                'posts' => $filteredPosts,
+                'pendingPosts' => DB::table('tblposts')
+                    ->where('status', 'Pending')
+                    ->get(),
+            ]);
+        } elseif (request()->is('moderator*')) {
+            return view('moderator.postpage', [
+                'posts' => $filteredPosts,
+                'pendingPosts' => DB::table('tblposts')
+                    ->where('status', 'Pending')
+                    ->get(),
+            ]);
+        }
     }
 
     //search function
@@ -145,10 +162,17 @@ class PostpageController extends Controller
         $posts = $query->paginate(10);
 
         // Return the view with the search results
-        return view('admin.postpage', [
-            'posts' => $posts, // Pass the results to the view
-            'pendingPosts' => Posts::where('status', 'Pending')->get(), // You can keep this for the pending posts
-        ]);
+        if (request()->is('admin*')) {
+            return view('admin.postpage', [
+                'posts' => $posts, // Pass the results to the view
+                'pendingPosts' => Posts::where('status', 'Pending')->get(), // You can keep this for the pending posts
+            ]);
+        } elseif (request()->is('moderator*')) {
+            return view('moderator.postpage', [
+                'posts' => $posts, // Pass the results to the view
+                'pendingPosts' => Posts::where('status', 'Pending')->get(), // You can keep this for the pending posts
+            ]);
+        }
     }
 
     //edit and update function

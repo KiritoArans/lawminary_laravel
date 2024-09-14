@@ -82,7 +82,7 @@ class DashboardController extends Controller
         if (request()->is('admin*')) {
             return view('admin.dashboard', $data);
         } elseif (request()->is('moderator*')) {
-            return view('moderator.mdashboard', $data);
+            return view('moderator.dashboard', $data);
         }
     }
 
@@ -100,22 +100,32 @@ class DashboardController extends Controller
                 '%' . $search . '%'
             )
                 ->orWhere('act_username', 'LIKE', '%' . $search . '%')
-                ->get();
+                ->paginate(10);
         } else {
             // If no search term, show all activities
-            $dashboardData = Dashboard::all();
+            $dashboardData = Dashboard::paginate(10); // Use paginate instead of get()
         }
 
         // Fetch the additional dashboard data
         $dashboardCounts = $this->getDashboardData();
 
         // Pass both the search results and the dashboard counts to the view
-        return view('admin.dashboard', [
-            'dashboardData' => $dashboardData,
-            'pendingPosts' => $dashboardCounts['pendingPosts'],
-            'pendingAccounts' => $dashboardCounts['pendingAccounts'],
-            'accountsCount' => $dashboardCounts['accountsCount'],
-            'forumsCount' => $dashboardCounts['forumsCount'],
-        ]);
+        if (request()->is('admin*')) {
+            return view('admin.dashboard', [
+                'dashboardData' => $dashboardData,
+                'pendingPosts' => $dashboardCounts['pendingPosts'],
+                'pendingAccounts' => $dashboardCounts['pendingAccounts'],
+                'accountsCount' => $dashboardCounts['accountsCount'],
+                'forumsCount' => $dashboardCounts['forumsCount'],
+            ]);
+        } elseif (request()->is('moderator*')) {
+            return view('moderator.dashboard', [
+                'dashboardData' => $dashboardData,
+                'pendingPosts' => $dashboardCounts['pendingPosts'],
+                'pendingAccounts' => $dashboardCounts['pendingAccounts'],
+                'accountsCount' => $dashboardCounts['accountsCount'],
+                'forumsCount' => $dashboardCounts['forumsCount'],
+            ]);
+        }
     }
 }

@@ -34,7 +34,7 @@
                             <div class="action-cell">
                                 <!-- Approve Form -->
                                 <form
-                                    action="{{ route('admin.postpage') }}"
+                                    action="{{ request()->is('admin*') ? route('admin.postpage') : route('moderator.postpage') }}"
                                     method="POST"
                                     style="display: inline-block"
                                 >
@@ -55,7 +55,7 @@
 
                                 <!-- Disregard Form -->
                                 <form
-                                    action="{{ route('admin.postpage') }}"
+                                    action="{{ request()->is('admin*') ? route('admin.postpage') : route('moderator.postpage') }}"
                                     method="POST"
                                     style="display: inline-block"
                                 >

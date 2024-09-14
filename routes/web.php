@@ -48,7 +48,7 @@ Route::get('/admin/systemcontent', [
 // Moderator routes
 Route::get('/moderator/dashboard', [
     ModeratorController::class,
-    'showMdashboard',
+    'showdashboard',
 ])->name('moderator.dashboard');
 
 Route::get('/moderator/posts', [
@@ -66,9 +66,9 @@ Route::get('/moderator/resources', [
     'showMresources',
 ])->name('moderator.resources');
 
-Route::get('/moderator/accounts', [
+Route::get('/moderator/account', [
     ModeratorController::class,
-    'showMaccounts',
+    'showaccount',
 ])->name('moderator.accounts');
 
 Route::get('/moderator/forums', [
@@ -271,22 +271,42 @@ Route::get('/admin/forums/filter', [ForumController::class, 'filter'])->name(
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Moderator Accounts Page
-Route::post('/moderator/accounts', [
+Route::get('/moderator/account', [AccountController::class, 'index'])->name(
+    'moderator.account'
+);
+Route::get('/moderator/pending-accounts', [
+    AccountController::class,
+    'pendingAcc',
+])->name('moderator.pendingAcc');
+
+Route::post('/moderator/account', [
     AccountController::class,
     'addAccount',
 ])->name('moderator.addAccount');
-Route::delete('/moderator/accounts/{id}', [
+Route::delete('/moderator/account/{id}', [
     AccountController::class,
     'destroyAccount',
 ])->name('moderator.destroyAccount');
-Route::match(['put', 'patch'], '/moderator/accounts/{id}', [
+
+Route::match(['put', 'patch'], '/moderator/account/{id}', [
     AccountController::class,
     'updateAccount',
 ])->name('moderator.updateAccount');
-Route::post('/moderator/accounts/filter', [
+
+Route::get('moderator/account/filter', [
     AccountController::class,
     'filterAccount',
 ])->name('moderator.filterAccount');
+
+Route::get('/moderator/account/searchAccounts', [
+    AccountController::class,
+    'searchAccounts',
+])->name('moderator.searchAccounts');
+
+Route::post('/moderator/approveAccount/{id}', [
+    AccountController::class,
+    'approveAccount',
+])->name('moderator.approveAccount');
 
 //moderator Dashboard Page
 Route::get('moderator/dashboard', [
@@ -294,10 +314,35 @@ Route::get('moderator/dashboard', [
     'dashboard',
 ])->name('moderator.dashboard');
 
-Route::post('moderator/dashboard/filter', [
+Route::get('moderator/dashboard/filter', [
     DashboardController::class,
     'dashboard',
 ])->name('moderator.filterDashboard');
+
+Route::get('/moderator/dashboard/search', [
+    DashboardController::class,
+    'search',
+])->name('moderator.search');
+
+//moderator post page
+
+Route::get('moderator/postpage', [PostpageController::class, 'postpage'])->name(
+    'moderator.postpage'
+);
+Route::match(['get', 'post'], '/moderator/postpage', [
+    PostpageController::class,
+    'postpage',
+])->name('moderator.postpage');
+
+Route::get('/moderator/filter-posts', [
+    PostpageController::class,
+    'filterPosts',
+])->name('moderator.filterPosts');
+
+Route::get('/moderator/postpage', [
+    PostpageController::class,
+    'searchPosts',
+])->name('moderator.searchPosts');
 
 // Moderator Resource Page
 Route::post('/moderator/resources/upload', [

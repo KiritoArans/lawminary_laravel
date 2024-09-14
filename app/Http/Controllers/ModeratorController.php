@@ -18,20 +18,20 @@ class moderatorController extends Controller
         return view('moderator.admod_login');
     }
 
-    public function showMaccounts()
+    public function showaccount()
     {
         $accounts = UserAccount::all();
-        return view('moderator.Maccounts', ['accounts' => $accounts]);
+        return view('moderator.account', ['accounts' => $accounts]);
     }
 
-    public function showMdashboard()
+    public function showdashboard()
     {
-        return view('moderator.mdashboard');
+        return view('moderator.dashboard');
     }
 
-    public function showMposts()
+    public function showpostpage()
     {
-        return view('moderator.mposts');
+        return view('moderator.postpage');
     }
 
     public function showMleaderboards()

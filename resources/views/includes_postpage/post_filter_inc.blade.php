@@ -6,7 +6,7 @@
         <form
             id="filterForm"
             method="GET"
-            action="{{ route('admin.filterPosts') }}"
+            action="{{ request()->is('admin*') ? route('admin.filterPosts') : route('moderator.filterPosts') }}"
         >
             <label for="filterPostId">Post ID:</label>
             <input type="text" id="filterPostId" name="filterPostId" />

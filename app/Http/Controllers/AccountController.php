@@ -122,10 +122,10 @@ class AccountController extends Controller
         return view('moderator.admod_login');
     }
 
-    public function showMaccounts()
+    public function showaccounts()
     {
         $accounts = UserAccount::all();
-        return view('moderator.Maccounts', ['accounts' => $accounts]);
+        return view('moderator.account', ['accounts' => $accounts]);
     }
 
     public function addAccount(Request $request)
@@ -156,7 +156,7 @@ class AccountController extends Controller
                     ->withInput();
             } else {
                 return redirect()
-                    ->route('moderator.accounts') // Redirect sa moderator route
+                    ->route('moderator.account') // Redirect sa moderator route
                     ->withErrors($validator)
                     ->withInput();
             }
@@ -192,7 +192,7 @@ class AccountController extends Controller
                 ->with('success', 'Account created successfully');
         } else {
             return redirect()
-                ->route('moderator.accounts')
+                ->route('moderator.account')
                 ->with('success', 'Account updated successfully');
         }
     }
@@ -238,15 +238,9 @@ class AccountController extends Controller
         $account->save();
 
         // Redirect back to the accounts list WITHOUT the ID in the URL
-        if (request()->is('admin*')) {
-            return redirect()
-                ->route('admin.account')
-                ->with('success', 'Account updated successfully');
-        } else {
-            return redirect()
-                ->route('moderator.accounts')
-                ->with('success', 'Account updated successfully');
-        }
+        return redirect()
+            ->back()
+            ->with('success', 'Account updated successfully!');
     }
 
     //delete account
@@ -265,7 +259,7 @@ class AccountController extends Controller
                 ->with('success', 'Account deleted successfully');
         } else {
             return redirect()
-                ->route('moderator.accounts')
+                ->route('moderator.account')
                 ->with('success', 'Account deleted successfully');
         }
     }
@@ -317,7 +311,7 @@ class AccountController extends Controller
                 'pendingAcc' => $pendingAcc, // Pass the pending accounts too
             ]);
         } else {
-            return view('moderator.maccounts', [
+            return view('moderator.account', [
                 'accounts' => $accounts,
                 'pendingAcc' => $pendingAcc, // Pass the pending accounts too
             ]);
@@ -351,10 +345,17 @@ class AccountController extends Controller
         $pendingAcc = UserAccount::where('status', 'Pending')->paginate(10);
 
         // Return the view with the search results
-        return view('admin.account', [
-            'accounts' => $accounts,
-            'pendingAcc' => $pendingAcc, // Pass the results to the view
-        ]);
+        if (request()->is('admin*')) {
+            return view('admin.account', [
+                'accounts' => $accounts,
+                'pendingAcc' => $pendingAcc, // Pass the results to the view
+            ]);
+        } elseif (request()->is('moderator*')) {
+            return view('moderator.account', [
+                'accounts' => $accounts,
+                'pendingAcc' => $pendingAcc, // Pass the results to the view
+            ]);
+        }
     }
 
     public function index(Request $request)
@@ -368,10 +369,17 @@ class AccountController extends Controller
             ->paginate(10);
 
         // Return the view with both paginated accounts and pending accounts
-        return view('admin.account', [
-            'accounts' => $accounts,
-            'pendingAcc' => $pendingAcc, // Pass both all accounts and pending accounts
-        ]);
+        if (request()->is('admin*')) {
+            return view('admin.account', [
+                'accounts' => $accounts,
+                'pendingAcc' => $pendingAcc, // Pass both all accounts and pending accounts
+            ]);
+        } elseif (request()->is('moderator*')) {
+            return view('moderator.account', [
+                'accounts' => $accounts,
+                'pendingAcc' => $pendingAcc,
+            ]);
+        }
     }
 
     public function approveAccount($id)

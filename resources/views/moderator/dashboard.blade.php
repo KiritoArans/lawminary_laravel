@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Lawminary | Moderator</title>
+        <title>Lawminary | Admin</title>
         <link
             rel="icon"
             href="{{ asset('imgs/lawminarylogo.png') }}"
@@ -13,6 +13,7 @@
             rel="stylesheet"
             href="{{ asset('css/admin/dashboardstyle.css') }}"
         />
+        <link rel="stylesheet" href="{{ asset('css/base_pagination.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
         <link
             rel="stylesheet"
@@ -69,42 +70,63 @@
                             alt=""
                         />
                     </div>
+
                     <hr class="divider" />
+
                     <div class="header-line">
                         <div class="header-ttl">
                             <h1>Dashboard</h1>
                         </div>
-                        <section class="filter-container">
-                {{-- search function --}}
-                <!-- @include('includes_accounts.search_inc') -->
-                <div class="action-buttons">
-                    <button class="custom-button" id="filterButton">Filter</button>
-                    <div id="filterModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close-button" id="closeFilterModal">&times;</span>
-                            <h2>Filter Accounts</h2>
-                            <!--filter accounts-->
-                             @include('includes_dashboard.dash_filter_inc')
+
+                        <!-- Search Form -->
+                        @include('includes_dashboard.dash_search_inc')
+
+                        <!-- Filter Button -->
+                        <div class="filter-container">
+                            <button class="custom-button" id="filterButton">
+                                Filter
+                            </button>
+                            <div id="filterModal" class="modal">
+                                <div class="modal-content">
+                                    <span
+                                        class="close-button"
+                                        id="closeFilterModal"
+                                    >
+                                        &times;
+                                    </span>
+                                    <h2>Filter Accounts</h2>
+                                    @include('includes_dashboard.dash_filter_inc')
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    </div>
+
+                    <!-- Close .header-line -->
                 </header>
+                <!-- Correctly close header tag -->
+
                 <div class="content">
                     <div class="dash-content">
                         <div class="box-content">
                             <div class="boxes">
                                 @include('includes_dashboard.pending_inc')
-                                    <div class="container-table-2">
-                                        <!-- recent act table -->
-                                        @include('includes_dashboard.recent_act_inc')
-                                    </div>
+                                <div class="container-table-2">
+                                    <!-- recent activity table -->
+                                    @include('includes_dashboard.recent_act_inc')
                                 </div>
+                                <!-- Close .container-table-2 -->
                             </div>
+                            <!-- Close .boxes -->
                         </div>
+                        <!-- Close .box-content -->
                     </div>
+                    <!-- Close .dash-content -->
                 </div>
+                <!-- Close .content -->
             </main>
-            <script src="{{ asset('js/moderator_js/mdashboard_js.js') }}"></script>
+            <!-- Close main -->
+
+            <script src="{{ asset('js/admin_js/dashboard_js.js') }}"></script>
         </div>
     </body>
 </html>

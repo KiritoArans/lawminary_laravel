@@ -1,4 +1,7 @@
-<form action="{{ route('admin.searchAccounts') }}" method="GET">
+<form
+    action="{{ request()->is('admin*') ? route('admin.searchAccounts') : route('moderator.searchAccounts') }}"
+    method="GET"
+>
     <div class="search-bar-content">
         <div class="search-bar">
             <input
