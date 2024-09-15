@@ -346,16 +346,6 @@ Route::post('/moderator/resources/upload', [
     'uploadResource',
 ])->name('moderator.uploadResource');
 
-Route::match(['put', 'patch'], '/moderator/resources/{id}/updateResource', [
-    ResourcepageController::class,
-    'updateResource',
-])->name('moderator.updateResource');
-
-Route::delete('/moderator/{rsrcfile}/destroy', [
-    ResourcepageController::class,
-    'destroyResource',
-])->name('moderator.destroyResource');
-
 Route::get('/moderator/search-resources', [
     ResourcepageController::class,
     'searchResources',

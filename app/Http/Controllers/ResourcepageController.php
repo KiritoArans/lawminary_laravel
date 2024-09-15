@@ -49,38 +49,4 @@ class ResourcepageController extends Controller
         // Return the view with the filtered results
         return view('moderator.resources', compact('resources'));
     }
-
-    public function updateResource(Request $request, $id)
-    {
-        // Validate the incoming request data
-        $request->validate([
-            'documentTitle' => 'required|string|max:255',
-            'documentDesc' => 'required|string',
-            'documentFile' =>
-                'nullable|mimes:pdf,doc,docx,jpg,png,zip|max:2048',
-        ]);
-
-        // Find the resource by ID
-        $resource = ResourceFile::findOrFail($id);
-
-        // Update the resource fields
-        $resource->documentTitle = $request->input('documentTitle');
-        $resource->documentDesc = $request->input('documentDesc');
-
-        // Check if a new file was uploaded and replace the old one
-        if ($request->hasFile('documentFile')) {
-            $path = $request
-                ->file('documentFile')
-                ->store('resources', 'public');
-            $resource->documentFile = $path;
-        }
-
-        // Save the updated resource to the database
-        $resource->save();
-
-        // Redirect back with success message
-        return redirect()
-            ->back()
-            ->with('success', 'Resource updated successfully!');
-    }
 }

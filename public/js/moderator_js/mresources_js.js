@@ -43,100 +43,45 @@ window.addEventListener('click', function (event) {
     }
 });
 
-// Function to bind the event listeners to the view buttons
-function bindViewButtons() {
-    var modal = document.getElementById('viewModal');
-    var closeButton = document.getElementById('closeButton');
+// Function to open the edit modal and populate it with the resource data
+function openEditModal(resource) {
+    // Populate the modal fields with the resource data
+    document.getElementById('documentTitle').value = resource.documentTitle;
+    document.getElementById('documentDesc').value = resource.documentDesc;
 
-    document.querySelectorAll('.view-button').forEach((button) => {
+    // Set the form action to update the resource using the resource ID
+    document.getElementById('editResourceForm').action =
+        `/moderator/resources/${resource.id}`;
+
+    // Display the modal
+    document.getElementById('editResourceModal').style.display = 'block';
+}
+
+// Function to close the modal
+function closeModal() {
+    document.getElementById('editResourceModal').style.display = 'none';
+}
+
+// Bind edit buttons (call this when the page loads)
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.edit-button').forEach((button) => {
         button.addEventListener('click', function () {
-            var id = this.getAttribute('data-id');
-            var title = this.getAttribute('data-title');
-            var desc = this.getAttribute('data-desc');
-            var file = this.getAttribute('data-file');
-            var date = this.getAttribute('data-date');
+            // Parse the resource data from the button's data attribute
+            const resource = JSON.parse(this.getAttribute('data-resource'));
 
-            document.getElementById('rsrcId').value = id;
-            document.getElementById('rsrcDocumentTitle').value = title;
-            document.getElementById('rsrcDocumentDesc').value = desc;
-            document.getElementById('rsrcDocumentFileLink').textContent = file;
-            document.getElementById('rsrcDocumentFileLink').href = file;
-            document.getElementById('rsrcDateUploaded').value = date;
-
-            var formAction = `/moderator/resources/${id}`;
-            document.getElementById('editResourceForm').action = formAction;
-
-            modal.style.display = 'block';
+            // Open the modal and pass the resource data to it
+            openEditModal(resource);
         });
     });
+});
 
-    closeButton.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    });
-}
-
-function confirmDelete(event) {
-    event.preventDefault(); // Prevent form submission
-
-    Swal.fire({
-        title: 'Are you sure?',
-        text: 'Do you want to delete this resource? This action cannot be undone!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // If confirmed, submit the form manually
-            event.target.submit();
-        }
-    });
-}
-
-// Function to bind event listeners to "View" buttons
-function bindViewButtons() {
-    const modal = document.getElementById('viewModal');
-    const closeButton = document.getElementById('closeButton');
-
-    document.querySelectorAll('.view-button').forEach((button) => {
-        button.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            const title = this.getAttribute('data-title');
-            const desc = this.getAttribute('data-desc');
-            const file = this.getAttribute('data-file');
-            const date = this.getAttribute('data-date');
-
-            document.getElementById('rsrcId').value = id;
-            document.getElementById('rsrcDocumentTitle').value = title;
-            document.getElementById('rsrcDocumentDesc').value = desc;
-            document.getElementById('rsrcDocumentFileLink').textContent = file;
-            document.getElementById('rsrcDocumentFileLink').href = file;
-            document.getElementById('rsrcDateUploaded').value = date;
-
-            const formAction = `/moderator/resources/${id}`;
-            document.getElementById('editResourceForm').action = formAction;
-
-            modal.style.display = 'block';
-        });
-    });
-
-    closeButton.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    });
-}
+// Optional: Close modal when clicking outside of the modal content
+window.onclick = function (event) {
+    const modal = document.getElementById('editResourceModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+};
 
 // Search function
 const searchInput = document.getElementById('searchInput'); // Corrected ID

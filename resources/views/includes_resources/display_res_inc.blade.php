@@ -35,7 +35,7 @@
                         </button>
                         <form
                             method="post"
-                            action="{{ route('moderator.destroyResource', $resource->id) }}"
+                            action=""
                             onsubmit="confirmDelete(event);"
                         >
                             @csrf
