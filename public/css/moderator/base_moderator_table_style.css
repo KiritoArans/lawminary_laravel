@@ -3,7 +3,7 @@ table {
     margin-bottom: 1rem;
     color: #212529;
     border-collapse: collapse;
-    table-layout: fixed; 
+    table-layout: fixed;
     font-size: 1rem;
 }
 .table th,
@@ -11,9 +11,9 @@ table {
     padding: 0.5rem;
     vertical-align: top;
     border: 1px solid #dee2e6;
-    word-wrap: break-word; 
+    word-wrap: break-word;
 }
-td:last-child{
+td:last-child {
     text-align: center;
     display: flex;
     justify-content: center;
@@ -49,9 +49,6 @@ td:last-child{
     background-color: #218838;
 }
 
-
-
-
 .action-buttons {
     display: flex;
     gap: 10px;
@@ -62,16 +59,17 @@ td:last-child{
     margin-left: auto;
 }
 
-.add-container{
+.add-container {
     display: flex;
     justify-content: end;
     margin-right: 2px;
 }
-#addButton{
+#addButton {
     padding: 10px 22px;
 }
 
-.custom-button {
+.custom-button,
+.view-button {
     background-color: #999;
     color: white;
     border: 1px solid #ccc;
@@ -88,7 +86,7 @@ td:last-child{
 .custom-button:hover {
     background-color: #333333;
 }
-.delete-button{
+.delete-button {
     background-color: red;
     color: white;
     border: 1px solid #ccc;
@@ -111,4 +109,8 @@ td:last-child{
     white-space: nowrap; /* Prevents the text from wrapping to a new line */
     overflow: hidden; /* Hides any overflowed text */
     text-overflow: ellipsis; /* Adds "..." to the truncated text */
+}
+.paginationContent {
+    display: flex;
+    justify-content: center;
 }

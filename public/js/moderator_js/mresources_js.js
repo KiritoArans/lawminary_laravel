@@ -48,7 +48,7 @@ function bindViewButtons() {
     var modal = document.getElementById('viewModal');
     var closeButton = document.getElementById('closeButton');
 
-    document.querySelectorAll('.view-button').forEach(button => {
+    document.querySelectorAll('.view-button').forEach((button) => {
         button.addEventListener('click', function () {
             var id = this.getAttribute('data-id');
             var title = this.getAttribute('data-title');
@@ -86,7 +86,7 @@ function confirmDelete(event) {
 
     Swal.fire({
         title: 'Are you sure?',
-        text: "Do you want to delete this resource? This action cannot be undone!",
+        text: 'Do you want to delete this resource? This action cannot be undone!',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -105,7 +105,7 @@ function bindViewButtons() {
     const modal = document.getElementById('viewModal');
     const closeButton = document.getElementById('closeButton');
 
-    document.querySelectorAll('.view-button').forEach(button => {
+    document.querySelectorAll('.view-button').forEach((button) => {
         button.addEventListener('click', function () {
             const id = this.getAttribute('data-id');
             const title = this.getAttribute('data-title');
@@ -145,12 +145,12 @@ searchInput.addEventListener('keyup', function () {
     const query = this.value;
 
     fetch(`/moderator/search-resources?query=${query}`)
-        .then(response => response.json())
-        .then(data => {
+        .then((response) => response.json())
+        .then((data) => {
             let resultsHtml = '';
 
             if (data.length > 0) {
-                data.forEach(resource => {
+                data.forEach((resource) => {
                     resultsHtml += `
                         <tr>
                             <td>${resource.id}</td>
@@ -179,12 +179,13 @@ searchInput.addEventListener('keyup', function () {
                 resultsHtml = '<tr><td colspan="6">No results found</td></tr>';
             }
 
-            document.querySelector('.resource-table tbody').innerHTML = resultsHtml;
+            document.querySelector('.resource-table tbody').innerHTML =
+                resultsHtml;
 
             // Re-bind event listeners to new view buttons
             bindViewButtons();
         })
-        .catch(error => {
+        .catch((error) => {
             console.error('Error fetching search results:', error);
         });
 });
@@ -193,4 +194,3 @@ searchInput.addEventListener('keyup', function () {
 document.addEventListener('DOMContentLoaded', function () {
     bindViewButtons();
 });
-

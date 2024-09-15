@@ -12,6 +12,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostpageController;
 use App\Http\Controllers\SystemContentController;
 use App\Http\Controllers\ForumController;
+use App\Http\Controllers\ResourcepageController;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -60,11 +61,6 @@ Route::get('/moderator/leaderboards', [
     ModeratorController::class,
     'showMleaderboards',
 ])->name('moderator.leaderboards');
-
-Route::get('/moderator/resources', [
-    ModeratorController::class,
-    'showMresources',
-])->name('moderator.resources');
 
 Route::get('/moderator/account', [
     ModeratorController::class,
@@ -346,35 +342,34 @@ Route::get('/moderator/postpage', [
 
 // Moderator Resource Page
 Route::post('/moderator/resources/upload', [
-    ModeratorController::class,
+    ResourcepageController::class,
     'uploadResource',
 ])->name('moderator.uploadResource');
-Route::match(['put', 'patch'], '/moderator/resources/{id}', [
-    ModeratorController::class,
+
+Route::match(['put', 'patch'], '/moderator/resources/{id}/updateResource', [
+    ResourcepageController::class,
     'updateResource',
 ])->name('moderator.updateResource');
+
 Route::delete('/moderator/{rsrcfile}/destroy', [
-    ModeratorController::class,
+    ResourcepageController::class,
     'destroyResource',
 ])->name('moderator.destroyResource');
+
 Route::get('/moderator/search-resources', [
-    ModeratorController::class,
+    ResourcepageController::class,
     'searchResources',
 ])->name('moderator.searchResources');
 
-//Moderator Resource Page
-Route::post('/moderator/resources', [
-    ModeratorController::class,
-    'uploadResource',
-])->name('moderator.uploadResource');
-Route::match(['put', 'patch'], '/moderator/resources/{id}', [
-    ModeratorController::class,
-    'updateResource',
-])->name('moderator.updateResource');
-Route::delete('/moderator/{rsrcfile}/destroy', [
-    ModeratorController::class,
-    'destroyResource',
-])->name('moderator.destroyResource');
+Route::get('/moderator/resources', [
+    ResourcepageController::class,
+    'resources',
+])->name('moderator.resources');
+
+Route::get('/moderator/resources/filter', [
+    ResourcepageController::class,
+    'filterResources',
+])->name('moderator.filterResources');
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

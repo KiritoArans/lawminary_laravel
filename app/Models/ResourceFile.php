@@ -11,9 +11,5 @@ class ResourceFile extends Model
 
     protected $table = 'tblresources';
 
-    protected $fillable = [
-        'documentTitle',
-        'documentDesc',
-        'documentFile',
-    ];
+    protected $fillable = ['documentTitle', 'documentDesc', 'documentFile'];
 }

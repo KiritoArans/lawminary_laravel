@@ -48,10 +48,4 @@ class moderatorController extends Controller
     {
         return view('moderator.mfaqs');
     }
-    public function showMresources()
-    {
-        $rsrcfiles = ResourceFile::all(); // Assuming 'ResourceFile' is your model
-
-        return view('moderator.mresources', compact('rsrcfiles'));
-    }
 }
