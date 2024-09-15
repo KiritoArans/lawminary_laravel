@@ -147,6 +147,9 @@ header hr {
     justify-content: end;
     margin: 0;
 }
+.following-count, .follower-count{
+    cursor: pointer;
+}
 
 .edit-profile-button {
     margin-top: 1rem;
