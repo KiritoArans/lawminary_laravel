@@ -419,7 +419,7 @@
 
 /* Post content */
 .clicked-post-text p{
-    margin: 0;
+    margin: 1rem 0;
     font-size: 16px;
     color: #333;
 }
@@ -617,4 +617,77 @@
     border-radius: 5px;
     color: white;
     background-color: var(--primary-color);
+}
+
+
+
+/* Modal container */
+.rate-modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal content box */
+.rate-modal-content {
+    background-color: #fff;
+    border-radius: 12px;
+    width: 400px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    padding: 20px;
+}
+
+/* Close modal button */
+.close-rate-modal {
+    color: #333;
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.rate-stars {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+/* Default star color */
+.fa-star {
+    color: grey; /* Default color of stars */
+    cursor: pointer;
+    font-size: 24px;
+}
+
+/* Highlight stars up to the one being hovered */
+.star:hover, 
+.star:hover ~ .star { 
+    color: grey; /* Reset color for stars to the right */
+}
+
+/* Highlight the stars to the left when hovering */
+.star:hover ~ .fa-star {
+    color: grey; /* Reset color of stars to the right */
+}
+
+.star:hover, 
+.fa-star:hover ~ .fa-star {
+    color: gold; /* Color stars to the left and the hovered star */
+}
+
+/* When a star is clicked, keep the previous stars highlighted */
+.selected-star {
+    color: gold;
 }

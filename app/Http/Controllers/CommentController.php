@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\Reply;
+use App\Models\Rate;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
@@ -55,4 +56,28 @@ class CommentController extends Controller
         // return redirect()->back()->with('success', 'Replied posted');
         return redirect()->back();
     }
+
+
+    public function rateComment(Request $request)
+    {
+
+        \Log::info('Comment ID: ' . $request->comment_id);
+        // Validate comment_id and rating
+        $request->validate([
+            'comment_id' => 'required|exists:tblcomments,comment_id', // Validates if comment_id exists
+            'rating' => 'required|integer|min:1|max:5', // Ensures rating is between 1 and 5
+        ]);
+
+        // Create a new rate record
+        $rate = new Rate();
+        $rate->comment_id = $request->input('comment_id'); // Use 'comment_id' from the request
+        $rate->user_id = Auth::user()->user_id; // Store the ID of the logged-in user
+        $rate->rate = $request->input('rating'); // Store the rating
+        $rate->save();
+
+        return redirect()->back()->with('success', 'Your rating has been submitted.');
+    }
+
+
+
 }

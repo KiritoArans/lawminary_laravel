@@ -104,6 +104,66 @@ function confirmDelete(postId) {
 }
 
 
+// Rate Modal:
+document.addEventListener('DOMContentLoaded', function () {
+    let rateModal = document.getElementById('rateModal');
+    let closeRateModal = document.querySelector('.close-rate-modal');
+    let commentIdInput = document.getElementById('rating_comment_id'); // Hidden input to store comment ID
+    let starRatingInput = document.getElementById('star-rating'); // Hidden input for the rating
+    let rateStars = document.querySelectorAll('.rate-btn'); // Target all buttons that open the modal
+    let starIcons = document.querySelectorAll('.star'); // Target the star icons for rating selection
+
+    // Loop through all the stars (rate buttons) that open the modal and add event listeners
+    rateStars.forEach(star => {
+        star.addEventListener('click', function () {
+            // Find the comment ID from the data-comment-id attribute
+            let commentId = this.getAttribute('data-rating-comment-comment_id');
+            
+            // Set the comment ID in the hidden input inside the modal
+            commentIdInput.value = commentId;
+            
+            console.log('Rating Comment ID:', commentId); // Log for debugging
+            rateModal.style.display = 'flex'; // Show the modal
+        });
+    });
+
+    // Handle the star rating selection
+    starIcons.forEach(star => {
+        star.addEventListener('click', function () {
+            let selectedRating = this.getAttribute('data-rating');
+            
+            // Set the rating value in the hidden input field
+            starRatingInput.value = selectedRating;
+
+            // Highlight stars up to the clicked one (left to right)
+            starIcons.forEach(star => star.classList.remove('selected-star')); // Remove the highlight for all
+            for (let i = 0; i < selectedRating; i++) {
+                starIcons[i].classList.add('selected-star'); // Add highlight for the stars up to the clicked one
+            }
+        });
+    });
+
+    // Close the modal when clicking the close button
+    closeRateModal.addEventListener('click', function () {
+        rateModal.style.display = 'none';
+    });
+
+    // Close the modal if clicking outside the modal content
+    window.addEventListener('click', function (event) {
+        if (event.target === rateModal) {
+            rateModal.style.display = 'none';
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
 // Post Modal
 var newPostModal = document.getElementById("postModal");
 var createPostBtn = document.querySelector(".new-post");
