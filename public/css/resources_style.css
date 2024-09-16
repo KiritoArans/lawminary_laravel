@@ -1,15 +1,15 @@
-*{
-    font-family: "Montserrat", sans-serif;
+* {
+    font-family: 'Montserrat', sans-serif;
 }
 body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
-:root{
-    --primary-color: #561C24;
-    --secondary-color: #FFAF45;
-    --panel-color: #FFF;
+:root {
+    --primary-color: #561c24;
+    --secondary-color: #ffaf45;
+    --panel-color: #fff;
     --text-color: #000;
     --text-color1: #333;
     --text-color2: #fff;
@@ -17,9 +17,9 @@ body {
     --text-color4: #f5f5f5;
     --black-light-color: #707070;
     --border-color: #e6e5e5;
-    --toggle-color: #DDD;
+    --toggle-color: #ddd;
     --title-icon-color: #fff;
-    
+
     --tran-05: all 0.5s ease;
     --tran-03: all 0.3s ease;
     --tran-03: all 0.2s ease;
@@ -46,7 +46,7 @@ header h1 {
     font-size: 2em;
     color: var(--primary-color);
 }
-.header-top img{
+.header-top img {
     height: 32px;
     position: relative;
     left: -8px;
@@ -82,7 +82,6 @@ header hr {
     background-color: var(--text-color1);
 }
 
-
 .search-bar {
     position: relative;
     display: flex;
@@ -90,12 +89,12 @@ header hr {
     margin-left: 10px;
 }
 .search-bar input {
-    width: 450px;
+    width: 100%;
     padding: 10px 10px 10px 32px;
     border: 1px solid #ddd;
     border-radius: 5px;
 }
-.search-bar i {
+.search-bar {
     position: absolute;
     left: 8px;
     color: var(--primary-color);
@@ -119,38 +118,37 @@ header hr {
     color: var(--primary-color);
 }
 
-
 .resources-container {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
-    gap: 20px; 
+    gap: 20px;
     background-color: #ffffff;
     border: 1px solid #ddd;
     padding: 300px 20px;
     border-radius: 5px;
     box-shadow: 0 2px 5px #0000001a;
-    padding-top: 20px; 
+    padding-top: 20px;
 }
 
-.resources-content{
+.resources-content {
     padding: 8px;
 }
-.resources-content .docs{
+.resources-content .docs {
     display: flex;
     justify-content: space-around;
     cursor: pointer;
 }
-.resources-content .docs span{
+.resources-content .docs span {
     border: 1px solid;
     border-radius: 4px;
     padding: 4px 8px 4px 8px;
     margin-right: 4px;
 }
-.resources-content .docs i{
+.resources-content .docs i {
     font-size: 1.5rem;
     text-align: center;
 }
-.resources-content a{
-    font-size: .80rem;
+.resources-content a {
+    font-size: 0.8rem;
 }

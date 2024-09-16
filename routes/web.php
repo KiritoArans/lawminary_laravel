@@ -13,6 +13,7 @@ use App\Http\Controllers\PostpageController;
 use App\Http\Controllers\SystemContentController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ResourcepageController;
+use App\Http\Controllers\LeaderboardController;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -360,6 +361,22 @@ Route::get('/moderator/resources/filter', [
     ResourcepageController::class,
     'filterResources',
 ])->name('moderator.filterResources');
+
+//leaderboards page
+Route::get('/moderator/leaderboards', [
+    LeaderboardController::class,
+    'leaderboards',
+])->name('moderator.leaderboards');
+
+Route::get('/moderator/search-leaderboards', [
+    leaderboardController::class,
+    'search',
+])->name('moderator.searchLeaderboards');
+
+Route::get('/moderator/leaderboards/filter', [
+    LeaderboardController::class,
+    'filterLeaderboards',
+])->name('moderator.filterLeaderboards');
 
 // routes/web.php
 Route::post('moderator/resources/update', [

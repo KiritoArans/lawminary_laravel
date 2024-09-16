@@ -1,6 +1,6 @@
 <div class="search-bar-content">
     <form
-        action="{{ route('moderator.searchResources') }}"
+        action="{{ route('moderator.searchLeaderboards') }}"
         method="GET"
         class="search-bar"
     >
