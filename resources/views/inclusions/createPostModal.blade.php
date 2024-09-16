@@ -8,11 +8,7 @@
             @csrf 
             @include('inclusions/response')
             <div class="post-header">
-                @if(Auth::user()->userPhoto)
-                    <img src="{{ Storage::url(Auth::user()->userPhoto) }}" alt="Profile Picture" class="post-profile-pic">
-                @else
-                    <img src="../../imgs/user-img.png" alt="Profile Picture" class="post-profile-pic">
-                @endif
+                <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : '../../imgs/user-img.png' }}" alt="Profile Picture" class="post-profile-pic">
                 <div class="post-modal-info">
                     <h2>{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h2>
                     <p>@<span>{{ Auth::user()->username }}</span></p>
@@ -20,6 +16,10 @@
             </div>
             <div class="post-modal-text">
                 <textarea name="concern" placeholder="Ask concerns..." required></textarea>
+            </div>
+            <div id="image-preview-section" class="post-modal-photo" style="display: none;">
+                <img id="image-preview" src="" alt="Image Preview">
+                <button type="button" id="remove-image" style="color: red; background: none; border: none; cursor: pointer;">X</button>
             </div>
             <div class="post-modal-footer">
                 <label for="file-upload" class="custom-file-upload">

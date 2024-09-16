@@ -7,6 +7,7 @@ use App\Models\Posts;
 use App\Models\Like;
 use App\Models\Bookmark;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\PageController;
 
 class PostController extends Controller
@@ -31,10 +32,33 @@ class PostController extends Controller
 
         $post->save();
 
-        $PageController = new PageController();
-
         return redirect()->back()->with('success', 'Your concern has been posted!');
     }
+
+    public function deletePost($postId)
+    {
+        $post = Posts::where('post_id', $postId)->first();
+
+        if (!$post) {
+            return redirect()->back()->with('error', 'Post not found.');
+        }
+
+        if ($post->postedBy != Auth::user()->user_id) {
+            return redirect()->back()->with('error', 'You are not authorized to delete this post.');
+        }
+
+        if ($post->concernPhoto) {
+            Storage::delete($post->concernPhoto);
+        }
+
+        $post->delete();
+
+        return redirect()->back()->with('success', 'Post deleted successfully.');
+    }
+
+
+
+
 
     public function likePost(Request $request)
     {

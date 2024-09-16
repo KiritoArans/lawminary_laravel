@@ -84,7 +84,7 @@
                                 <div class="post-options">
                                     <div class="options">
                                         <a href="#">Action</a>
-                                        <a href="#">Report</a>
+                                        {{-- <a href="#">Report</a> --}}
                                     </div>
                                     <i class="fas fa-ellipsis-v"></i>
                                 </div>
@@ -200,6 +200,7 @@
                                                         <a href="{{ Auth::check() && Auth::user()->user_id == $comment->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $comment->user->user_id]) }}">
                                                             {{ $comment->user ? ($comment->user->accountType === 'Attorney' ? 'Atty. ' : '') . $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
                                                         </a>
+                                                        <i class="fa-regular fa-star"></i>
                                                     </span>                                                    
                                                     <p>{{ $comment->comment }}</p>
                                                     <div class="date-reply">

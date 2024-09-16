@@ -98,7 +98,7 @@ class PageController extends Controller
 
         $likes = DB::table('tbllikes')
             ->join('tblposts', 'tbllikes.post_id', '=', 'tblposts.post_id')
-            ->join('tblaccounts', 'tblposts.postedBy', '=', 'tblaccounts.user_id') // Join with tblaccounts to get user info
+            ->join('tblaccounts', 'tblposts.postedBy', '=', 'tblaccounts.user_id')
             ->where('tbllikes.user_id', $user->user_id)
             ->orderBy('tbllikes.created_at', 'desc')
             ->select('tblposts.*', 

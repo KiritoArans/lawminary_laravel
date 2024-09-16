@@ -252,6 +252,12 @@ header hr {
     color: var(--text-color1);
     text-align: center;
 }
+.comments .comment-text p{
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+}
 .comments .comment-text .date-time p{
     margin: 0;
     color: var(--text-color3);
