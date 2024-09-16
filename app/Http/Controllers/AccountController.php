@@ -193,7 +193,7 @@ class AccountController extends Controller
         } else {
             return redirect()
                 ->route('moderator.account')
-                ->with('success', 'Account updated successfully');
+                ->with('success', 'Account created successfully');
         }
     }
 

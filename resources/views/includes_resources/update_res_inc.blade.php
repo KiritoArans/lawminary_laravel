@@ -1,55 +1,60 @@
-<form
-    id="editResourceForm"
-    method="POST"
-    enctype="multipart/form-data"
-    action="{{ route('moderator.updateResource', $resource->id) }}"
+<button
+    class="view-button"
+    data-id="{{ $resource->id }}"
+    data-titleEdit="{{ $resource->documentTitle }}"
+    data-descEdit="{{ $resource->documentDesc }}"
+    data-fileEdit="{{ $resource->documentFile }}"
 >
-    @csrf
-    @method('PUT')
+    Edit
+</button>
 
-    <label>ID:</label>
-    <input id="rsrcId" name="id" value="{{ $resource->id }}" readonly />
+<!-- Modal structure -->
+<!-- Modal structure -->
+<div id="editResourceModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close-btnEdit">&times;</span>
+            <h2>Edit Resource</h2>
+        </div>
+        <div class="modal-body">
+            <form
+                id="editResourceForm"
+                method="POST"
+                action="{{ route('moderator.updateResource', $resource->id) }}"
+                enctype="multipart/form-data"
+            >
+                @csrf
+                <label for="resourceId">Content ID</label>
+                <input type="text" name="id" id="resourceId" readonly />
 
-    <label>Document Name:</label>
-    <input
-        type="text"
-        id="rsrcDocumentTitle"
-        name="documentTitle"
-        placeholder="Enter Document Name"
-        value="{{ $resource->documentTitle }}"
-    />
+                <label for="documentTitleEdit">Title</label>
+                <input
+                    type="text"
+                    id="documentTitleEdit"
+                    name="documentTitle"
+                    required
+                />
 
-    <label>Document Description:</label>
-    <input
-        type="text"
-        id="rsrcDocumentDesc"
-        name="documentDesc"
-        placeholder="Enter Description"
-        value="{{ $resource->documentDesc }}"
-    />
+                <label for="documentDescEdit">Description</label>
+                <textarea
+                    id="documentDescEdit"
+                    name="documentDesc"
+                    required
+                ></textarea>
 
-    <label for="newDocumentFile">Upload New File:</label>
-    <input
-        type="file"
-        id="newDocumentFile"
-        name="documentFile"
-        accept=".pdf,.doc,.docx,.jpg,.png,.zip"
-    />
-    <a
-        id="rsrcDocumentFileLink"
-        href="{{ asset('storage/' . $resource->documentFile) }}"
-        download
-    >
-        {{ $resource->documentFile }}
-    </a>
+                <label for="documentFileName">File</label>
+                <input
+                    type="text"
+                    id="documentFileName"
+                    name="documentFileCall"
+                    readonly
+                />
 
-    <label>Date Uploaded:</label>
-    <input
-        id="rsrcDateUploaded"
-        name="created_at"
-        value="{{ $resource->created_at->format('Y-m-d') }}"
-        readonly
-    />
+                <label for="documentFileEdit">File</label>
+                <input type="file" id="documentFileEdit" name="documentFile" />
 
-    <button type="submit" class="custom-button">Save</button>
-</form>
+                <button type="submit">Save changes</button>
+            </form>
+        </div>
+    </div>
+</div>

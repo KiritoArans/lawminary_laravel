@@ -43,101 +43,6 @@ window.addEventListener('click', function (event) {
     }
 });
 
-// Function to bind the event listeners to the view buttons
-function bindViewButtons() {
-    var modal = document.getElementById('viewModal');
-    var closeButton = document.getElementById('closeButton');
-
-    document.querySelectorAll('.view-button').forEach((button) => {
-        button.addEventListener('click', function () {
-            var id = this.getAttribute('data-id');
-            var title = this.getAttribute('data-title');
-            var desc = this.getAttribute('data-desc');
-            var file = this.getAttribute('data-file');
-            var date = this.getAttribute('data-date');
-
-            document.getElementById('rsrcId').value = id;
-            document.getElementById('rsrcDocumentTitle').value = title;
-            document.getElementById('rsrcDocumentDesc').value = desc;
-            document.getElementById('rsrcDocumentFileLink').textContent = file;
-            document.getElementById('rsrcDocumentFileLink').href = file;
-            document.getElementById('rsrcDateUploaded').value = date;
-
-            var formAction = `/moderator/resources/${id}`;
-            document.getElementById('editResourceForm').action = formAction;
-
-            modal.style.display = 'block';
-        });
-    });
-
-    closeButton.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    });
-}
-
-function confirmDelete(event) {
-    event.preventDefault(); // Prevent form submission
-
-    Swal.fire({
-        title: 'Are you sure?',
-        text: 'Do you want to delete this resource? This action cannot be undone!',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // If confirmed, submit the form manually
-            event.target.submit();
-        }
-    });
-}
-
-// Function to bind event listeners to "View" buttons
-function bindViewButtons() {
-    const modal = document.getElementById('viewModal');
-    const closeButton = document.getElementById('closeButton');
-
-    document.querySelectorAll('.view-button').forEach((button) => {
-        button.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            const title = this.getAttribute('data-title');
-            const desc = this.getAttribute('data-desc');
-            const file = this.getAttribute('data-file');
-            const date = this.getAttribute('data-date');
-
-            document.getElementById('rsrcId').value = id;
-            document.getElementById('rsrcDocumentTitle').value = title;
-            document.getElementById('rsrcDocumentDesc').value = desc;
-            document.getElementById('rsrcDocumentFileLink').textContent = file;
-            document.getElementById('rsrcDocumentFileLink').href = file;
-            document.getElementById('rsrcDateUploaded').value = date;
-
-            const formAction = `/moderator/resources/${id}`;
-            document.getElementById('editResourceForm').action = formAction;
-
-            modal.style.display = 'block';
-        });
-    });
-
-    closeButton.addEventListener('click', function () {
-        modal.style.display = 'none';
-    });
-
-    window.addEventListener('click', function (event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    });
-}
-
 // Search function
 const searchInput = document.getElementById('searchInput'); // Corrected ID
 
@@ -190,7 +95,54 @@ searchInput.addEventListener('keyup', function () {
         });
 });
 
-// Initial binding of view buttons on page load
+// Function to bind the click event to the view buttons
+
+// Function to close the modal
+function bindCloseButton() {
+    const closeButton = document.querySelector('.close-btnEdit');
+    const modal = document.getElementById('editResourceModal');
+
+    closeButton.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    // Also close the modal when clicking outside of the modal content
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+// Ensure everything runs when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
-    bindViewButtons();
+    bindViewButtons(); // Bind view button events
+    bindCloseButton(); // Bind close modal events
 });
+
+function bindViewButtons() {
+    const buttons = document.querySelectorAll('.view-button');
+
+    buttons.forEach((button) => {
+        button.addEventListener('click', function () {
+            // Get data attributes from the clicked button
+            const id = this.getAttribute('data-id');
+            const title = this.getAttribute('data-titleEdit');
+            const desc = this.getAttribute('data-descEdit');
+            const file = this.getAttribute('data-fileEdit');
+
+            // Debugging: Log the values retrieved
+            console.log('Data retrieved:', { id, title, desc, file });
+
+            // Populate modal fields with the resource data
+            document.getElementById('resourceId').value = id || ''; // Set the resource ID
+            document.getElementById('documentTitleEdit').value = title || ''; // Set the title
+            document.getElementById('documentDescEdit').value = desc || ''; // Set the description
+            document.getElementById('documentFileName').value = file || ''; // Display the current file name
+
+            // Display the modal
+            const modal = document.getElementById('editResourceModal');
+            modal.style.display = 'block';
+        });
+    });
+}

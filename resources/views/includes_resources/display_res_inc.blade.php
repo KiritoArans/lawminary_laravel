@@ -23,23 +23,16 @@
                     </td>
                     <td>{{ $resource->created_at->format('Y-m-d') }}</td>
                     <td>
-                        <button
-                            class="view-button"
-                            data-id="{{ $resource->id }}"
-                            data-title="{{ $resource->documentTitle }}"
-                            data-desc="{{ $resource->documentDesc }}"
-                            data-file="{{ $resource->documentFile }}"
-                            data-date="{{ $resource->created_at }}"
-                        >
-                            Edit
-                        </button>
+                        <!-- Include the edit button and modal here -->
+                        @include('includes_resources.update_res_inc', ['resource' => $resource])
+
                         <form
-                            method="post"
-                            action="{{ route('moderator.destroyResource', $resource->id) }}"
-                            onsubmit="confirmDelete(event);"
+                            method="POST"
+                            action="{{ route('admin.deleteResource', $resource->id) }}"
+                            onsubmit="return confirm('Are you sure you want to delete this resource?');"
                         >
                             @csrf
-                            @method('delete')
+                            @method('DELETE')
                             <button type="submit" class="custom-button">
                                 Delete
                             </button>

@@ -74,13 +74,7 @@
                     </div>
                     <hr class="divider" />
                     <div class="filter-container">
-                        <div class="search-bar">
-                            <input
-                                type="text"
-                                id="searchInput"
-                                placeholder="Search posts..."
-                            />
-                        </div>
+                        @include('includes_resources.search_res_inc')
                     </div>
 
                     <div class="add-container">
@@ -123,16 +117,7 @@
                                 &times;
                             </span>
                             <h2>View Resource</h2>
-                            <div class="error">
-                                @if ($errors->any())
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            </div>
-                            @include('includes_resources.update_res_inc')
+                            <div class="error"></div>
                         </div>
                     </div>
                 </content>
