@@ -70,7 +70,7 @@
                                                     @include('inclusions/response')
                                                     <input type="hidden" name="following" value="{{ $post->user->user_id }}">
                                                     
-                                                    <button class="btn-follow {{ $haveFollowed ? 'following' : '' }}">
+                                                    <button class="follow-btn {{ $haveFollowed ? 'following' : '' }}">
                                                         {{ $haveFollowed ? 'Unfollow' : 'Follow' }}
                                                     </button>
                                                 </form>

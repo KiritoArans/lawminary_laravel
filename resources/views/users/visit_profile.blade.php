@@ -56,6 +56,7 @@
                                 @endphp
                                 <form action="{{ route('followUser') }}" method="POST" style="display:inline;">
                                     @csrf
+                                    @include('inclusions/response')
                                     <input type="hidden" name="following" value="{{ $user->user_id }}">
                                     
                                     <button class="edit-profile-button">
@@ -78,21 +79,24 @@
                 </div>
                 <hr>
                 <div class="profile-content">
+
+                    @include('inclusions/profile/profileFollowModal')
                     
-                        @include('inclusions/profile/profilePosts')
+                    @include('inclusions/profile/profilePosts')
     
-                        @include('inclusions/openComments')
+                    @include('inclusions/openComments')
     
-                        @include('inclusions/profile/profileCommsReps')
+                    @include('inclusions/profile/profileCommsReps')
     
-                        @include('inclusions/profile/profileLikes')
+                    @include('inclusions/profile/profileLikes')
     
-                        @include('inclusions/profile/profileBookmarks')
+                    @include('inclusions/profile/profileBookmarks')
 
                 </div>
             </content>
         </main>
     </div>
+    <script src="js/followModal.js"></script>
     <script src="/js/postandcomment.js"></script>
     <script src="/js/settings.js"></script>
     <script src="/js/profile.js"></script>
