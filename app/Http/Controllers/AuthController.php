@@ -138,4 +138,10 @@ class AuthController extends Controller
             ->withErrors(['loginError' => 'Invalid username or password.'])
             ->withInput();
     }
+
+    public function logoutAdMod()
+    {
+        Auth::logout(); // Log the user out of the application
+        return redirect()->route('admin.showAdModLogin'); // Redirect to login page after logout
+    }
 }

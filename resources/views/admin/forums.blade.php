@@ -43,25 +43,7 @@
     <body>
         <div class="container">
             <aside>
-                <div class="top-nav">
-                    <div class="profile">
-                        <div class="user-indicator">
-                            <img
-                                src="../../imgs/user-img.png"
-                                alt="Profile Picture"
-                            />
-                            <label>@Username</label>
-                        </div>
-                    </div>
-                    {{-- navigation --}}
-                    @include('includes_accounts.nav_inc')
-                </div>
-                <div class="bottom-nav">
-                    <a class="logout">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        <span>Log out</span>
-                    </a>
-                </div>
+                @include('includes_accounts.nav_inc')
             </aside>
             <main>
                 <header>

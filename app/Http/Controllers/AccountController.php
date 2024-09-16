@@ -202,6 +202,7 @@ class AccountController extends Controller
     {
         // Validate the incoming request data
         $request->validate([
+            'userPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|min:1',
             'username' =>
                 'required|string|max:255|unique:tblaccounts,username,' . $id,
             'email' =>
@@ -219,6 +220,17 @@ class AccountController extends Controller
         ]);
 
         $account = UserAccount::findOrFail($id);
+
+        if ($request->hasFile('userPhoto')) {
+            $file = $request->file('userPhoto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs(
+                'uploads/profile_pictures',
+                $filename,
+                'public'
+            );
+            $account->userPhoto = $filePath; // Save the file path to the 'userPhoto' field
+        }
 
         // Update the account details
         $account->username = $request->input('username');

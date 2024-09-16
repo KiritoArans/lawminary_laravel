@@ -404,13 +404,18 @@ Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name(
     'loginAdMod'
 );
 
+Route::post('/logoutAdMod', [AuthController::class, 'logoutAdMod'])->name(
+    'logoutAdMod'
+);
+
 // Create Post
 Route::post('/home', [PostController::class, 'createPost'])->name(
     'users.createPost'
 );
 // Delete Post
-Route::delete('/home-{post}', [PostController::class, 'deletePost'])->name('post.delete');
-
+Route::delete('/home-{post}', [PostController::class, 'deletePost'])->name(
+    'post.delete'
+);
 
 // Like Post
 Route::post('/home-liked', [PostController::class, 'likePost'])->name(
