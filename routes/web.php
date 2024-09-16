@@ -390,6 +390,10 @@ Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name(
 Route::post('/home', [PostController::class, 'createPost'])->name(
     'users.createPost'
 );
+// Delete Post
+Route::delete('/home-{post}', [PostController::class, 'deletePost'])->name('post.delete');
+
+
 // Like Post
 Route::post('/home-liked', [PostController::class, 'likePost'])->name(
     'post.like'

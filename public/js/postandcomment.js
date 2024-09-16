@@ -85,6 +85,25 @@ function toggleReplies(commentId, linkElement) {
     }
 }
 
+// Delete Post Sweet Alert
+function confirmDelete(postId) {
+    Swal.fire({
+        title: 'Deleting Post',
+        text: "Do you want to delete this post?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'Cancel',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('delete-form-' + postId).submit();
+        }
+    })
+}
+
+
 // Post Modal
 var newPostModal = document.getElementById("postModal");
 var createPostBtn = document.querySelector(".new-post");
@@ -103,3 +122,29 @@ var span = document.getElementsByClassName("close")[0];
             newPostModal.style.display = "none";
         }
 }
+
+// Preview Concern Image
+const fileUpload = document.getElementById('file-upload');
+const imagePreviewSection = document.getElementById('image-preview-section');
+const imagePreview = document.getElementById('image-preview');
+const removeImage = document.getElementById('remove-image');
+
+// Show image preview when a file is selected
+fileUpload.addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            imagePreview.src = e.target.result;
+            imagePreviewSection.style.display = 'block'; // Show the image preview section
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Remove image preview when 'X' button is clicked
+removeImage.addEventListener('click', function() {
+    imagePreview.src = ''; // Clear the image preview source
+    imagePreviewSection.style.display = 'none'; // Hide the image preview section
+    fileUpload.value = ''; // Reset the file input field
+});
