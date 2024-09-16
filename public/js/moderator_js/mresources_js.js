@@ -43,46 +43,6 @@ window.addEventListener('click', function (event) {
     }
 });
 
-// Function to open the edit modal and populate it with the resource data
-function openEditModal(resource) {
-    // Populate the modal fields with the resource data
-    document.getElementById('documentTitle').value = resource.documentTitle;
-    document.getElementById('documentDesc').value = resource.documentDesc;
-
-    // Set the form action to update the resource using the resource ID
-    document.getElementById('editResourceForm').action =
-        `/moderator/resources/${resource.id}`;
-
-    // Display the modal
-    document.getElementById('editResourceModal').style.display = 'block';
-}
-
-// Function to close the modal
-function closeModal() {
-    document.getElementById('editResourceModal').style.display = 'none';
-}
-
-// Bind edit buttons (call this when the page loads)
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.edit-button').forEach((button) => {
-        button.addEventListener('click', function () {
-            // Parse the resource data from the button's data attribute
-            const resource = JSON.parse(this.getAttribute('data-resource'));
-
-            // Open the modal and pass the resource data to it
-            openEditModal(resource);
-        });
-    });
-});
-
-// Optional: Close modal when clicking outside of the modal content
-window.onclick = function (event) {
-    const modal = document.getElementById('editResourceModal');
-    if (event.target === modal) {
-        closeModal();
-    }
-};
-
 // Search function
 const searchInput = document.getElementById('searchInput'); // Corrected ID
 
@@ -135,7 +95,54 @@ searchInput.addEventListener('keyup', function () {
         });
 });
 
-// Initial binding of view buttons on page load
+// Function to bind the click event to the view buttons
+
+// Function to close the modal
+function bindCloseButton() {
+    const closeButton = document.querySelector('.close-btnEdit');
+    const modal = document.getElementById('editResourceModal');
+
+    closeButton.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    // Also close the modal when clicking outside of the modal content
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+// Ensure everything runs when the DOM is fully loaded
 document.addEventListener('DOMContentLoaded', function () {
-    bindViewButtons();
+    bindViewButtons(); // Bind view button events
+    bindCloseButton(); // Bind close modal events
 });
+
+function bindViewButtons() {
+    const buttons = document.querySelectorAll('.view-button');
+
+    buttons.forEach((button) => {
+        button.addEventListener('click', function () {
+            // Get data attributes from the clicked button
+            const id = this.getAttribute('data-id');
+            const title = this.getAttribute('data-titleEdit');
+            const desc = this.getAttribute('data-descEdit');
+            const file = this.getAttribute('data-fileEdit');
+
+            // Debugging: Log the values retrieved
+            console.log('Data retrieved:', { id, title, desc, file });
+
+            // Populate modal fields with the resource data
+            document.getElementById('resourceId').value = id || ''; // Set the resource ID
+            document.getElementById('documentTitleEdit').value = title || ''; // Set the title
+            document.getElementById('documentDescEdit').value = desc || ''; // Set the description
+            document.getElementById('documentFileName').value = file || ''; // Display the current file name
+
+            // Display the modal
+            const modal = document.getElementById('editResourceModal');
+            modal.style.display = 'block';
+        });
+    });
+}

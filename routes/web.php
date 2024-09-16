@@ -348,7 +348,7 @@ Route::post('/moderator/resources/upload', [
 
 Route::get('/moderator/search-resources', [
     ResourcepageController::class,
-    'searchResources',
+    'search',
 ])->name('moderator.searchResources');
 
 Route::get('/moderator/resources', [
@@ -360,6 +360,17 @@ Route::get('/moderator/resources/filter', [
     ResourcepageController::class,
     'filterResources',
 ])->name('moderator.filterResources');
+
+// routes/web.php
+Route::post('moderator/resources/update', [
+    ResourcepageController::class,
+    'updateResource',
+])->name('moderator.updateResource');
+
+Route::delete('/admin/resources/delete/{id}', [
+    ResourcepageController::class,
+    'destroy',
+])->name('admin.deleteResource');
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
