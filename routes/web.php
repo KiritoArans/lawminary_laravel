@@ -425,6 +425,8 @@ Route::post('/home-bookmarked', [PostController::class, 'bookmarkPost'])->name(
 Route::post('/comment', [CommentController::class, 'createComment'])->name(
     'users.createComment'
 );
+// Rate Comment
+route::post('/rate-comment', [CommentController::class, 'rateComment'])->name('rateComment');
 
 // Create Reply
 route::post('/reply', [CommentController::class, 'createReply'])->name(

@@ -200,14 +200,15 @@
                                                         <a href="{{ Auth::check() && Auth::user()->user_id == $comment->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $comment->user->user_id]) }}">
                                                             {{ $comment->user ? ($comment->user->accountType === 'Attorney' ? 'Atty. ' : '') . $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
                                                         </a>
-                                                        <i class="fa-regular fa-star"></i>
+                                                        <!-- Star icon for rating -->
+                                                        <i class="fa-regular fa-star rate-btn" data-rating-comment-comment_id="{{ $comment->comment_id }}"></i>
                                                     </span>                                                    
                                                     <p>{{ $comment->comment }}</p>
                                                     <div class="date-reply">
                                                         <p class="comment-time">{{ $comment->created_at->diffForHumans() }}</p>
                                                         <a href="javascript:void(0);" class="reply-btn" data-comment-id="{{ $comment->id }}">Reply</a>
                                                     </div>
-                                                    
+
                                                     <div class="reply-field" id="reply-field-{{ $comment->id }}">
                                                         @php
                                                             $attorneyComments = $post->comments->filter(function ($comment) {
@@ -237,6 +238,7 @@
                                                     </div>                       
                                                 </div> 
                                             </div>
+
                                             @if($comment->reply->isNotEmpty())
                                                 <div class="view-reply">
                                                     <a href="javascript:void(0);" onclick="toggleReplies({{ $comment->id }}, this)">View Replies</a>
@@ -303,6 +305,33 @@
                     @endforeach
                 </div>
                 @include('inclusions/createPostModal')
+                <!-- Rate Comment Modal -->
+
+                <div id="rateModal" class="rate-modal" style="display:none;">
+                    <div class="rate-modal-content">
+                        <span class="close-rate-modal">&times;</span>
+                        <h2>Rate Comment</h2>
+                        <form id="rateForm" action="{{ route('rateComment') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="comment_id" id="rating_comment_id">
+                            <input type="hidden" name="rating" id="star-rating">
+                
+                            <!-- Star icons for rating -->
+                            <div class="rate-stars">
+                                <i class="fa fa-star star" data-rating="1"></i>
+                                <i class="fa fa-star star" data-rating="2"></i>
+                                <i class="fa fa-star star" data-rating="3"></i>
+                                <i class="fa fa-star star" data-rating="4"></i>
+                                <i class="fa fa-star star" data-rating="5"></i>
+                            </div>
+                
+                            <button type="submit">Submit Rating</button>
+                        </form>
+                    </div>
+                </div>
+                
+                
+                
             </content>
         </main>
     </div>
