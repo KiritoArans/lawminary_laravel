@@ -168,7 +168,7 @@
 .post-modal {
     display: none; 
     position: fixed;
-    z-index: 9999;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
@@ -312,7 +312,7 @@
 .comment-modal {
     display: none; /* Hidden by default */
     position: fixed;
-    z-index: 9999; /* Always on top */
+    z-index: 1000; /* Always on top */
     left: 0;
     top: 0;
     width: 100%;
@@ -622,13 +622,14 @@
     border: none;
     border-radius: 5px;
     color: white;
+    font-weight: 600;
     background-color: var(--primary-color);
 }
 
 
 .rate-modal {
     position: fixed;
-    z-index: 10000;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
@@ -663,8 +664,14 @@
     }
 
     .rate-modal-content form button{
-        margin: .75rem 0 0 0;
+        margin: 1rem 0 0 0;
+        padding: .5rem;
         cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        font-weight: 600;
+        color: white;
+        background-color: var(--primary-color);
 }
 
 
@@ -696,4 +703,8 @@
 
     .selected-star {
         color: gold;
+}
+
+.swal-popup {
+    z-index: 99999; /* Make sure this is higher than any other modals */
 }

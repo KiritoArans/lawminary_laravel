@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tblposts', function (Blueprint $table) {
+        Schema::create('tblpoints', function (Blueprint $table) {
             $table->id();
-            $table->string('post_id', 13);
-            $table->string('concern', 255);
-            $table->string('concernPhoto', 255)->nullable();
-            $table->string('postedBy', 50);
-            $table->boolean('approved', 1);
-            $table->string('approvedBy', 100)->nullable();
+            $table->string('lawyerUser_id', 20)->nullable();
+            $table->integer('points');
+            $table->string('pointsFrom', 10);
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tblposts');
+        Schema::dropIfExists('tblpoints');
     }
 };

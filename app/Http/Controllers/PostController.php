@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Posts;
+use App\Models\Points;
 use App\Models\Like;
 use App\Models\Bookmark;
 use Illuminate\Support\Facades\Auth;
@@ -24,6 +25,8 @@ class PostController extends Controller
         $post->post_id = uniqid();
         $post->concern = $data['concern'];
         $post->postedBy = Auth::user()->user_id; 
+        
+        $post->approved = 0;
 
         if ($request->hasFile('concernPhoto')) {
             $photoPath = $request->file('concernPhoto')->store('public/files/posts');
@@ -32,7 +35,16 @@ class PostController extends Controller
 
         $post->save();
 
-        return redirect()->back()->with('success', 'Your concern has been posted!');
+
+        if (Auth::user()->accountType === 'Attorney') {
+            $addPoints = new Points();
+            $addPoints->lawyerUser_id = Auth::user()->user_id;
+            $addPoints->points = "30";
+            $addPoints->pointsFrom = "Post";
+            $addPoints->save();
+        }
+
+        return redirect()->back()->with('success', 'Concern has been sent, please wait for approval.');
     }
 
     public function deletePost($postId)

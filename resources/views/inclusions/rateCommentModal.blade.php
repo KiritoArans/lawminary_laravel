@@ -6,6 +6,7 @@
             @csrf
             <h2>Rate Comment</h2>
             <input type="hidden" name="comment_id" id="rating_comment_id">
+            <input type="hidden" name="lawyerUser_id" id="rating_lawyerUser_id">
             <input type="hidden" name="rating" id="star-rating">
             <div class="rate-stars">
                 <i class="fa fa-star star" data-rating="1"></i>

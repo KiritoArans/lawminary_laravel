@@ -38,11 +38,13 @@ class PageController extends Controller
                                 ->pluck('following');
 
             $posts = Posts::with('user')
+                ->where('approved', 1)
                 ->whereIn('postedBy', $followingUserIds)
                 ->orderBy('created_at', 'desc')
                 ->get();
         } else {
             $posts = Posts::with('user')
+                ->where('approved', 1)
                 ->orderBy('created_at', 'desc')
                 ->get();
         }
@@ -85,8 +87,9 @@ class PageController extends Controller
         
 
         $posts = Posts::where('postedBy', $user->user_id)
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->where('approved', 1)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         $allPosts = Posts::with('user', 'comments', 'comments.user', 'comments.reply.user')
             ->orderBy('created_at', 'desc')
@@ -138,8 +141,6 @@ class PageController extends Controller
         $user = UserAccount::where('user_id', $user_id)->firstOrFail();
 
         $profileFunctions = $this->profilePageFunctions($user);
-
-        // $profileUser = \App\Models\User::find($userId);
 
         $isFollowing = \App\Models\Follow::where('follower', $user->user_id)
                         ->where('following', $user->user_id)
