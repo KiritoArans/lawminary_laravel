@@ -2,8 +2,22 @@
     <div class="modal-content">
         <span class="close-buttonEdit">&times;</span>
         <h2>Edit System Content</h2>
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
 
-        <form id="editForm" method="POST" enctype="multipart/form-data">
+        <form
+            id="editForm"
+            method="POST"
+            action="{{ route('admin.systemcontent.update', ['id' => $sysconData->first()->id]) }}"
+            enctype="multipart/form-data"
+        >
             @csrf
             @method('PUT')
 
