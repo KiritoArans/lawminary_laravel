@@ -66,12 +66,9 @@
         <div>
             <button
                 class="btn btn-primary editButton"
-                data-id="{{ $sysconData->first()->id ?? '' }}"
-                data-type="content_text"
-                data-content="{{ $sysconData->first()->about_lawminary ?? '' }}"
-                data-bs-toggle="modal"
-                data-bs-target="#editModal"
-                @if ($sysconData->isEmpty()) disabled @endif
+                data-id="{{ $sysconData->first()->id }}"
+                data-type="about_lawminary"
+                data-content="{{ $sysconData->first()->about_lawminary }}"
             >
                 Edit About Lawminary
             </button>
@@ -91,12 +88,9 @@
         <div>
             <button
                 class="btn btn-primary editButton"
-                data-id="{{ $sysconData->first()->id ?? '' }}"
-                data-type="content_text"
-                data-content="{{ $sysconData->first()->about_pao ?? '' }}"
-                data-bs-toggle="modal"
-                data-bs-target="#editModal"
-                @if ($sysconData->isEmpty()) disabled @endif
+                data-id="{{ $sysconData->first()->id }}"
+                data-type="about_pao"
+                data-content="{{ $sysconData->first()->about_pao }}"
             >
                 Edit About PAO
             </button>
@@ -116,12 +110,9 @@
         <div>
             <button
                 class="btn btn-primary editButton"
-                data-id="{{ $sysconData->first()->id ?? '' }}"
-                data-type="content_text"
-                data-content="{{ $sysconData->first()->terms_of_service ?? '' }}"
-                data-bs-toggle="modal"
-                data-bs-target="#editModal"
-                @if ($sysconData->isEmpty()) disabled @endif
+                data-id="{{ $sysconData->first()->id }}"
+                data-type="terms_of_service"
+                data-content="{{ $sysconData->first()->terms_of_service }}"
             >
                 Edit Terms of Service
             </button>

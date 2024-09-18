@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('editTermsOfService');
     const editLogoField = document.getElementById('editLogo');
 
+    // Clear modal content and show relevant fields based on the button clicked
     editButtons.forEach((button) => {
         button.addEventListener('click', function () {
             // Hide all form fields first
@@ -34,8 +35,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
             const id = this.getAttribute('data-id');
             const contentType = this.getAttribute('data-type'); // Type to determine content (logo, name, or text content)
-            const content = this.getAttribute('data-content');
-            const name = this.getAttribute('data-name') || ''; // Ensure name has a default empty string
+            const content = this.getAttribute('data-content') || '';
+            const name = this.getAttribute('data-name') || ''; // Default to empty string if undefined
 
             // Populate the hidden ID and field in the form
             editIdField.value = id;
@@ -44,18 +45,16 @@ document.addEventListener('DOMContentLoaded', function () {
             // Check content type and show corresponding form fields
             if (contentType === 'system_name') {
                 nameField.style.display = 'block';
-                editNameField.value = name; // Populate name field
-            } else if (contentType === 'content_text') {
-                if (content.includes('Lawminary')) {
-                    aboutLawminaryField.style.display = 'block';
-                    editAboutLawminaryField.value = content; // Populate textarea
-                } else if (content.includes('PAO')) {
-                    aboutPaoField.style.display = 'block';
-                    editAboutPaoField.value = content; // Populate textarea
-                } else if (content.includes('Terms')) {
-                    termsOfServiceField.style.display = 'block';
-                    editTermsOfServiceField.value = content; // Populate textarea
-                }
+                editNameField.value = name || ''; // Populate name field
+            } else if (contentType === 'about_lawminary') {
+                aboutLawminaryField.style.display = 'block';
+                editAboutLawminaryField.value = content; // Populate textarea
+            } else if (contentType === 'about_pao') {
+                aboutPaoField.style.display = 'block';
+                editAboutPaoField.value = content; // Populate textarea
+            } else if (contentType === 'terms_of_service') {
+                termsOfServiceField.style.display = 'block';
+                editTermsOfServiceField.value = content; // Populate textarea
             } else if (contentType === 'logo') {
                 fileContentField.style.display = 'block'; // Show file input for the logo
             }
