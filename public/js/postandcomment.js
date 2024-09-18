@@ -85,6 +85,7 @@ function toggleReplies(commentId, linkElement) {
     }
 }
 
+
 // Delete Post Sweet Alert
 function confirmDelete(postId) {
     Swal.fire({
@@ -108,49 +109,63 @@ function confirmDelete(postId) {
 document.addEventListener('DOMContentLoaded', function () {
     let rateModal = document.getElementById('rateModal');
     let closeRateModal = document.querySelector('.close-rate-modal');
-    let commentIdInput = document.getElementById('rating_comment_id'); // Hidden input to store comment ID
-    let starRatingInput = document.getElementById('star-rating'); // Hidden input for the rating
-    let rateStars = document.querySelectorAll('.rate-btn'); // Target all buttons that open the modal
-    let starIcons = document.querySelectorAll('.star'); // Target the star icons for rating selection
+    let commentIdInput = document.getElementById('rating_comment_id');
+    let commenterIdInput = document.getElementById('rating_lawyerUser_id');
+    let starRatingInput = document.getElementById('star-rating');
+    let rateStars = document.querySelectorAll('.rate-btn');
+    let starIcons = document.querySelectorAll('.star');
 
-    // Loop through all the stars (rate buttons) that open the modal and add event listeners
     rateStars.forEach(star => {
         star.addEventListener('click', function () {
-            // Find the comment ID from the data-comment-id attribute
             let commentId = this.getAttribute('data-rating-comment-comment_id');
-            
-            // Set the comment ID in the hidden input inside the modal
-            commentIdInput.value = commentId;
-            
-            console.log('Rating Comment ID:', commentId); // Log for debugging
-            rateModal.style.display = 'flex'; // Show the modal
+            let commenterUserId = this.getAttribute('data-rating-comment-user_id');
+
+            // AJAX call to check if the user has already rated this comment
+            fetch(`/check-rating/${commentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.hasRated) {
+                        Swal.fire({
+                            title: 'Already Rated',
+                            text: 'You have already rated this comment.',
+                            icon: 'error',
+                            confirmButtonText: 'OK',
+                            customClass: {
+                                popup: 'swal-popup'
+                            }
+                        });
+                    } else {
+                        commentIdInput.value = commentId;
+                        commenterIdInput.value = commenterUserId;
+
+                        console.log('Rating Comment ID:', commentId); 
+                        console.log('Commenter ID:', commenterUserId); 
+                        rateModal.style.display = 'flex'; 
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         });
     });
 
     // Handle the star rating selection on hover and click
     starIcons.forEach((star, index) => {
         star.addEventListener('mouseover', function () {
-            // Highlight all the stars up to the hovered one
-            resetStars(); // Reset stars first
+            resetStars();
             highlightStars(index);
         });
 
         star.addEventListener('click', function () {
             let selectedRating = this.getAttribute('data-rating');
-            
-            // Set the rating value in the hidden input field
             starRatingInput.value = selectedRating;
-
-            // Remove previously selected stars and set new selection
-            starIcons.forEach(star => star.classList.remove('selected-star')); // Remove the highlight for all
-            highlightStars(index, true); // Highlight the stars and keep them highlighted on click
+            starIcons.forEach(star => star.classList.remove('selected-star'));
+            highlightStars(index, true);
         });
 
         star.addEventListener('mouseout', function () {
-            resetStars(); // Reset stars when mouse moves out
+            resetStars();
             let selectedRating = starRatingInput.value;
             if (selectedRating) {
-                highlightStars(selectedRating - 1, true); // Re-highlight selected stars on mouse out
+                highlightStars(selectedRating - 1, true);
             }
         });
     });
@@ -165,25 +180,18 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // Function to highlight stars up to a certain index
     function highlightStars(index, permanent = false) {
         for (let i = 0; i <= index; i++) {
             starIcons[i].classList.add(permanent ? 'selected-star' : 'hovered-star');
         }
     }
 
-    // Function to reset all stars
     function resetStars() {
         starIcons.forEach(star => {
             star.classList.remove('hovered-star', 'selected-star');
         });
     }
 });
-
-
-
-
-
 
 
 

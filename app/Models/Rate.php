@@ -14,12 +14,18 @@ class Rate extends Model
     protected $fillable = [
         'user_id', 
         'comment_id',
+        'lawyerUser_id', 
         'rate',
     ];
 
     public function user()
     {
         return $this->belongsTo(UserAccount::class, 'user_id', 'user_id');
+    }
+
+    public function commenter()
+    {
+        return $this->belongsTo(Comment::class, 'lawyerUser_id', 'user_id');
     }
 
     public function comment()

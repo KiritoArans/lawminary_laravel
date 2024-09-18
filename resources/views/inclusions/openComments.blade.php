@@ -69,7 +69,10 @@
                                     {{ $comment->user ? ($comment->user->accountType === 'Attorney' ? 'Atty. ' : '') . $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
                                 </a>
                                 @if($comment->user->accountType === 'Attorney')
-                                    <i class="fa-regular fa-star rate-btn" data-rating-comment-comment_id="{{ $comment->comment_id }}"></i>
+                                    <i class="fa-regular fa-star rate-btn" 
+                                        data-rating-comment-comment_id="{{ $comment->comment_id }}" 
+                                        data-rating-comment-user_id="{{ $comment->user->user_id }}">
+                                    </i>
                                 @endif
                             </span>                                     
                             <p>{{ $comment->comment }}</p>
