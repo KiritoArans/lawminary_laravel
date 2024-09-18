@@ -15,7 +15,7 @@
         <main>
             <header>
                 <div class="header-top">
-                    <img src="../imgs/Lawminary_Logo_2-Gold.png" alt="">
+                     @include('includes_syscon.syscon_logo_inc')
                     <div class="notification">
                         <a href="notifications"><i class="fas fa-bell bell-icon"></i></a>
                     </div>

@@ -46,10 +46,7 @@
             <main>
                 <header>
                     <div class="header-top">
-                        <img
-                            src="../../imgs/Lawminary_Logo_2-Gold.png"
-                            alt=""
-                        />
+                        @include('includes_syscon.syscon_logo_inc')
                         <div class="spacer"></div>
                     </div>
                     <hr class="divider" />

@@ -1,73 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lawminary | Profile</title>
-    <link rel="icon" href="../imgs/lawminarylogo.png" type="image/png">
-    <link rel="stylesheet" href="{{ asset ('css/profile_style.css') }}">
-    <link rel="stylesheet" href="{{ asset ('css/nav_style.css') }}">
-    <link rel="stylesheet" href="{{ asset ('css/otherstyles/posts_style.css') }}">
-    @include('inclusions/libraryLinks')
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lawminary | Profile</title>
+        <link rel="icon" href="../imgs/lawminarylogo.png" type="image/png" />
+        <link rel="stylesheet" href="{{ asset('css/profile_style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
+        <link
+            rel="stylesheet"
+            href="{{ asset('css/otherstyles/posts_style.css') }}"
+        />
+        @include('inclusions/libraryLinks')
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-<body>
-    <div class="container">
-        @include('inclusions/userNav')
-        <main>
-            <header>
-                <div class="header-top">
-                    <img src="../imgs/Lawminary_Logo_2-Gold.png" alt="Lawminary Logo">
-                    <div class="notification">
-                        <a href="notifications"><i class="fas fa-bell bell-icon"></i></a>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            @include('inclusions/userNav')
+            <main>
+                <header>
+                    <div class="header-top">
+                        @include('includes_syscon.syscon_logo_inc')
+                        <div class="notification">
+                            <a href="notifications">
+                                <i class="fas fa-bell bell-icon"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <hr class="divider">
-            </header>
+                    <hr class="divider" />
+                </header>
 
-            <content class="profile-section">
-                <div class="profile-header">
-                    <div class="profile-details">
-                        <div class="profile-left">
-                            <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="profile-photo" alt="Profile Picture">
-                            <div class="profile-info">
-                                <h2>{{ Auth::user()->firstName }} {{ Auth::user()->lastName }}</h2>
-                                <h4>@<span>{{ Auth::user()->username }}</span></h4>
-                                <div class="profile-badge">
-                                    <span class="badge">{{ Auth::user()->accountType }}</span>
+                <content class="profile-section">
+                    <div class="profile-header">
+                        <div class="profile-details">
+                            <div class="profile-left">
+                                <img
+                                    src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}"
+                                    class="profile-photo"
+                                    alt="Profile Picture"
+                                />
+                                <div class="profile-info">
+                                    <h2>
+                                        {{ Auth::user()->firstName }}
+                                        {{ Auth::user()->lastName }}
+                                    </h2>
+                                    <h4>
+                                        @
+                                        <span>
+                                            {{ Auth::user()->username }}
+                                        </span>
+                                    </h4>
+                                    <div class="profile-badge">
+                                        <span class="badge">
+                                            {{ Auth::user()->accountType }}
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                             <div class="profile-right">
                                 <div class="profile-stats">
                                     <div class="following-count">
                                         <span>Following:</span>
                                         <span>{{ $followingCount }}</span>
-                                    </div>                                    
+                                    </div>
                                     <div class="follower-count">
                                         <span>Followers:</span>
                                         <span>{{ $followerCount }}</span>
                                     </div>
-                                    <a href="account-settings" class="edit-profile-button">Edit Profile</a>
+                                    <a
+                                        href="account-settings"
+                                        class="edit-profile-button"
+                                    >
+                                        Edit Profile
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <hr>
+                    <hr />
                     <div class="profile-nav">
                         <ul>
                             <li><a id="posts-link">Posts</a></li>
-                            <li><a id="comments-link">Comments and Replies</a></li>
+                            <li>
+                                <a id="comments-link">Comments and Replies</a>
+                            </li>
                             <li><a id="liked-link">Likes</a></li>
                             <li><a id="bookmarked-link">Bookmarks</a></li>
                         </ul>
                     </div>
-                    <hr>
+                    <hr />
                     <div class="profile-content">
-
                         @include('inclusions/profile/profileFollowModal')
-                        
+
                         @include('inclusions/profile/profilePosts')
 
                         @include('inclusions/createPostModal')
@@ -81,15 +106,14 @@
                         @include('inclusions/profile/profileLikes')
 
                         @include('inclusions/profile/profileBookmarks')
-
                     </div>
-            </content>
-        </main>
-    </div>
-    <script src="js/followModal.js"></script>
-    <script src="js/postandcomment.js"></script>
-    <script src="js/settings.js"></script>
-    <script src="js/profile.js"></script>
-    <script src="js/logout.js"></script>
-</body>
+                </content>
+            </main>
+        </div>
+        <script src="js/followModal.js"></script>
+        <script src="js/postandcomment.js"></script>
+        <script src="js/settings.js"></script>
+        <script src="js/profile.js"></script>
+        <script src="js/logout.js"></script>
+    </body>
 </html>
