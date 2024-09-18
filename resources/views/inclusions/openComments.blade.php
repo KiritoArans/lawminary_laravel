@@ -1,4 +1,3 @@
-
 @foreach($allPosts as $post)
     <div class="comment-modal" id="commentModal-{{ $post->post_id }}" style="display:none;">
         <div class="clicked-post-content">

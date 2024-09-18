@@ -91,6 +91,7 @@
                     </div>
                     <hr />
                     <div class="profile-content">
+
                         @include('inclusions/profile/profileFollowModal')
 
                         @include('inclusions/profile/profilePosts')

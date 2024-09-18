@@ -38,13 +38,13 @@ class PageController extends Controller
                                 ->pluck('following');
 
             $posts = Posts::with('user')
-                ->where('approved', 1)
+                ->where('status', 'Approved')
                 ->whereIn('postedBy', $followingUserIds)
                 ->orderBy('created_at', 'desc')
                 ->get();
         } else {
             $posts = Posts::with('user')
-                ->where('approved', 1)
+                ->where('status', 'Approved')
                 ->orderBy('created_at', 'desc')
                 ->get();
         }
@@ -87,7 +87,7 @@ class PageController extends Controller
         
 
         $posts = Posts::where('postedBy', $user->user_id)
-            ->where('approved', 1)
+            ->where('status', 'Approved')
             ->orderBy('created_at', 'desc')
             ->get();
 

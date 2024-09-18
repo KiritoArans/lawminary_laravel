@@ -26,7 +26,7 @@ class PostController extends Controller
         $post->concern = $data['concern'];
         $post->postedBy = Auth::user()->user_id; 
         
-        $post->approved = 0;
+        $post->status = "Pending";
 
         if ($request->hasFile('concernPhoto')) {
             $photoPath = $request->file('concernPhoto')->store('public/files/posts');

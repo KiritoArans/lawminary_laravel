@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('nationality', 100);
             $table->enum('sex', ['Male', 'Female', 'Other'], 100);
             $table->string('contactNumber', 11);
+            $table->string('status', 15)->nullable();
             $table->boolean('restrict')->default(false);
             $table->integer('restrictDays', 50)->nullable();
             $table->enum('account_type', ['user', 'moderator', 'lawyer', 'admin'], 50);

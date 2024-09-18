@@ -77,6 +77,11 @@
                         </form>
                     </div>
                     <div class="posts">
+                        @if($posts->isEmpty())
+                        <div class="empty">
+                            No posts available.
+                        </div>
+                        @endif
                         @foreach ($posts as $post)
                             <div class="post-content">
                                 <div class="post-header">
@@ -127,10 +132,7 @@
                                             </div>
 
                                             <label>
-                                                @
-                                                <span>
-                                                    {{ $post->user->username ?? 'unknownuser' }}
-                                                </span>
+                                                @<span>{{ $post->user->username ?? 'unknownuser' }}</span>
                                             </label>
                                             <p>
                                                 Posted:
@@ -243,12 +245,7 @@
                                                     </a>
                                                 </h2>
                                                 <label>
-                                                    @
-                                                    <span
-                                                        id="modalUserUsername"
-                                                    >
-                                                        {{ $post->user->username ?? 'username' }}
-                                                    </span>
+                                                    @<span id="modalUserUsername">{{ $post->user->username ?? 'username' }}</span>
                                                 </label>
                                                 <p class="comment-time">
                                                     {{ $post->created_at->format('M d, Y H:i A') }}

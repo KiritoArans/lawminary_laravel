@@ -419,7 +419,7 @@
 
 /* Post content */
 .clicked-post-text p{
-    margin: 1rem 0;
+    margin: .5rem 0 0 0;
     font-size: 16px;
     color: #333;
 }
@@ -707,4 +707,14 @@
 
 .swal-popup {
     z-index: 99999; /* Make sure this is higher than any other modals */
+}
+
+.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    font-weight: 600;
+    color: var(--text-color3);
+    text-align: center;
 }

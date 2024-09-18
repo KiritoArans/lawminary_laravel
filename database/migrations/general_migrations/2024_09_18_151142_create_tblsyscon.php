@@ -11,14 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tblposts', function (Blueprint $table) {
+        Schema::create('tblsyscon', function (Blueprint $table) {
             $table->id();
-            $table->string('post_id', 13);
-            $table->string('concern', 255);
-            $table->string('concernPhoto', 255)->nullable();
-            $table->string('postedBy', 50);
-            $table->string('status', 15);
-            $table->string('approvedBy', 100)->nullable();
+            $table->string('logo_path', 100)->nullable();
+            $table->string('system_name', 50);
+            $table->text('about_lawminary');
+            $table->text('about_pao');
+            $table->text('terms_of_service');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tblposts');
+        Schema::dropIfExists('tblsyscon');
     }
 };
