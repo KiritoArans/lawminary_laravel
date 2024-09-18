@@ -84,7 +84,6 @@
                                 <div class="post-options">
                                     <div class="options">
                                         <a href="#">Action</a>
-                                        {{-- <a href="#">Report</a> --}}
                                     </div>
                                     <i class="fas fa-ellipsis-v"></i>
                                 </div>
@@ -200,8 +199,11 @@
                                                         <a href="{{ Auth::check() && Auth::user()->user_id == $comment->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $comment->user->user_id]) }}">
                                                             {{ $comment->user ? ($comment->user->accountType === 'Attorney' ? 'Atty. ' : '') . $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
                                                         </a>
-                                                        <!-- Star icon for rating -->
-                                                        <i class="fa-regular fa-star rate-btn" data-rating-comment-comment_id="{{ $comment->comment_id }}"></i>
+
+                                                        @if($comment->user->accountType === 'Attorney')
+                                                            <i class="fa-regular fa-star rate-btn" data-rating-comment-comment_id="{{ $comment->comment_id }}"></i>
+                                                        @endif
+
                                                     </span>                                                    
                                                     <p>{{ $comment->comment }}</p>
                                                     <div class="date-reply">
@@ -305,33 +307,8 @@
                     @endforeach
                 </div>
                 @include('inclusions/createPostModal')
-                <!-- Rate Comment Modal -->
 
-                <div id="rateModal" class="rate-modal" style="display:none;">
-                    <div class="rate-modal-content">
-                        <span class="close-rate-modal">&times;</span>
-                        <h2>Rate Comment</h2>
-                        <form id="rateForm" action="{{ route('rateComment') }}" method="POST">
-                            @csrf
-                            <input type="hidden" name="comment_id" id="rating_comment_id">
-                            <input type="hidden" name="rating" id="star-rating">
-                
-                            <!-- Star icons for rating -->
-                            <div class="rate-stars">
-                                <i class="fa fa-star star" data-rating="1"></i>
-                                <i class="fa fa-star star" data-rating="2"></i>
-                                <i class="fa fa-star star" data-rating="3"></i>
-                                <i class="fa fa-star star" data-rating="4"></i>
-                                <i class="fa fa-star star" data-rating="5"></i>
-                            </div>
-                
-                            <button type="submit">Submit Rating</button>
-                        </form>
-                    </div>
-                </div>
-                
-                
-                
+                @include('inclusions/rateCommentModal')
             </content>
         </main>
     </div>

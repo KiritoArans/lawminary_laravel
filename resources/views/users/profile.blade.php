@@ -74,6 +74,8 @@
 
                         @include('inclusions/openComments')
 
+                        @include('inclusions/rateCommentModal')
+
                         @include('inclusions/profile/profileCommsReps')
 
                         @include('inclusions/profile/profileLikes')

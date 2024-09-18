@@ -68,6 +68,9 @@
                                 <a href="{{ Auth::check() && Auth::user()->user_id == $comment->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $comment->user->user_id]) }}">
                                     {{ $comment->user ? ($comment->user->accountType === 'Attorney' ? 'Atty. ' : '') . $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
                                 </a>
+                                @if($comment->user->accountType === 'Attorney')
+                                    <i class="fa-regular fa-star rate-btn" data-rating-comment-comment_id="{{ $comment->comment_id }}"></i>
+                                @endif
                             </span>                                     
                             <p>{{ $comment->comment }}</p>
                             <div class="date-reply">

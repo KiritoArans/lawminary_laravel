@@ -85,6 +85,8 @@
                     @include('inclusions/profile/profilePosts')
     
                     @include('inclusions/openComments')
+                    
+                    @include('inclusions/rateCommentModal')
     
                     @include('inclusions/profile/profileCommsReps')
     
