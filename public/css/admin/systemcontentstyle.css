@@ -122,3 +122,10 @@ button:hover {
     left: 8px;
     color: var(--primary-color);
 }
+.content-sections {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap; /* Ensures items wrap into columns */
+    gap: 20px; /* Adds space between columns */
+}

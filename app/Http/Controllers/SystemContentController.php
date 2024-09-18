@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SystemContent;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class SystemContentController extends Controller
 {
@@ -17,60 +19,63 @@ class SystemContentController extends Controller
             'sysconData' => $sysconData,
         ]);
     }
-    public function edit($id)
-    {
-        // Fetch the record by its ID
-        $syscon = SystemContent::findOrFail($id);
-
-        // Return the edit view with the data
-        return view('includes_syscon.syscon_edit_inc', compact('syscon'));
-    }
 
     public function update(Request $request, $id)
     {
-        // Validate the request
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'content' => 'required', // Adjust depending on file or string
-        ]);
-
-        // Fetch the record by its ID
         $syscon = SystemContent::findOrFail($id);
 
-        // Update the fields
-        $syscon->name = $validated['name'];
+        // Identify which field is being updated based on 'field'
+        $field = $request->input('field');
 
-        if ($request->hasFile('content')) {
-            $fileName = $request->file('content')->store('uploads'); // Save the file and store the path
-            $syscon->content = $fileName; // Update content field with file path
-        } else {
-            $syscon->content = $validated['content'];
+        // Handle system_name
+        if ($field === 'system_name') {
+            $request->validate(['system_name' => 'required|string|max:255']);
+            $syscon->system_name = $request->input('system_name');
         }
 
-        // Save the updated record
+        // Handle about_lawminary
+        elseif ($field === 'about_lawminary') {
+            $request->validate(['about_lawminary' => 'required|string']);
+            $syscon->about_lawminary = $request->input('about_lawminary');
+        }
+
+        // Handle about_pao
+        elseif ($field === 'about_pao') {
+            $request->validate(['about_pao' => 'required|string']);
+            $syscon->about_pao = $request->input('about_pao');
+        }
+
+        // Handle terms_of_service
+        elseif ($field === 'terms_of_service') {
+            $request->validate(['terms_of_service' => 'required|string']);
+            $syscon->terms_of_service = $request->input('terms_of_service');
+        }
+
+        // Handle logo update
+        elseif ($field === 'logo') {
+            $request->validate([
+                'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
+
+            // Store the new logo and delete the old one if it exists
+            if ($request->hasFile('logo')) {
+                if ($syscon->logo_path) {
+                    Storage::disk('public')->delete($syscon->logo_path);
+                }
+
+                $logoPath = $request->file('logo')->store('imgs', 'public');
+                $syscon->logo_path = $logoPath;
+            }
+        }
+
+        // Update 'updated_by' field with authenticated user's ID
+        $syscon->updated_by = Auth::id();
+
+        // Save changes
         $syscon->save();
 
-        // Redirect with success message
         return redirect()
             ->route('admin.systemcontent')
-            ->with('success', 'Content updated successfully!');
-    }
-
-    //search function
-
-    public function search(Request $request)
-    {
-        // Get the search query from the request
-        $query = $request->input('query');
-
-        // Search the SystemContent model by name or content
-        $sysconData = SystemContent::where('name', 'LIKE', "%{$query}%")
-            ->orWhere('content', 'LIKE', "%{$query}%")
-            ->get();
-
-        // Return the results to the view
-        return view('admin.systemcontent', [
-            'sysconData' => $sysconData,
-        ]);
+            ->with('success', 'System content updated successfully!');
     }
 }

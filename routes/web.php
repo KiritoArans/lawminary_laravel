@@ -230,15 +230,10 @@ Route::get('admin/systemcontent', [
     'index',
 ])->name('admin.systemcontent');
 
-Route::match(['put', 'post'], '/admin/systemcontent/update/{id}', [
+Route::put('/admin/systemcontent/update/{id}', [
     SystemContentController::class,
     'update',
 ])->name('admin.systemcontent.update');
-
-Route::get('admin/systemcontent/search', [
-    SystemContentController::class,
-    'search',
-])->name('admin.systemcontent.search');
 
 //admin forums route
 
@@ -431,7 +426,9 @@ Route::post('/comment', [CommentController::class, 'createComment'])->name(
     'users.createComment'
 );
 // Rate Comment
-route::post('/rate-comment', [CommentController::class, 'rateComment'])->name('rateComment');
+route::post('/rate-comment', [CommentController::class, 'rateComment'])->name(
+    'rateComment'
+);
 
 // Create Reply
 route::post('/reply', [CommentController::class, 'createReply'])->name(

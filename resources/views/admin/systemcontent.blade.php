@@ -47,7 +47,7 @@
                 <header>
                     <div class="header-top">
                         <img
-                            src="../../imgs/Lawminary_Logo_2-Gold.png"
+                            src="{{ Storage::url($sysconData->first()->logo_path) }}"
                             alt=""
                         />
                         <div class="spacer"></div>
@@ -56,7 +56,6 @@
                 </header>
                 <content class="table-container">
                     <h1>System Content</h1>
-                    @include('includes_syscon.syscon_search_inc')
                     @include('includes_syscon.syscon_table_inc')
                 </content>
             </main>

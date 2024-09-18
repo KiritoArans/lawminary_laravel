@@ -5,39 +5,75 @@
 
         <form id="editForm" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('POST')
+            @method('PUT')
+
+            <!-- Hidden input for ID and field type -->
             <input type="hidden" id="editId" name="id" />
-            <div class="form-group">
+            <input type="hidden" id="editField" name="field" />
+
+            <!-- System Name Section -->
+            <div class="form-group" id="nameField" style="display: none">
                 <label for="editName">Name:</label>
                 <input
                     type="text"
                     id="editName"
-                    name="name"
-                    class="form-control"
-                    required
-                />
-            </div>
-
-            <div class="form-group">
-                <label for="viewContent">Content</label>
-                <input
-                    type="text"
-                    id="viewContent"
-                    name="viewContent"
+                    name="system_name"
                     class="form-control"
                 />
             </div>
 
-            <div class="form-group">
-                <label for="editContent">New Content:</label>
+            <!-- About Lawminary Section -->
+            <div
+                class="form-group"
+                id="about_LawminaryField"
+                style="display: none"
+            >
+                <label for="editAboutLawminary">About Lawminary:</label>
+                <textarea
+                    id="editAboutLawminary"
+                    name="about_lawminary"
+                    class="form-control"
+                    rows="5"
+                ></textarea>
+            </div>
+
+            <!-- About PAO Section -->
+            <div class="form-group" id="aboutPaoField" style="display: none">
+                <label for="editAboutPao">About PAO:</label>
+                <textarea
+                    id="editAboutPao"
+                    name="about_pao"
+                    class="form-control"
+                    rows="5"
+                ></textarea>
+            </div>
+
+            <!-- Terms of Service Section -->
+            <div
+                class="form-group"
+                id="termsOfServiceField"
+                style="display: none"
+            >
+                <label for="editTermsOfService">Terms of Service:</label>
+                <textarea
+                    id="editTermsOfService"
+                    name="terms_of_service"
+                    class="form-control"
+                    rows="5"
+                ></textarea>
+            </div>
+
+            <!-- File input for Logo -->
+            <div class="form-group" id="fileContentField" style="display: none">
+                <label for="editLogo">Upload New Logo:</label>
                 <input
                     type="file"
-                    name="content"
-                    id="editContent"
+                    name="logo"
+                    id="editLogo"
                     class="form-control"
-                    required
                 />
             </div>
+
             <button type="submit" class="btn btn-success">Update</button>
         </form>
     </div>
