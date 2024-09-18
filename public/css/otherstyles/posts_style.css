@@ -501,7 +501,13 @@
 .user-comment-content span i{
     margin: .1rem .25rem 0 0;
     cursor: pointer;
+    font-size: 1.25rem;
+    transition: ease-in-out;
 }
+.user-comment-content span i:hover{
+    color: gold;
+}
+
 .user-comment span{
     font-weight: bold;
 }
@@ -620,10 +626,7 @@
 }
 
 
-
-/* Modal container */
 .rate-modal {
-    display: none;
     position: fixed;
     z-index: 10000;
     left: 0;
@@ -634,21 +637,37 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    }
+
+    .rate-modal-content {
+        background-color: #fff;
+        border-radius: 12px;
+        width: auto;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+        padding: 40px 40px 32px 40px;
 }
 
-/* Modal content box */
-.rate-modal-content {
-    background-color: #fff;
-    border-radius: 12px;
-    width: 400px;
-    max-height: 80vh;
-    overflow-y: auto;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    position: relative;
-    padding: 20px;
+.rate-modal-content form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    }
+
+    .rate-modal-content form h2{
+        font-size: 1.5rem;
+        text-align: center;
+        margin: 0 0 .5rem 0;
+    }
+
+    .rate-modal-content form button{
+        margin: .75rem 0 0 0;
+        cursor: pointer;
 }
 
-/* Close modal button */
+
 .close-rate-modal {
     color: #333;
     position: absolute;
@@ -658,36 +677,23 @@
     cursor: pointer;
 }
 
+
 .rate-stars {
     display: flex;
     justify-content: center;
-    gap: 5px;
-}
+    gap: .5rem;
+    }
 
-/* Default star color */
-.fa-star {
-    color: grey; /* Default color of stars */
-    cursor: pointer;
-    font-size: 24px;
-}
+    .fa-star {
+        color: var(--text-color3);
+        cursor: pointer;
+        font-size: 24px;
+    }
 
-/* Highlight stars up to the one being hovered */
-.star:hover, 
-.star:hover ~ .star { 
-    color: grey; /* Reset color for stars to the right */
-}
+    .hovered-star {
+        color: gold;
+    }
 
-/* Highlight the stars to the left when hovering */
-.star:hover ~ .fa-star {
-    color: grey; /* Reset color of stars to the right */
-}
-
-.star:hover, 
-.fa-star:hover ~ .fa-star {
-    color: gold; /* Color stars to the left and the hovered star */
-}
-
-/* When a star is clicked, keep the previous stars highlighted */
-.selected-star {
-    color: gold;
+    .selected-star {
+        color: gold;
 }

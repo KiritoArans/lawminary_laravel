@@ -127,35 +127,58 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Handle the star rating selection
-    starIcons.forEach(star => {
+    // Handle the star rating selection on hover and click
+    starIcons.forEach((star, index) => {
+        star.addEventListener('mouseover', function () {
+            // Highlight all the stars up to the hovered one
+            resetStars(); // Reset stars first
+            highlightStars(index);
+        });
+
         star.addEventListener('click', function () {
             let selectedRating = this.getAttribute('data-rating');
             
             // Set the rating value in the hidden input field
             starRatingInput.value = selectedRating;
 
-            // Highlight stars up to the clicked one (left to right)
+            // Remove previously selected stars and set new selection
             starIcons.forEach(star => star.classList.remove('selected-star')); // Remove the highlight for all
-            for (let i = 0; i < selectedRating; i++) {
-                starIcons[i].classList.add('selected-star'); // Add highlight for the stars up to the clicked one
+            highlightStars(index, true); // Highlight the stars and keep them highlighted on click
+        });
+
+        star.addEventListener('mouseout', function () {
+            resetStars(); // Reset stars when mouse moves out
+            let selectedRating = starRatingInput.value;
+            if (selectedRating) {
+                highlightStars(selectedRating - 1, true); // Re-highlight selected stars on mouse out
             }
         });
     });
 
-    // Close the modal when clicking the close button
     closeRateModal.addEventListener('click', function () {
         rateModal.style.display = 'none';
     });
 
-    // Close the modal if clicking outside the modal content
     window.addEventListener('click', function (event) {
         if (event.target === rateModal) {
             rateModal.style.display = 'none';
         }
     });
-});
 
+    // Function to highlight stars up to a certain index
+    function highlightStars(index, permanent = false) {
+        for (let i = 0; i <= index; i++) {
+            starIcons[i].classList.add(permanent ? 'selected-star' : 'hovered-star');
+        }
+    }
+
+    // Function to reset all stars
+    function resetStars() {
+        starIcons.forEach(star => {
+            star.classList.remove('hovered-star', 'selected-star');
+        });
+    }
+});
 
 
 
