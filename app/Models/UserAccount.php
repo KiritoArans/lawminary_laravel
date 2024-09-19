@@ -38,7 +38,7 @@ class UserAccount extends Authenticatable
         static::creating(function ($model) {
             $model->user_id = Carbon::now()->format('YmdHis');
 
-            $model->accountType = $model->accountType ?? 'User';
+            // $model->accountType = $model->accountType ?? 'User';
         });
     }
 

@@ -28,7 +28,9 @@ class AccountController extends Controller
             'restrict' => 'nullable',
             'restrictDays' => 'nullable',
         ]);
-
+        
+        $data['accountType'] = 'User';
+        
         $data['password'] = Hash::make($data['password']);
 
         $newAccount = UserAccount::create($data);

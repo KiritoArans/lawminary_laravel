@@ -12,8 +12,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tblaccounts', function (Blueprint $table) {
-            $table->id();
-            $table->id('user_id', 20);
+            $table->id(); // This is the auto-increment primary key column
+            $table->unsignedBigInteger('user_id')->nullable(); // user_id without auto-increment
             $table->string('username', 50)->unique();
             $table->string('email', 100)->unique();
             $table->string('userPhoto', 255)->nullable();
@@ -23,12 +23,12 @@ return new class extends Migration
             $table->string('lastName', 100);
             $table->date('birthDate');
             $table->string('nationality', 100);
-            $table->enum('sex', ['Male', 'Female', 'Other'], 100);
+            $table->enum('sex', ['Male', 'Female', 'Other']);
             $table->string('contactNumber', 11);
             $table->string('status', 15)->nullable();
             $table->boolean('restrict')->default(false);
-            $table->integer('restrictDays', 50)->nullable();
-            $table->enum('account_type', ['user', 'moderator', 'lawyer', 'admin'], 50);
+            $table->integer('restrictDays')->nullable(); // Removed auto-increment
+            $table->enum('accountType', ['User', 'Moderator', 'Lawyer', 'Admin']);
             $table->timestamps();
         });
     }
