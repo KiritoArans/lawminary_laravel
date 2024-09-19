@@ -39,10 +39,17 @@
                 
                     <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : "" }}">
                         <i class="fa-solid fa-gavel"></i> Hit
+                        @if($post->likes_count > 0)
+                            <span>({{ $post->likes_count }})</span>
+                        @endif
                     </button>
                 </form>
                 
-                <button><i class="fas fa-comment"></i> Comment</button>
+                <button><i class="fas fa-comment"></i> Comment
+                    @if($post->comments_count > 0)
+                        <span>({{ $post->comments_count }})</span>
+                    @endif
+                </button>
 
                 <form action="{{ route('post.bookmark') }}" method="POST">
                     @csrf
@@ -50,6 +57,9 @@
                 
                     <button type="submit" class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : "" }}">
                         <i class="fas fa-bookmark"></i> Bookmark
+                        @if($post->bookmarks_count > 0)
+                            <span>({{ $post->bookmarks_count }})</span>
+                        @endif
                     </button>
                 </form>
             </div>

@@ -1,4 +1,7 @@
 <div class="profile-liked">
+    @if($posts->isEmpty())
+    <p>No likes yet.</p>
+    @endif
     @foreach($likes as $post)
         <div class="posts">
             <div class="post-content">

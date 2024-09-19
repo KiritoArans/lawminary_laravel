@@ -30,27 +30,30 @@ class PageController extends Controller
     public function showHomePage(Request $request)
     {
         $user = Auth::user();
-
+    
         $filter = $request->input('filter', 'all');
-
+    
         if ($filter === 'following') {
             $followingUserIds = \App\Models\Follow::where('follower', $user->user_id)
                                 ->pluck('following');
-
+    
             $posts = Posts::with('user')
+                ->withCount('likes', 'comments', 'bookmarks')
                 ->where('status', 'Approved')
                 ->whereIn('postedBy', $followingUserIds)
                 ->orderBy('created_at', 'desc')
                 ->get();
         } else {
             $posts = Posts::with('user')
+                ->withCount('likes', 'comments', 'bookmarks')
                 ->where('status', 'Approved')
                 ->orderBy('created_at', 'desc')
                 ->get();
         }
-
+    
         return view('users.home', compact('posts'));
     }
+    
 
 
     public function showArticlePage()
@@ -87,11 +90,13 @@ class PageController extends Controller
         
 
         $posts = Posts::where('postedBy', $user->user_id)
+            ->withCount('likes', 'comments', 'bookmarks')
             ->where('status', 'Approved')
             ->orderBy('created_at', 'desc')
             ->get();
 
         $allPosts = Posts::with('user', 'comments', 'comments.user', 'comments.reply.user')
+            ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('created_at', 'desc')
             ->get();
 

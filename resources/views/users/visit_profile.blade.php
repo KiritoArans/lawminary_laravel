@@ -77,7 +77,7 @@
                         <li><a id="bookmarked-link">Bookmarks</a></li>
                     </ul>
                 </div>
-                <hr>
+                
                 <div class="profile-content">
 
                     @include('inclusions/profile/profileFollowModal')

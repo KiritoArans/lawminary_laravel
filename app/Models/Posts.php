@@ -22,10 +22,21 @@ class Posts extends Model
         'updated_by',
     ];
 
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'post_id', 'post_id');
+    }    
+
     public function comments()
     {
         return $this->hasMany(Comment::class, 'post_id', 'post_id'); // Assuming 'post_id' is the key used in both tables
     }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class, 'post_id', 'post_id');
+    } 
+
     public function user()
     {
         return $this->belongsTo(UserAccount::class, 'postedBy', 'user_id');

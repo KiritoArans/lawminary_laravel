@@ -35,14 +35,13 @@ class PostController extends Controller
 
         $post->save();
 
-
-        if (Auth::user()->accountType === 'Attorney') {
-            $addPoints = new Points();
-            $addPoints->lawyerUser_id = Auth::user()->user_id;
-            $addPoints->points = "30";
-            $addPoints->pointsFrom = "Post";
-            $addPoints->save();
-        }
+        // if (Auth::user()->accountType === 'Attorney') {
+        //     $addPoints = new Points();
+        //     $addPoints->lawyerUser_id = Auth::user()->user_id;
+        //     $addPoints->points = "30";
+        //     $addPoints->pointsFrom = "Post";
+        //     $addPoints->save();
+        // }
 
         return redirect()->back()->with('success', 'Concern has been sent, please wait for approval.');
     }

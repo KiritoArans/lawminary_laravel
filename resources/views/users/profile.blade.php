@@ -46,10 +46,7 @@
                                         {{ Auth::user()->lastName }}
                                     </h2>
                                     <h4>
-                                        @
-                                        <span>
-                                            {{ Auth::user()->username }}
-                                        </span>
+                                        @<span>{{ Auth::user()->username }}</span>
                                     </h4>
                                     <div class="profile-badge">
                                         <span class="badge">
@@ -81,22 +78,18 @@
                     <hr />
                     <div class="profile-nav">
                         <ul>
-                            <li><a id="posts-link">Posts</a></li>
-                            <li>
-                                <a id="comments-link">Comments and Replies</a>
-                            </li>
+                            <li><a id="posts-link">Posts</a></li> 
+                            <li><a id="comments-link">Comments and Replies</a></li>
                             <li><a id="liked-link">Likes</a></li>
                             <li><a id="bookmarked-link">Bookmarks</a></li>
                         </ul>
                     </div>
-                    <hr />
+                    {{-- <hr /> --}}
                     <div class="profile-content">
 
                         @include('inclusions/profile/profileFollowModal')
 
                         @include('inclusions/profile/profilePosts')
-
-                        @include('inclusions/createPostModal')
 
                         @include('inclusions/openComments')
 
@@ -107,7 +100,11 @@
                         @include('inclusions/profile/profileLikes')
 
                         @include('inclusions/profile/profileBookmarks')
+
                     </div>
+                    
+                    @include('inclusions/createPostModal')
+
                 </content>
             </main>
         </div>

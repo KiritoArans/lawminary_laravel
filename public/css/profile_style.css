@@ -168,33 +168,48 @@ header hr {
     background-color: #FFAF45;
 }
 
+/* Hide the sections by default and show the active one */
+.profile-content > div {
+    display: none; /* Initially hide all sections */
+}
 
-.profile-nav ul{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin: 0;
+.profile-content > div.active {
+    display: block; 
 }
-.profile-nav ul li{
+
+.profile-nav ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.profile-nav ul li {
+    margin-right: 20px;
+    padding: 10px 20px;
     cursor: pointer;
-    
-    color: var(--text-color1);
-}
-.profile-nav ul li a{
-    text-decoration: none;
     font-weight: 600;
-    /* color: var(--text-color1); */
-    transition: var(--tran-05);
+    color: var(--text-color3); 
+    border-bottom: 2px solid transparent;
 }
-.profile-nav ul li a:hover{
-    opacity: 50%;
+
+.profile-nav ul li:hover {
+    color: var(--primary-color); 
 }
+
 .profile-nav ul li.active {
+    font-weight: 700;
+    color: var(--primary-color); 
     scale: 1.1;
-    font-weight: 800;
-    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
 }
+
+.profile-posts, .profile-comments, .profile-liked, .profile-bookmarked {
+    margin-top: 20px;
+}
+
+
 
 
 .profile-comments{

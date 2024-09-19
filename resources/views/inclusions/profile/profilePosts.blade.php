@@ -1,4 +1,7 @@
 <div class="profile-posts">
+    @if($posts->isEmpty())
+    <p>No posts yet.</p>
+    @else
     @foreach($posts as $post)
         <div class="posts">
             @if($posts->isEmpty())
@@ -57,11 +60,17 @@
                     
                         <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : "" }}">
                             <i class="fa-solid fa-gavel"></i> Hit
+                            @if($post->likes_count > 0)
+                                <span>({{ $post->likes_count }})</span>
+                            @endif
                         </button>
                     </form>
                     
                     <button class="btn-comment" data-post-id="{{ $post->post_id }}">
                         <i class="fas fa-comment"></i> Comment
+                        @if($post->comments_count > 0)
+                            <span>({{ $post->comments_count }})</span>
+                        @endif
                     </button>
 
                     <form action="{{ route('post.bookmark') }}" method="POST">
@@ -70,6 +79,9 @@
                     
                         <button type="submit" class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : "" }}">
                             <i class="fas fa-bookmark"></i> Bookmark
+                            @if($post->bookmarks_count > 0)
+                                <span>({{ $post->bookmarks_count }})</span>
+                            @endif
                         </button>
                     </form>
 
@@ -77,4 +89,5 @@
             </div>
         </div>
     @endforeach
+    @endif
 </div>
