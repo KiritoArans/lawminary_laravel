@@ -259,3 +259,28 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch((error) => console.error('Error loading nationalities:', error));
 });
+
+// Open modal when the image is clicked
+document.querySelectorAll('.clickable-photo').forEach((img) => {
+    img.addEventListener('click', function () {
+        var modal = document.getElementById('imageModalPic');
+        var fullImage = document.getElementById('fullImage');
+        fullImage.src = this.getAttribute('data-fullsize');
+        modal.style.display = 'flex'; // Use flex to center the image
+    });
+});
+
+// Close modal when the "X" button is clicked
+document.getElementById('closeModalPic').addEventListener('click', function () {
+    var modal = document.getElementById('imageModalPic');
+    modal.style.display = 'none';
+});
+
+// Close modal when clicking outside the image
+document
+    .getElementById('imageModalPic')
+    .addEventListener('click', function (event) {
+        if (event.target === this) {
+            this.style.display = 'none';
+        }
+    });

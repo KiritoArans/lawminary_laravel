@@ -173,3 +173,19 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+//reset filter
+
+function resetFilter() {
+    // Clear all filter inputs
+    document.getElementById('filterPostId').value = '';
+    document.getElementById('filterContent').value = '';
+    document.getElementById('filterStatus').value = '';
+    document.getElementById('filterTags').value = '';
+    document.getElementById('filterPostedBy').value = '';
+    document.getElementById('filterApprovedBy').value = '';
+    document.getElementById('filterDate').value = '';
+
+    // Optionally, submit the form to reset the filter in the backend or refresh the page
+    document.getElementById('filterForm').submit(); // This will refresh the page with cleared filters
+}

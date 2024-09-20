@@ -26,17 +26,7 @@
                         <!-- Include the edit button and modal here -->
                         @include('includes_resources.update_res_inc', ['resource' => $resource])
 
-                        <form
-                            method="POST"
-                            action="{{ route('admin.deleteResource', $resource->id) }}"
-                            onsubmit="return confirm('Are you sure you want to delete this resource?');"
-                        >
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="custom-button">
-                                Delete
-                            </button>
-                        </form>
+                        @include('includes_resources.delete_res_inc')
                     </td>
                 </tr>
             @empty

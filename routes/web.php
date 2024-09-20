@@ -426,7 +426,10 @@ Route::post('/comment', [CommentController::class, 'createComment'])->name(
     'users.createComment'
 );
 // Rate Comment
-route::get('/check-rating/{comment_id}', [CommentController::class, 'checkIfRated']);
+route::get('/check-rating/{comment_id}', [
+    CommentController::class,
+    'checkIfRated',
+]);
 route::post('/rate-comment', [CommentController::class, 'rateComment'])->name(
     'rateComment'
 );

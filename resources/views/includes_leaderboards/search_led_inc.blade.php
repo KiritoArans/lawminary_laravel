@@ -8,7 +8,7 @@
             type="text"
             id="searchInput"
             name="query"
-            placeholder="Search resources..."
+            placeholder="Search Leaderboards..."
             value="{{ request()->query('query') }}"
         />
         <button type="submit" class="custom-button">Search</button>

@@ -40,6 +40,7 @@
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
             rel="stylesheet"
         />
+        <script src="{{ asset('js/library_js/sweetalertV2.js') }}"></script>
     </head>
     <body>
         <div class="container">
@@ -103,6 +104,5 @@
             </main>
         </div>
         <script src="{{ asset('js/moderator_js/mresources_js.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 </html>

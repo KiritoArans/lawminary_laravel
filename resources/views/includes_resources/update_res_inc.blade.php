@@ -9,7 +9,6 @@
 </button>
 
 <!-- Modal structure -->
-<!-- Modal structure -->
 <div id="editResourceModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
@@ -24,6 +23,7 @@
                 enctype="multipart/form-data"
             >
                 @csrf
+                @include('inclusions.response')
                 <label for="resourceId">Content ID</label>
                 <input type="text" name="id" id="resourceId" readonly />
 

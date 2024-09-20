@@ -59,7 +59,7 @@
                         <div id="filterModal" class="modal">
                             <div class="modal-content">
                                 <span class="close-button">&times;</span>
-                                <h2>Filter Resources</h2>
+                                <h2>Filter Leaderboards</h2>
                                 @include('includes_leaderboards.filter_lead_inc')
                             </div>
                         </div>

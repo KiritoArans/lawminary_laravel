@@ -5,6 +5,7 @@
     action="{{ route('moderator.uploadResource') }}"
 >
     @csrf
+    @include('inclusions.response')
     <label for="documentTitle">Document Title:</label>
     <input
         type="text"

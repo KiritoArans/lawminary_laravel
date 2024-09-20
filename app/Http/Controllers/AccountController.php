@@ -14,6 +14,7 @@ class AccountController extends Controller
     {
         $data = $request->validate([
             'user_id' => 'nullable',
+
             'username' => 'required|unique:tblaccounts,username',
             'email' => 'required',
             'password' => 'required|min:8|confirmed',
@@ -28,9 +29,9 @@ class AccountController extends Controller
             'restrict' => 'nullable',
             'restrictDays' => 'nullable',
         ]);
-        
+
         $data['accountType'] = 'User';
-        
+
         $data['password'] = Hash::make($data['password']);
 
         $newAccount = UserAccount::create($data);

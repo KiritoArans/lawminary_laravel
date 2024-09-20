@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const viewButtons = document.querySelectorAll('.btn-view');
     const modal = document.getElementById('viewModal');
     const closeButton = document.querySelector('.close-button');
+    const closeButtonView = document.querySelector('.close-buttonView');
     const modalContent = document.getElementById('modalContent');
 
     viewButtons.forEach((button) => {
@@ -23,6 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     closeButton.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+    closeButtonView.addEventListener('click', function () {
         modal.style.display = 'none';
     });
 
@@ -90,4 +94,17 @@ function filterDashboard(filterId, filterUsername, filterAction, filterDate) {
             row.style.display = 'none';
         }
     });
+}
+
+//reset filter
+
+function resetFilter() {
+    // Clear all filter inputs
+    document.getElementById('filterId').value = '';
+    document.getElementById('filterUsername').value = '';
+    document.getElementById('filterAction').value = '';
+    document.getElementById('filterDate').value = '';
+
+    // Optionally, submit the form to reset the filter in the backend or refresh the page
+    document.getElementById('filterForm').submit(); // This will refresh the page with cleared filters
 }

@@ -35,5 +35,9 @@
         value="{{ request('filterDate') }}"
     />
 
+    <button type="button" class="custom-button" onclick="resetFilter()">
+        Reset Filter
+    </button>
+
     <button class="custom-button" type="submit">Apply Filters</button>
 </form>

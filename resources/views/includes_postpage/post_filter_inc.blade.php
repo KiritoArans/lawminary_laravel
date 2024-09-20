@@ -34,6 +34,10 @@
             <label for="filterDate">Date:</label>
             <input type="date" id="filterDate" name="filterDate" />
 
+            <button type="button" class="custom-button" onclick="resetFilter()">
+                Reset Filter
+            </button>
+
             <button type="submit" class="custom-button">Apply Filter</button>
         </form>
     </div>

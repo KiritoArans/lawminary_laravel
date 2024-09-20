@@ -75,7 +75,7 @@
 <!-- Modal Structure -->
 <div id="viewModal" class="modal">
     <div class="modal-content">
-        <span class="close-button" id="closeModal">&times;</span>
+        <span class="close-buttonView" id="closeModal">&times;</span>
         <h2>Activity Details</h2>
         <div id="modalContent">
             <!-- Dynamic content will be loaded here -->

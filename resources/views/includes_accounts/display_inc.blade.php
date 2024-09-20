@@ -2,6 +2,7 @@
     <thead>
         <tr>
             <th>ID</th>
+            <th>Display Photo</th>
             <th>Username</th>
             <th>LN, FN, MI</th>
             <th>E-mail</th>
@@ -18,6 +19,47 @@
         @foreach ($accounts as $account)
             <tr>
                 <td>{{ $account->id }}</td>
+                <td>
+                    @if ($account->userPhoto)
+                        <img
+                            src="{{ Storage::url($account->userPhoto) }}"
+                            alt="User Photo"
+                            width="50"
+                            height="50"
+                            class="clickable-photo"
+                            data-fullsize="{{ Storage::url($account->userPhoto) }}"
+                        />
+                    @else
+                        <img
+                            src="{{ asset('imgs/user-img.png') }}"
+                            alt="No Photo Available"
+                            width="50"
+                            height="50"
+                            class="clickable-photo"
+                            data-fullsize="{{ asset('imgs/user-img.png') }}"
+                        />
+                    @endif
+                </td>
+
+                <!-- Modal Structure -->
+                <div id="imageModalPic" class="modalPic">
+                    <span class="close-modalPic" id="closeModalPic">
+                        &times;
+                    </span>
+                    <img id="fullImage" src="" alt="Full Image" />
+                </div>
+
+                <!-- Modal Structure -->
+                <div id="imageModalPic" class="modalPic" style="display: none">
+                    <span class="close-modalPic">&times;</span>
+                    <img
+                        id="fullImage"
+                        src=""
+                        alt="Full Image"
+                        style="width: 50%; height: 50%"
+                    />
+                </div>
+
                 <td>{{ $account->username }}</td>
                 <td>
                     {{ $account->lastName . ', ' . $account->firstName . ', ' . $account->middleName . '.' }}
@@ -41,6 +83,7 @@
                         type="button"
                         class="custom-button edit-button"
                         data-id="{{ $account->id }}"
+                        data-userPhoto="{{ $account->userPhoto }}"
                         data-user_id="{{ $account->user_id }}"
                         data-username="{{ $account->username }}"
                         data-email="{{ $account->email }}"

@@ -28,20 +28,98 @@
     />
 
     <label for="filterPoints">Points:</label>
-    <input
-        type="text"
-        id="filterPoints"
-        name="filterPoints"
-        value="{{ request('filterPoints') }}"
-    />
+    <select id="filterPoints" name="filterPoints">
+        <option value="">-- Select Points Range --</option>
+        <!-- Default option -->
+        <option
+            value="0-200"
+            {{ request('filterPoints') == '0-200' ? 'selected' : '' }}
+        >
+            0-200
+        </option>
+        <option
+            value="201-500"
+            {{ request('filterPoints') == '201-500' ? 'selected' : '' }}
+        >
+            201-500
+        </option>
+        <option
+            value="501-1000"
+            {{ request('filterPoints') == '501-1000' ? 'selected' : '' }}
+        >
+            501-1000
+        </option>
+        <option
+            value="1001-2000"
+            {{ request('filterPoints') == '1001-2000' ? 'selected' : '' }}
+        >
+            1001-2000
+        </option>
+        <option
+            value="2001-3500"
+            {{ request('filterPoints') == '2001-3500' ? 'selected' : '' }}
+        >
+            2001-3500
+        </option>
+        <option
+            value="3501-5000"
+            {{ request('filterPoints') == '3501-5000' ? 'selected' : '' }}
+        >
+            3501-5000
+        </option>
+        <option
+            value="5001+"
+            {{ request('filterPoints') == '5001+' ? 'selected' : '' }}
+        >
+            5001+
+        </option>
+    </select>
 
     <label for="filterBadge">Badge:</label>
-    <input
-        type="text"
-        id="filterBadge"
-        name="filterBadge"
-        value="{{ request('filterBadge') }}"
-    />
+    <select id="filterBadge" name="filterBadge">
+        <option value="">-- Select Badge --</option>
+        <!-- Default option -->
+        <option
+            value="Wood"
+            {{ request('filterBadge') == 'Wood' ? 'selected' : '' }}
+        >
+            Wood
+        </option>
+        <option
+            value="Steel"
+            {{ request('filterBadge') == 'Steel' ? 'selected' : '' }}
+        >
+            Steel
+        </option>
+        <option
+            value="Bronze"
+            {{ request('filterBadge') == 'Bronze' ? 'selected' : '' }}
+        >
+            Bronze
+        </option>
+        <option
+            value="Silver"
+            {{ request('filterBadge') == 'Silver' ? 'selected' : '' }}
+        >
+            Silver
+        </option>
+        <option
+            value="Gold"
+            {{ request('filterBadge') == 'Gold' ? 'selected' : '' }}
+        >
+            Gold
+        </option>
+        <option
+            value="Diamond"
+            {{ request('filterBadge') == 'Diamond' ? 'selected' : '' }}
+        >
+            Diamond
+        </option>
+    </select>
+
+    <button type="button" class="custom-button" onclick="resetFilter()">
+        Reset Filter
+    </button>
 
     <button class="custom-button" type="submit">Apply Filters</button>
 </form>

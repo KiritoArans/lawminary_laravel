@@ -64,11 +64,21 @@ class LeaderboardController extends Controller
         }
 
         if ($request->filled('filterPoints')) {
-            $query->where(
-                'points',
-                'like',
-                '%' . $request->input('filterPoints') . '%'
-            );
+            $filterPoints = $request->input('filterPoints');
+
+            // Handle special case for "5001+" (which means greater than 5001)
+            if ($filterPoints == '5001+') {
+                $query->where('points', '>', 5000);
+            } else {
+                // Split the range into two parts, start and end
+                [$minPoints, $maxPoints] = explode('-', $filterPoints);
+
+                // Add the range condition to the query
+                $query->whereBetween('points', [
+                    (int) $minPoints,
+                    (int) $maxPoints,
+                ]);
+            }
         }
 
         if ($request->filled('filterBadge')) {

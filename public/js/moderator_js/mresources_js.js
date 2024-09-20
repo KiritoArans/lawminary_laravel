@@ -146,3 +146,39 @@ function bindViewButtons() {
         });
     });
 }
+
+function confirmDelete(resourceId) {
+    // Show SweetAlert2 confirmation dialog
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel',
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // If user confirms, submit the form programmatically
+            document.getElementById(`delete-form-${resourceId}`).submit();
+
+            // Optionally show another alert after submission
+            Swal.fire('Deleted!', 'The resource has been deleted.', 'success');
+        } else {
+            // Optional: Handle the case when user cancels
+            Swal.fire('Cancelled', 'Your resource is safe!', 'info');
+        }
+    });
+}
+
+function resetFilter() {
+    // Clear all filter inputs
+    document.getElementById('filterId').value = '';
+    document.getElementById('filterTitle').value = '';
+    document.getElementById('filterDesc').value = '';
+    document.getElementById('filterDate').value = '';
+
+    // Optionally, submit the form to reset the filter in the backend or refresh the page
+    document.getElementById('filterForm').submit(); // This will refresh the page with cleared filters
+}

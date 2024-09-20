@@ -110,8 +110,7 @@ class ResourcepageController extends Controller
         $request->validate([
             'documentTitle' => 'required|string|max:255',
             'documentDesc' => 'required|string',
-            'documentFile' =>
-                'required|file|mimes:pdf,doc,docx,jpg,png,zip|max:2048', // Adjust the max size based on your needs
+            'documentFile' => 'required|file|mimes:pdf,doc,docx,jpg,png,zip', // Adjust the max size based on your needs
         ]);
 
         // Store the uploaded file in the 'resources' directory inside the public storage

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -28,7 +27,20 @@ return new class extends Migration
             $table->string('status', 15)->nullable();
             $table->boolean('restrict')->default(false);
             $table->integer('restrictDays')->nullable(); // Removed auto-increment
-            $table->enum('accountType', ['User', 'Moderator', 'Lawyer', 'Admin']);
+            $table->enum('badge', [
+                'Wood',
+                'Steel',
+                'Bronze',
+                'Silver',
+                'Gold',
+                'Diamond',
+            ]);
+            $table->enum('accountType', [
+                'User',
+                'Moderator',
+                'Lawyer',
+                'Admin',
+            ]);
             $table->timestamps();
         });
     }
@@ -41,4 +53,3 @@ return new class extends Migration
         Schema::dropIfExists('tblaccounts');
     }
 };
-
