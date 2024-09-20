@@ -1,7 +1,6 @@
 <div id="followModal" class="followModal">
     <div class="followModal-content">
         <span class="close">&times;</span>
-        <h2 class="modal-title">Followers and Following</h2>
         <div class="modal-nav">
             <span id="followers-tab" class="active">Followers</span>
             <span id="following-tab">Following</span>

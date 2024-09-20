@@ -26,13 +26,13 @@ class CommentController extends Controller
 
         $comment->save();
 
-        if (Auth::user()->accountType === 'Attorney') {
-            $addPoints = new Points();
-            $addPoints->lawyerUser_id = Auth::user()->user_id;
-            $addPoints->points = "20";
-            $addPoints->pointsFrom = "Comment";
-            $addPoints->save();
-        }
+        // if (Auth::user()->accountType === 'Attorney') {
+        //     $addPoints = new Points();
+        //     $addPoints->lawyerUser_id = Auth::user()->user_id;
+        //     $addPoints->points = "20";
+        //     $addPoints->pointsFrom = "Comment";
+        //     $addPoints->save();
+        // }
 
         return redirect()
             ->back()
@@ -60,13 +60,13 @@ class CommentController extends Controller
         $reply->reply = $request->input('reply');
         $reply->save();
 
-        if (Auth::user()->accountType === 'Attorney') {
-            $addPoints = new Points();
-            $addPoints->lawyerUser_id = Auth::user()->user_id;
-            $addPoints->points = "10";
-            $addPoints->pointsFrom = "Reply";
-            $addPoints->save();
-        }
+        // if (Auth::user()->accountType === 'Attorney') {
+        //     $addPoints = new Points();
+        //     $addPoints->lawyerUser_id = Auth::user()->user_id;
+        //     $addPoints->points = "10";
+        //     $addPoints->pointsFrom = "Reply";
+        //     $addPoints->save();
+        // }
 
         return redirect()->back()->with('success', 'Replied posted');
         return redirect()->back();

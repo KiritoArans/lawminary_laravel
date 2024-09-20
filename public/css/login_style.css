@@ -21,7 +21,7 @@
     --tran-02: all 0.2s ease;
 }
 body {
-    background: linear-gradient(to top, #561c24, #9e4d56); 
+    background: linear-gradient(to top, #561c24, #7b2d37); 
     min-height: 100vh;
     display: flex;
     justify-content: center;

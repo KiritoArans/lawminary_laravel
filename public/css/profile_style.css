@@ -361,15 +361,15 @@ header hr {
 .modal-nav {
     display: flex;
     justify-content: space-around;
-    padding: 10px 0;
+    padding: 8px 0 0px 0;
     border-bottom: 1px solid #ddd;
     }
 
     .modal-nav span {
         cursor: pointer;
-        color: #888;
+        color: var(--text-color3);
         font-size: 14px;
-        font-weight: bold;
+        font-weight: 600;
         padding: 10px;
         text-align: center;
         width: 100%;
@@ -378,8 +378,9 @@ header hr {
 }
 
     .modal-nav span.active-tab {
-        color: black;
-        border-bottom: 2px solid black;
+        color: var(--primary-color);
+        border-bottom: 3px solid var(--primary-color);
+        font-weight: 700;
 }
 
 .search-bar {

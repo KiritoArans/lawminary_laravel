@@ -41,7 +41,7 @@
                 <div class="filter-post">
                     <form action="{{ route('home') }}" method="GET" class="filter-form">
                         <select name="filter" id="filter" onchange="this.form.submit()">
-                            <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All</option>
+                            <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>Discover</option>
                             <option value="following" {{ request('filter') == 'following' ? 'selected' : '' }}>Following</option>
                         </select>
                     </form>

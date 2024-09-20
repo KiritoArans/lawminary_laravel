@@ -67,10 +67,6 @@ class PostController extends Controller
         return redirect()->back()->with('success', 'Post deleted successfully.');
     }
 
-
-
-
-
     public function likePost(Request $request)
     {
         $user = Auth::user();
@@ -93,8 +89,18 @@ class PostController extends Controller
         $newLike->user_id = $user->user_id;
         $newLike->like = 1;
         $newLike->save();
+
+        $post = Posts::where('post_id', $data['post_id'])->with('user')->first();
+        
+        if ($post && $post->user->accountType === 'Attorney') {
+            $addPoints = new Points();
+            $addPoints->lawyerUser_id = $post->user->user_id; 
+            $addPoints->points = "15";
+            $addPoints->pointsFrom = "Like"; 
+            $addPoints->save();
+        }
     
-        return redirect()->back()->with('success', 'Post liked!');
+        return redirect()->back()->with('success', 'Post liked.');
     }
 
     public function bookmarkPost(Request $request)
@@ -119,6 +125,17 @@ class PostController extends Controller
         $newBookmark->bookmark = 1;
         $newBookmark->save();
     
-        return redirect()->back()->with('success', 'Post bookmarked!');
+        $post = Posts::where('post_id', $data['post_id'])->with('user')->first();
+        
+        if ($post && $post->user->accountType === 'Attorney') {
+            $addPoints = new Points();
+            $addPoints->lawyerUser_id = $post->user->user_id; 
+            $addPoints->points = "20";
+            $addPoints->pointsFrom = "Bookmark"; 
+            $addPoints->save();
+        }
+    
+        return redirect()->back()->with('success', 'Post bookmarked.');
     }
+    
 }
