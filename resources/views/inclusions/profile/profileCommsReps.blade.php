@@ -1,35 +1,34 @@
-@foreach($posts as $post)
-    <div class="profile-comments">
+<div class="profile-comments">
+    @if($comments->isEmpty())
+        <div class="empty">No comments yet.</div>
+    @else
         @foreach($comments as $comment)
-        <div class="comments">
-            <div class="comment-content">
-                <div class="comment-header">
-                    <div class="user-info">
-                        <img src="{{ $post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
-                        <div class="comment-info">
-                            <h2>{{ $user->accountType === 'Attorney' ? 'Atty. ' : '' }}{{ $user->firstName }} {{ $user->lastName }}</h2>
-                            <label>@<span>{{ $user->username }}</span></label>
+                <div class="comments">
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <div class="user-info">
+                                <img src="{{ $comment->user->userPhoto ? Storage::url($comment->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
+                                <div class="comment-info">
+                                    <h2>{{ $comment->user->accountType === 'Attorney' ? 'Atty. ' : '' }}{{ $comment->user->firstName }} {{ $comment->user->lastName }}</h2>
+                                    <label>@<span>{{ $comment->user->username }}</span></label>
+                                </div>
+                            </div>
                         </div>
+                        <hr>
+                        <div class="comment-text">
+                            <p>{{ $comment->comment }}</p>
+                            <div class="date-time">
+                                <p>{{ $comment->created_at->diffForHumans() }}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="actions">
+                            <button class="btn-comment" data-post-id="{{ $comment->post_id }}">
+                                View Post
+                            </button>
+                        </div>            
                     </div>
-                        {{-- <div class="comment-options">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </div> --}}
                 </div>
-                <hr>
-                <div class="comment-text">
-                    <p>{{ $comment->comment }}</p>
-                    <div class="date-time">
-                        <p for="">{{ $comment->created_at->diffForHumans() }}</p>
-                    </div>
-                </div>
-                <hr>
-                <div class="actions">
-                    <button class="btn-comment" data-post-id="{{ $comment->post_id }}">
-                        View Post
-                    </button>
-                </div>            
-            </div>
-        </div>
         @endforeach
-    </div>
-@endforeach
+    @endif
+</div>

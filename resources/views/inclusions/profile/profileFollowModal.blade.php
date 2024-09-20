@@ -15,7 +15,9 @@
             <li>
                 <img src="{{ $follower->followerUser->userPhoto ? Storage::url($follower->followerUser->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Photo" class="user-profile-photo">
                 <div class="user-info">
-                    <span class="fullname">{{ $follower->followerUser->firstName }} {{ $follower->followerUser->lastName }}</span>
+                    <a href="{{ Auth::check() && Auth::user()->user_id == $follower->followerUser->user_id ? route('profile') : route('visit-profile', ['user_id' => $follower->followerUser->user_id]) }}">
+                        <span class="fullname">{{ $follower->followerUser->firstName }} {{ $follower->followerUser->lastName }}</span>
+                    </a>
                 </div>
                 @if(Auth::user()->user_id != $follower->followerUser->user_id)
                 @php
@@ -42,7 +44,9 @@
             <li>
                 <img src="{{ $follow->followedUser->userPhoto ? Storage::url($follow->followedUser->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Photo" class="user-profile-photo">
                 <div class="user-info">
-                    <span class="fullname">{{ $follow->followedUser->firstName }} {{ $follow->followedUser->lastName }}</span>
+                    <a href="{{ Auth::check() && Auth::user()->user_id == $follow->followedUser->user_id ? route('profile') : route('visit-profile', ['user_id' => $follow->followedUser->user_id]) }}">
+                        <span class="fullname">{{ $follow->followedUser->firstName }} {{ $follow->followedUser->lastName }}</span>
+                    </a>
                 </div>
                 @if(Auth::user()->user_id != $follow->followedUser->user_id)
                 @php

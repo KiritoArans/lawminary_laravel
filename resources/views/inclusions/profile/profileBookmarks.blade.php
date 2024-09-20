@@ -1,6 +1,6 @@
 <div class="profile-bookmarked">
-    @if($posts->isEmpty())
-    <p>No bookmarks yet.</p>
+    @if($bookmarks->isEmpty())
+        <div class="empty">No bookmarks yet.</div>
     @endif
     @foreach($bookmarks as $post)
         <div class="posts">

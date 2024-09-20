@@ -38,8 +38,7 @@
                                 <img
                                     src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}"
                                     class="profile-photo"
-                                    alt="Profile Picture"
-                                />
+                                    alt="Profile Picture"/>
                                 <div class="profile-info">
                                     <h2>
                                         {{ Auth::user()->firstName }}
@@ -65,26 +64,24 @@
                                         <span>Followers:</span>
                                         <span>{{ $followerCount }}</span>
                                     </div>
-                                    <a
-                                        href="account-settings"
-                                        class="edit-profile-button"
-                                    >
+                                    <a href="account-settings" class="edit-profile-button">
                                         Edit Profile
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <hr />
+                    <hr class="hr1">
                     <div class="profile-nav">
                         <ul>
-                            <li><a id="posts-link">Posts</a></li> 
-                            <li><a id="comments-link">Comments and Replies</a></li>
-                            <li><a id="liked-link">Likes</a></li>
-                            <li><a id="bookmarked-link">Bookmarks</a></li>
+                            <li id="posts-link"><a >Posts</a></li>
+                            <li id="comments-link"><a >Comments and Replies</a></li>
+                            <li id="liked-link"><a>Likes</a></li>
+                            <li id="bookmarked-link"><a>Bookmarks</a></li>
                         </ul>
                     </div>
-                    {{-- <hr /> --}}
+                    <hr class="hr2">
+                    
                     <div class="profile-content">
 
                         @include('inclusions/profile/profileFollowModal')

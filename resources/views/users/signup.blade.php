@@ -14,7 +14,7 @@
         <div class="wrapper">
             <div class="container">
                 <h1>Sign Up</h1>
-                <div class="error">
+                {{-- <div class="error">
                     @if($errors->any())
                     <ul>
                         @foreach($errors->all() as $error)
@@ -22,10 +22,11 @@
                         @endforeach
                     </ul>
                     @endif
-                </div>
+                </div> --}}
                 <form class="signup-form" method="post" action="{{route('signup')}}">
                     @csrf
                     @method('post')
+                    @include('inclusions/response')
                     <div class="left-column">
                         <div class="form-group">
                             <label for="first-name">First Name</label>
@@ -74,12 +75,18 @@
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>
-                            <input type="password" id="password" name="password" required>
+                            <div class="password-container">
+                                <input type="password" id="password" name="password" required>
+                                <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="password_confirmation">Confirm Password</label>
-                            <input type="password" id="password_confirmation" name="password_confirmation" required>
-                        </div>
+                            <div class="password-container">
+                                <input type="password" id="password_confirmation" name="password_confirmation" required>
+                                <i class="fas fa-eye toggle-password" id="togglePasswordConfirmation"></i>
+                            </div>
+                        </div>                        
                         <div class="buttons">
                             <a href="login" class="back-home">Back to Login</a>
                             <button type="submit">Create Account</button>
@@ -89,5 +96,6 @@
             </div>
         </div>
     </section>
+    <script src="js/loginandsignup.js"></script>
 </body>
 </html>
