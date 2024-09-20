@@ -67,17 +67,16 @@
                         </div>
                     </div>
                 </div>
-                
-                <hr>
+                <hr class="hr1">
                 <div class="profile-nav">
                     <ul>
-                        <li><a id="posts-link">Posts</a></li>
-                        <li><a id="comments-link">Comments and Replies</a></li>
-                        <li><a id="liked-link">Likes</a></li>
-                        <li><a id="bookmarked-link">Bookmarks</a></li>
+                        <li id="posts-link"><a >Posts</a></li>
+                        <li id="comments-link"><a >Comments and Replies</a></li>
+                        <li id="liked-link"><a>Likes</a></li>
+                        <li id="bookmarked-link"><a>Bookmarks</a></li>
                     </ul>
                 </div>
-                
+                <hr class="hr2">
                 <div class="profile-content">
 
                     @include('inclusions/profile/profileFollowModal')

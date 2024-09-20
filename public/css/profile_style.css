@@ -52,6 +52,7 @@ header h1 {
     left: -8px;
 }
 header hr {
+    opacity: 40%;
     margin-top: 10px;
     border: 1px solid #b1b1b1;
 }
@@ -119,13 +120,13 @@ header hr {
 .profile-info h2 {
     margin: 0;
     font-size: 24px;
-    color: #333;
+    color: var(--text-color1);
 }
 
 .profile-info h4 {
     font-weight: 600;
     margin: 0;
-    color: #777;
+    color: var(--text-color3);
 }
 
 .profile-badge{
@@ -146,6 +147,13 @@ header hr {
     flex-direction: column;
     justify-content: end;
     margin: 0;
+}
+.profile-stats span:nth-child(1){
+    color: var(--text-color1);
+}
+.profile-stats span:nth-child(2){
+    color: var(--text-color1);
+    font-weight: 600;
 }
 .following-count, .follower-count{
     cursor: pointer;
@@ -201,20 +209,19 @@ header hr {
 .profile-nav ul li.active {
     font-weight: 700;
     color: var(--primary-color); 
-    scale: 1.1;
-    border-bottom: 2px solid var(--primary-color);
+    border-bottom: 4px solid var(--primary-color);
 }
 
 .profile-posts, .profile-comments, .profile-liked, .profile-bookmarked {
     margin-top: 20px;
 }
-
-
-
-
-.profile-comments{
-    display: none;
+.hr2, .hr1{
+    margin: 0;
+    opacity: 40%;
 }
+
+
+
 .comments .comment-content {
     background-color: #ffffff;
     border: 1px solid #ddd;
@@ -272,6 +279,7 @@ header hr {
     overflow-wrap: break-word;
     white-space: normal;
     max-width: 100%;
+    color: var(--text-color1);
 }
 .comments .comment-text .date-time p{
     margin: 0;
@@ -305,13 +313,6 @@ header hr {
 .comments .comment-content .actions button:hover {
     color: var(--primary-color);
     scale: 1.1;
-}
-
-.profile-liked{
-    display: none;
-}
-.profile-bookmarked{
-    display: none;
 }
 
 
@@ -407,6 +408,9 @@ header hr {
         padding: 10px 0;
         border-bottom: 1px solid #eee;
     }
+    .user-list li .user-info a{
+        text-decoration: none;
+    }
     .user-profile-photo {
         border-radius: 50%;
         width: 40px;
@@ -419,8 +423,11 @@ header hr {
     }
     .fullname {
         font-weight: bold;
-        color: #333;
+        color: var(--text-color1);
         display: block;
+    }    
+    .fullname:hover {
+        color: var(--primary-color);
 }
 
 .follow-btn {
@@ -435,5 +442,6 @@ header hr {
     }
 
     .follow-btn:hover {
-        background-color: #ddd;
+        background-color: var(--primary-color);
+        color: var(--text-color2);
 }

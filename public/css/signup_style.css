@@ -87,13 +87,23 @@ section{
 .form-group span {
     color: #888;
 }
+/* Container for the password input and icon */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Style the eye icon */
 .toggle-password {
     position: absolute;
-    right: 10px;
+    right: -8px;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
+    font-size: 18px;
+    color: var(--black-light-color); /* Adjust the icon color */
 }
+
 .buttons {
     display: flex;
     justify-content: space-between;

@@ -1,7 +1,7 @@
 <div class="profile-posts">
     @if($posts->isEmpty())
-    <p>No posts yet.</p>
-    @else
+        <div class="empty">No posts yet.</div>
+    @endif
     @foreach($posts as $post)
         <div class="posts">
             @if($posts->isEmpty())
@@ -89,5 +89,4 @@
             </div>
         </div>
     @endforeach
-    @endif
 </div>

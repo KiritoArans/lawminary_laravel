@@ -36,7 +36,9 @@ class AccountController extends Controller
 
         $newAccount = UserAccount::create($data);
 
-        return view('users.login');
+        return redirect()
+            ->back()
+            ->with('success', 'Account created successfully.');
     }
 
     public function updateAccountNames(Request $request)

@@ -1,19 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // Highlight the active nav item
     const navItems = document.querySelectorAll(".profile-nav ul li");
 
-    // Set default active to "Posts"
-    const postsLink = document.getElementById('posts-link').parentElement;
-    postsLink.classList.add('active');  // Add 'active' class to posts link by default
+    const postsLink = document.getElementById('posts-link');
+    postsLink.classList.add('active'); 
 
     navItems.forEach(item => {
         item.addEventListener("click", function() {
-            navItems.forEach(i => i.classList.remove("active"));  // Remove active class from all
-            this.classList.add("active");  // Add active class to the clicked item
+            navItems.forEach(i => i.classList.remove("active"));  
+            this.classList.add("active");  
         });
     });
 });
-
 document.addEventListener('DOMContentLoaded', (event) => {
     const postsLink = document.getElementById('posts-link');
     const commentsLink = document.getElementById('comments-link');
@@ -27,38 +24,38 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Function to hide all sections
     function hideAllSections() {
-        profilePosts.style.display = 'none';
-        profileComments.style.display = 'none';
-        profileLiked.style.display = 'none';
-        profileBookmarked.style.display = 'none';
+        if (profilePosts) profilePosts.style.display = 'none';
+        if (profileComments) profileComments.style.display = 'none';
+        if (profileLiked) profileLiked.style.display = 'none';
+        if (profileBookmarked) profileBookmarked.style.display = 'none';
     }
 
     // Set the default section to 'Posts'
-    hideAllSections();  // Hide all first
-    profilePosts.style.display = 'block';  // Show posts by default
+    hideAllSections(); 
+    if (profilePosts) profilePosts.style.display = 'block';  // Show posts by default
 
     // Event listeners for each navigation link
     postsLink.addEventListener('click', (event) => {
         event.preventDefault();
-        hideAllSections();  // Hide everything
-        profilePosts.style.display = 'block';  // Show posts
+        hideAllSections();
+        if (profilePosts) profilePosts.style.display = 'block';
     });
 
     commentsLink.addEventListener('click', (event) => {
         event.preventDefault();
-        hideAllSections();  // Hide everything
-        profileComments.style.display = 'block';  // Show comments
+        hideAllSections();
+        if (profileComments) profileComments.style.display = 'block';
     });
 
     likedLink.addEventListener('click', (event) => {
         event.preventDefault();
-        hideAllSections();  // Hide everything
-        profileLiked.style.display = 'block';  // Show liked posts
+        hideAllSections();
+        if (profileLiked) profileLiked.style.display = 'block';
     });
 
     bookmarkedLink.addEventListener('click', (event) => {
         event.preventDefault();
-        hideAllSections();  // Hide everything
-        profileBookmarked.style.display = 'block';  // Show bookmarks
+        hideAllSections();
+        if (profileBookmarked) profileBookmarked.style.display = 'block';
     });
 });

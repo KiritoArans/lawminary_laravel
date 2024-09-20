@@ -31,8 +31,12 @@
                     </div>
                     <div class="password">
                         <label for="password">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Type your password" required>
+                        <div class="password-container">
+                            <input type="password" id="password" name="password" placeholder="Type your password" required>
+                            <i class="fas fa-eye toggle-password" id="togglePassword"></i> <!-- Eye icon -->
+                        </div>
                     </div>
+                                      
                     <div class="buttons">
                         <a class="bn3637 bn36" id="signup-btn" href="signup">Sign Up</a>
                         <button class="bn3637 bn37" id="login-btn" type="submit">Login</button>

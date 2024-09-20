@@ -96,6 +96,21 @@ section {
         inset 2px 2px 5px rgba(0, 0, 0, 0.3),
         inset -2px -2px 5px rgba(255, 255, 255, 0.6);
 }
+
+.password-container {
+    position: relative;
+    width: 275px;
+    }
+    .toggle-password {
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 18px;
+        color: var(--black-light-color);
+}
+
 .buttons {
     display: flex;
     justify-content: space-between;
