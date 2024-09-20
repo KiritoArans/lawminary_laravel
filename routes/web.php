@@ -342,6 +342,11 @@ Route::post('/moderator/resources/upload', [
     'uploadResource',
 ])->name('moderator.uploadResource');
 
+Route::get('/moderator/resources/download/{id}', [
+    ResourcepageController::class,
+    'downloadResource',
+])->name('moderator.downloadResource');
+
 Route::get('/moderator/search-resources', [
     ResourcepageController::class,
     'search',

@@ -17,8 +17,10 @@
                     <td>{{ $resource->documentTitle }}</td>
                     <td>{{ $resource->documentDesc }}</td>
                     <td>
-                        <a href="{{ $resource->documentFile }}">
-                            {{ $resource->documentFile }}
+                        <a
+                            href="{{ route('moderator.downloadResource', $resource->id) }}"
+                        >
+                            Download File
                         </a>
                     </td>
                     <td>{{ $resource->created_at->format('Y-m-d') }}</td>
@@ -26,7 +28,17 @@
                         <!-- Include the edit button and modal here -->
                         @include('includes_resources.update_res_inc', ['resource' => $resource])
 
-                        @include('includes_resources.delete_res_inc')
+                        <form
+                            method="POST"
+                            action="{{ route('admin.deleteResource', $resource->id) }}"
+                            onsubmit="return confirm('Are you sure you want to delete this resource?');"
+                        >
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="custom-button">
+                                Delete
+                            </button>
+                        </form>
                     </td>
                 </tr>
             @empty

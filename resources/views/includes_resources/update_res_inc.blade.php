@@ -50,8 +50,15 @@
                     readonly
                 />
 
-                <label for="documentFileEdit">File</label>
-                <input type="file" id="documentFileEdit" name="documentFile" />
+                <label for="documentFile">Upload File:</label>
+                <input
+                    class="custom-button"
+                    type="file"
+                    id="documentFile"
+                    name="documentFile"
+                    accept=".pdf,.doc,.docx,.jpg,.png,.zip"
+                    required
+                />
 
                 <button type="submit">Save changes</button>
             </form>

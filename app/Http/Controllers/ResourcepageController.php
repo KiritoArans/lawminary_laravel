@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\ResourceFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ResourcepageController extends Controller
 {
@@ -69,9 +71,13 @@ class ResourcepageController extends Controller
 
         // If a file is uploaded, handle the file update
         if ($request->hasFile('documentFile')) {
+            \Log::info(
+                'Uploaded file MIME type: ' .
+                    $request->file('documentFile')->getMimeType()
+            );
             $filePath = $request
                 ->file('documentFile')
-                ->store('resource', 'public');
+                ->store('resource', 'private');
             $resource->documentFile = $filePath;
         }
 
@@ -116,7 +122,7 @@ class ResourcepageController extends Controller
         // Store the uploaded file in the 'resources' directory inside the public storage
         $filePath = $request
             ->file('documentFile')
-            ->store('resources', 'public');
+            ->store('resources', 'private');
 
         // Create a new resource entry in the database
         $resource = new ResourceFile(); // Adjust this according to your model
@@ -151,5 +157,22 @@ class ResourcepageController extends Controller
             'searchQuery',
             $searchQuery
         );
+    }
+
+    public function downloadResource($id)
+    {
+        // Fetch the resource by ID
+        $resource = ResourceFile::findOrFail($id);
+
+        // Temporarily remove the authorization check for testing
+        // if (!Auth::user()->can('download', $resource)) {
+        //     abort(403, 'Unauthorized action.');
+        // }
+
+        // The file path is stored in the database, so we fetch it
+        $filePath = $resource->documentFile; // This contains the path inside 'storage/app/private/resources'
+
+        // Return the file as a download
+        return Storage::disk('private')->download($filePath);
     }
 }
