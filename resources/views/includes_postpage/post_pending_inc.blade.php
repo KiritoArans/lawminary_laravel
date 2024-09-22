@@ -65,13 +65,7 @@
                                         name="post_id"
                                         value="{{ $post->post_id }}"
                                     />
-                                    <button
-                                        type="submit"
-                                        name="disregard"
-                                        class="btn-view-reject"
-                                    >
-                                        Disregard
-                                    </button>
+                                    @include('includes_postpage.post_reject_inc')
                                 </form>
                             </div>
                         </td>

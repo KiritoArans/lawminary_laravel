@@ -16,10 +16,12 @@ class Posts extends Model
         'concern',
         'postedBy',
         'approvedBy',
+        'reasonDisregard',
         'status',
         'tags',
         'created_by',
         'updated_by',
+        
     ];
 
     public function likes()

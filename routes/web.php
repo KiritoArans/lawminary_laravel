@@ -321,6 +321,12 @@ Route::get('/moderator/dashboard/search', [
 Route::get('moderator/postpage', [PostpageController::class, 'postpage'])->name(
     'moderator.postpage'
 );
+
+Route::post('moderator/postspage/{id}/disregard', [
+    PostpageController::class,
+    'postDisregard', // This should point to the correct method
+])->name('posts.disregard');
+
 Route::match(['get', 'post'], '/moderator/postpage', [
     PostpageController::class,
     'postpage',
@@ -341,7 +347,6 @@ Route::post('/moderator/resources/upload', [
     ResourcepageController::class,
     'uploadResource',
 ])->name('moderator.uploadResource');
-
 Route::get('/moderator/resources/download/{id}', [
     ResourcepageController::class,
     'downloadResource',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Posts;
+use App\Models\UserAccount;
 
 class PostpageController extends Controller
 {
@@ -13,22 +14,63 @@ class PostpageController extends Controller
         // Handle form submission (POST request for approve/disregard)
         if ($request->isMethod('post')) {
             $postId = $request->input('post_id');
+
+            // Ensure the post ID exists
+            $username = auth()->user()->username;
+
+            $post = DB::table('tblposts')->where('post_id', $postId)->first();
+            if (!$post) {
+                return redirect()->back()->with('error', 'Post not found.');
+            }
+
             if ($request->has('approve')) {
                 // Approve the post
-                DB::table('tblposts')
+                $updated = DB::table('tblposts')
                     ->where('post_id', $postId)
-                    ->update(['status' => 'Approved']);
-                return redirect()
-                    ->back()
-                    ->with('success', 'Post approved successfully.');
-            } elseif ($request->has('disregard')) {
-                // Disregard the post
-                DB::table('tblposts')
+                    ->update([
+                        'status' => 'Approved',
+                        'approvedBy' => $username,
+                    ]);
+
+                // Check if the update was successful
+                if ($updated) {
+                    return redirect()
+                        ->back()
+                        ->with('success', 'Post approved successfully.');
+                } else {
+                    return redirect()
+                        ->back()
+                        ->with('error', 'Failed to approve post.');
+                }
+            } elseif ($request->has('reject')) {
+                // Validate reason for disregard
+                $request->validate([
+                    'reasonDisregard' => 'required|string|max:500',
+                ]);
+
+                $reasonDisregard = $request->input('reasonDisregard');
+
+                // Disregard the post with reason
+                $updated = DB::table('tblposts')
                     ->where('post_id', $postId)
-                    ->update(['status' => 'Disregarded']);
-                return redirect()
-                    ->back()
-                    ->with('success', 'Post disregarded successfully.');
+                    ->update([
+                        'status' => 'Disregarded',
+                        'approvedBy' => $username,
+                        'reasonDisregard' => $reasonDisregard,
+                    ]);
+
+                \Log::info('Update Status:', ['updated' => $updated]);
+
+                // Check if the update was successful
+                if ($updated) {
+                    return redirect()
+                        ->back()
+                        ->with('success', 'Post disregarded successfully.');
+                } else {
+                    return redirect()
+                        ->back()
+                        ->with('error', 'Failed to disregard post.');
+                }
             }
         }
 
@@ -55,7 +97,6 @@ class PostpageController extends Controller
     }
 
     //filter function
-
     public function filterPosts(Request $request)
     {
         // Handle GET request (for displaying or filtering posts)
@@ -191,6 +232,7 @@ class PostpageController extends Controller
     public function update(Request $request)
     {
         $post = Posts::find($request->post_id);
+        $username = auth()->user()->username;
 
         // Validate the input data
         $request->validate([
@@ -206,7 +248,7 @@ class PostpageController extends Controller
         $post->status = $request->status;
         $post->tags = $request->tags;
         $post->postedBy = $request->postedBy;
-        $post->approvedBy = $request->approvedBy;
+        $post->approvedBy = $username;
         $post->save();
 
         return redirect()->back()->with('success', 'Post updated successfully');

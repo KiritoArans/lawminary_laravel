@@ -189,3 +189,30 @@ function resetFilter() {
     // Optionally, submit the form to reset the filter in the backend or refresh the page
     document.getElementById('filterForm').submit(); // This will refresh the page with cleared filters
 }
+
+// Function to open the modal
+document.querySelectorAll('.btn-view-reject').forEach((button) => {
+    button.addEventListener('click', function () {
+        var postId = this.getAttribute('data-target').split('-')[1]; // Get the post ID from data-target attribute
+        var modal = document.getElementById('disregardModal-' + postId);
+        modal.style.display = 'block'; // Show the modal by setting display to block
+    });
+});
+
+// Function to close the modal when the close button is clicked
+document.querySelectorAll('.close-button').forEach((closeButton) => {
+    closeButton.addEventListener('click', function () {
+        var modal = this.closest('.modal');
+        modal.style.display = 'none'; // Hide the modal by setting display to none
+    });
+});
+
+// Function to close the modal if clicked outside the modal content
+window.addEventListener('click', function (event) {
+    var modals = document.querySelectorAll('.modal');
+    modals.forEach(function (modal) {
+        if (event.target === modal) {
+            modal.style.display = 'none'; // Hide the modal if clicked outside
+        }
+    });
+});

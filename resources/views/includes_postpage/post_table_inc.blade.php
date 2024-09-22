@@ -8,7 +8,8 @@
             <th>Status</th>
             <th>Tags</th>
             <th>Posted By</th>
-            <th>Approved by</th>
+            <th>Updated By</th>
+            <th>Reason for Rejection</th>
             <th>Date</th>
             <th>Action</th>
         </tr>
@@ -27,6 +28,7 @@
                     <td>{{ $activity->tags }}</td>
                     <td>{{ $activity->postedBy }}</td>
                     <td>{{ $activity->approvedBy }}</td>
+                    <td>{{ $activity->reasonDisregard }}</td>
                     <td>
                         {{ \Carbon\Carbon::parse($activity->updated_at)->format('Y-m-d') }}
                     </td>
