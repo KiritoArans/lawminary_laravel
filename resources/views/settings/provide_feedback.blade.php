@@ -29,16 +29,18 @@
                 </header>
                 <content class="feedback-section">
                     <div class="feedback-form">
-                        <form method="POST" action="submit_feedback.php">
-                            <label for="name">Name:</label>
-                            <input type="text" id="name" name="name" required />
 
+                        <form method="POST" action="{{ route('users.createFeedback') }}">
+                            @csrf 
+                            @include('inclusions/response')
                             <label for="email">Email:</label>
                             <input
                                 type="email"
                                 id="email"
                                 name="email"
+                                value="{{ Auth::user()->email }}"
                                 required
+                                readonly
                             />
 
                             <label for="feedback">Feedback:</label>
@@ -51,6 +53,7 @@
 
                             <button type="submit">Submit Feedback</button>
                         </form>
+
                     </div>
                 </content>
             </main>
