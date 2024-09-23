@@ -46,6 +46,7 @@
                         </select>
                     </form>
                 </div>
+                
                 <div class="posts">
                     @if($posts->isEmpty())
                     <div class="empty">No posts available.</div>
