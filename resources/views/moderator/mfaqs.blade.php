@@ -60,79 +60,42 @@
                     </div>
                 </header>
                 <content>
-                    <div class="table-container">
-                        <table class="table">
+                    <h1>Frequently Asked Questions</h1>
+                    <div class="container">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Concern</th>
-                                    <th>Frequency</th>
-                                    <th>Date</th>
-                                    <th>Action</th>
+                                    <th>Entities</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr
-                                    data-id="1"
-                                    data-concern="How to register?"
-                                    data-frequency="15"
-                                    data-date="2024-08-10"
-                                >
-                                    <td>1</td>
-                                    <td>How to register?</td>
-                                    <td>15</td>
-                                    <td>2024-08-10</td>
-                                    <td>
-                                        <button
-                                            class="custom-button view-button"
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr
-                                    data-id="2"
-                                    data-concern="How to reset password?"
-                                    data-frequency="10"
-                                    data-date="2024-08-11"
-                                >
-                                    <td>2</td>
-                                    <td>How to reset password?</td>
-                                    <td>10</td>
-                                    <td>2024-08-11</td>
-                                    <td>
-                                        <button
-                                            class="custom-button view-button"
-                                        >
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
+                                @foreach ($faqs as $faq)
+                                    <tr>
+                                        <td>{{ $faq['id'] }}</td>
+                                        <td>{{ $faq['concern'] }}</td>
+                                        <td>
+                                            @if (! empty($faq['entities']))
+                                                @foreach ($faq['entities'] as $entity)
+                                                    @if (is_array($entity))
+                                                        @foreach ($entity as $keyword)
+                                                            {{ $keyword }}
+                                                            <br />
+                                                        @endforeach
+                                                    @else
+                                                        {{ $entity }}
+                                                        <br />
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                    No entities found
+                                            @endif
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
-                    </div>
-
-                    <div id="viewFaqModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close-button">&times;</span>
-                            <h2>FAQ Details</h2>
-                            <p>
-                                <strong>ID:</strong>
-                                <span id="viewFaqId"></span>
-                            </p>
-                            <p>
-                                <strong>Concern:</strong>
-                                <span id="viewFaqConcern"></span>
-                            </p>
-                            <p>
-                                <strong>Frequency:</strong>
-                                <span id="viewFaqFrequency"></span>
-                            </p>
-                            <p>
-                                <strong>Date:</strong>
-                                <span id="viewFaqDate"></span>
-                            </p>
-                        </div>
                     </div>
 
                     <div id="filterFaqModal" class="modal">

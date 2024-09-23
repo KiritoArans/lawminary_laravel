@@ -14,6 +14,7 @@ use App\Http\Controllers\SystemContentController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ResourcepageController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\FaqsController;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -258,6 +259,11 @@ Route::get('/admin/forums', [ForumController::class, 'search'])->name(
 
 Route::get('/admin/forums/filter', [ForumController::class, 'filter'])->name(
     'admin.forums.filter'
+);
+
+//FAQS route
+Route::get('/moderator/faqs', [FaqsController::class, 'getFAQs'])->name(
+    'moderator.faqs'
 );
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
