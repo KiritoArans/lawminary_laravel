@@ -48,9 +48,9 @@
             @endforelse
         </tbody>
     </table>
-
     <div class="paginationContent">
         <ul class="pagination">
+            <!-- Previous Page Button -->
             <li
                 class="page-item {{ $resources->currentPage() == 1 ? 'disabled' : '' }}"
                 aria-disabled="{{ $resources->currentPage() == 1 }}"
@@ -60,10 +60,12 @@
                     href="{{ $resources->appends(request()->input())->previousPageUrl() }}"
                     rel="prev"
                 >
-                    &laquo;
+                    <i class="fas fa-chevron-left"></i>
+                    <!-- Left Arrow Icon -->
                 </a>
             </li>
 
+            <!-- Page Numbers -->
             @for ($i = 1; $i <= $resources->lastPage(); $i++)
                 <li
                     class="page-item {{ $resources->currentPage() == $i ? 'active' : '' }}"
@@ -77,6 +79,7 @@
                 </li>
             @endfor
 
+            <!-- Next Page Button -->
             <li
                 class="page-item {{ $resources->hasMorePages() ? '' : 'disabled' }}"
                 aria-disabled="{{ ! $resources->hasMorePages() }}"
@@ -86,7 +89,8 @@
                     href="{{ $resources->appends(request()->input())->nextPageUrl() }}"
                     rel="next"
                 >
-                    &raquo;
+                    <i class="fas fa-chevron-right"></i>
+                    <!-- Right Arrow Icon -->
                 </a>
             </li>
         </ul>

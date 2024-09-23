@@ -13,7 +13,7 @@
             rel="stylesheet"
             href="{{ asset('css/moderator/mfaqsstyle.css') }}"
         />
-        <link rel="stylesheet" href="{{ asset('/base_pagination') }}" />
+        <link rel="stylesheet" href="{{ asset('css/base_pagination.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
         <link
             rel="stylesheet"
@@ -63,12 +63,12 @@
                 <content>
                     <h1>Frequently Asked Questions</h1>
                     <div class="container">
-                        @if (! empty($faqs))
+                        @if ($faqs->isNotEmpty())
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>Question</th>
-                                        <th>Action</th>
+                                        <th>View Related Question/s</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,19 +80,60 @@
                                                     class="custom-button view-related"
                                                     data-questions="{{ json_encode($questions) }}"
                                                 >
-                                                    View Related Questions
+                                                    View
                                                 </button>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+
+                            <!-- Move Pagination Outside of the Table -->
+                            <div class="paginationContent">
+                                <ul class="pagination">
+                                    <li
+                                        class="page-item {{ $faqs->currentPage() == 1 ? 'disabled' : '' }}"
+                                    >
+                                        <a
+                                            class="page-link"
+                                            href="{{ $faqs->appends(request()->input())->previousPageUrl() }}"
+                                            rel="prev"
+                                        >
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    @for ($i = 1; $i <= $faqs->lastPage(); $i++)
+                                        <li
+                                            class="page-item {{ $faqs->currentPage() == $i ? 'active' : '' }}"
+                                        >
+                                            <a
+                                                class="page-link"
+                                                href="{{ $faqs->appends(request()->input())->url($i) }}"
+                                            >
+                                                {{ $i }}
+                                            </a>
+                                        </li>
+                                    @endfor
+
+                                    <li
+                                        class="page-item {{ $faqs->hasMorePages() ? '' : 'disabled' }}"
+                                    >
+                                        <a
+                                            class="page-link"
+                                            href="{{ $faqs->appends(request()->input())->nextPageUrl() }}"
+                                            rel="next"
+                                        >
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         @else
                             <p>No FAQs found.</p>
                         @endif
                     </div>
 
-                    <!-- Modal -->
+                    <!-- Modal remains unchanged -->
                     <div id="relatedFaqModal" class="modal">
                         <div class="modal-content">
                             <span class="close-button">&times;</span>
