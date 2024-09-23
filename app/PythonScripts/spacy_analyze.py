@@ -1,65 +1,65 @@
 import spacy
 import json
 import mysql.connector
-from collections import Counter
+from collections import defaultdict
+import warnings
+
+warnings.filterwarnings("ignore", category=UserWarning)
 
 # Load SpaCy model (English)
 nlp = spacy.load("en_core_web_sm")
 
 # Connect to the MySQL database
 connection = mysql.connector.connect(
-    host="localhost",       # Your database host
-    user="root",            # Your database username
-    password="",  # Your database password
-    database="lawminary_db"   # Your database name
+    host="localhost",
+    user="root",
+    password="",
+    database="lawminary_db"
 )
 
 # Fetch FAQs from tblposts table
 cursor = connection.cursor(dictionary=True)
-cursor.execute("SELECT id, concern FROM tblposts")  # Adjust based on your table structure
+cursor.execute("SELECT id, concern FROM tblposts")
 faqs = cursor.fetchall()
 
-# Function to analyze text and extract keywords
+# Function to analyze text and group by semantic similarity
 def analyze_faqs(faqs):
-    analyzed_data = []
-    all_keywords = []  # To store all keywords across all questions for frequency analysis
-    
+    doc_list = []
+    grouped_faqs = defaultdict(list)
+
+    # Process each FAQ's concern and convert to a SpaCy doc object
     for faq in faqs:
-        doc = nlp(faq['concern'])  # Analyze the FAQ text using SpaCy
-        
-        # Extract keywords or entities (you can tweak this based on what you consider important)
-        entities = [ent.text.lower() for ent in doc.ents]  # Lowercase entities for uniformity
-        
-        # If no entities found, tokenize the question to extract other important words
-        if not entities:
-            tokens = [token.text.lower() for token in doc if not token.is_stop and not token.is_punct]
-            entities = tokens
-        
-        # Add the entities to the frequency list
-        all_keywords.extend(entities)
-        
-        analyzed_data.append({
-            "id": faq['id'],
-            "concern": faq['concern'],
-            "entities": entities
-        })
-    
-    # Count the frequency of all keywords/entities
-    keyword_counter = Counter(all_keywords)
-    
-    # Only keep FAQs with frequent keywords (frequency > 2)
-    filtered_data = []
-    for faq in analyzed_data:
-        if any(keyword_counter[keyword] > 5 for keyword in faq['entities']):
-            filtered_data.append(faq)
-    
-    return filtered_data
+        doc = nlp(faq['concern'])
+        doc_list.append((faq, doc))  # Store both the FAQ and its doc object
 
-# Analyze the FAQs from the database
-analyzed_faqs = analyze_faqs(faqs)
+    # Compare the similarity between FAQ concerns
+    threshold = 0.50  # Adjust this threshold for more or less similarity
+    for i, (faq_a, doc_a) in enumerate(doc_list):
+        found_group = False
+        for key, group in grouped_faqs.items():
+            similarity_score = doc_a.similarity(nlp(key))
+            if similarity_score > threshold:
+                grouped_faqs[key].append(faq_a)
+                found_group = True
+                break
+        if not found_group:
+            grouped_faqs[faq_a['concern']].append(faq_a)  # Create a new group
+    
+    # Sort the groups by the number of related questions (highest to lowest)
+    sorted_grouped_faqs = sorted(grouped_faqs.items(), key=lambda x: len(x[1]), reverse=True)
+    
+    return sorted_grouped_faqs
 
-# Print the analyzed FAQs as JSON
-print(json.dumps(analyzed_faqs, indent=2))
+# Analyze the FAQs
+grouped_faqs = analyze_faqs(faqs)
+
+# Prepare the output for Laravel
+output = {
+    key: [{'id': faq['id'], 'concern': faq['concern']} for faq in group] for key, group in grouped_faqs
+}
+
+# Print the output as JSON
+print(json.dumps(output, indent=2))
 
 # Close the database connection
 cursor.close()

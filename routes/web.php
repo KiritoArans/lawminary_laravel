@@ -14,6 +14,7 @@ use App\Http\Controllers\SystemContentController;
 use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ResourcepageController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\FaqsController;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -471,9 +472,5 @@ Route::post('/profile/settings/account/changeinfo2', [
     AccountController::class,
     'updateAccountInfo',
 ])->name('settings.updateAccountInfo');
-
-Route::post('/feedback', [FeedbackController::class, 'createFeedback'])->name(
-    'users.createFeedback'
-);
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------

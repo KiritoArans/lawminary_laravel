@@ -13,6 +13,7 @@
             rel="stylesheet"
             href="{{ asset('css/moderator/mfaqsstyle.css') }}"
         />
+        <link rel="stylesheet" href="{{ asset('/base_pagination') }}" />
         <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
         <link
             rel="stylesheet"
@@ -62,87 +63,43 @@
                 <content>
                     <h1>Frequently Asked Questions</h1>
                     <div class="container">
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Concern</th>
-                                    <th>Entities</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($faqs as $faq)
+                        @if (! empty($faqs))
+                            <table class="table table-striped">
+                                <thead>
                                     <tr>
-                                        <td>{{ $faq['id'] }}</td>
-                                        <td>{{ $faq['concern'] }}</td>
-                                        <td>
-                                            @if (! empty($faq['entities']))
-                                                @foreach ($faq['entities'] as $entity)
-                                                    @if (is_array($entity))
-                                                        @foreach ($entity as $keyword)
-                                                            {{ $keyword }}
-                                                            <br />
-                                                        @endforeach
-                                                    @else
-                                                        {{ $entity }}
-                                                        <br />
-                                                    @endif
-                                                @endforeach
-                                            @else
-                                                    No entities found
-                                            @endif
-                                        </td>
+                                        <th>Question</th>
+                                        <th>Action</th>
                                     </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach ($faqs as $keyword => $questions)
+                                        <tr>
+                                            <td>{{ $keyword }}</td>
+                                            <td>
+                                                <button
+                                                    class="custom-button view-related"
+                                                    data-questions="{{ json_encode($questions) }}"
+                                                >
+                                                    View Related Questions
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <p>No FAQs found.</p>
+                        @endif
                     </div>
 
-                    <div id="filterFaqModal" class="modal">
+                    <!-- Modal -->
+                    <div id="relatedFaqModal" class="modal">
                         <div class="modal-content">
                             <span class="close-button">&times;</span>
-                            <h2>Filter FAQs</h2>
-                            <form id="filterForm">
-                                <label for="filterFaqId">Filter by ID:</label>
-                                <input
-                                    type="text"
-                                    id="filterFaqId"
-                                    name="filterFaqId"
-                                />
-
-                                <label for="filterFaqConcern">
-                                    Filter by Concern:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="filterFaqConcern"
-                                    name="filterFaqConcern"
-                                />
-
-                                <label for="filterFaqFrequency">
-                                    Filter by Frequency:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="filterFaqFrequency"
-                                    name="filterFaqFrequency"
-                                />
-
-                                <label for="filterFaqDate">
-                                    Filter by Date:
-                                </label>
-                                <input
-                                    type="date"
-                                    id="filterFaqDate"
-                                    name="filterFaqDate"
-                                />
-
-                                <div class="form-buttons">
-                                    <button type="submit" class="save-button">
-                                        Apply Filters
-                                    </button>
-                                </div>
-                            </form>
+                            <h2>Related Questions</h2>
+                            <div id="relatedQuestionsContent">
+                                <!-- Dynamic related questions will be loaded here -->
+                            </div>
                         </div>
                     </div>
                 </content>

@@ -3,35 +3,42 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use App\Models\Posts;
 
 class FaqsController extends Controller
 {
     public function getFAQs()
     {
-        // Define the Python script path and Python executable path
+        // Path to Python script
         $pythonScript = base_path('app/PythonScripts/spacy_analyze.py');
+
+        // Ensure the correct Python executable is used
         $pythonExecutable =
             'C:/xampp/htdocs/lawminary_laravel/venv/Scripts/python.exe';
 
-        // Run the Python script and capture the output
-        $output = shell_exec("$pythonExecutable $pythonScript 2>&1");
+        // Run the Python script using shell_exec
+        $command = escapeshellcmd("$pythonExecutable $pythonScript");
+        $output = shell_exec($command);
 
-        // Decode the JSON output
-        $faqs = json_decode($output, true);
-
-        // Check if there was an error decoding JSON
-        if (json_last_error() !== JSON_ERROR_NONE) {
+        // Check if the output exists
+        if ($output === null) {
             return response()->json(
-                [
-                    'error' => 'JSON decoding failed: ' . json_last_error_msg(),
-                ],
+                ['error' => 'Failed to execute Python script'],
                 500
             );
         }
 
-        // Pass the decoded data to the view
-        return view('moderator.mfaqs', ['faqs' => $faqs]);
+        // Decode the JSON output from the Python script
+        $faqs = json_decode($output, true);
+
+        // Check if the JSON decoding was successful
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return response()->json(
+                ['error' => 'JSON decoding failed: ' . json_last_error_msg()],
+                500
+            );
+        }
+
+        // Pass the FAQs to the Blade view
+        return view('moderator.mfaqs', compact('faqs'));
     }
 }
