@@ -91,42 +91,19 @@
                 <i class="fas fa-search search-icon"></i>
                 <input type="text" placeholder="Search Forums">
               </div>
-              <div class="forum">
-                <div class="forum-status">
-                  <span>Joined</span>
+              
+              @foreach($forums as $forum)
+                <div class="forum">
+                    <div class="forum-status">
+                        <span>Joined</span> <!-- Assuming you have logic to check if the user has joined -->
+                    </div>
+                    <div class="forum-head">
+                        <h3>{{ $forum->forumName }}</h3> <!-- Display the forum name -->
+                        <h5>Members: {{ $forum->members ?? 0 }}</h5> <!-- Assuming you have a members count field, fallback to 0 if none -->
+                    </div>
                 </div>
-                <div class="forum-head">
-                  <h3>Forum Name</h3>
-                  <h5>Members: 0</h5>
-                </div>
-              </div>
-              <div class="forum">
-                <div class="forum-status">
-                  <span>Joined</span>
-                </div>
-                <div class="forum-head">
-                  <h3>Forum Name</h3>
-                  <h5>Members: 0</h5>
-                </div>
-              </div>
-              <div class="forum">
-                <div class="forum-status">
-                  <span>Joined</span>
-                </div>
-                <div class="forum-head">
-                  <h3>Forum Name</h3>
-                  <h5>Members: 0</h5>
-                </div>
-              </div>
-              <div class="forum">
-                <div class="forum-status">
-                  <span>Joined</span>
-                </div>
-                <div class="forum-head">
-                  <h3>Forum Name</h3>
-                  <h5>Members: 0</h5>
-                </div>
-              </div>
+              @endforeach
+            
               <div class="forum-pagination">
                 <button id="prev">Previous</button>
                   <span id="page-num">1</span>

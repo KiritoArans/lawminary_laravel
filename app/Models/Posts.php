@@ -21,7 +21,6 @@ class Posts extends Model
         'tags',
         'created_by',
         'updated_by',
-        
     ];
 
     public function likes()

@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Lawminary | Forums</title>
+        <title>Lawminary | Moderator Forums</title>
         <link
             rel="icon"
             href="{{ asset('imgs/lawminarylogo.png') }}"
@@ -26,17 +26,7 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-            integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-        />
-        <link
-            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
-            rel="stylesheet"
-        />
+        @include('inclusions/libraryLinks')
     </head>
     <body>
         <div class="container">
@@ -241,25 +231,26 @@
                                     &times;
                                 </span>
                                 <h2>Add Forum</h2>
-                                <form id="addForumForm">
+                                <form id="addForumForm" method="POST" action="{{ route('createForum') }}" enctype="multipart/form-data">
+                                    @csrf 
+                                    @include('inclusions/response')
                                     <label for="addForumName">
                                         Forum Name:
                                     </label>
                                     <input
                                         type="text"
                                         id="addForumName"
-                                        name="addForumName"
+                                        name="forumName"
                                         required
                                     />
 
-                                    <label for="addForumIssue">
-                                        Forum Issue:
+                                    <label for="addForumPhoto">
+                                        Forum Photo:
                                     </label>
                                     <input
-                                        type="text"
-                                        id="addForumIssue"
-                                        name="addForumIssue"
-                                        required
+                                        type="file"
+                                        id="addForumPhoto"
+                                        name="forumPhoto"
                                     />
 
                                     <label for="addForumDescription">
@@ -268,27 +259,7 @@
                                     <input
                                         type="text"
                                         id="addForumDescription"
-                                        name="addForumDescription"
-                                        required
-                                    />
-
-                                    <label for="addMembersCount">
-                                        Members Count:
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="addMembersCount"
-                                        name="addMembersCount"
-                                        required
-                                    />
-
-                                    <label for="addDateCreated">
-                                        Date Created:
-                                    </label>
-                                    <input
-                                        type="date"
-                                        id="addDateCreated"
-                                        name="addDateCreated"
+                                        name="forumDesc"
                                         required
                                     />
 
@@ -313,186 +284,20 @@
                             </tr>
                         </thead>
                         <tbody id="forumsTableBody">
-                            <tr data-forum-id="1">
-                                <td>1</td>
-                                <td>General Discussion</td>
-                                <td>A forum for general topics</td>
-                                <td>100</td>
-                                <td>2024-01-15</td>
+                            @foreach ($forums as $forum)
+                            <tr data-forum-id="{{ $forum->id }}">
+                                <td>{{ $forum->id }}</td>
+                                <td>{{ $forum->forumName }}</td>
+                                <td>{{ $forum->forumDesc }}</td>
+                                <td>{{ $forum->forumPhoto }}</td>
+                                <td>{{ $forum->created_at }}</td>
                                 <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="1"
-                                    >
+                                    <button class="action-button" data-forum-id="{{ $forum->id }}">
                                         View
                                     </button>
                                 </td>
                             </tr>
-                            <tr data-forum-id="2">
-                                <td>2</td>
-                                <td>Help and Support</td>
-                                <td>Get help and support</td>
-                                <td>50</td>
-                                <td>2024-02-20</td>
-                                <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="2"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-forum-id="3">
-                                <td>3</td>
-                                <td>Announcements</td>
-                                <td>Official announcements</td>
-                                <td>200</td>
-                                <td>2024-03-10</td>
-                                <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="3"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-forum-id="4">
-                                <td>4</td>
-                                <td>Feedback</td>
-                                <td>Share your feedback</td>
-                                <td>75</td>
-                                <td>2024-04-05</td>
-                                <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="4"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-forum-id="5">
-                                <td>5</td>
-                                <td>Off-Topic</td>
-                                <td>Discuss anything</td>
-                                <td>120</td>
-                                <td>2024-05-22</td>
-                                <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="5"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-forum-id="6">
-                                <td>6</td>
-                                <td>Events</td>
-                                <td>Upcoming events and activities</td>
-                                <td>85</td>
-                                <td>2024-06-15</td>
-                                <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="6"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-forum-id="7">
-                                <td>7</td>
-                                <td>Introductions</td>
-                                <td>Introduce yourself</td>
-                                <td>90</td>
-                                <td>2024-07-01</td>
-                                <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="7"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-forum-id="8">
-                                <td>8</td>
-                                <td>Technical Support</td>
-                                <td>Get technical help</td>
-                                <td>60</td>
-                                <td>2024-08-20</td>
-                                <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="8"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-forum-id="9">
-                                <td>9</td>
-                                <td>Marketplace</td>
-                                <td>Buy and sell items</td>
-                                <td>150</td>
-                                <td>2024-09-05</td>
-                                <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="9"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-forum-id="10">
-                                <td>10</td>
-                                <td>Project Collaboration</td>
-                                <td>Find project partners</td>
-                                <td>110</td>
-                                <td>2024-10-15</td>
-                                <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="10"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-forum-id="11">
-                                <td>11</td>
-                                <td>Resource Sharing</td>
-                                <td>Share resources and materials</td>
-                                <td>95</td>
-                                <td>2024-11-08</td>
-                                <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="11"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            <tr data-forum-id="12">
-                                <td>12</td>
-                                <td>Study Groups</td>
-                                <td>Form or join study groups</td>
-                                <td>130</td>
-                                <td>2024-12-01</td>
-                                <td>
-                                    <button
-                                        class="action-button"
-                                        data-forum-id="12"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
+                            @endforeach
                         </tbody>
                     </table>
                     <div id="viewForumModal" class="modal">

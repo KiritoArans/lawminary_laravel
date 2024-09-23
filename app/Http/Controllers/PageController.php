@@ -8,6 +8,7 @@ use App\Models\UserAccount;
 use App\Models\Posts;
 use App\Models\Like;
 use App\Models\Comment;
+use App\Models\Forum;
 use App\Models\Follow;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -63,7 +64,16 @@ class PageController extends Controller
 
     public function showForumsPage()
     {
-        return view('users.forums');
+        // $forums = DB::table('tblforums')
+        // ->leftJoin('forum_members', 'tblforums.forum_id', '=', 'forum_members.forum_id')
+        // ->select('tblforums.*', DB::raw('COUNT(forum_members.user_id) as members'))
+        // ->groupBy('tblforums.forum_id')
+        // ->orderBy('created_at', 'desc')
+        
+        $forums = DB::table('tblforums')->orderBy('created_at', 'desc')
+        ->get();
+        
+        return view('users.forums', compact('forums'));
     }
 
     public function showNotificationPage()

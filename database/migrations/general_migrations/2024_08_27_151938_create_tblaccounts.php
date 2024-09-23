@@ -11,8 +11,8 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('tblaccounts', function (Blueprint $table) {
-            $table->id(); // This is the auto-increment primary key column
-            $table->unsignedBigInteger('user_id')->nullable(); // user_id without auto-increment
+            $table->id(); 
+            $table->unsignedBigInteger('user_id')->nullable(); 
             $table->string('username', 50)->unique();
             $table->string('email', 100)->unique();
             $table->string('userPhoto', 255)->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->string('contactNumber', 11);
             $table->string('status', 15)->nullable();
             $table->boolean('restrict')->default(false);
-            $table->integer('restrictDays')->nullable(); // Removed auto-increment
+            $table->integer('restrictDays')->nullable(); 
             $table->enum('badge', [
                 'Wood',
                 'Steel',
