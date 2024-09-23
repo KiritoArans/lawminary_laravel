@@ -13,6 +13,7 @@
             rel="stylesheet"
             href="{{ asset('css/moderator/mfaqsstyle.css') }}"
         />
+        <link rel="stylesheet" href="{{ asset('css/base_pagination.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
         <link
             rel="stylesheet"
@@ -60,126 +61,86 @@
                     </div>
                 </header>
                 <content>
-                    <div class="table-container">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Concern</th>
-                                    <th>Frequency</th>
-                                    <th>Date</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    data-id="1"
-                                    data-concern="How to register?"
-                                    data-frequency="15"
-                                    data-date="2024-08-10"
-                                >
-                                    <td>1</td>
-                                    <td>How to register?</td>
-                                    <td>15</td>
-                                    <td>2024-08-10</td>
-                                    <td>
-                                        <button
-                                            class="custom-button view-button"
+                    <h1>Frequently Asked Questions</h1>
+                    <div class="container">
+                        @if ($faqs->isNotEmpty())
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Question</th>
+                                        <th>View Related Question/s</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($faqs as $keyword => $questions)
+                                        <tr>
+                                            <td>{{ $keyword }}</td>
+                                            <td>
+                                                <button
+                                                    class="custom-button view-related"
+                                                    data-questions="{{ json_encode($questions) }}"
+                                                >
+                                                    View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+
+                            <!-- Move Pagination Outside of the Table -->
+                            <div class="paginationContent">
+                                <ul class="pagination">
+                                    <li
+                                        class="page-item {{ $faqs->currentPage() == 1 ? 'disabled' : '' }}"
+                                    >
+                                        <a
+                                            class="page-link"
+                                            href="{{ $faqs->appends(request()->input())->previousPageUrl() }}"
+                                            rel="prev"
                                         >
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr
-                                    data-id="2"
-                                    data-concern="How to reset password?"
-                                    data-frequency="10"
-                                    data-date="2024-08-11"
-                                >
-                                    <td>2</td>
-                                    <td>How to reset password?</td>
-                                    <td>10</td>
-                                    <td>2024-08-11</td>
-                                    <td>
-                                        <button
-                                            class="custom-button view-button"
+                                            <i class="fas fa-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    @for ($i = 1; $i <= $faqs->lastPage(); $i++)
+                                        <li
+                                            class="page-item {{ $faqs->currentPage() == $i ? 'active' : '' }}"
                                         >
-                                            View
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                            <a
+                                                class="page-link"
+                                                href="{{ $faqs->appends(request()->input())->url($i) }}"
+                                            >
+                                                {{ $i }}
+                                            </a>
+                                        </li>
+                                    @endfor
+
+                                    <li
+                                        class="page-item {{ $faqs->hasMorePages() ? '' : 'disabled' }}"
+                                    >
+                                        <a
+                                            class="page-link"
+                                            href="{{ $faqs->appends(request()->input())->nextPageUrl() }}"
+                                            rel="next"
+                                        >
+                                            <i class="fas fa-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        @else
+                            <p>No FAQs found.</p>
+                        @endif
                     </div>
 
-                    <div id="viewFaqModal" class="modal">
+                    <!-- Modal remains unchanged -->
+                    <div id="relatedFaqModal" class="modal">
                         <div class="modal-content">
                             <span class="close-button">&times;</span>
-                            <h2>FAQ Details</h2>
-                            <p>
-                                <strong>ID:</strong>
-                                <span id="viewFaqId"></span>
-                            </p>
-                            <p>
-                                <strong>Concern:</strong>
-                                <span id="viewFaqConcern"></span>
-                            </p>
-                            <p>
-                                <strong>Frequency:</strong>
-                                <span id="viewFaqFrequency"></span>
-                            </p>
-                            <p>
-                                <strong>Date:</strong>
-                                <span id="viewFaqDate"></span>
-                            </p>
-                        </div>
-                    </div>
-
-                    <div id="filterFaqModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close-button">&times;</span>
-                            <h2>Filter FAQs</h2>
-                            <form id="filterForm">
-                                <label for="filterFaqId">Filter by ID:</label>
-                                <input
-                                    type="text"
-                                    id="filterFaqId"
-                                    name="filterFaqId"
-                                />
-
-                                <label for="filterFaqConcern">
-                                    Filter by Concern:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="filterFaqConcern"
-                                    name="filterFaqConcern"
-                                />
-
-                                <label for="filterFaqFrequency">
-                                    Filter by Frequency:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="filterFaqFrequency"
-                                    name="filterFaqFrequency"
-                                />
-
-                                <label for="filterFaqDate">
-                                    Filter by Date:
-                                </label>
-                                <input
-                                    type="date"
-                                    id="filterFaqDate"
-                                    name="filterFaqDate"
-                                />
-
-                                <div class="form-buttons">
-                                    <button type="submit" class="save-button">
-                                        Apply Filters
-                                    </button>
-                                </div>
-                            </form>
+                            <h2>Related Questions</h2>
+                            <div id="relatedQuestionsContent">
+                                <!-- Dynamic related questions will be loaded here -->
+                            </div>
                         </div>
                     </div>
                 </content>
