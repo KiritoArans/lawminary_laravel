@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const addForumButton = document.getElementById('addForumButton');
     const addForumModal = document.getElementById('addForumModal');
     const closeAddForumModal = document.getElementById('closeAddForumModal');
-    const addForumForm = document.getElementById('addForumForm');
+    // const addForumForm = document.getElementById('addForumForm');
     let forumIdCounter = 3; // Adjust based on existing forums
 
     addForumButton.addEventListener('click', function () {
@@ -79,32 +79,32 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    addForumForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const forumName = document.getElementById('addForumName').value;
-        const forumIssue = document.getElementById('addForumIssue').value;
-        const forumDescription = document.getElementById('addForumDescription').value;
-        const membersCount = document.getElementById('addMembersCount').value;
-        const dateCreated = document.getElementById('addDateCreated').value;
+    // addForumForm.addEventListener('submit', function (event) {
+    //     event.preventDefault();
+    //     const forumName = document.getElementById('addForumName').value;
+    //     const forumIssue = document.getElementById('addForumIssue').value;
+    //     const forumDescription = document.getElementById('addForumDescription').value;
+    //     const membersCount = document.getElementById('addMembersCount').value;
+    //     const dateCreated = document.getElementById('addDateCreated').value;
 
-        addForum(forumIdCounter++, forumName, forumIssue, forumDescription, membersCount, dateCreated);
-        addForumModal.style.display = 'none';
-        addForumForm.reset();
-    });
+    //     addForum(forumIdCounter++, forumName, forumIssue, forumDescription, membersCount, dateCreated);
+    //     addForumModal.style.display = 'none';
+    //     addForumForm.reset();
+    // });
 
-    function addForum(id, name, issue, description, members, date) {
-        const tbody = document.getElementById('forumsTableBody');
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-            <td>${id}</td>
-            <td>${name}</td>
-            <td>${description}</td>
-            <td>${members}</td>
-            <td>${date}</td>
-            <td><button class="action-button">View</button></td>
-        `;
-        tbody.appendChild(newRow);
-    }
+    // function addForum(id, name, issue, description, members, date) {
+    //     const tbody = document.getElementById('forumsTableBody');
+    //     const newRow = document.createElement('tr');
+    //     newRow.innerHTML = `
+    //         <td>${id}</td>
+    //         <td>${name}</td>
+    //         <td>${description}</td>
+    //         <td>${members}</td>
+    //         <td>${date}</td>
+    //         <td><button class="action-button">View</button></td>
+    //     `;
+    //     tbody.appendChild(newRow);
+    // }
 });
 
 /edit button/

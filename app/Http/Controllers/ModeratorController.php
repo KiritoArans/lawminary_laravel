@@ -9,6 +9,7 @@ use App\Models\ResourceFile;
 use Illuminate\Support\Facades\Hash;
 use App\Models\general_database;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class moderatorController extends Controller
@@ -41,7 +42,8 @@ class moderatorController extends Controller
 
     public function showMforums()
     {
-        return view('moderator.mforums');
+        $forums = DB::table('tblforums')->orderBy('created_at', 'desc')->get(); // or use a Forum model
+        return view('moderator.mforums', compact('forums'));
     }
 
     public function showMfaqs()

@@ -402,6 +402,12 @@ Route::delete('/admin/resources/delete/{id}', [
     'destroy',
 ])->name('admin.deleteResource');
 
+
+// Forums
+Route::post('/createForum', [ForumController::class, 'createForum'])->name(
+    'createForum'
+);
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // User Backend Routing
