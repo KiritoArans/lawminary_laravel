@@ -11,9 +11,7 @@
     </head>
     <body>
         <div class="container">
-            <!-- Include navigation bar for users -->
             @include('inclusions/userNav')
-
             <main>
                 <!-- Header section -->
                 <header>
@@ -79,18 +77,19 @@
                             @if (isset($possibleCharges) && count($possibleCharges) > 0)
                                 @foreach ($possibleCharges as $charge)
                                     <div class="charges-info">
-                                        <div class="possible-charges">
-                                            <h2>
-                                                {{ $charge->article_name }}
-                                            </h2>
-                                            <p>{{ $charge->description }}</p>
-                                        </div>
+                                        <h2>{{ $charge->article_name }}</h2>
+                                        <p>{{ $charge->description }}</p>
                                     </div>
                                 @endforeach
                             @else
                                 <p>
                                     No possible charges found for your concern.
                                 </p>
+                            @endif
+                            @if (isset($error) && ! empty($error))
+                                <div class="alert alert-danger">
+                                    {{ $error }}
+                                </div>
                             @endif
                         </div>
                     </div>

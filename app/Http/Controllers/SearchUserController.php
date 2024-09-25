@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\BookTwoLaws;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\Process\Process;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 
@@ -11,41 +12,76 @@ class SearchUserController extends Controller
 {
     public function findPossibleCharges(Request $request)
     {
-        // Get the user's input
-        $concern = $request->input('user_concern');
+        Log::info('findPossibleCharges method was called.');
 
-        // Define the Python script path and pass the user's concern
-        $process = new Process([
-            base_path('venv/Scripts/python'), // Ensure correct Python path
-            base_path('app/PythonScripts/concern_analyzer.py'),
-            $concern,
-        ]);
+        $concern = $request->input('user_concern');
+        Log::info('User concern: ' . $concern);
+
+        // Get the current environment variables and add them to the process
+        $env = array_merge($_ENV, ['SystemRoot' => getenv('SystemRoot')]);
+
+        $process = new Process(
+            [
+                base_path('venv/Scripts/python'),
+                base_path('app/PythonScripts/concern_analyzer.py'),
+                $concern,
+            ],
+            null,
+            $env
+        );
+
         $process->run();
 
-        // Check if the process ran successfully
         if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+            Log::error('Python script failed: ' . $process->getErrorOutput());
+            return view('users.search', [
+                'possibleCharges' => [],
+                'concern' => $concern,
+                'error' => $process->getErrorOutput(),
+            ]);
         }
 
-        // Get the output from Python (refined keywords)
         $output = $process->getOutput();
         $keywords = json_decode($output, true);
 
-        // Check if $keywords is valid before using it in the query
-        if (is_array($keywords) && !empty($keywords)) {
-            // Use the keywords to search in the database
-            $possibleCharges = BookTwoLaws::where(function ($query) use (
-                $keywords
-            ) {
-                foreach ($keywords as $keyword) {
-                    $query->orWhere('synonyms', 'LIKE', "%{$keyword}%");
-                }
-            })->get();
-        } else {
-            $possibleCharges = []; // Set as empty if no valid keywords
-        }
+        Log::info('Extracted keywords: ' . json_encode($keywords));
 
-        // Return the results to the Blade view
+        // Prepare bindings for secure queries
+        $bindingsArray = array_map(function ($keyword) {
+            return "%{$keyword}%";
+        }, $keywords);
+
+        // Run the actual query with relevance calculation
+        $possibleCharges = \DB::table('tblbooktwo')
+            ->select('tblbooktwo.*')
+            ->selectRaw(
+                '
+            (
+                ' .
+                    implode(
+                        ' + ',
+                        array_fill(
+                            0,
+                            count($keywords),
+                            '(CASE WHEN description LIKE ? THEN 1 ELSE 0 END)'
+                        )
+                    ) .
+                    '
+            ) as relevance
+        ',
+                $bindingsArray
+            )
+            ->where(function ($query) use ($keywords) {
+                foreach ($keywords as $keyword) {
+                    $query->orWhere('description', 'LIKE', "%{$keyword}%");
+                }
+            })
+            ->orderByDesc('relevance')
+            ->limit(5)
+            ->get();
+
+        Log::info('Query result: ' . json_encode($possibleCharges));
+
         return view('users.search', [
             'possibleCharges' => $possibleCharges,
             'concern' => $concern,
