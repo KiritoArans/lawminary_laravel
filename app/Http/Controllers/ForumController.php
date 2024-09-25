@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Forum;
+use App\Models\JoinForum;
 use App\Models\ForumPosts;
 use App\Models\Points;
 use App\Models\Like;
@@ -92,6 +93,33 @@ class ForumController extends Controller
         $post->save();
 
         return redirect()->back()->with('success', 'Concern has been sent, please wait for approval.');
+    }
+    
+    public function joinForum(Request $request)
+    {
+        $user = Auth::user();
+        $data = $request->validate([
+            'forum_id' => 'required',
+        ]);
+    
+        // Check if the user has already joined the forum
+        $joined = JoinForum::where('user_id', $user->user_id)
+                    ->where('forum_id', $data['forum_id'])
+                    ->first();
+    
+        // If already joined, leave the forum
+        if ($joined) {
+            $joined->delete();
+            return redirect()->back()->with('success', 'You have left the forum.');
+        }
+    
+        // Otherwise, join the forum
+        $join = new JoinForum();
+        $join->forum_id = $data['forum_id'];
+        $join->user_id = $user->user_id;
+        $join->save();
+    
+        return redirect()->back()->with('success', 'You have successfully joined the forum.');
     }
     
 

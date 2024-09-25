@@ -488,6 +488,8 @@ route::get('/forum-{forum_id}', [PageController::class, 'showVisitForum'])->name
 Route::post('/forum', [ForumController::class, 'createPost'])->name(
     'createForumPost'
 );
+// Join Forum
+Route::post('/forum-join', [ForumController::class, 'joinForum'])->name('forum.join');
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

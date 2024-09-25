@@ -50,8 +50,16 @@
                   </div>
                 </div>
               
-                <button class="join-button">Join</button>
-              </section>
+                {{-- @php
+                  $hasLiked = \App\Models\Like::where('user_id', Auth::user()->user_id)->where('post_id', $post->post_id)->exists();
+                  $hasBookmarked = \App\Models\Bookmark::where('user_id', Auth::user()->user_id)->where('post_id', $post->post_id)->exists();
+               @endphp --}}
+               <form action="{{ route('forum.join') }}" method="POST">
+                @csrf
+                <input type="hidden" name="forum_id" value="{{ $activeForum->forum_id }}">
+        
+                <button class="join-button" type="submit">{{ $joined ? 'Joined' : 'Join' }}</button>
+            </form>
             </div>
 
             <div class="create-post">
@@ -59,7 +67,6 @@
                 @csrf
                 @include('inclusions/response')
                 <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture"/>
-                {{-- <input type="text" name="" id=""> --}}
                 <textarea name="concern" id="" cols="30" rows="10"></textarea>
                 <button>Post</button>
               </form>

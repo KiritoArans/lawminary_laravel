@@ -10,6 +10,7 @@ use App\Models\ForumPosts;
 use App\Models\Like;
 use App\Models\Comment;
 use App\Models\Forum;
+use App\Models\JoinForum;
 use App\Models\Follow;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -84,6 +85,8 @@ class PageController extends Controller
 
     public function showVisitForum($forum_id)
     {
+        $user = Auth::user();
+        
         $activeForum = DB::table('tblforums')->where('forum_id', $forum_id)->first();
         session(['activeForum' => $activeForum]);
         
@@ -96,7 +99,11 @@ class PageController extends Controller
         ->orderBy('created_at', 'desc')
         ->get();
 
-        return view('users.visit_forums', compact('activeForum', 'forums', 'posts', 'allPosts'));
+        $joined = JoinForum::where('user_id', $user->user_id)
+        ->where('forum_id', $forum_id)
+        ->exists();
+
+        return view('users.visit_forums', compact('activeForum', 'forums', 'posts', 'allPosts', 'joined'));
     }
 
     
@@ -187,6 +194,7 @@ class PageController extends Controller
         $isFollowing = \App\Models\Follow::where('follower', $user->user_id)
                         ->where('following', $user->user_id)
                         ->exists();
+                        
 
         return view('users.visit_profile', array_merge(['user' => $user], $profileFunctions), compact('isFollowing'));
     }
