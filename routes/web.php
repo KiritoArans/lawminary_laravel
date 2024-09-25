@@ -15,6 +15,7 @@ use App\Http\Controllers\ForumController;
 use App\Http\Controllers\ResourcepageController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\FaqsController;
+use App\Http\Controllers\SearchUserController;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -94,6 +95,7 @@ Route::get('/notifications', [
     PageController::class,
     'showNotificationPage',
 ])->middleware('auth');
+
 Route::get('/search', [PageController::class, 'showSearchPage'])->middleware(
     'auth'
 );
@@ -474,3 +476,7 @@ Route::post('/profile/settings/account/changeinfo2', [
 ])->name('settings.updateAccountInfo');
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+//search user function routing
+
+Route::post('/search', [SearchUserController::class, 'findPossibleCharges'])->name('find.charges');
