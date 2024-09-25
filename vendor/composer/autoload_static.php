@@ -665,6 +665,7 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
         'App\\Http\\Controllers\\FollowController' => __DIR__ . '/../..' . '/app/Http/Controllers/FollowController.php',
         'App\\Http\\Controllers\\ForumController' => __DIR__ . '/../..' . '/app/Http/Controllers/ForumController.php',
         'App\\Http\\Controllers\\LeaderboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/LeaderboardController.php',
+        'App\\Http\\Controllers\\ModeratorController' => __DIR__ . '/../..' . '/app/Http/Controllers/ModeratorController.php',
         'App\\Http\\Controllers\\PageController' => __DIR__ . '/../..' . '/app/Http/Controllers/PageController.php',
         'App\\Http\\Controllers\\PostController' => __DIR__ . '/../..' . '/app/Http/Controllers/PostController.php',
         'App\\Http\\Controllers\\PostpageController' => __DIR__ . '/../..' . '/app/Http/Controllers/PostpageController.php',

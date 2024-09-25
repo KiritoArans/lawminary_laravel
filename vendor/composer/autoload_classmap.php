@@ -17,6 +17,7 @@ return array(
     'App\\Http\\Controllers\\FollowController' => $baseDir . '/app/Http/Controllers/FollowController.php',
     'App\\Http\\Controllers\\ForumController' => $baseDir . '/app/Http/Controllers/ForumController.php',
     'App\\Http\\Controllers\\LeaderboardController' => $baseDir . '/app/Http/Controllers/LeaderboardController.php',
+    'App\\Http\\Controllers\\ModeratorController' => $baseDir . '/app/Http/Controllers/ModeratorController.php',
     'App\\Http\\Controllers\\PageController' => $baseDir . '/app/Http/Controllers/PageController.php',
     'App\\Http\\Controllers\\PostController' => $baseDir . '/app/Http/Controllers/PostController.php',
     'App\\Http\\Controllers\\PostpageController' => $baseDir . '/app/Http/Controllers/PostpageController.php',
