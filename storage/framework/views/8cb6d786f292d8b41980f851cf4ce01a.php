@@ -11,9 +11,7 @@
     </head>
     <body>
         <div class="container">
-            <!-- Include navigation bar for users -->
             <?php echo $__env->make('inclusions/userNav', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
             <main>
                 <!-- Header section -->
                 <header>
@@ -79,19 +77,20 @@
                             <?php if(isset($possibleCharges) && count($possibleCharges) > 0): ?>
                                 <?php $__currentLoopData = $possibleCharges; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $charge): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="charges-info">
-                                        <div class="possible-charges">
-                                            <h2>
-                                                <?php echo e($charge->article_name); ?>
-
-                                            </h2>
-                                            <p><?php echo e($charge->description); ?></p>
-                                        </div>
+                                        <h2><?php echo e($charge->article_name); ?></h2>
+                                        <p><?php echo e($charge->description); ?></p>
                                     </div>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             <?php else: ?>
                                 <p>
                                     No possible charges found for your concern.
                                 </p>
+                            <?php endif; ?>
+                            <?php if(isset($error) && ! empty($error)): ?>
+                                <div class="alert alert-danger">
+                                    <?php echo e($error); ?>
+
+                                </div>
                             <?php endif; ?>
                         </div>
                     </div>
