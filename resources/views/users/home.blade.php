@@ -127,9 +127,9 @@
                                     @endif
                                 </button>
                             </form>
-
                         </div>
                     </div>
+                    
                     <div class="comment-modal" id="commentModal-{{ $post->post_id }}" style="display: none">
                         <div class="clicked-post-content">
                             <div class="clicked-post-header">

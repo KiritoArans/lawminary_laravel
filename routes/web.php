@@ -468,6 +468,7 @@ Route::post('/home-followed', [FollowController::class, 'followUser'])->name(
     'followUser'
 );
 
+// Settings Update Functions
 Route::post('/profile/settings/account/changepass', [
     AccountController::class,
     'changePassword',
@@ -480,6 +481,13 @@ Route::post('/profile/settings/account/changeinfo2', [
     AccountController::class,
     'updateAccountInfo',
 ])->name('settings.updateAccountInfo');
+
+
+// Forum Routes
+route::get('/forum-{forum_id}', [PageController::class, 'showVisitForum'])->name('visit.forum');
+Route::post('/forum', [ForumController::class, 'createPost'])->name(
+    'createForumPost'
+);
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

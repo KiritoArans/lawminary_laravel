@@ -5,16 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Forum extends Model
+class ForumPosts extends Model
 {
     use HasFactory;
 
-    protected $table = 'tblforums';
+    protected $table = 'tblforumposts';
 
     protected $fillable = [
+        'post_id',
         'forum_id',
-        'forumName',
-        'forumDesc',
+        'concern',
+        'postedBy',
+        'approvedBy',
+        'reasonDisregard',
+        'status',
+        'tags',
+        'created_by',
+        'updated_by',
     ];
 
     public function likes()

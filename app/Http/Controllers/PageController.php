@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserAccount;
 use App\Models\Posts;
+use App\Models\ForumPosts;
 use App\Models\Like;
 use App\Models\Comment;
 use App\Models\Forum;
@@ -64,17 +65,41 @@ class PageController extends Controller
 
     public function showForumsPage()
     {
-        // $forums = DB::table('tblforums')
-        // ->leftJoin('forum_members', 'tblforums.forum_id', '=', 'forum_members.forum_id')
-        // ->select('tblforums.*', DB::raw('COUNT(forum_members.user_id) as members'))
-        // ->groupBy('tblforums.forum_id')
-        // ->orderBy('created_at', 'desc')
-        
-        $forums = DB::table('tblforums')->orderBy('created_at', 'desc')
-        ->get();
-        
-        return view('users.forums', compact('forums'));
+        // Fetch all forums
+        $forums = DB::table('tblforums')->orderBy('created_at', 'desc')->get();
+    
+        // Get the first forum as the default forum
+        $defaultForum = $forums->first();
+    
+        // Fetch posts related to the default forum (or show all posts if you want)
+        $posts = DB::table('tblforumposts')
+            ->where('forum_id', $defaultForum->forum_id) // Filter posts by default forum_id
+            ->get();
+
+        // $posts = DB::table('tblforumposts')->where('forum_id', $forumId)->get();
+    
+        // Pass the forums, default forum, and filtered posts to the view
+        return view('users.forums', compact('forums', 'defaultForum', 'posts'));
     }
+
+    public function showVisitForum($forum_id)
+    {
+        $activeForum = DB::table('tblforums')->where('forum_id', $forum_id)->first();
+        session(['activeForum' => $activeForum]);
+        
+        $forums = DB::table('tblforums')->orderBy('created_at', 'desc')->get();
+
+        $posts = ForumPosts::with('user')->where('forum_id', $forum_id)->get();
+
+        $allPosts = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
+        ->withCount('likes', 'comments', 'bookmarks')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        return view('users.visit_forums', compact('activeForum', 'forums', 'posts', 'allPosts'));
+    }
+
+    
 
     public function showNotificationPage()
     {
@@ -109,6 +134,8 @@ class PageController extends Controller
             ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('created_at', 'desc')
             ->get();
+            
+        session(['allPosts' => $allPosts]);
 
         $comments = Comment::where('user_id', $user->user_id)
             ->orderBy('created_at', 'desc')

@@ -71,7 +71,7 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $data = $request->validate([
-            'post_id' => 'required|exists:tblposts,post_id',
+            'post_id' => 'required',
         ]);
     
         $like = Like::where('user_id', $user->user_id)
@@ -107,7 +107,7 @@ class PostController extends Controller
     {
         $user = Auth::user();
         $data = $request->validate([
-            'post_id' => 'required|exists:tblposts,post_id',
+            'post_id' => 'required',
         ]);
     
         $bookmark = Bookmark::where('user_id', $user->user_id)

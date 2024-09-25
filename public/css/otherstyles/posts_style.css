@@ -718,3 +718,11 @@
     color: var(--text-color3);
     text-align: center;
 }
+.empty2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: var(--text-color3);
+    text-align: center;
+}

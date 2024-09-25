@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Forum;
+use App\Models\ForumPosts;
+use App\Models\Points;
+use App\Models\Like;
+use App\Models\Bookmark;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class ForumController extends Controller
@@ -13,17 +19,20 @@ class ForumController extends Controller
         return view('admin.forums', compact('forums'));
     }
 
-    // public function showForums()
-    // {
-    //     $forums = DB::table('tblforums')
-    //                 ->leftJoin('forum_members', 'tblforums.forum_id', '=', 'forum_members.forum_id')
-    //                 ->select('tblforums.*', DB::raw('COUNT(forum_members.user_id) as members'))
-    //                 ->groupBy('tblforums.forum_id')
-    //                 ->orderBy('created_at', 'desc')
-    //                 ->get();
+    public function getForumDetails($forum_id)
+    {
+        // Find the forum by its forum_id instead of id
+        $forum = Forum::where('forum_id', $forum_id)->first();
     
-    //     return view('users.forums', compact('forums'));
-    // }
+        // Check if the forum exists
+        if ($forum) {
+            return response()->json($forum);
+        } else {
+            return response()->json(['error' => 'Forum not found'], 404);
+        }
+    }
+    
+    
     
 
 
@@ -54,6 +63,37 @@ class ForumController extends Controller
             ->back()
             ->with('success', 'Forum created successfully!');
     }
+
+    
+    public function createPost(Request $request)
+    {
+        $data = $request->validate([
+            'concern' => 'required|string|max:255',
+            'concernPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif', 
+        ]);
+
+        $activeForum = session('activeForum');
+
+        $post = new ForumPosts;
+
+        $post->forum_id = $activeForum->forum_id;
+
+        $post->post_id = uniqid();
+        $post->concern = $data['concern'];
+        $post->postedBy = Auth::user()->user_id; 
+        
+        // $post->status = "Pending";
+
+        if ($request->hasFile('concernPhoto')) {
+            $photoPath = $request->file('concernPhoto')->store('public/files/posts');
+            $post->concernPhoto = $photoPath;
+        }
+
+        $post->save();
+
+        return redirect()->back()->with('success', 'Concern has been sent, please wait for approval.');
+    }
+    
 
     
 

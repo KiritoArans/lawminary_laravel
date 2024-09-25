@@ -48,7 +48,7 @@ class CommentController extends Controller
     {
         $request->validate([
             'reply' => 'required|string|max:2500',
-            'post_id' => 'required|exists:tblposts,post_id',
+            'post_id' => 'required',
             'comment_id' => 'required|exists:tblcomments,comment_id',
         ]);
 
