@@ -1,7 +1,7 @@
 <!-- resources/views/includes/logo.blade.php -->
 
-@if ($sysconData->isNotEmpty() && $sysconData->first()->logo_path)
-    <img src="{{ $sysconData->first()->logo_path ? Storage::url($sysconData->first()->logo_path) : asset('imgs/Lawminary_Logo_2-Gold.png') }}" alt="Logo" />
+@if ($sysconData->isNotEmpty() && !empty($sysconData->first()->logo_path))
+    <img src="{{ Storage::url($sysconData->first()->logo_path) }}" alt="Logo" />
 @else
-    <img src="../imgs/Lawminary_Logo_2-Gold.png" alt="">
+    <img src="{{ asset('../imgs/Lawminary_Logo_2-Gold.png') }}" alt="Logo">
 @endif
