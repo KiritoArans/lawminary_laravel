@@ -35,73 +35,46 @@
 
         <div class="content-wrapper">
           <div class="forum-left">
-            <div class="forum-overview">
 
-              {{-- <section class="forum-section">
-                <div class="forum-active">
-                  <div class="circle">
-                    <img class="images" src="{{ Storage::url($defaultForum->forumPhoto) }}" alt="{{ $defaultForum->forumName }}"/>
-                  </div>
-                  <div class="forum-details">
-                    <h2>{{ $defaultForum->forumName }}</h2>
-                    <p>Members: {{ $defaultForum->members ?? 0 }}</p>
-                    <p>{{ $defaultForum->forumDesc }}</p>
-                    <input type="text" id="forumIdInput" value="{{ $defaultForum->forum_id }}" >
-                  </div>
-                </div>
-
-                <button class="join-button">Join</button>
-              </section> --}}
-
-              <section class="forum-section">
-                <div class="forum-active">
-                  <div class="circle">
-                    <img class="images" src="" alt=""/>
-                  </div>
-                  <div class="forum-details">
-                    <h2>Forum name</h2>
-                    <p>Members: #</p>
-                    <p>Forum desc</p>
-                    <input type="text" id="forumIdInput" value="" readonly>
-                  </div>
-                </div>
-              
-                <button class="join-button">Join</button>
-              </section>
-              
-
-              <hr>
-
-              <div class="posts">
-                    <div class="post-content">
-                        <div class="post-header">
-                            <div class="user-info">
-                                <img src="../imgs/user-img.png" alt="Profile Picture" class="user-profile-photo"/>
-                                <div class="post-info">
-                                    <h2>Some Name</h2> <!-- Assuming postedBy is the user's name -->
-                                    <p>@username</p> <!-- Adjust this to display the user's username if available -->
-                                </div>
-                            </div>
-                            <div class="post-options">
-                                <div class="options" style="display: none"><a href="#">Action</a></div>
-                                <i class="fas fa-ellipsis-v"></i>
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="post-text">
-                            <p>Concern</p> <!-- Post content -->
-                        </div>
-                        <hr />
-                        <div class="actions">
-                            <button><i class="fa-solid fa-gavel"></i> Hit</button>
-                            <button><i class="fas fa-comment"></i> Comment</button>
-                            <button><i class="fas fa-bookmark"></i> Bookmark</button>
-                        </div>
-                    </div>
+            <div class="search-forum">
+              <div class="search-ttl">
+                <label>Discover</label>
+                <label>Forums</label>
               </div>
-            
-
+              <input type="text" id="searchInput" placeholder="Search forums...">
+              <button>Search</button>
             </div>
+
+            @foreach($discoverForum as $dForum)
+              <div class="forum-overview forum-item">
+                  <section class="forum-section">
+                      <div class="forum-active">
+                          <div class="circle">
+                              <img class="images" src="{{ Storage::url($dForum->forumPhoto) }}" alt="{{ $dForum->forumName }}"/>
+                          </div>
+                          <div class="forum-details">
+                              <a href="{{ route('visit.forum', $dForum->forum_id) }}" class="forum-link">
+                                  <h2 class="forum-name">{{ $dForum->forumName }}</h2>
+                              </a>
+                              <p>{{ $dForum->membersCount }} Member(s)</p> <!-- Displaying the member count -->
+                              <p>{{ $dForum->forumDesc }}</p>
+                              <input type="hidden" id="forumIdInput" value="{{ $dForum->forum_id }}" readonly>
+                          </div>
+                      </div>
+                  
+                      <form action="{{ route('forum.join') }}" method="POST">
+                          @csrf
+                          @include('inclusions/response')
+                          <input type="hidden" name="forum_id" value="{{ $dForum->forum_id }}">
+                          <button class="join-button {{ $joined[$dForum->forum_id] ? 'joined-button' : '' }}" type="submit">
+                              {{ $joined[$dForum->forum_id] ? 'Joined' : 'Join' }}
+                          </button>
+                      </form>
+                  </section>
+              </div>
+            @endforeach
+        
+
           </div>
 
           <div class="forum-invitations-wrapper">
@@ -115,12 +88,12 @@
                 <input type="text" placeholder="Search Forums">
               </div>
           
-              @foreach($forums as $forum)
+              @foreach($joinedForum as $forum)
                 <a href="{{ route('visit.forum', $forum->forum_id) }}" class="forum-link">
                   <div class="forum" 
                     data-forum-id="{{ $forum->forum_id }}"
                     data-forum-name="{{ $forum->forumName }}"
-                    data-forum-members="{{ $forum->members ?? 0 }}"
+                    data-forum-members="{{ $forum->membersCount ?? 0 }}"
                     data-forum-desc="{{ $forum->forumDesc }}"
                     data-forum-photo="{{ Storage::url($forum->forumPhoto) }}">
                     <img src="{{ Storage::url($forum->forumPhoto) }}" alt="">
@@ -129,15 +102,12 @@
                     </div>
                     <div class="forum-head">
                         <h3>{{ $forum->forumName }}</h3>
-                        <h5>Members: {{ $forum->members ?? 0 }}</h5>
+                        <h5>Member(s): {{ $forum->membersCount ?? 0 }}</h5>
                     </div>
                     </div>
                 </a>
               @endforeach
               
-
-            
-          
               <div class="forum-pagination">
                 <button id="prev">Previous</button>
                 <span id="page-num">1</span>

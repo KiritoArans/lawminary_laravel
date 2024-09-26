@@ -89,17 +89,33 @@ main .header-top {
     margin: 0 8px;
 }
 
+#showForumLists{
+    padding: 10px 20px;
+    background-color: var(--text-color3);
+    color: var(--panel-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    }
+    #showForumLists:hover{
+        background-color: var(--primary-color);
+    }   
+
+
 .content-wrapper {
     display: flex;
     gap: 20px;
 }
 .forum-left {
     flex: 1;
+    margin-bottom: 1rem;
 }
 .forum-overview{
     margin-top: 1rem;
     border: 1px solid #ddd;
-    background-color: #ffffff;
+    background-color: var(--panel-color);
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
@@ -117,10 +133,10 @@ main .header-top {
 .forum-active{
     display: flex;
 }
-.join-button {
+.join-button{
     padding: 10px 20px;
-    background-color: var(--primary-color);
-    color: #ffffff;
+    background-color: var(--text-color3);
+    color: var(--panel-color);
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -128,6 +144,9 @@ main .header-top {
     font-weight: bold;
     position: relative;
     top: -40px;
+}
+.joined-button {
+    background-color: var(--primary-color);
 }
 .join-button:hover {
     background-color: var(--secondary-color);
@@ -138,7 +157,7 @@ main .header-top {
     transition: all 0.3s ease;
 }
 .forum-invitations {
-    background-color: #ffffff;
+    background-color: var(--panel-color);
     padding: 20px;
     border: 1px solid #ddd;
     border-radius: 5px;
@@ -256,6 +275,9 @@ main .header-top {
     margin: 1rem 0 0 0;
     color: var(--text-color1);
 }
+.forum-details h2:hover{
+    color: var(--primary-color);
+}
 .forum-details p:nth-child(2){
     margin: 0;
     font-weight: 600;
@@ -270,7 +292,7 @@ main .header-top {
 
 
 .create-post{
-    background-color: #ffffff;
+    background-color: var(--panel-color);
     border: 1px solid #ddd;
     padding: 20px;
     margin: 20px 280px 0 212px;
@@ -285,12 +307,22 @@ main .header-top {
     }
     .create-post textarea{
         width: 100%;
-        padding: .5rem .5rem;
+        padding: .5rem;
         margin-right: .5rem;
         border-radius: 5px;
         min-height: 32px;
         height: 32px;
         resize: vertical;
+    }
+    .create-post label i{
+        margin-right: 0.5rem;
+        font-size: 3rem;
+        top: 0;
+        color: var(--text-color3);
+        transition: ease-in-out;
+    }
+    .create-post label i:hover{
+        color: var(--primary-color);
     }
     .create-post button{
         padding: 0 .75rem;
@@ -300,4 +332,46 @@ main .header-top {
         color: white;
         font-weight: 600;
         background-color: var(--primary-color);
+}
+
+.search-forum{
+    display: flex;
+    background-color: var(--panel-color);
+    margin-top: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
+    .search-ttl{
+        display: flex;
+        flex-direction: column;
+        margin-right: .5rem;
+    }
+    .search-forum label{
+        font-weight: 600;
+        color: var(--primary-color);
+        margin: 0;
+    }
+    .search-forum label:nth-child(1){
+        font-size: 1.25rem;
+        font-weight: 700;
+    }
+    .search-forum input{
+        width: 100%;
+        padding: .25rem .5rem;
+        margin-right: .5rem;
+        border-radius: 5px;
+        min-height: 32px;
+        height: 32px;
+        border: 1px solid var(--text-color3);
+    }
+    .search-forum button{
+        padding: 0 .75rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: 600;
+        background-color: var(--primary-color);
+}

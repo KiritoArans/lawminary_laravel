@@ -44,33 +44,36 @@
                   </div>
                   <div class="forum-details">
                     <h2>{{ $activeForum->forumName }}</h2>
-                    <p>{{ $activeForum->members ?? 0 }} Members</p>
+                    <p>{{ $activeForum->membersCount ?? 0 }} Members</p>
                     <p>{{ $activeForum->forumDesc }}</p>
                     <input type="hidden" id="forumIdInput" value="{{ $activeForum->forum_id }}" readonly>
                   </div>
                 </div>
               
-                {{-- @php
-                  $hasLiked = \App\Models\Like::where('user_id', Auth::user()->user_id)->where('post_id', $post->post_id)->exists();
-                  $hasBookmarked = \App\Models\Bookmark::where('user_id', Auth::user()->user_id)->where('post_id', $post->post_id)->exists();
-               @endphp --}}
-               <form action="{{ route('forum.join') }}" method="POST">
-                @csrf
-                <input type="hidden" name="forum_id" value="{{ $activeForum->forum_id }}">
-        
-                <button class="join-button" type="submit">{{ $joined ? 'Joined' : 'Join' }}</button>
-            </form>
+                <form action="{{ route('forum.join') }}" method="POST">
+                  @csrf
+                  @include('inclusions/response')
+                  <input type="hidden" name="forum_id" value="{{ $activeForum->forum_id }}">
+                  <button class="join-button {{ $joinedVF ? 'joined-button' : '' }}" type="submit">{{ $joinedVF ? 'Joined' : 'Join' }}</button>
+                </form>
+              </section>
             </div>
 
-            <div class="create-post">
-              <form action="{{ route('createForumPost')}}" method="POST">
-                @csrf
-                @include('inclusions/response')
-                <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture"/>
-                <textarea name="concern" id="" cols="30" rows="10"></textarea>
-                <button>Post</button>
-              </form>
-            </div>
+            @if($joinedVF)
+              <div class="create-post">
+                <form action="{{ route('createForumPost')}}" method="POST" enctype="multipart/form-data">
+                  @csrf
+                  @include('inclusions/response')
+                  <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture"/>
+                  <textarea name="concern" id="" cols="30" rows="10" placeholder="What's on your mind?"></textarea>
+                  <label for="file-upload" class="custom-file-upload">
+                      <i class="fa-solid fa-file-arrow-up" title="Attach Photo"></i>
+                  </label>
+                  <input id="file-upload" type="file" name="concernPhoto" style="display: none;">
+                  <button>Post</button>
+                </form>
+              </div>
+            @endif
 
             <div class="posts">
               @if($posts->isEmpty())
@@ -173,12 +176,12 @@
                 <input type="text" placeholder="Search Forums">
               </div>
           
-              @foreach($forums as $forum)
+              @foreach($joinedForum as $forum)
                 <a href="{{ route('visit.forum', $forum->forum_id) }}" class="forum-link">
                   <div class="forum" 
                     data-forum-id="{{ $forum->forum_id }}"
                     data-forum-name="{{ $forum->forumName }}"
-                    data-forum-members="{{ $forum->members ?? 0 }}"
+                    data-forum-members="{{ $forum->membersCount ?? 0 }}"
                     data-forum-desc="{{ $forum->forumDesc }}"
                     data-forum-photo="{{ Storage::url($forum->forumPhoto) }}">
                     <img src="{{ Storage::url($forum->forumPhoto) }}" alt="">
@@ -187,7 +190,7 @@
                     </div>
                     <div class="forum-head">
                         <h3>{{ $forum->forumName }}</h3>
-                        <h5>Members: {{ $forum->members ?? 0 }}</h5>
+                        <h5>Member(s): {{ $forum->membersCount ?? 0 }}</h5>
                     </div>
                     </div>
                 </a>

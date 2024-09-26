@@ -86,7 +86,7 @@ class ForumController extends Controller
         // $post->status = "Pending";
 
         if ($request->hasFile('concernPhoto')) {
-            $photoPath = $request->file('concernPhoto')->store('public/files/posts');
+            $photoPath = $request->file('concernPhoto')->store('public/files/forum_posts');
             $post->concernPhoto = $photoPath;
         }
 
@@ -102,24 +102,21 @@ class ForumController extends Controller
             'forum_id' => 'required',
         ]);
     
-        // Check if the user has already joined the forum
         $joined = JoinForum::where('user_id', $user->user_id)
                     ->where('forum_id', $data['forum_id'])
                     ->first();
     
-        // If already joined, leave the forum
         if ($joined) {
             $joined->delete();
-            return redirect()->back()->with('success', 'You have left the forum.');
+            return redirect()->back()->with('success', 'You left the forum.');
         }
     
-        // Otherwise, join the forum
         $join = new JoinForum();
         $join->forum_id = $data['forum_id'];
         $join->user_id = $user->user_id;
         $join->save();
     
-        return redirect()->back()->with('success', 'You have successfully joined the forum.');
+        return redirect()->back()->with('success', 'You have joined the forum.');
     }
     
 

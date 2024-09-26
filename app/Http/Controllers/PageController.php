@@ -64,47 +64,122 @@ class PageController extends Controller
         return view('users.article');
     }
 
+    public function forumFunctions($user)
+    {
+        $discoverForum = DB::table('tblforums')
+            ->leftJoin('tblforummembers', 'tblforums.forum_id', '=', 'tblforummembers.forum_id')
+            ->select('tblforums.forum_id', 
+            'tblforums.forumName', 
+            'tblforums.forumPhoto', 
+            'tblforums.forumDesc', 
+            DB::raw('COUNT(tblforummembers.forum_id) as membersCount'))
+            ->whereNotIn('tblforums.forum_id', function ($query) use ($user) {
+                $query->select('forum_id')
+                      ->from('tblforummembers')
+                      ->where('user_id', $user->user_id);
+            })
+            ->groupBy('tblforums.forum_id', 
+            'tblforums.forumName', 
+            'tblforums.forumPhoto', 
+            'tblforums.forumDesc')
+            ->orderBy('tblforums.created_at', 'desc')
+            ->get();
+    
+        $forums = DB::table('tblforums')
+            ->leftJoin('tblforummembers', 'tblforums.forum_id', '=', 'tblforummembers.forum_id')
+            ->select('tblforums.forum_id', 
+                'tblforums.forumName', 
+                'tblforums.forumPhoto', 
+                'tblforums.forumDesc', 
+                DB::raw('COUNT(tblforummembers.forum_id) as membersCount'))
+            ->groupBy('tblforums.forum_id', 
+                'tblforums.forumName', 
+                'tblforums.forumPhoto', 
+                'tblforums.forumDesc')
+            ->orderBy('tblforums.created_at', 'desc')
+            ->get();
+    
+        $joinedForum = DB::table('tblforums')
+            ->leftJoin('tblforummembers', 'tblforums.forum_id', '=', 'tblforummembers.forum_id')
+            ->select(
+                'tblforums.forum_id', 
+                'tblforums.forumName', 
+                'tblforums.forumPhoto', 
+                'tblforums.forumDesc', 
+                DB::raw('COUNT(tblforummembers.forum_id) as membersCount'))
+            ->whereIn('tblforums.forum_id', function ($query) use ($user) {
+                $query->select('forum_id')
+                      ->from('tblforummembers')
+                      ->where('user_id', $user->user_id);
+            })
+            ->groupBy('tblforums.forum_id', 
+            'tblforums.forumName', 
+            'tblforums.forumPhoto', 
+            'tblforums.forumDesc')
+            ->orderBy('tblforums.created_at', 'desc')
+            ->get();
+    
+        $joined = [];
+        foreach ($forums as $forum) {
+            $joined[$forum->forum_id] = JoinForum::where('user_id', $user->user_id)
+                ->where('forum_id', $forum->forum_id)
+                ->exists();
+        }
+    
+        return compact('forums', 'discoverForum', 'joinedForum', 'joined');
+    }
+    
     public function showForumsPage()
     {
-        // Fetch all forums
-        $forums = DB::table('tblforums')->orderBy('created_at', 'desc')->get();
+        $user = Auth::user();
     
-        // Get the first forum as the default forum
-        $defaultForum = $forums->first();
+        $forumFunctions = $this->forumFunctions($user);
     
-        // Fetch posts related to the default forum (or show all posts if you want)
-        $posts = DB::table('tblforumposts')
-            ->where('forum_id', $defaultForum->forum_id) // Filter posts by default forum_id
-            ->get();
-
-        // $posts = DB::table('tblforumposts')->where('forum_id', $forumId)->get();
-    
-        // Pass the forums, default forum, and filtered posts to the view
-        return view('users.forums', compact('forums', 'defaultForum', 'posts'));
+        return view('users.forums', array_merge(['user' => $user], $forumFunctions));
     }
-
+    
     public function showVisitForum($forum_id)
     {
         $user = Auth::user();
-        
-        $activeForum = DB::table('tblforums')->where('forum_id', $forum_id)->first();
-        session(['activeForum' => $activeForum]);
-        
-        $forums = DB::table('tblforums')->orderBy('created_at', 'desc')->get();
-
+    
+        $forumFunctions = $this->forumFunctions($user);
+    
+        $activeForum = DB::table('tblforums')
+        ->leftJoin('tblforummembers', 'tblforums.forum_id', '=', 'tblforummembers.forum_id')
+        ->select(
+            'tblforums.forum_id',
+            'tblforums.forumName',
+            'tblforums.forumPhoto',
+            'tblforums.forumDesc',
+            'tblforums.created_at',
+            'tblforums.updated_at',
+            DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
+        )
+        ->where('tblforums.forum_id', $forum_id)
+        ->groupBy(
+            'tblforums.forum_id',
+            'tblforums.forumName',
+            'tblforums.forumPhoto',
+            'tblforums.forumDesc',
+            'tblforums.created_at',
+            'tblforums.updated_at'
+        )
+        ->first();
+    
         $posts = ForumPosts::with('user')->where('forum_id', $forum_id)->get();
-
+    
         $allPosts = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
-        ->withCount('likes', 'comments', 'bookmarks')
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-        $joined = JoinForum::where('user_id', $user->user_id)
-        ->where('forum_id', $forum_id)
-        ->exists();
-
-        return view('users.visit_forums', compact('activeForum', 'forums', 'posts', 'allPosts', 'joined'));
+            ->withCount('likes', 'comments', 'bookmarks')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    
+        $joinedVF = JoinForum::where('user_id', $user->user_id)
+            ->where('forum_id', $forum_id)
+            ->exists();
+    
+        return view('users.visit_forums', array_merge(['activeForum' => $activeForum, 'posts' => $posts, 'allPosts' => $allPosts], $forumFunctions), compact('joinedVF'));
     }
+    
 
     
 

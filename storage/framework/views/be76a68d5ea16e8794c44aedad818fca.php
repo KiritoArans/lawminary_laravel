@@ -44,30 +44,36 @@
                   </div>
                   <div class="forum-details">
                     <h2><?php echo e($activeForum->forumName); ?></h2>
-                    <p><?php echo e($activeForum->members ?? 0); ?> Members</p>
+                    <p><?php echo e($activeForum->membersCount ?? 0); ?> Members</p>
                     <p><?php echo e($activeForum->forumDesc); ?></p>
                     <input type="hidden" id="forumIdInput" value="<?php echo e($activeForum->forum_id); ?>" readonly>
                   </div>
                 </div>
               
-                
-               <form action="<?php echo e(route('forum.join')); ?>" method="POST">
-                <?php echo csrf_field(); ?>
-                <input type="hidden" name="forum_id" value="<?php echo e($activeForum->forum_id); ?>">
-        
-                <button class="join-button" type="submit"><?php echo e($joined ? 'Joined' : 'Join'); ?></button>
-            </form>
+                <form action="<?php echo e(route('forum.join')); ?>" method="POST">
+                  <?php echo csrf_field(); ?>
+                  <?php echo $__env->make('inclusions/response', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                  <input type="hidden" name="forum_id" value="<?php echo e($activeForum->forum_id); ?>">
+                  <button class="join-button <?php echo e($joinedVF ? 'joined-button' : ''); ?>" type="submit"><?php echo e($joinedVF ? 'Joined' : 'Join'); ?></button>
+                </form>
+              </section>
             </div>
 
-            <div class="create-post">
-              <form action="<?php echo e(route('createForumPost')); ?>" method="POST">
-                <?php echo csrf_field(); ?>
-                <?php echo $__env->make('inclusions/response', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                <img src="<?php echo e(Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png')); ?>" class="user-profile-photo" alt="Profile Picture"/>
-                <textarea name="concern" id="" cols="30" rows="10"></textarea>
-                <button>Post</button>
-              </form>
-            </div>
+            <?php if($joinedVF): ?>
+              <div class="create-post">
+                <form action="<?php echo e(route('createForumPost')); ?>" method="POST" enctype="multipart/form-data">
+                  <?php echo csrf_field(); ?>
+                  <?php echo $__env->make('inclusions/response', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                  <img src="<?php echo e(Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png')); ?>" class="user-profile-photo" alt="Profile Picture"/>
+                  <textarea name="concern" id="" cols="30" rows="10" placeholder="What's on your mind?"></textarea>
+                  <label for="file-upload" class="custom-file-upload">
+                      <i class="fa-solid fa-file-arrow-up" title="Attach Photo"></i>
+                  </label>
+                  <input id="file-upload" type="file" name="concernPhoto" style="display: none;">
+                  <button>Post</button>
+                </form>
+              </div>
+            <?php endif; ?>
 
             <div class="posts">
               <?php if($posts->isEmpty()): ?>
@@ -171,12 +177,12 @@
                 <input type="text" placeholder="Search Forums">
               </div>
           
-              <?php $__currentLoopData = $forums; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $forum): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+              <?php $__currentLoopData = $joinedForum; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $forum): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <a href="<?php echo e(route('visit.forum', $forum->forum_id)); ?>" class="forum-link">
                   <div class="forum" 
                     data-forum-id="<?php echo e($forum->forum_id); ?>"
                     data-forum-name="<?php echo e($forum->forumName); ?>"
-                    data-forum-members="<?php echo e($forum->members ?? 0); ?>"
+                    data-forum-members="<?php echo e($forum->membersCount ?? 0); ?>"
                     data-forum-desc="<?php echo e($forum->forumDesc); ?>"
                     data-forum-photo="<?php echo e(Storage::url($forum->forumPhoto)); ?>">
                     <img src="<?php echo e(Storage::url($forum->forumPhoto)); ?>" alt="">
@@ -185,7 +191,7 @@
                     </div>
                     <div class="forum-head">
                         <h3><?php echo e($forum->forumName); ?></h3>
-                        <h5>Members: <?php echo e($forum->members ?? 0); ?></h5>
+                        <h5>Member(s): <?php echo e($forum->membersCount ?? 0); ?></h5>
                     </div>
                     </div>
                 </a>
