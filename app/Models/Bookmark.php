@@ -25,4 +25,18 @@ class Bookmark extends Model
     {
         return $this->belongsTo(UserAccount::class, 'user_id', 'user_id');
     }
+
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'post_id', 'post_id');
+    }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class, 'post_id', 'post_id'); 
+    }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class, 'post_id', 'post_id');
+    } 
 }

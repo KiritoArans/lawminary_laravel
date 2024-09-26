@@ -7,15 +7,15 @@
             <div class="post-content">
                 <div class="post-header">
                     <div class="user-info">
-                        <img src="<?php echo e($post->userPhoto ? Storage::url($post->userPhoto) : '../imgs/user-img.png'); ?>" alt="Profile Picture" class="user-profile-photo">
+                        <img src="<?php echo e($post->user->userPhoto ? Storage::url($post->user->userPhoto) : '../imgs/user-img.png'); ?>" alt="Profile Picture" class="user-profile-photo" />
                         <div class="post-info">
                             <h2>
                                 <a href="<?php echo e(Auth::check() && Auth::user()->user_id == $post->postedBy ? route('profile') : route('visit-profile', ['user_id' => $post->postedBy])); ?>">
-                                    <?php echo e($post->accountType === 'Attorney' ? 'Atty. ' : ''); ?><?php echo e($post->firstName); ?> <?php echo e($post->lastName); ?>
+                                    <?php echo e($post->user->accountType === 'Attorney' ? 'Atty. ' : ''); ?><?php echo e($post->user->firstName); ?> <?php echo e($post->user->lastName); ?>
 
                                 </a>
                             </h2>                            
-                            <label>@<span><?php echo e($post->username ?? 'username'); ?></span></label>
+                            <label>@<span><?php echo e($post->user->username ?? 'username'); ?></span></label>
                             <p>Posted: <?php echo e(\Carbon\Carbon::parse($post->created_at)->diffForHumans()); ?></p>
                         </div>
                     </div>
@@ -45,11 +45,17 @@
                     
                         <button type="submit" class="btn-hit <?php echo e($hasLiked ? 'btn-hitted' : ""); ?>">
                             <i class="fa-solid fa-gavel"></i> Hit
+                            <?php if($post->likes_count > 0): ?>
+                                <span>(<?php echo e($post->likes_count); ?>)</span>
+                            <?php endif; ?>
                         </button>
                     </form>
                     
                     <button class="btn-comment" data-post-id="<?php echo e($post->post_id); ?>">
                         <i class="fas fa-comment"></i> Comment
+                        <?php if($post->comments_count > 0): ?>
+                            <span>(<?php echo e($post->comments_count); ?>)</span>
+                        <?php endif; ?>
                     </button>
 
                     <form action="<?php echo e(route('post.bookmark')); ?>" method="POST">
@@ -58,6 +64,9 @@
                     
                         <button type="submit" class="btn-bookmark <?php echo e($hasBookmarked ? 'btn-bookmarked' : ""); ?>">
                             <i class="fas fa-bookmark"></i> Bookmark
+                            <?php if($post->bookmarks_count > 0): ?>
+                                <span>(<?php echo e($post->bookmarks_count); ?>)</span>
+                            <?php endif; ?>
                         </button>
                     </form>
 

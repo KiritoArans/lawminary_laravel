@@ -1,4 +1,9 @@
 <div class="profile-posts">
+    <?php if(Auth::user()): ?>
+        <div class="pending-btn">
+            <button class="view-pendings">View Pending Posts</button>
+        </div>
+    <?php endif; ?>
     <?php if($posts->isEmpty()): ?>
         <div class="empty">No posts yet.</div>
     <?php endif; ?>

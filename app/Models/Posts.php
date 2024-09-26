@@ -23,10 +23,15 @@ class Posts extends Model
         'updated_by',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(UserAccount::class, 'postedBy', 'user_id');
+    }
+
     public function likes()
     {
         return $this->hasMany(Like::class, 'post_id', 'post_id');
-    }    
+    }     
 
     public function comments()
     {
@@ -37,11 +42,7 @@ class Posts extends Model
     {
         return $this->hasMany(Bookmark::class, 'post_id', 'post_id');
     } 
-
-    public function user()
-    {
-        return $this->belongsTo(UserAccount::class, 'postedBy', 'user_id');
-    }
+    
     public function reply()
     {
         return $this->hasMany(Reply::class, 'comment_id', 'comment_id');

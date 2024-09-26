@@ -41,14 +41,4 @@ class UserAccount extends Authenticatable
             // $model->accountType = $model->accountType ?? 'User';
         });
     }
-
-    // UserAccount.php (Model)
-    // public function isFollowing($userId)
-    // {
-    //     return Follow::where('follower', $this->user_id)
-    //                 ->where('following', $userId)
-    //                 ->exists();
-    // }
-
-
 }

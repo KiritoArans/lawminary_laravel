@@ -223,31 +223,27 @@ class PageController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $likes = DB::table('tbllikes')
-            ->join('tblposts', 'tbllikes.post_id', '=', 'tblposts.post_id')
-            ->join('tblaccounts', 'tblposts.postedBy', '=', 'tblaccounts.user_id')
-            ->where('tbllikes.user_id', $user->user_id)
-            ->orderBy('tbllikes.created_at', 'desc')
-            ->select('tblposts.*', 
-                'tblaccounts.firstName', 
-                'tblaccounts.lastName', 
-                'tblaccounts.username', 
-                'tblaccounts.accountType', 
-                'tblaccounts.userPhoto') 
-            ->get();
+        $likes = Posts::whereIn('post_id', function($query) use ($user) {
+            $query->select('post_id')
+                  ->from('tbllikes')
+                  ->where('user_id', $user->user_id);
+        })
+        ->with(['user']) 
+        ->withCount('likes', 'comments', 'bookmarks')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
-        $bookmarks = DB::table('tblbookmarks')
-            ->join('tblposts', 'tblbookmarks.post_id', '=', 'tblposts.post_id')
-            ->join('tblaccounts', 'tblposts.postedBy', '=', 'tblaccounts.user_id') // Join with tblaccounts to get user info
-            ->where('tblbookmarks.user_id', $user->user_id)
-            ->orderBy('tblbookmarks.created_at', 'desc')
-            ->select('tblposts.*',
-                'tblaccounts.firstName', 
-                'tblaccounts.lastName', 
-                'tblaccounts.username', 
-                'tblaccounts.accountType', 
-                'tblaccounts.userPhoto') 
-            ->get();
+
+
+        $bookmarks = Posts::whereIn('post_id', function($query) use ($user) {
+            $query->select('post_id')
+                  ->from('tblbookmarks')
+                  ->where('user_id', $user->user_id);
+        })
+        ->with('user') 
+        ->withCount('likes', 'comments', 'bookmarks') 
+        ->orderBy('created_at', 'desc')
+        ->get();
         
         return compact('posts', 'allPosts', 'comments', 'likes', 'bookmarks', 'following', 'followers','followingCount', 'followerCount');
     }
