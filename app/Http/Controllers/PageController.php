@@ -166,7 +166,10 @@ class PageController extends Controller
         )
         ->first();
     
-        $posts = ForumPosts::with('user')->where('forum_id', $forum_id)->get();
+        $posts = ForumPosts::with('user')
+            ->where('forum_id', $forum_id)
+            ->orderBy('created_at', 'desc')
+            ->get();
     
         $allPosts = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
             ->withCount('likes', 'comments', 'bookmarks')

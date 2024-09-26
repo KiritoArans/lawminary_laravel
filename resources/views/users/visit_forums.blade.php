@@ -64,6 +64,7 @@
                 <form action="{{ route('createForumPost')}}" method="POST" enctype="multipart/form-data">
                   @csrf
                   @include('inclusions/response')
+                  <input type="hidden" name="forum_id" value="{{ $activeForum->forum_id }}">
                   <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture"/>
                   <textarea name="concern" id="" cols="30" rows="10" placeholder="What's on your mind?"></textarea>
                   <label for="file-upload" class="custom-file-upload">
