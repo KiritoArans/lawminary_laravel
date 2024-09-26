@@ -1,0 +1,65 @@
+/.phpunit.cache
+/node_modules
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.env.production
+.phpactor.json
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
+
+# Ignore everything
+*
+
+# Don't ignore directories, so we can unignore files within them
+!*/
+
+# Unignore specific file types
+!*.php
+!*.py
+!*.js
+!*.css
+!*.json
+
+# Exclude specific directories that may contain important files
+!app/**
+
+# Ignore large files and directories
+/node_modules/
+/vendor/
+/storage/
+/public/uploads/
+/public/storage/
+
+# Ignore environment and sensitive files
+.env
+.env.*
+*.key
+
+# Ignore log files
+*.log
+logs/
+
+# Ignore IDE/editor configuration files
+*.sublime-project
+*.sublime-workspace
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Ignore other unnecessary files
+*.bak
+*.tmp
+
