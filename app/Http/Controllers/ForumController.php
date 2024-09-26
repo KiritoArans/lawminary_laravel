@@ -69,6 +69,7 @@ class ForumController extends Controller
     public function createPost(Request $request)
     {
         $data = $request->validate([
+            'forum_id' => 'required',
             'concern' => 'required|string|max:255',
             'concernPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif', 
         ]);
@@ -77,13 +78,10 @@ class ForumController extends Controller
 
         $post = new ForumPosts;
 
-        $post->forum_id = $activeForum->forum_id;
-
+        $post->forum_id =  $data['forum_id'];
         $post->post_id = uniqid();
         $post->concern = $data['concern'];
         $post->postedBy = Auth::user()->user_id; 
-        
-        // $post->status = "Pending";
 
         if ($request->hasFile('concernPhoto')) {
             $photoPath = $request->file('concernPhoto')->store('public/files/forum_posts');
@@ -92,7 +90,7 @@ class ForumController extends Controller
 
         $post->save();
 
-        return redirect()->back()->with('success', 'Concern has been sent, please wait for approval.');
+        return redirect()->back()->with('success', 'Posted successfully.');
     }
     
     public function joinForum(Request $request)
