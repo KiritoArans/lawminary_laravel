@@ -16,6 +16,7 @@ use App\Http\Controllers\ResourcepageController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\SearchUserController;
+use App\Http\Controllers\ForgotPasswordController;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -472,6 +473,24 @@ Route::post('/loginAdMod', [AuthController::class, 'loginAdMod'])->name(
 Route::post('/logoutAdMod', [AuthController::class, 'logoutAdMod'])->name(
     'logoutAdMod'
 );
+
+// Forgot Password
+Route::post('/validate-user', [ForgotPasswordController::class, 'validateUser']);
+Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp']);
+Route::post('/update-password', [ForgotPasswordController::class, 'updatePassword']);
+
+Route::get('/test-email', function() {
+    try {
+        Mail::raw('This is a test email', function ($message) {
+            $message->to('larspogiii03@gmail.com')
+                    ->subject('Sending to email test.');
+        });
+        return 'Email sent successfully';
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
+
 
 // Create Post
 Route::post('/home', [PostController::class, 'createPost'])->name(
