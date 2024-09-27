@@ -70,10 +70,9 @@ Route::get('/moderator/account', [
     'showaccount',
 ])->name('moderator.accounts');
 
-Route::get('/moderator/forums', [
-    ModeratorController::class,
-    'showMforums',
-])->name('moderator.forums');
+Route::get('/moderator/forums', [ModeratorController::class, 'showMforums'])
+    ->name('moderator.forums')
+    ->middleware('auth');
 
 Route::get('/moderator/faqs', [ModeratorController::class, 'showMfaqs'])->name(
     'moderator.faqs'
@@ -145,251 +144,298 @@ Route::get('/terms-of-service', [
 // Admin Backend Routing
 
 // Admin Accounts Page
-Route::get('/admin/account', [AccountController::class, 'index'])->name(
-    'admin.account'
-);
-Route::get('/admin/pending-accounts', [
-    AccountController::class,
-    'pendingAcc',
-])->name('admin.pendingAcc');
+Route::prefix('admin')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('account', [AccountController::class, 'index'])->name(
+            'admin.account'
+        );
+        Route::get('pending-accounts', [
+            AccountController::class,
+            'pendingAcc',
+        ])->name('admin.pendingAcc');
 
-Route::post('/admin/account', [AccountController::class, 'addAccount'])->name(
-    'admin.addAccount'
-);
-Route::delete('/admin/account/{id}', [
-    AccountController::class,
-    'destroyAccount',
-])->name('admin.destroyAccount');
-Route::match(['put', 'patch'], '/admin/account/{id}', [
-    AccountController::class,
-    'updateAccount',
-])->name('admin.updateAccount');
-Route::get('admin/account/filter', [
-    AccountController::class,
-    'filterAccount',
-])->name('admin.filterAccount');
+        Route::post('account', [AccountController::class, 'addAccount'])->name(
+            'admin.addAccount'
+        );
+        Route::delete('account/{id}', [
+            AccountController::class,
+            'destroyAccount',
+        ])->name('admin.destroyAccount');
+        Route::match(['put', 'patch'], 'account/{id}', [
+            AccountController::class,
+            'updateAccount',
+        ])->name('admin.updateAccount');
+        Route::get('account/filter', [
+            AccountController::class,
+            'filterAccount',
+        ])->name('admin.filterAccount');
 
-Route::get('/admin/account/searchAccounts', [
-    AccountController::class,
-    'searchAccounts',
-])->name('admin.searchAccounts');
+        Route::get('account/searchAccounts', [
+            AccountController::class,
+            'searchAccounts',
+        ])->name('admin.searchAccounts');
 
-Route::post('/admin/approveAccount/{id}', [
-    AccountController::class,
-    'approveAccount',
-])->name('admin.approveAccount');
+        Route::post('approveAccount/{id}', [
+            AccountController::class,
+            'approveAccount',
+        ])->name('admin.approveAccount');
+    });
 
-// Admin Dashboard Page
+// dashboard controller
+Route::prefix('admin')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('dashboard', [
+            DashboardController::class,
+            'dashboard',
+        ])->name('admin.dashboard');
 
-Route::get('admin/dashboard', [DashboardController::class, 'dashboard'])->name(
-    'admin.dashboard'
-);
-Route::get('admin/dashboard/filter', [
-    DashboardController::class,
-    'dashboard',
-])->name('admin.filterDashboard');
+        Route::get('dashboard/filter', [
+            DashboardController::class,
+            'dashboard',
+        ])->name('admin.filterDashboard');
 
-Route::get('/admin/dashboard/search', [
-    DashboardController::class,
-    'search',
-])->name('admin.search');
+        Route::get('dashboard/search', [
+            DashboardController::class,
+            'search',
+        ])->name('admin.search');
+    });
 
 // Admin Post page
-Route::get('admin/postpage', [PostpageController::class, 'postpage'])->name(
-    'admin.postpage'
-);
-Route::match(['get', 'post'], '/admin/postpage', [
-    PostpageController::class,
-    'postpage',
-])->name('admin.postpage');
+Route::prefix('admin')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        // Admin Post Page
+        Route::get('postpage', [PostpageController::class, 'postpage'])->name(
+            'admin.postpage'
+        );
+        Route::match(['get', 'post'], 'postpage', [
+            PostpageController::class,
+            'postpage',
+        ])->name('admin.postpage');
 
-Route::get('/admin/filter-posts', [
-    PostpageController::class,
-    'filterPosts',
-])->name('admin.filterPosts');
+        // Filtering and Searching Posts
+        Route::get('filter-posts', [
+            PostpageController::class,
+            'filterPosts',
+        ])->name('admin.filterPosts');
+        Route::get('postpage/search', [
+            PostpageController::class,
+            'searchPosts',
+        ])->name('admin.searchPosts');
 
-Route::get('/admin/postpage', [PostpageController::class, 'searchPosts'])->name(
-    'admin.searchPosts'
-);
+        // Edit and Update Post
+        Route::get('includes_postpage/post_edit_inc/{id}', [
+            PostpageController::class,
+            'post_edit_inc',
+        ])->name('post_edit_inc');
+        Route::post('update', [PostpageController::class, 'update'])->name(
+            'update'
+        );
 
-// edit and update buttons
-Route::get('includes_postpage/post_edit_inc/{id}', [
-    PostpageController::class,
-    'post_edit_inc',
-])->name('post_edit_inc');
-
-Route::post('admin/update', [PostpageController::class, 'update'])->name(
-    'update'
-);
-
-Route::delete('/posts/{id}', [PostpageController::class, 'destroy'])->name(
-    'posts.destroy'
-);
+        // Deleting a Post
+        Route::delete('posts/{id}', [
+            PostpageController::class,
+            'destroy',
+        ])->name('posts.destroy');
+    });
 
 //admin system content route
+Route::prefix('admin')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('systemcontent', [
+            SystemContentController::class,
+            'index',
+        ])->name('admin.systemcontent');
 
-Route::get('admin/systemcontent', [
-    SystemContentController::class,
-    'index',
-])->name('admin.systemcontent');
-
-Route::put('/admin/systemcontent/update/{id}', [
-    SystemContentController::class,
-    'update',
-])->name('admin.systemcontent.update');
+        Route::put('systemcontent/update/{id}', [
+            SystemContentController::class,
+            'update',
+        ])->name('admin.systemcontent.update');
+    });
 
 //admin forums route
 
-Route::get('/admin/forums', [ForumController::class, 'index'])->name(
-    'admin.forums'
-);
-Route::post('/admin/forums/add', [ForumController::class, 'store'])->name(
-    'admin.forums.add'
-);
-Route::post('/admin/forums/update/{id}', [
-    ForumController::class,
-    'update',
-])->name('admin.forums.update');
-Route::delete('/admin/forums/delete/{id}', [
-    ForumController::class,
-    'destroy',
-])->name('admin.forums.delete');
+Route::prefix('admin')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('forums', [ForumController::class, 'index'])->name(
+            'admin.forums'
+        );
+        Route::post('forums/add', [ForumController::class, 'store'])->name(
+            'admin.forums.add'
+        );
+        Route::post('forums/update/{id}', [
+            ForumController::class,
+            'update',
+        ])->name('admin.forums.update');
+        Route::delete('forums/delete/{id}', [
+            ForumController::class,
+            'destroy',
+        ])->name('admin.forums.delete');
 
-Route::get('/admin/forums', [ForumController::class, 'search'])->name(
-    'admin.forums'
-);
+        Route::get('forums/search', [ForumController::class, 'search'])->name(
+            'admin.forums.search'
+        );
 
-Route::get('/admin/forums/filter', [ForumController::class, 'filter'])->name(
-    'admin.forums.filter'
-);
+        Route::get('forums/filter', [ForumController::class, 'filter'])->name(
+            'admin.forums.filter'
+        );
+    });
 
 //FAQS route
-Route::get('/moderator/faqs', [FaqsController::class, 'getFAQs'])->name(
-    'moderator.faqs'
-);
+Route::prefix('moderator')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('faqs', [FaqsController::class, 'getFAQs'])->name(
+            'moderator.faqs'
+        );
+    });
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 // Moderator Accounts Page
-Route::get('/moderator/account', [AccountController::class, 'index'])->name(
-    'moderator.account'
-);
-Route::get('/moderator/pending-accounts', [
-    AccountController::class,
-    'pendingAcc',
-])->name('moderator.pendingAcc');
+Route::prefix('moderator')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('account', [AccountController::class, 'index'])->name(
+            'moderator.account'
+        );
+        Route::get('pending-accounts', [
+            AccountController::class,
+            'pendingAcc',
+        ])->name('moderator.pendingAcc');
 
-Route::post('/moderator/account', [
-    AccountController::class,
-    'addAccount',
-])->name('moderator.addAccount');
-Route::delete('/moderator/account/{id}', [
-    AccountController::class,
-    'destroyAccount',
-])->name('moderator.destroyAccount');
+        Route::post('account', [AccountController::class, 'addAccount'])->name(
+            'moderator.addAccount'
+        );
+        Route::delete('account/{id}', [
+            AccountController::class,
+            'destroyAccount',
+        ])->name('moderator.destroyAccount');
 
-Route::match(['put', 'patch'], '/moderator/account/{id}', [
-    AccountController::class,
-    'updateAccount',
-])->name('moderator.updateAccount');
+        Route::match(['put', 'patch'], 'account/{id}', [
+            AccountController::class,
+            'updateAccount',
+        ])->name('moderator.updateAccount');
 
-Route::get('moderator/account/filter', [
-    AccountController::class,
-    'filterAccount',
-])->name('moderator.filterAccount');
+        Route::get('account/filter', [
+            AccountController::class,
+            'filterAccount',
+        ])->name('moderator.filterAccount');
 
-Route::get('/moderator/account/searchAccounts', [
-    AccountController::class,
-    'searchAccounts',
-])->name('moderator.searchAccounts');
+        Route::get('account/searchAccounts', [
+            AccountController::class,
+            'searchAccounts',
+        ])->name('moderator.searchAccounts');
 
-Route::post('/moderator/approveAccount/{id}', [
-    AccountController::class,
-    'approveAccount',
-])->name('moderator.approveAccount');
+        Route::post('approveAccount/{id}', [
+            AccountController::class,
+            'approveAccount',
+        ])->name('moderator.approveAccount');
+    });
 
 //moderator Dashboard Page
-Route::get('moderator/dashboard', [
-    DashboardController::class,
-    'dashboard',
-])->name('moderator.dashboard');
+Route::prefix('moderator')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('dashboard', [
+            DashboardController::class,
+            'dashboard',
+        ])->name('moderator.dashboard');
 
-Route::get('moderator/dashboard/filter', [
-    DashboardController::class,
-    'dashboard',
-])->name('moderator.filterDashboard');
+        Route::get('dashboard/filter', [
+            DashboardController::class,
+            'dashboard',
+        ])->name('moderator.filterDashboard');
 
-Route::get('/moderator/dashboard/search', [
-    DashboardController::class,
-    'search',
-])->name('moderator.search');
+        Route::get('dashboard/search', [
+            DashboardController::class,
+            'search',
+        ])->name('moderator.search');
+    });
 
 //moderator post page
 
-Route::get('moderator/postpage', [PostpageController::class, 'postpage'])->name(
-    'moderator.postpage'
-);
+Route::prefix('moderator')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('postpage', [PostpageController::class, 'postpage'])->name(
+            'moderator.postpage'
+        );
 
-Route::post('moderator/postspage/{id}/disregard', [
-    PostpageController::class,
-    'postDisregard', // This should point to the correct method
-])->name('posts.disregard');
+        Route::post('postspage/{id}/disregard', [
+            PostpageController::class,
+            'postDisregard', // This should point to the correct method
+        ])->name('posts.disregard');
 
-Route::match(['get', 'post'], '/moderator/postpage', [
-    PostpageController::class,
-    'postpage',
-])->name('moderator.postpage');
+        Route::match(['get', 'post'], 'postpage', [
+            PostpageController::class,
+            'postpage',
+        ])->name('moderator.postpage');
 
-Route::get('/moderator/filter-posts', [
-    PostpageController::class,
-    'filterPosts',
-])->name('moderator.filterPosts');
+        Route::get('filter-posts', [
+            PostpageController::class,
+            'filterPosts',
+        ])->name('moderator.filterPosts');
 
-Route::get('/moderator/postpage', [
-    PostpageController::class,
-    'searchPosts',
-])->name('moderator.searchPosts');
+        Route::get('postpage', [
+            PostpageController::class,
+            'searchPosts',
+        ])->name('moderator.searchPosts');
+    });
 
 // Moderator Resource Page
-Route::post('/moderator/resources/upload', [
-    ResourcepageController::class,
-    'uploadResource',
-])->name('moderator.uploadResource');
-Route::get('/moderator/resources/download/{id}', [
-    ResourcepageController::class,
-    'downloadResource',
-])->name('moderator.downloadResource');
 
-Route::get('/moderator/search-resources', [
-    ResourcepageController::class,
-    'search',
-])->name('moderator.searchResources');
+Route::prefix('moderator')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::post('resources/upload', [
+            ResourcepageController::class,
+            'uploadResource',
+        ])->name('moderator.uploadResource');
+        Route::get('resources/download/{id}', [
+            ResourcepageController::class,
+            'downloadResource',
+        ])->name('moderator.downloadResource');
 
-Route::get('/moderator/resources', [
-    ResourcepageController::class,
-    'resources',
-])->name('moderator.resources');
+        Route::get('search-resources', [
+            ResourcepageController::class,
+            'search',
+        ])->name('moderator.searchResources');
 
-Route::get('/moderator/resources/filter', [
-    ResourcepageController::class,
-    'filterResources',
-])->name('moderator.filterResources');
+        Route::get('resources', [
+            ResourcepageController::class,
+            'resources',
+        ])->name('moderator.resources');
+
+        Route::get('resources/filter', [
+            ResourcepageController::class,
+            'filterResources',
+        ])->name('moderator.filterResources');
+    });
 
 //leaderboards page
-Route::get('/moderator/leaderboards', [
-    LeaderboardController::class,
-    'leaderboards',
-])->name('moderator.leaderboards');
+Route::prefix('moderator')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('leaderboards', [
+            LeaderboardController::class,
+            'leaderboards',
+        ])->name('moderator.leaderboards');
 
-Route::get('/moderator/search-leaderboards', [
-    leaderboardController::class,
-    'search',
-])->name('moderator.searchLeaderboards');
+        Route::get('search-leaderboards', [
+            leaderboardController::class,
+            'search',
+        ])->name('moderator.searchLeaderboards');
 
-Route::get('/moderator/leaderboards/filter', [
-    LeaderboardController::class,
-    'filterLeaderboards',
-])->name('moderator.filterLeaderboards');
+        Route::get('leaderboards/filter', [
+            LeaderboardController::class,
+            'filterLeaderboards',
+        ])->name('moderator.filterLeaderboards');
+    });
 
 // routes/web.php
 Route::post('moderator/resources/update', [
@@ -401,7 +447,6 @@ Route::delete('/admin/resources/delete/{id}', [
     ResourcepageController::class,
     'destroy',
 ])->name('admin.deleteResource');
-
 
 // Forums
 Route::post('/createForum', [ForumController::class, 'createForum'])->name(
@@ -482,17 +527,24 @@ Route::post('/profile/settings/account/changeinfo2', [
     'updateAccountInfo',
 ])->name('settings.updateAccountInfo');
 
-
 // Forum Routes
-route::get('/forum-{forum_id}', [PageController::class, 'showVisitForum'])->name('visit.forum');
+route::get('/forum-{forum_id}', [
+    PageController::class,
+    'showVisitForum',
+])->name('visit.forum');
 Route::post('/forum', [ForumController::class, 'createPost'])->name(
     'createForumPost'
 );
 // Join Forum
-Route::post('/forum-join', [ForumController::class, 'joinForum'])->name('forum.join');
+Route::post('/forum-join', [ForumController::class, 'joinForum'])->name(
+    'forum.join'
+);
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //search user function routing
 
-Route::post('/search', [SearchUserController::class, 'findPossibleCharges'])->name('find.charges');
+Route::post('/search', [
+    SearchUserController::class,
+    'findPossibleCharges',
+])->name('find.charges');

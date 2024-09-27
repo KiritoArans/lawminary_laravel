@@ -44,7 +44,7 @@ class Authenticate implements AuthenticatesRequests
      */
     public static function using($guard, ...$others)
     {
-        return static::class.':'.implode(',', [$guard, ...$others]);
+        return static::class . ':' . implode(',', [$guard, ...$others]);
     }
 
     /**
@@ -102,7 +102,7 @@ class Authenticate implements AuthenticatesRequests
         throw new AuthenticationException(
             'Unauthenticated.',
             $guards,
-            $request->expectsJson() ? null : $this->redirectTo($request),
+            $request->expectsJson() ? null : $this->redirectTo($request)
         );
     }
 
@@ -114,8 +114,19 @@ class Authenticate implements AuthenticatesRequests
      */
     protected function redirectTo(Request $request)
     {
-        if (static::$redirectToCallback) {
-            return call_user_func(static::$redirectToCallback, $request);
+        if (!$request->expectsJson()) {
+            // Check for admin routes
+            if ($request->is('admin/*')) {
+                return '/admod/login'; // Redirect to admin/moderator login page
+            }
+
+            // Check for moderator routes
+            if ($request->is('moderator/*')) {
+                return '/admod/login'; // Redirect to the same login page for moderators
+            }
+
+            // For general user routes, default to /login
+            return '/login';
         }
     }
 
