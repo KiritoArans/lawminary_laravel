@@ -83,6 +83,7 @@ Route::get('/login', [PageController::class, 'showLoginPage']);
 Route::get('/signup', [PageController::class, 'showSignupPage'])->name(
     'signup'
 );
+Route::get('/forgot-password', [PageController::class, 'showForgotPassPage']);
 Route::get('/home', [PageController::class, 'showHomePage'])
     ->name('home')
     ->middleware('auth');

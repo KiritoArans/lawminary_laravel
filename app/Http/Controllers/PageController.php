@@ -27,6 +27,11 @@ class PageController extends Controller
     {
         return view('users.signup');
     }
+    
+    public function showForgotPassPage()
+    {
+        return view('users.forgotPass');
+    }
 
 
     // User Page

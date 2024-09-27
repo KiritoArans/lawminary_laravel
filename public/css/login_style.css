@@ -161,3 +161,43 @@ section {
 .bn37:hover {
     transform: perspective(1px) scale3d(1.044, 1.044, 1) translateZ(0) !important;
 }
+
+
+.forgot-pass{
+    display: flex;
+    padding: 4rem;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    .forgot-pass h1{
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    .forgot-pass input{
+        width: 24rem;
+        padding: .5rem;
+        margin: 8px 0 16px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    .forgot-pass button{
+        width: 100%;
+        padding: .75rem;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+    }
+    .forgot-pass-content, .verify-otp, .new-pass{
+        display: flex;
+        flex-direction: column;
+    }
+    .btn{
+        display: flex;
+        gap: .5rem;
+    }
