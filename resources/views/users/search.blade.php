@@ -40,9 +40,13 @@
                         >
                             @csrf
                             <div class="concern-input">
+                                <label for="user_concern" class="input-label">
+                                    Your Concern:
+                                </label>
                                 <textarea
                                     name="user_concern"
                                     id="user_concern"
+                                    class="textarea-field"
                                     placeholder="Type your concern here..."
                                     required
                                 ></textarea>
@@ -54,6 +58,7 @@
                             </div>
                         </form>
                     </div>
+
                     <p>
                         <strong>Disclaimer:</strong>
                         <br />
@@ -96,5 +101,6 @@
                 </section>
             </main>
         </div>
+        <script src="js/logout.js"></script>
     </body>
 </html>

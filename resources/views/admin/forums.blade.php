@@ -53,50 +53,9 @@
                     </div>
                     <hr class="divider" />
                 </header>
-                <section class="filter-container">
-                    @include('includes_forums.forums_search_inc')
-                    <div class="action-buttons">
-                        @include('includes_forums.forums_filter_inc')
-                        @include('includes_forums.forums_add_inc')
-                    </div>
-                </section>
-                <content class="table-container">
-                    @include('includes_forums.forums_table_inc')
-                    <div id="viewForumModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close-button" id="closeViewForumModal">
-                                &times;
-                            </span>
-                            <h2>Forum Details</h2>
-                            <p>
-                                <strong>Forum ID:</strong>
-                                <span id="viewForumId"></span>
-                            </p>
-                            <p>
-                                <strong>Forum Name:</strong>
-                                <span id="viewForumName"></span>
-                            </p>
-                            <p>
-                                <strong>Forum Issue:</strong>
-                                <span id="viewForumIssue"></span>
-                            </p>
-                            <p>
-                                <strong>Forum Description:</strong>
-                                <span id="viewForumDescription"></span>
-                            </p>
-                            <p>
-                                <strong>Members Count:</strong>
-                                <span id="viewMembersCount"></span>
-                            </p>
-                            <p>
-                                <strong>Date Created:</strong>
-                                <span id="viewDateCreated"></span>
-                            </p>
-                        </div>
-                    </div>
-                </content>
+                @include('includes_forums.forums_view_inc')
             </main>
         </div>
-        <script src="{{ asset('js/admin_js/forums_js.js') }}"></script>
+        <script src="{{ asset('js/moderator_js/mforums_js.js') }}"></script>
     </body>
 </html>

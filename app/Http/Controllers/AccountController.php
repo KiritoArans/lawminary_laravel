@@ -356,6 +356,7 @@ class AccountController extends Controller
         }
 
         // Execute the query and get the results
+        $query->orderBy('created_at', 'desc');
 
         $accounts = $query->paginate(10);
 

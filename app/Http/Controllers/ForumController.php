@@ -11,20 +11,135 @@ use App\Models\Bookmark;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ForumController extends Controller
 {
-    public function index()
+    public function showMforums()
     {
-        $forums = Forum::all();
-        return view('admin.forums', compact('forums'));
+        $forums = DB::table('tblforums')
+            ->leftJoin(
+                'tblforummembers',
+                'tblforums.forum_id',
+                '=',
+                'tblforummembers.forum_id'
+            )
+            ->select(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumDesc',
+                'tblforums.created_at',
+                DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
+            )
+            ->groupBy(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumDesc',
+                'tblforums.created_at'
+            )
+            ->orderBy('tblforums.created_at', 'desc')
+            ->get();
+
+        return view('moderator.mforums', compact('forums'));
     }
+
+    public function searchMforums(Request $request)
+    {
+        $searchTerm = $request->input('query');
+
+        $forums = DB::table('tblforums')
+            ->leftJoin(
+                'tblforummembers',
+                'tblforums.forum_id',
+                '=',
+                'tblforummembers.forum_id'
+            )
+            ->select(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumDesc',
+                'tblforums.created_at',
+                DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
+            )
+            ->where('tblforums.forumName', 'LIKE', "%{$searchTerm}%")
+            ->orWhere('tblforums.forumDesc', 'LIKE', "%{$searchTerm}%")
+            ->groupBy(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumDesc',
+                'tblforums.created_at'
+            )
+            ->orderBy('tblforums.created_at', 'desc')
+            ->get();
+
+        return view('moderator.mforums', compact('forums'));
+    }
+
+    public function filterMforums(Request $request)
+    {
+        // Retrieve filter inputs
+        $forumId = $request->input('filterForumId');
+        $forumName = $request->input('filterForumName');
+        $forumDesc = $request->input('filterForumDescription');
+        $membersCount = $request->input('filterMembersCount');
+        $dateCreated = $request->input('filterDateCreated');
+
+        // Build query
+        $query = DB::table('tblforums')
+            ->leftJoin(
+                'tblforummembers',
+                'tblforums.forum_id',
+                '=',
+                'tblforummembers.forum_id'
+            )
+            ->select(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumDesc',
+                'tblforums.created_at',
+                DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
+            )
+            ->groupBy(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumDesc',
+                'tblforums.created_at'
+            );
+
+        // Apply filters conditionally
+        if ($forumId) {
+            $query->where('tblforums.forum_id', 'LIKE', "%{$forumId}%");
+        }
+
+        if ($forumName) {
+            $query->where('tblforums.forumName', 'LIKE', "%{$forumName}%");
+        }
+
+        if ($forumDesc) {
+            $query->where('tblforums.forumDesc', 'LIKE', "%{$forumDesc}%");
+        }
+
+        if ($membersCount) {
+            $query->having('membersCount', '>=', $membersCount);
+        }
+
+        if ($dateCreated) {
+            $query->whereDate('tblforums.created_at', $dateCreated);
+        }
+
+        // Fetch filtered results
+        $forums = $query->orderBy('tblforums.created_at', 'desc')->get();
+
+        return view('moderator.mforums', compact('forums'));
+    }
+
+    //admin
 
     public function getForumDetails($forum_id)
     {
         // Find the forum by its forum_id instead of id
         $forum = Forum::where('forum_id', $forum_id)->first();
-    
+
         // Check if the forum exists
         if ($forum) {
             return response()->json($forum);
@@ -32,32 +147,29 @@ class ForumController extends Controller
             return response()->json(['error' => 'Forum not found'], 404);
         }
     }
-    
-    
-    
-
 
     // Store a new forum
     public function createForum(Request $request)
     {
         $validated = $request->validate([
             'forumName' => 'required|string|max:50',
-            'forumPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif', 
+            'forumPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'forumDesc' => 'required|string|max:150',
         ]);
 
-        $forum = new Forum;
+        $forum = new Forum();
 
         $forum->forum_id = uniqid();
         $forum->forumName = $request['forumName'];
         $forum->forumDesc = $request['forumDesc'];
 
         if ($request->hasFile('forumPhoto')) {
-            $photoPath = $request->file('forumPhoto')->store('public/files/forums');
+            $photoPath = $request
+                ->file('forumPhoto')
+                ->store('public/files/forums');
             $forum->forumPhoto = $photoPath;
         }
 
-        
         $forum->save();
 
         return redirect()
@@ -65,26 +177,27 @@ class ForumController extends Controller
             ->with('success', 'Forum created successfully!');
     }
 
-    
     public function createPost(Request $request)
     {
         $data = $request->validate([
             'forum_id' => 'required',
             'concern' => 'required|string|max:255',
-            'concernPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif', 
+            'concernPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
         $activeForum = session('activeForum');
 
-        $post = new ForumPosts;
+        $post = new ForumPosts();
 
-        $post->forum_id =  $data['forum_id'];
+        $post->forum_id = $data['forum_id'];
         $post->post_id = uniqid();
         $post->concern = $data['concern'];
-        $post->postedBy = Auth::user()->user_id; 
+        $post->postedBy = Auth::user()->user_id;
 
         if ($request->hasFile('concernPhoto')) {
-            $photoPath = $request->file('concernPhoto')->store('public/files/forum_posts');
+            $photoPath = $request
+                ->file('concernPhoto')
+                ->store('public/files/forum_posts');
             $post->concernPhoto = $photoPath;
         }
 
@@ -92,151 +205,66 @@ class ForumController extends Controller
 
         return redirect()->back()->with('success', 'Posted successfully.');
     }
-    
+
     public function joinForum(Request $request)
     {
         $user = Auth::user();
         $data = $request->validate([
             'forum_id' => 'required',
         ]);
-    
+
         $joined = JoinForum::where('user_id', $user->user_id)
-                    ->where('forum_id', $data['forum_id'])
-                    ->first();
-    
+            ->where('forum_id', $data['forum_id'])
+            ->first();
+
         if ($joined) {
             $joined->delete();
             return redirect()->back()->with('success', 'You left the forum.');
         }
-    
+
         $join = new JoinForum();
         $join->forum_id = $data['forum_id'];
         $join->user_id = $user->user_id;
         $join->save();
-    
-        return redirect()->back()->with('success', 'You have joined the forum.');
+
+        return redirect()
+            ->back()
+            ->with('success', 'You have joined the forum.');
     }
-    
 
-    
+    //edit forums
 
+    public function updateForum(Request $request, $forum_id)
+    {
+        $validated = $request->validate([
+            'forumName' => 'required|string|max:50',
+            'forumDesc' => 'required|string|max:150',
+            'dateCreated' => 'required|date',
+        ]);
 
+        $forum = Forum::where('forum_id', $forum_id)->firstOrFail();
+        $forum->forumName = $validated['forumName'];
+        $forum->forumDesc = $validated['forumDesc'];
+        $forum->created_at = $validated['dateCreated'];
 
+        $forum->save();
 
+        return redirect()
+            ->back()
+            ->with('success', 'Forum updated successfully!');
+    }
 
+    public function deleteForum($forum_id)
+    {
+        // Find the forum by its forum_id
+        $forum = Forum::where('forum_id', $forum_id)->firstOrFail();
 
+        // Delete the forum
+        $forum->delete();
 
-
-
-    // Update a forum
-    // ForumController.php
-    // public function update(Request $request, $id)
-    // {
-    //     // Validate the incoming data
-    //     $validated = $request->validate([
-    //         'forum_name' => 'required|string|max:255',
-    //         'forum_desc' => 'required|string|max:500',
-    //         'mem_count' => 'required|integer',
-    //     ]);
-
-    //     // Find the forum by ID and update its details
-    //     $forum = Forums::findOrFail($id);
-    //     $forum->forum_name = $validated['forum_name'];
-    //     $forum->forum_desc = $validated['forum_desc'];
-    //     $forum->mem_count = $validated['mem_count'];
-
-    //     // Save the updated forum
-    //     $forum->save();
-
-    //     // Redirect back with success message
-    //     return redirect()
-    //         ->route('admin.forums')
-    //         ->with('success', 'Forum updated successfully!');
-    // }
-
-    // // Delete a forum
-    // public function destroy($id)
-    // {
-    //     $forum = Forums::findOrFail($id);
-    //     $forum->delete();
-
-    //     return redirect()
-    //         ->route('admin.forums')
-    //         ->with('success', 'Forum deleted successfully!');
-    // }
-    // //add a forum
-
-    // public function add(Request $request)
-    // {
-    //     // Validate the incoming request
-    //     $validated = $request->validate([
-    //         'forum_name' => 'required|string|max:255',
-    //         'forum_desc' => 'required|string|max:255',
-    //         'mem_count' => 'required|integer',
-    //     ]);
-
-    //     // Insert the new forum into the database
-    //     Forums::create($validated);
-
-    //     // Redirect back to the forums page with a success message
-    //     return redirect()
-    //         ->route('admin.forums')
-    //         ->with('success', 'Forum added successfully!');
-    // }
-    // public function search(Request $request)
-    // {
-    //     $search = $request->input('search'); // Capture the search query
-
-    //     if ($search) {
-    //         // Filter forums based on the search query (forum name or description)
-    //         $forums = Forums::where('forum_name', 'LIKE', '%' . $search . '%')
-    //             ->orWhere('forum_desc', 'LIKE', '%' . $search . '%')
-    //             ->get();
-    //     } else {
-    //         // If no search term, show all forums
-    //         $forums = Forums::all();
-    //     }
-
-    //     return view('admin.forums', compact('forums'));
-    // }
-    // //filter function
-    // public function filter(Request $request)
-    // {
-    //     $query = Forums::query();
-
-    //     // Filter by members count
-    //     if ($request->input('members')) {
-    //         $members = $request->input('members');
-    //         if ($members == '1-10') {
-    //             $query
-    //                 ->where('mem_count', '>=', 1)
-    //                 ->where('mem_count', '<=', 10);
-    //         } elseif ($members == '11-50') {
-    //             $query
-    //                 ->where('mem_count', '>=', 11)
-    //                 ->where('mem_count', '<=', 50);
-    //         } elseif ($members == '51-100') {
-    //             $query
-    //                 ->where('mem_count', '>=', 51)
-    //                 ->where('mem_count', '<=', 100);
-    //         } elseif ($members == '101') {
-    //             $query->where('mem_count', '>', 100);
-    //         }
-    //     }
-
-    //     // Filter by date created
-    //     if ($request->input('date_created')) {
-    //         $query->whereDate(
-    //             'created_at',
-    //             '=',
-    //             $request->input('date_created')
-    //         );
-    //     }
-
-    //     // Get the filtered results
-    //     $forums = $query->get();
-
-    //     // Return view with filtered results
-    //     return view('admin.forums', compact('forums'));
-    // }
+        // Redirect back with a success message
+        return redirect()
+            ->back()
+            ->with('success', 'Forum deleted successfully!');
+    }
 }

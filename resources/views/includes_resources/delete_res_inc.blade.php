@@ -1,7 +1,7 @@
 <form
     id="delete-form-{{ $resource->id }}"
     method="POST"
-    action="{{ route('admin.deleteResource', $resource->id) }}"
+    action="{{ route('moderator.deleteResource', $resource->id) }}"
 >
     @csrf
     @method('DELETE')

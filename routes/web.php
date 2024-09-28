@@ -40,7 +40,7 @@ Route::get('/admin/account', [AdminController::class, 'showAccount'])->name(
     'admin.account'
 );
 
-Route::get('/admin/forums', [AdminController::class, 'showForums'])->name(
+Route::get('/admin/forums', [ForumController::class, 'showMforums'])->name(
     'admin.forums'
 );
 
@@ -69,10 +69,6 @@ Route::get('/moderator/account', [
     ModeratorController::class,
     'showaccount',
 ])->name('moderator.accounts');
-
-Route::get('/moderator/forums', [ModeratorController::class, 'showMforums'])
-    ->name('moderator.forums')
-    ->middleware('auth');
 
 Route::get('/moderator/faqs', [ModeratorController::class, 'showMfaqs'])->name(
     'moderator.faqs'
@@ -262,9 +258,10 @@ Route::prefix('admin')
 Route::prefix('admin')
     ->middleware(['auth']) // Use the default auth middleware
     ->group(function () {
-        Route::get('forums', [ForumController::class, 'index'])->name(
+        Route::get('forums', [ForumController::class, 'showAdminForums'])->name(
             'admin.forums'
         );
+
         Route::post('forums/add', [ForumController::class, 'store'])->name(
             'admin.forums.add'
         );
@@ -286,57 +283,7 @@ Route::prefix('admin')
         );
     });
 
-//FAQS route
-Route::prefix('moderator')
-    ->middleware(['auth']) // Use the default auth middleware
-    ->group(function () {
-        Route::get('faqs', [FaqsController::class, 'getFAQs'])->name(
-            'moderator.faqs'
-        );
-    });
-
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-// Moderator Accounts Page
-Route::prefix('moderator')
-    ->middleware(['auth']) // Use the default auth middleware
-    ->group(function () {
-        Route::get('account', [AccountController::class, 'index'])->name(
-            'moderator.account'
-        );
-        Route::get('pending-accounts', [
-            AccountController::class,
-            'pendingAcc',
-        ])->name('moderator.pendingAcc');
-
-        Route::post('account', [AccountController::class, 'addAccount'])->name(
-            'moderator.addAccount'
-        );
-        Route::delete('account/{id}', [
-            AccountController::class,
-            'destroyAccount',
-        ])->name('moderator.destroyAccount');
-
-        Route::match(['put', 'patch'], 'account/{id}', [
-            AccountController::class,
-            'updateAccount',
-        ])->name('moderator.updateAccount');
-
-        Route::get('account/filter', [
-            AccountController::class,
-            'filterAccount',
-        ])->name('moderator.filterAccount');
-
-        Route::get('account/searchAccounts', [
-            AccountController::class,
-            'searchAccounts',
-        ])->name('moderator.searchAccounts');
-
-        Route::post('approveAccount/{id}', [
-            AccountController::class,
-            'approveAccount',
-        ])->name('moderator.approveAccount');
-    });
 
 //moderator Dashboard Page
 Route::prefix('moderator')
@@ -388,6 +335,26 @@ Route::prefix('moderator')
         ])->name('moderator.searchPosts');
     });
 
+//leaderboards page
+Route::prefix('moderator')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('leaderboards', [
+            LeaderboardController::class,
+            'leaderboards',
+        ])->name('moderator.leaderboards');
+
+        Route::get('search-leaderboards', [
+            leaderboardController::class,
+            'search',
+        ])->name('moderator.searchLeaderboards');
+
+        Route::get('leaderboards/filter', [
+            LeaderboardController::class,
+            'filterLeaderboards',
+        ])->name('moderator.filterLeaderboards');
+    });
+
 // Moderator Resource Page
 
 Route::prefix('moderator')
@@ -416,43 +383,101 @@ Route::prefix('moderator')
             ResourcepageController::class,
             'filterResources',
         ])->name('moderator.filterResources');
+        Route::post('moderator/resources/update', [
+            ResourcepageController::class,
+            'updateResource',
+        ])->name('moderator.updateResource');
+
+        Route::delete('moderator/resources/delete/{id}', [
+            ResourcepageController::class,
+            'destroy',
+        ])->name('moderator.deleteResource');
     });
 
-//leaderboards page
+// Moderator Accounts Page
 Route::prefix('moderator')
     ->middleware(['auth']) // Use the default auth middleware
     ->group(function () {
-        Route::get('leaderboards', [
-            LeaderboardController::class,
-            'leaderboards',
-        ])->name('moderator.leaderboards');
+        Route::get('account', [AccountController::class, 'index'])->name(
+            'moderator.account'
+        );
+        Route::get('pending-accounts', [
+            AccountController::class,
+            'pendingAcc',
+        ])->name('moderator.pendingAcc');
 
-        Route::get('search-leaderboards', [
-            leaderboardController::class,
-            'search',
-        ])->name('moderator.searchLeaderboards');
+        Route::post('account', [AccountController::class, 'addAccount'])->name(
+            'moderator.addAccount'
+        );
+        Route::delete('account/{id}', [
+            AccountController::class,
+            'destroyAccount',
+        ])->name('moderator.destroyAccount');
 
-        Route::get('leaderboards/filter', [
-            LeaderboardController::class,
-            'filterLeaderboards',
-        ])->name('moderator.filterLeaderboards');
+        Route::match(['put', 'patch'], 'account/{id}', [
+            AccountController::class,
+            'updateAccount',
+        ])->name('moderator.updateAccount');
+
+        Route::get('account/filter', [
+            AccountController::class,
+            'filterAccount',
+        ])->name('moderator.filterAccount');
+
+        Route::get('account/searchAccounts', [
+            AccountController::class,
+            'searchAccounts',
+        ])->name('moderator.searchAccounts');
+
+        Route::post('approveAccount/{id}', [
+            AccountController::class,
+            'approveAccount',
+        ])->name('moderator.approveAccount');
     });
 
-// routes/web.php
-Route::post('moderator/resources/update', [
-    ResourcepageController::class,
-    'updateResource',
-])->name('moderator.updateResource');
+// Moderator Forums
+Route::prefix('moderator')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('forums', [ForumController::class, 'showMforums'])->name(
+            'moderator.forums'
+        );
 
-Route::delete('/admin/resources/delete/{id}', [
-    ResourcepageController::class,
-    'destroy',
-])->name('admin.deleteResource');
+        Route::post('createForum', [
+            ForumController::class,
+            'createForum',
+        ])->name('createForum');
 
-// Forums
-Route::post('/createForum', [ForumController::class, 'createForum'])->name(
-    'createForum'
-);
+        Route::get('forums/search', [
+            ForumController::class,
+            'searchMforums',
+        ])->name('moderator.searchForums');
+
+        Route::get('forums/filter', [
+            ForumController::class,
+            'filterMforums',
+        ])->name('moderator.filterForums');
+
+        Route::post('forums/{forum_id}/edit', [
+            ForumController::class,
+            'updateForum',
+        ])->name('moderator.updateForum');
+
+        Route::delete('forums/{forum_id}/delete', [
+            ForumController::class,
+            'deleteForum',
+        ])->name('moderator.deleteForum');
+    });
+
+// Moderator FAQs
+
+Route::prefix('moderator')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('faqs', [FaqsController::class, 'getFAQs'])->name(
+            'moderator.faqs'
+        );
+    });
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

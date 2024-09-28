@@ -26,6 +26,9 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         />
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         @include('inclusions/libraryLinks')
     </head>
     <body>
@@ -43,177 +46,110 @@
                 </header>
                 <section class="filter-container">
                     <div class="search-bar">
-                        <input
-                            type="text"
-                            placeholder="Search for Forums or Key Words..."
-                        />
-
-                        <button class="custom-button" id="editButton">
-                            Edit
-                        </button>
-
-                        <div id="editForumModal" class="modal">
-                            <div class="modal-content">
-                                <span
-                                    class="close-button"
-                                    id="closeEditForumModal"
-                                >
-                                    &times;
-                                </span>
-                                <h2>Edit Forum</h2>
-                                <form id="editForumForm">
-                                    <label for="editForumId">Forum ID:</label>
-                                    <input
-                                        type="text"
-                                        id="editForumId"
-                                        name="editForumId"
-                                        readonly
-                                    />
-
-                                    <label for="editForumName">
-                                        Forum Name:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="editForumName"
-                                        name="editForumName"
-                                        required
-                                    />
-
-                                    <label for="editForumIssue">
-                                        Forum Issue:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="editForumIssue"
-                                        name="editForumIssue"
-                                        required
-                                    />
-
-                                    <label for="editForumDescription">
-                                        Forum Description:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="editForumDescription"
-                                        name="editForumDescription"
-                                        required
-                                    />
-
-                                    <label for="editMembersCount">
-                                        Members Count:
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="editMembersCount"
-                                        name="editMembersCount"
-                                        required
-                                    />
-
-                                    <label for="editDateCreated">
-                                        Date Created:
-                                    </label>
-                                    <input
-                                        type="date"
-                                        id="editDateCreated"
-                                        name="editDateCreated"
-                                        required
-                                    />
-
-                                    <label for="restrictForumAccess">
-                                        Restrict Access:
-                                    </label>
-                                    <input
-                                        type="checkbox"
-                                        id="restrictForumAccess"
-                                        name="restrictForumAccess"
-                                    />
-
-                                    <label for="archiveForum">
-                                        Archive Forum:
-                                    </label>
-                                    <input
-                                        type="checkbox"
-                                        id="archiveForum"
-                                        name="archiveForum"
-                                    />
-
-                                    <button type="submit" class="custom-button">
-                                        Save Changes
-                                    </button>
-                                    <button
-                                        type="button"
-                                        class="custom-button"
-                                        id="deleteForumButton"
-                                    >
-                                        Delete Forum
-                                    </button>
-                                </form>
+                        <form
+                            action="{{ route('moderator.searchForums') }}"
+                            method="GET"
+                        >
+                            <div class="form-group">
+                                <input
+                                    type="text"
+                                    name="query"
+                                    class="form-control"
+                                    placeholder="Search for Forums or Key Words..."
+                                />
                             </div>
-                        </div>
+                            <button type="submit" class="btn btn-primary">
+                                Search
+                            </button>
+                        </form>
                     </div>
                     <div class="action-buttons">
-                        <button class="custom-button" id="filterButton">
-                            Filter
-                        </button>
+                        <div class="container"></div>
+                        <h1>Forums</h1>
 
-                        <div id="filterModal" class="modal">
-                            <div class="modal-content">
-                                <span
-                                    class="close-button"
-                                    id="closeFilterModal"
-                                >
-                                    &times;
-                                </span>
-                                <h2>Filter Forums</h2>
-                                <form id="filterForm">
-                                    <label for="filterForumId">Forum ID:</label>
-                                    <input
-                                        type="text"
-                                        id="filterForumId"
-                                        name="filterForumId"
-                                    />
+                        <!-- Filter Button and Modal -->
+                        <div class="action-buttons">
+                            <button class="custom-button" id="filterButton">
+                                Filter
+                            </button>
 
-                                    <label for="filterForumName">
-                                        Forum Name:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="filterForumName"
-                                        name="filterForumName"
-                                    />
+                            <div id="filterModal" class="modal">
+                                <div class="modal-content">
+                                    <span
+                                        class="close-button"
+                                        id="closeFilterModal"
+                                    >
+                                        &times;
+                                    </span>
+                                    <h2>Filter Forums</h2>
 
-                                    <label for="filterForumDescription">
-                                        Forum Description:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="filterForumDescription"
-                                        name="filterForumDescription"
-                                    />
+                                    <!-- Filter Form -->
+                                    <form
+                                        id="filterForm"
+                                        action="{{ route('moderator.filterForums') }}"
+                                        method="GET"
+                                    >
+                                        <label for="filterForumId">
+                                            Forum ID:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="filterForumId"
+                                            name="filterForumId"
+                                        />
 
-                                    <label for="filterMembersCount">
-                                        Members Count:
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="filterMembersCount"
-                                        name="filterMembersCount"
-                                    />
+                                        <label for="filterForumName">
+                                            Forum Name:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="filterForumName"
+                                            name="filterForumName"
+                                        />
 
-                                    <label for="filterDateCreated">
-                                        Date Created:
-                                    </label>
-                                    <input
-                                        type="date"
-                                        id="filterDateCreated"
-                                        name="filterDateCreated"
-                                    />
+                                        <label for="filterForumDescription">
+                                            Forum Description:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="filterForumDescription"
+                                            name="filterForumDescription"
+                                        />
 
-                                    <button type="submit" class="custom-button">
-                                        Apply Filter
-                                    </button>
-                                </form>
+                                        <label for="filterMembersCount">
+                                            Members Count:
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="filterMembersCount"
+                                            name="filterMembersCount"
+                                        />
+
+                                        <label for="filterDateCreated">
+                                            Date Created:
+                                        </label>
+                                        <input
+                                            type="date"
+                                            id="filterDateCreated"
+                                            name="filterDateCreated"
+                                        />
+
+                                        <button
+                                            type="button"
+                                            class="custom-button"
+                                            id="resetButton"
+                                        >
+                                            Reset Filter
+                                        </button>
+
+                                        <button
+                                            type="submit"
+                                            class="custom-button"
+                                        >
+                                            Apply Filter
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <!-- Add Forum Button -->
@@ -231,8 +167,13 @@
                                     &times;
                                 </span>
                                 <h2>Add Forum</h2>
-                                <form id="addForumForm" method="POST" action="{{ route('createForum') }}" enctype="multipart/form-data">
-                                    @csrf 
+                                <form
+                                    id="addForumForm"
+                                    method="POST"
+                                    action="{{ route('createForum') }}"
+                                    enctype="multipart/form-data"
+                                >
+                                    @csrf
                                     @include('inclusions/response')
                                     <label for="addForumName">
                                         Forum Name:
@@ -271,68 +212,7 @@
                         </div>
                     </div>
                 </section>
-                <content class="table-container">
-                    <table class="table table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Forum ID</th>
-                                <th>Forum Name</th>
-                                <th>Forum Description</th>
-                                <th>Members Count</th>
-                                <th>Date Created</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="forumsTableBody">
-                            @foreach ($forums as $forum)
-                            <tr data-forum-id="{{ $forum->id }}">
-                                <td>{{ $forum->id }}</td>
-                                <td>{{ $forum->forumName }}</td>
-                                <td>{{ $forum->forumDesc }}</td>
-                                <td>{{ $forum->forumPhoto }}</td>
-                                <td>{{ $forum->created_at }}</td>
-                                <td>
-                                    <button class="action-button" data-forum-id="{{ $forum->id }}">
-                                        View
-                                    </button>
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                    <div id="viewForumModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close-button" id="closeViewForumModal">
-                                &times;
-                            </span>
-                            <h2>Forum Details</h2>
-                            <p>
-                                <strong>Forum ID:</strong>
-                                <span id="viewForumId"></span>
-                            </p>
-                            <p>
-                                <strong>Forum Name:</strong>
-                                <span id="viewForumName"></span>
-                            </p>
-                            <p>
-                                <strong>Forum Issue:</strong>
-                                <span id="viewForumIssue"></span>
-                            </p>
-                            <p>
-                                <strong>Forum Description:</strong>
-                                <span id="viewForumDescription"></span>
-                            </p>
-                            <p>
-                                <strong>Members Count:</strong>
-                                <span id="viewMembersCount"></span>
-                            </p>
-                            <p>
-                                <strong>Date Created:</strong>
-                                <span id="viewDateCreated"></span>
-                            </p>
-                        </div>
-                    </div>
-                </content>
+                @include('includes_forums.forums_view_inc')
             </main>
         </div>
         <script src="{{ asset('js/moderator_js/mforums_js.js') }}"></script>

@@ -27,24 +27,25 @@ class PageController extends Controller
     {
         return view('users.signup');
     }
-    
+
     public function showForgotPassPage()
     {
         return view('users.forgotPass');
     }
 
-
     // User Page
     public function showHomePage(Request $request)
     {
         $user = Auth::user();
-    
+
         $filter = $request->input('filter', 'all');
-    
+
         if ($filter === 'following') {
-            $followingUserIds = \App\Models\Follow::where('follower', $user->user_id)
-                                ->pluck('following');
-    
+            $followingUserIds = \App\Models\Follow::where(
+                'follower',
+                $user->user_id
+            )->pluck('following');
+
             $posts = Posts::with('user')
                 ->withCount('likes', 'comments', 'bookmarks')
                 ->where('status', 'Approved')
@@ -58,11 +59,9 @@ class PageController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
         }
-    
+
         return view('users.home', compact('posts'));
     }
-    
-
 
     public function showArticlePage()
     {
@@ -72,124 +71,176 @@ class PageController extends Controller
     public function forumFunctions($user)
     {
         $discoverForum = DB::table('tblforums')
-            ->leftJoin('tblforummembers', 'tblforums.forum_id', '=', 'tblforummembers.forum_id')
-            ->select('tblforums.forum_id', 
-            'tblforums.forumName', 
-            'tblforums.forumPhoto', 
-            'tblforums.forumDesc', 
-            DB::raw('COUNT(tblforummembers.forum_id) as membersCount'))
-            ->whereNotIn('tblforums.forum_id', function ($query) use ($user) {
-                $query->select('forum_id')
-                      ->from('tblforummembers')
-                      ->where('user_id', $user->user_id);
-            })
-            ->groupBy('tblforums.forum_id', 
-            'tblforums.forumName', 
-            'tblforums.forumPhoto', 
-            'tblforums.forumDesc')
-            ->orderBy('tblforums.created_at', 'desc')
-            ->get();
-    
-        $forums = DB::table('tblforums')
-            ->leftJoin('tblforummembers', 'tblforums.forum_id', '=', 'tblforummembers.forum_id')
-            ->select('tblforums.forum_id', 
-                'tblforums.forumName', 
-                'tblforums.forumPhoto', 
-                'tblforums.forumDesc', 
-                DB::raw('COUNT(tblforummembers.forum_id) as membersCount'))
-            ->groupBy('tblforums.forum_id', 
-                'tblforums.forumName', 
-                'tblforums.forumPhoto', 
-                'tblforums.forumDesc')
-            ->orderBy('tblforums.created_at', 'desc')
-            ->get();
-    
-        $joinedForum = DB::table('tblforums')
-            ->leftJoin('tblforummembers', 'tblforums.forum_id', '=', 'tblforummembers.forum_id')
+            ->leftJoin(
+                'tblforummembers',
+                'tblforums.forum_id',
+                '=',
+                'tblforummembers.forum_id'
+            )
             ->select(
-                'tblforums.forum_id', 
-                'tblforums.forumName', 
-                'tblforums.forumPhoto', 
-                'tblforums.forumDesc', 
-                DB::raw('COUNT(tblforummembers.forum_id) as membersCount'))
-            ->whereIn('tblforums.forum_id', function ($query) use ($user) {
-                $query->select('forum_id')
-                      ->from('tblforummembers')
-                      ->where('user_id', $user->user_id);
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumPhoto',
+                'tblforums.forumDesc',
+                DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
+            )
+            ->whereNotIn('tblforums.forum_id', function ($query) use ($user) {
+                $query
+                    ->select('forum_id')
+                    ->from('tblforummembers')
+                    ->where('user_id', $user->user_id);
             })
-            ->groupBy('tblforums.forum_id', 
-            'tblforums.forumName', 
-            'tblforums.forumPhoto', 
-            'tblforums.forumDesc')
+            ->groupBy(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumPhoto',
+                'tblforums.forumDesc'
+            )
             ->orderBy('tblforums.created_at', 'desc')
             ->get();
-    
+
+        $forums = DB::table('tblforums')
+            ->leftJoin(
+                'tblforummembers',
+                'tblforums.forum_id',
+                '=',
+                'tblforummembers.forum_id'
+            )
+            ->select(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumPhoto',
+                'tblforums.forumDesc',
+                DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
+            )
+            ->groupBy(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumPhoto',
+                'tblforums.forumDesc'
+            )
+            ->orderBy('tblforums.created_at', 'desc')
+            ->get();
+
+        $joinedForum = DB::table('tblforums')
+            ->leftJoin(
+                'tblforummembers',
+                'tblforums.forum_id',
+                '=',
+                'tblforummembers.forum_id'
+            )
+            ->select(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumPhoto',
+                'tblforums.forumDesc',
+                DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
+            )
+            ->whereIn('tblforums.forum_id', function ($query) use ($user) {
+                $query
+                    ->select('forum_id')
+                    ->from('tblforummembers')
+                    ->where('user_id', $user->user_id);
+            })
+            ->groupBy(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumPhoto',
+                'tblforums.forumDesc'
+            )
+            ->orderBy('tblforums.created_at', 'desc')
+            ->get();
+
         $joined = [];
         foreach ($forums as $forum) {
-            $joined[$forum->forum_id] = JoinForum::where('user_id', $user->user_id)
+            $joined[$forum->forum_id] = JoinForum::where(
+                'user_id',
+                $user->user_id
+            )
                 ->where('forum_id', $forum->forum_id)
                 ->exists();
         }
-    
+
         return compact('forums', 'discoverForum', 'joinedForum', 'joined');
     }
-    
+
     public function showForumsPage()
     {
         $user = Auth::user();
-    
+
         $forumFunctions = $this->forumFunctions($user);
-    
-        return view('users.forums', array_merge(['user' => $user], $forumFunctions));
+
+        return view(
+            'users.forums',
+            array_merge(['user' => $user], $forumFunctions)
+        );
     }
-    
+
     public function showVisitForum($forum_id)
     {
         $user = Auth::user();
-    
+
         $forumFunctions = $this->forumFunctions($user);
-    
+
         $activeForum = DB::table('tblforums')
-        ->leftJoin('tblforummembers', 'tblforums.forum_id', '=', 'tblforummembers.forum_id')
-        ->select(
-            'tblforums.forum_id',
-            'tblforums.forumName',
-            'tblforums.forumPhoto',
-            'tblforums.forumDesc',
-            'tblforums.created_at',
-            'tblforums.updated_at',
-            DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
-        )
-        ->where('tblforums.forum_id', $forum_id)
-        ->groupBy(
-            'tblforums.forum_id',
-            'tblforums.forumName',
-            'tblforums.forumPhoto',
-            'tblforums.forumDesc',
-            'tblforums.created_at',
-            'tblforums.updated_at'
-        )
-        ->first();
-    
+            ->leftJoin(
+                'tblforummembers',
+                'tblforums.forum_id',
+                '=',
+                'tblforummembers.forum_id'
+            )
+            ->select(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumPhoto',
+                'tblforums.forumDesc',
+                'tblforums.created_at',
+                'tblforums.updated_at',
+                DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
+            )
+            ->where('tblforums.forum_id', $forum_id)
+            ->groupBy(
+                'tblforums.forum_id',
+                'tblforums.forumName',
+                'tblforums.forumPhoto',
+                'tblforums.forumDesc',
+                'tblforums.created_at',
+                'tblforums.updated_at'
+            )
+            ->first();
+
         $posts = ForumPosts::with('user')
             ->where('forum_id', $forum_id)
             ->orderBy('created_at', 'desc')
             ->get();
-    
-        $allPosts = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
+
+        $allPosts = ForumPosts::with(
+            'user',
+            'comments',
+            'comments.user',
+            'comments.reply.user'
+        )
             ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('created_at', 'desc')
             ->get();
-    
+
         $joinedVF = JoinForum::where('user_id', $user->user_id)
             ->where('forum_id', $forum_id)
             ->exists();
-    
-        return view('users.visit_forums', array_merge(['activeForum' => $activeForum, 'posts' => $posts, 'allPosts' => $allPosts], $forumFunctions), compact('joinedVF'));
-    }
-    
 
-    
+        return view(
+            'users.visit_forums',
+            array_merge(
+                [
+                    'activeForum' => $activeForum,
+                    'posts' => $posts,
+                    'allPosts' => $allPosts,
+                ],
+                $forumFunctions
+            ),
+            compact('joinedVF')
+        );
+    }
 
     public function showNotificationPage()
     {
@@ -206,13 +257,17 @@ class PageController extends Controller
         return view('users.resources');
     }
 
-    public function profilePageFunctions($user){
-        $following = Follow::where('follower', $user->user_id)->with('followedUser')->get();
-        $followers = Follow::where('following', $user->user_id)->with('followerUser')->get();
+    public function profilePageFunctions($user)
+    {
+        $following = Follow::where('follower', $user->user_id)
+            ->with('followedUser')
+            ->get();
+        $followers = Follow::where('following', $user->user_id)
+            ->with('followerUser')
+            ->get();
 
         $followingCount = Follow::where('follower', $user->user_id)->count();
         $followerCount = Follow::where('following', $user->user_id)->count();
-        
 
         $posts = Posts::where('postedBy', $user->user_id)
             ->withCount('likes', 'comments', 'bookmarks')
@@ -220,40 +275,55 @@ class PageController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $allPosts = Posts::with('user', 'comments', 'comments.user', 'comments.reply.user')
+        $allPosts = Posts::with(
+            'user',
+            'comments',
+            'comments.user',
+            'comments.reply.user'
+        )
             ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('created_at', 'desc')
             ->get();
-            
+
         session(['allPosts' => $allPosts]);
 
         $comments = Comment::where('user_id', $user->user_id)
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $likes = Posts::whereIn('post_id', function($query) use ($user) {
-            $query->select('post_id')
-                  ->from('tbllikes')
-                  ->where('user_id', $user->user_id);
+        $likes = Posts::whereIn('post_id', function ($query) use ($user) {
+            $query
+                ->select('post_id')
+                ->from('tbllikes')
+                ->where('user_id', $user->user_id);
         })
-        ->with(['user']) 
-        ->withCount('likes', 'comments', 'bookmarks')
-        ->orderBy('created_at', 'desc')
-        ->get();
+            ->with(['user'])
+            ->withCount('likes', 'comments', 'bookmarks')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-
-
-        $bookmarks = Posts::whereIn('post_id', function($query) use ($user) {
-            $query->select('post_id')
-                  ->from('tblbookmarks')
-                  ->where('user_id', $user->user_id);
+        $bookmarks = Posts::whereIn('post_id', function ($query) use ($user) {
+            $query
+                ->select('post_id')
+                ->from('tblbookmarks')
+                ->where('user_id', $user->user_id);
         })
-        ->with('user') 
-        ->withCount('likes', 'comments', 'bookmarks') 
-        ->orderBy('created_at', 'desc')
-        ->get();
-        
-        return compact('posts', 'allPosts', 'comments', 'likes', 'bookmarks', 'following', 'followers','followingCount', 'followerCount');
+            ->with('user')
+            ->withCount('likes', 'comments', 'bookmarks')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return compact(
+            'posts',
+            'allPosts',
+            'comments',
+            'likes',
+            'bookmarks',
+            'following',
+            'followers',
+            'followingCount',
+            'followerCount'
+        );
     }
     public function showProfilePage()
     {
@@ -261,9 +331,12 @@ class PageController extends Controller
 
         $profileFunctions = $this->profilePageFunctions($user);
 
-        return view('users.profile', array_merge(['user' => $user], $profileFunctions));
+        return view(
+            'users.profile',
+            array_merge(['user' => $user], $profileFunctions)
+        );
     }
-    
+
     public function showVisitProfilePage($user_id)
     {
         $user = UserAccount::where('user_id', $user_id)->firstOrFail();
@@ -271,11 +344,14 @@ class PageController extends Controller
         $profileFunctions = $this->profilePageFunctions($user);
 
         $isFollowing = \App\Models\Follow::where('follower', $user->user_id)
-                        ->where('following', $user->user_id)
-                        ->exists();
-                        
+            ->where('following', $user->user_id)
+            ->exists();
 
-        return view('users.visit_profile', array_merge(['user' => $user], $profileFunctions), compact('isFollowing'));
+        return view(
+            'users.visit_profile',
+            array_merge(['user' => $user], $profileFunctions),
+            compact('isFollowing')
+        );
     }
 
     // Settings

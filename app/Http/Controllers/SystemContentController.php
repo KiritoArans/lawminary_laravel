@@ -27,7 +27,7 @@ class SystemContentController extends Controller
         $syscon = SystemContent::findOrFail($id);
 
         $request->validate([
-            'system_name' => 'nullable|string|max:255',
+            'system_name' => 'nullable|string',
             'about_lawminary' => 'nullable|string',
             'about_pao' => 'nullable|string',
             'terms_of_service' => 'nullable|string',

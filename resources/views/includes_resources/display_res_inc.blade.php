@@ -30,7 +30,7 @@
 
                         <form
                             method="POST"
-                            action="{{ route('admin.deleteResource', $resource->id) }}"
+                            action="{{ route('moderator.deleteResource', $resource->id) }}"
                             onsubmit="return confirm('Are you sure you want to delete this resource?');"
                         >
                             @csrf
