@@ -8,8 +8,8 @@
 </head>
 <body>
     <h1>Your One-Time Password (OTP)</h1>
-    <p>Use the following OTP to reset your password:</p>
+    <p>Do not share this to anyone.</p>
     <h2>{{ $otp }}</h2>
-    <p>This OTP is valid for 10 minutes.</p>
+    <p>Note: This OTP is only valid for 5 minutes.</p>
 </body>
 </html>

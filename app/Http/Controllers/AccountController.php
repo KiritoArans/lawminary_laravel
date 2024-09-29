@@ -70,6 +70,7 @@ class AccountController extends Controller
             ->back()
             ->with('success', 'Your profile has been updated.');
     }
+    
     public function changePassword(Request $request)
     {
         $validator = Validator::make($request->all(), [

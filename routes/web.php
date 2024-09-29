@@ -81,6 +81,9 @@ Route::get('/signup', [PageController::class, 'showSignupPage'])->name(
     'signup'
 );
 Route::get('/forgot-password', [PageController::class, 'showForgotPassPage']);
+
+Route::get('/forgot-password-otp', [PageController::class, 'showOtpPage']);
+
 Route::get('/home', [PageController::class, 'showHomePage'])
     ->name('home')
     ->middleware('auth');
@@ -500,9 +503,13 @@ Route::post('/logoutAdMod', [AuthController::class, 'logoutAdMod'])->name(
 );
 
 // Forgot Password
-Route::post('/validate-user', [ForgotPasswordController::class, 'validateUser']);
-Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp']);
-Route::post('/update-password', [ForgotPasswordController::class, 'updatePassword']);
+Route::middleware(['web'])->group(function () {
+    Route::post('/validate-user', [ForgotPasswordController::class, 'validateUser']);
+    Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp']);
+    Route::post('/resend-otp', [ForgotPasswordController::class, 'resendOtp']);
+    Route::post('/update-password', [ForgotPasswordController::class, 'updatePassword']);
+});
+
 
 Route::get('/test-email', function() {
     try {

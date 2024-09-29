@@ -26,7 +26,7 @@ class SendOtpMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your OTP Code',
+            subject: 'Reset Password OTP',
         );
     }
 

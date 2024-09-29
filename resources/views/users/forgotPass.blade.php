@@ -13,7 +13,7 @@
 <body>
     <section>
         <div class="forgot-pass">
-            <!-- Username and Email section -->
+            
             <form id="forgotPassForm" class="forgot-pass-content">
                 <h1>Forgot Password</h1>
                 @if ($errors->has('loginError'))
@@ -22,39 +22,42 @@
                     </div>
                 @endif
                 <label for="username">Username</label>
-                <input type="text" id="usernameInput" required>
+                <input type="text" id="usernameInput" placeholder="Type your username" required>
                 <label for="email">Email</label>
-                <input type="email" id="emailInput" required>
+                <input type="email" id="emailInput" placeholder="Type your email" required>
                 <div class="btn">
                     <button id="backButton1" type="button">Back to Login</button>
                     <button id="nextButton" type="submit">Next</button>
                 </div>
             </form>
 
-            <!-- OTP Section -->
             <form id="otpForm" class="verify-otp" style="display: none;">
                 <h1>Input One-Time Password</h1>
                 <label for="otp">6 Digit OTP</label>
-                <input type="text" id="otpInput" required>
+                <input type="text" id="otpInput" required maxlength="6" placeholder="Type the 6 Digit OTP from your Email">
                 <div class="btn">
                     <button id="backButton2" type="button">Back</button>
                     <button id="submitOtpButton" type="submit">Submit</button>
                 </div>
+                <div class="btn2">
+                    <label for="">Haven't recieved yet?</label>
+                    <a id="resendOtpButton" type="button">Resend OTP</a>
+                </div>
             </form>
 
-            <!-- Password Reset Section -->
             <form id="newPassForm" class="new-pass" style="display: none;" action="/update-password" method="POST">
                 @csrf
                 <h1>Create New Password</h1>
                 <label for="password">Password</label>
-                <input type="password" name="password" required>
+                <input type="password" name="password" required placeholder="Type new password">
                 <label for="password_confirmation">Confirm Password</label>
-                <input type="password" name="password_confirmation" required>
+                <input type="password" name="password_confirmation" required placeholder="Confirm new password">
                 <div class="btn">
                     <button id="backButton3" type="button">Back</button>
                     <button type="submit" id="confirmButton">Confirm</button>
                 </div>
-            </form>
+            </form>            
+
         </div>
     </section>
     <script src="{{ asset('js/forgotPass.js') }}"></script>

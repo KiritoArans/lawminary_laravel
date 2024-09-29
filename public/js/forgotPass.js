@@ -1,51 +1,6 @@
-// let nextButton = document.getElementById('nextButton');
-// let submitButton = document.getElementById('sumbitButton');
-// let backButton1 = document.getElementById('backButton1');
-// let backButton2 = document.getElementById('backButton2');
-// let backButton3 = document.getElementById('backButton3');
-// const forgotPassDiv = document.querySelector('.forgot-pass-content');
-// const otpDiv = document.querySelector('.verify-otp');
-// const newPassDiv = document.querySelector('.new-pass');
-
-// // When Next is clicked
-// nextButton.addEventListener('click', function() {
-//     otpDiv.style.display = 'flex';
-//     forgotPassDiv.style.display = 'none';
-//     newPassDiv.style.display = 'none';
-// });
-
-// // When Submit is clicked
-// submitButton.addEventListener('click', function() {
-//     otpDiv.style.display = 'none';
-//     forgotPassDiv.style.display = 'none';
-//     newPassDiv.style.display = 'flex';
-// });
-
-// // Back button from OTP to Forgot Password
-// backButton1.addEventListener('click', function() {
-//     window.location.href = '/login';
-// });
-
-// // Back button from New Password to OTP
-// backButton2.addEventListener('click', function() {
-//     forgotPassDiv.style.display = 'flex';
-//     otpDiv.style.display = 'none';
-//     newPassDiv.style.display = 'none';
-// });
-
-// // Back button from New Password to OTP
-// backButton3.addEventListener('click', function() {
-//     forgotPassDiv.style.display = 'none';
-//     otpDiv.style.display = 'flex';
-//     newPassDiv.style.display = 'none';
-// });
-
-
-
-
-
 let nextButton = document.getElementById('nextButton');
 let submitOtpButton = document.getElementById('submitOtpButton');
+let resendOtpButton = document.getElementById('resendOtpButton');
 let backButton1 = document.getElementById('backButton1');
 let backButton2 = document.getElementById('backButton2');
 let backButton3 = document.getElementById('backButton3');
@@ -56,20 +11,31 @@ const newPassDiv = document.querySelector('.new-pass');
 // CSRF token for AJAX requests
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-// Prevent form submission
+// Handle forgot password submission
 document.getElementById('forgotPassForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const username = document.getElementById('usernameInput').value;
     const email = document.getElementById('emailInput').value;
 
-    // Validate username and email
     if (!username || !email) {
-        alert('Please fill in both username and email.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Please fill in both username and email.',
+        });
         return;
     }
 
-    // AJAX call to validate username and email, then send OTP
+    Swal.fire({
+        title: 'Verifying...',
+        text: 'Please wait while we verify your account.',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
     fetch('/validate-user', {
         method: 'POST',
         headers: {
@@ -78,39 +44,54 @@ document.getElementById('forgotPassForm').addEventListener('submit', function(ev
         },
         body: JSON.stringify({ username, email })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
+        Swal.close();
         if (data.success) {
-            // Move to the OTP section
             otpDiv.style.display = 'flex';
             forgotPassDiv.style.display = 'none';
         } else {
-            alert(data.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: data.errors.join('<br>')
+            });
         }
     })
     .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
+        Swal.close();
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An unexpected error occurred.',
+        });
     });
 });
 
-// OTP submission
+// Handle OTP submission
 document.getElementById('otpForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const otp = document.getElementById('otpInput').value;
 
     if (!otp) {
-        alert('Please enter the OTP.');
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Please enter the OTP.',
+        });
         return;
     }
 
-    // AJAX call to verify OTP
+    Swal.fire({
+        title: 'Verifying OTP...',
+        text: 'Please wait while we verify the OTP.',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
     fetch('/verify-otp', {
         method: 'POST',
         headers: {
@@ -119,24 +100,123 @@ document.getElementById('otpForm').addEventListener('submit', function(event) {
         },
         body: JSON.stringify({ otp })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
-        }
-        return response.json();
-    })
+    .then(response => response.json())
     .then(data => {
+        Swal.close();
         if (data.success) {
-            // Move to the new password section
             otpDiv.style.display = 'none';
             newPassDiv.style.display = 'flex';
         } else {
-            alert(data.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: data.errors.join('<br>')
+            });
         }
     })
     .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred. Please try again.');
+        Swal.close();
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An unexpected error occurred.',
+        });
+    });
+});
+
+// Handle resend OTP
+resendOtpButton.addEventListener('click', function() {
+    Swal.fire({
+        title: 'Resending OTP...',
+        text: 'Please wait while we resend the OTP.',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    fetch('/resend-otp', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        Swal.close();
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'OTP Resent',
+                text: data.message,
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                html: data.errors.join('<br>')
+            });
+        }
+    })
+    .catch(error => {
+        Swal.close();
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An unexpected error occurred.',
+        });
+    });
+});
+
+// Handle new password submission
+document.getElementById('newPassForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+
+    Swal.fire({
+        title: 'Updating password...',
+        text: 'Please wait while we update your password.',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    fetch('/update-password', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        Swal.close();
+        if (data.success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: data.message,
+            }).then(() => {
+                window.location.href = '/login';
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Password Error',
+                html: data.errors.join('<br>')
+            });
+        }
+    })
+    .catch(error => {
+        Swal.close();
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'An unexpected error occurred.',
+        });
     });
 });
 
