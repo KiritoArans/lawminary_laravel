@@ -42,7 +42,7 @@
                         <button class="bn3637 bn37" id="login-btn" type="submit">Login</button>
                     </div>
                     <div class="forgot">
-                        <a href="#">Forgot Password?</a>
+                        <a href="/forgot-password">Forgot Password?</a>
                     </div>
                 </form>                           
             </div>

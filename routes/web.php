@@ -77,6 +77,9 @@ Route::get('/signup', [PageController::class, 'showSignupPage'])->name(
     'signup'
 );
 Route::get('/forgot-password', [PageController::class, 'showForgotPassPage']);
+
+Route::get('/forgot-password-otp', [PageController::class, 'showOtpPage']);
+
 Route::get('/home', [PageController::class, 'showHomePage'])
     ->name('home')
     ->middleware('auth');
@@ -502,28 +505,18 @@ Route::post('/logoutAdMod', [AuthController::class, 'logoutAdMod'])->name(
 );
 
 // Forgot Password
-Route::post('/validate-user', [
-    ForgotPasswordController::class,
-    'validateUser',
-]);
-Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp']);
-Route::post('/update-password', [
-    ForgotPasswordController::class,
-    'updatePassword',
-]);
 
-Route::get('/test-email', function () {
-    try {
-        Mail::raw('This is a test email', function ($message) {
-            $message
-                ->to('larspogiii03@gmail.com')
-                ->subject('Sending to email test.');
-        });
-        return 'Email sent successfully';
-    } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
-    }
+Route::middleware(['web'])->group(function () {
+    Route::post('/validate-user', [ForgotPasswordController::class, 'validateUser']);
+    Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp']);
+    Route::post('/resend-otp', [ForgotPasswordController::class, 'resendOtp']);
+    Route::post('/update-password', [ForgotPasswordController::class, 'updatePassword']);
 });
+
+// OTP-related Routes
+Route::post('/account-verify-otp', [AccountController::class, 'verifyOtp'])->name('verify.otp');
+Route::post('/account-resend-otp', [AccountController::class, 'resendOtp'])->name('resend.otp');
+
 
 // Create Post
 Route::post('/home', [PostController::class, 'createPost'])->name(

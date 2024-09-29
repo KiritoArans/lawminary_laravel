@@ -20,19 +20,14 @@ class SendOtpMail extends Mailable
         $this->otp = $otp;
     }
 
-    /**
-     * Get the message envelope.
-     */
+
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your OTP Code',
+            subject: 'OTP Request',
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(

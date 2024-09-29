@@ -32,6 +32,10 @@ class PageController extends Controller
     {
         return view('users.forgotPass');
     }
+    public function showOtpPage()
+    {
+        return view('emails.otp');
+    }
 
     // User Page
     public function showHomePage(Request $request)
