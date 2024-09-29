@@ -11,8 +11,9 @@ class CreateOtpsTable extends Migration
         Schema::create('otps', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('otp');
+            $table->string('otp', 16);
             $table->timestamp('expires_at');
+            $table->string('purpose', 16);
             $table->timestamps();
 
             $table->foreign('user_id')->references('user_id')->on('tblaccounts')->onDelete('cascade');

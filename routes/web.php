@@ -513,19 +513,10 @@ Route::middleware(['web'])->group(function () {
     Route::post('/update-password', [ForgotPasswordController::class, 'updatePassword']);
 });
 
+// OTP-related Routes
+Route::post('/account-verify-otp', [AccountController::class, 'verifyOtp'])->name('verify.otp');
+Route::post('/account-resend-otp', [AccountController::class, 'resendOtp'])->name('resend.otp');
 
-Route::get('/test-email', function () {
-    try {
-        Mail::raw('This is a test email', function ($message) {
-            $message
-                ->to('larspogiii03@gmail.com')
-                ->subject('Sending to email test.');
-        });
-        return 'Email sent successfully';
-    } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
-    }
-});
 
 // Create Post
 Route::post('/home', [PostController::class, 'createPost'])->name(

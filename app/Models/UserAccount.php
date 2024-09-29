@@ -41,6 +41,7 @@ class UserAccount extends Authenticatable
             // $model->accountType = $model->accountType ?? 'User';
         });
     }
+
     public static function findByUserId($userId)
     {
         return self::where('user_id', $userId)->first();

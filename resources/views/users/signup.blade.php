@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Lawminary | Sign Up</title>
     <link rel="icon" href="../imgs/lawminarylogo.png" type="image/png">
     <link rel="stylesheet" href="{{ asset ('css/signup_style.css') }}">
@@ -23,6 +24,7 @@
                     </ul>
                     @endif
                 </div> --}}
+
                 <form class="signup-form" method="post" action="{{route('signup')}}">
                     @csrf
                     @method('post')
@@ -93,6 +95,50 @@
                         </div>
                     </div>
                 </form>
+
+                <!-- OTP Modal -->
+<div id="otpModal" class="modal" style="display: flex;">
+    <div class="modal-content">
+        <h2>Enter Your OTP</h2>
+        <label for="otpInput">6-Digit OTP</label>
+        <input type="text" id="otpInput" maxlength="6" required>
+
+        <div class="modal-buttons">
+            <button id="resendOtpButton">Resend OTP</button>
+            <button id="verifyOtpButton">Verify OTP</button>
+        </div>
+
+        <div id="otpError" class="error-message" style="display: none; color: red;"></div>
+    </div>
+</div>
+
+<style>
+    /* Add some basic styling for the modal */
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .modal-content {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        max-width: 400px;
+        width: 100%;
+    }
+    .modal-buttons button {
+        margin: 10px;
+    }
+</style>
+
+
             </div>
         </div>
     </section>
