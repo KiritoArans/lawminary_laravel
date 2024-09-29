@@ -65,4 +65,72 @@ class FaqsController extends Controller
         // Pass the paginated FAQs to the Blade view
         return view('moderator.mfaqs', ['faqs' => $paginatedFAQs]);
     }
+
+    // search
+
+    public function searchFAQs(Request $request)
+    {
+        // Path to Python script
+        $pythonScript = base_path('app/PythonScripts/spacy_analyze.py');
+
+        // Ensure the correct Python executable is used
+        $pythonExecutable =
+            'C:/xampp/htdocs/lawminary_laravel/venv/Scripts/python.exe';
+
+        // Run the Python script using shell_exec
+        $command = escapeshellcmd("$pythonExecutable $pythonScript");
+        $output = shell_exec($command);
+
+        if ($output === null) {
+            return response()->json(
+                ['error' => 'Failed to execute Python script'],
+                500
+            );
+        }
+
+        $faqs = json_decode($output, true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return response()->json(
+                ['error' => 'JSON decoding failed: ' . json_last_error_msg()],
+                500
+            );
+        }
+
+        // Convert the decoded JSON into a Laravel Collection
+        $faqCollection = collect($faqs);
+
+        // If there's a search query, filter the FAQs
+        $searchQuery = $request->input('search');
+        if ($searchQuery) {
+            $faqCollection = $faqCollection->filter(function (
+                $questions,
+                $keyword
+            ) use ($searchQuery) {
+                return stripos($keyword, $searchQuery) !== false;
+            });
+        }
+
+        // Manual Pagination (since we're using a collection)
+        $perPage = 10;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+
+        $currentPageItems = $faqCollection
+            ->slice(($currentPage - 1) * $perPage, $perPage)
+            ->all();
+
+        $paginatedFAQs = new LengthAwarePaginator(
+            $currentPageItems,
+            $faqCollection->count(),
+            $perPage,
+            $currentPage,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        // Pass the paginated and filtered FAQs to the Blade view
+        return view('moderator.mfaqs', [
+            'faqs' => $paginatedFAQs,
+            'searchQuery' => $searchQuery,
+        ]);
+    }
 }

@@ -46,6 +46,17 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+    // Define the resetFilter function
+    window.resetFilter = function () {
+        // Reset form fields
+        filterForm.reset();
+
+        // Show all rows again after reset
+        const rows = document.querySelectorAll('#accountTableBody tr');
+        rows.forEach((row) => {
+            row.style.display = ''; // Reset the display of all rows
+        });
+    };
 });
 
 /add/;

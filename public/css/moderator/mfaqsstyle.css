@@ -53,19 +53,6 @@ header hr {
     gap: 10px;
 }
 
-.search-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.search-bar input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
 .action-buttons {
     display: flex;
     gap: 10px;
@@ -87,6 +74,39 @@ header hr {
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s ease;
+}
+
+.custom-button:hover {
+    background-color: #333333;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Ensures the search bar container spans the full width */
+}
+
+.search-bar form {
+    display: flex;
+    flex-grow: 1; /* Ensures the form takes up the full width */
+}
+
+.search-bar input {
+    flex-grow: 1; /* Ensures the input takes up the maximum available space */
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.search-bar button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    background-color: #999;
+    color: white;
+    cursor: pointer;
+    white-space: nowrap; /* Prevents button text from breaking */
+    margin-left: 20px; /* Adds space between input and button */
 }
 
 .custom-button:hover {

@@ -1,28 +1,31 @@
-/filter button/;
+/filter modal/;
 
+// Show/hide the filter modal
 document.getElementById('filterButton').onclick = function () {
     var modal = document.getElementById('filterModal');
-    modal.style.display = 'block';
+    modal.style.display = 'block'; // Show the modal when the filter button is clicked
 };
 
+// Close the filter modal when clicking the "X" button
 document.getElementById('closeFilterModal').onclick = function () {
-    document.getElementById('filterModal').style.display = 'none';
+    var modal = document.getElementById('filterModal');
+    modal.style.display = 'none'; // Close the modal when the close button is clicked
 };
 
-// Close the filter modal when clicking outside the modal content
-window.onclick = function (event) {
+// Reset the filter form when clicking the reset button
+document.getElementById('resetButton').onclick = function () {
+    document.getElementById('filterForm').reset(); // Reset the form fields
+};
+
+// Close the modal when clicking outside of the modal content
+window.addEventListener('click', function (event) {
     var modal = document.getElementById('filterModal');
     var modalContent = document.getElementById('filterModalContent');
 
-    if (event.target === modal && !modalContent.contains(event.target)) {
-        modal.style.display = 'none';
+    if (event.target === modal) {
+        modal.style.display = 'none'; // Close the modal when clicking outside the modal content
     }
-};
-
-// Reset form when clicking the reset button
-document.getElementById('resetButton').onclick = function () {
-    document.getElementById('filterForm').reset(); // Reset form fields
-};
+});
 
 /update button/;
 
