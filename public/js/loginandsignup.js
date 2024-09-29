@@ -7,7 +7,6 @@ document.getElementById('togglePassword').addEventListener('click', function () 
     this.classList.toggle('fa-eye-slash');
 });
 
-// Toggle for confirm password field
 document.getElementById('togglePasswordConfirmation').addEventListener('click', function () {
     const confirmPasswordField = document.getElementById('password_confirmation');
     const type = confirmPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -17,48 +16,56 @@ document.getElementById('togglePasswordConfirmation').addEventListener('click', 
     this.classList.toggle('fa-eye-slash');
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const otpModal = document.getElementById('otpModal');
-    const otpError = document.getElementById('otpError');
-    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    // Handle form submission to create an account
-    document.querySelector('.signup-form').addEventListener('submit', function (event) {
-        event.preventDefault();  // Prevent the default form submission behavior
+document.addEventListener("DOMContentLoaded", function() {
+    const createAccountButton = document.getElementById("create-btn");
+    const verifyOtpButton = document.getElementById("verifyOtpButton");
+    const resendOtpButton = document.getElementById("resendOtpButton"); // Resend OTP Button
+    const otpSection = document.querySelector(".otp-section");
+    const signUpForm = document.getElementsByClassName("signup-form")[0];
+    const signUpHeader = document.querySelector("h1");
+    const backButton = document.getElementById("back-btn");
 
-        const formData = new FormData(this);
+    // Attach click event to the Create Account button
+    createAccountButton.addEventListener("click", function(event) {
+        event.preventDefault();
 
-        // Show loading modal for OTP sending
+        const formData = new FormData(signUpForm);
+
         Swal.fire({
             title: 'Sending OTP...',
-            text: 'Please wait while we verify your email.',
+            text: 'Please wait while we send the OTP to your email.',
             allowOutsideClick: false,
             didOpen: () => {
                 Swal.showLoading();
             }
         });
 
-        // Send the signup data via AJAX
         fetch('/signup', {
             method: 'POST',
+            body: formData,
             headers: {
-                'X-CSRF-TOKEN': csrfToken,
-            },
-            body: formData
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Failed to send signup request.');  // Handle non-200 HTTP responses
+                return response.json().then(err => { throw err });
             }
             return response.json();
         })
         .then(data => {
-            Swal.close(); // Close loading modal
+            Swal.close();
             if (data.success) {
-                // Show OTP modal on success
-                otpModal.style.display = 'flex';
+                otpSection.style.display = 'block';
+                signUpForm.style.display = 'none';
+                signUpHeader.style.display = 'none';
+                Swal.fire({
+                    icon: 'success',
+                    title: 'OTP Sent',
+                    text: data.message,
+                });
             } else {
-                // Show validation or server errors
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -67,27 +74,33 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })
         .catch(error => {
-            console.error('Error occurred during signup request:', error);  // Log the exact error
             Swal.close();
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'An unexpected error occurred. Please try again.',
+                html: error.errors ? error.errors.join('<br>') : 'An unexpected error occurred.',
             });
         });
     });
 
-    // Handle OTP verification in the modal
-    document.getElementById('verifyOtpButton').addEventListener('click', function () {
-        const otp = document.getElementById('otpInput').value;
+    // Attach click event to the Verify OTP button
+    verifyOtpButton.addEventListener("click", function(event) {
+        event.preventDefault();
 
-        if (!otp) {
-            otpError.style.display = 'block';
-            otpError.innerHTML = 'Please enter the OTP.';
+        const otpInputs = document.querySelectorAll('.otpInput');
+        let otp = '';
+        otpInputs.forEach(input => {
+            otp += input.value;
+        });
+
+        if (otp.length !== 6) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Please enter a 6-digit OTP.',
+            });
             return;
         }
-
-        otpError.style.display = 'none'; // Hide any previous errors
 
         Swal.fire({
             title: 'Verifying OTP...',
@@ -98,50 +111,52 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
-        // Send OTP verification request
-        fetch('/verify-otp', {
+        fetch('/account-verify-otp', {
             method: 'POST',
+            body: JSON.stringify({ otp: otp }),
             headers: {
                 'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': csrfToken
-            },
-            body: JSON.stringify({ otp })
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Failed to verify OTP.');  // Handle non-200 HTTP responses
+                return response.json().then(err => { throw err });
             }
             return response.json();
         })
         .then(data => {
             Swal.close();
             if (data.success) {
-                otpModal.style.display = 'none'; // Close OTP modal
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
-                    text: 'Account created successfully!'
+                    text: data.message,
                 }).then(() => {
-                    window.location.href = '/login'; // Redirect to login
+                    window.location.href = '/login';
                 });
             } else {
-                otpError.style.display = 'block';
-                otpError.innerHTML = data.errors.join('<br>'); // Show OTP error
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    html: data.errors.join('<br>') // Display precise OTP verification errors
+                });
             }
         })
         .catch(error => {
-            console.error('Error occurred during OTP verification:', error);  // Log the exact error
             Swal.close();
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'An unexpected error occurred. Please try again.',
+                html: error.errors ? error.errors.join('<br>') : 'An unexpected error occurred.',
             });
         });
     });
 
-    // Handle resend OTP
-    document.getElementById('resendOtpButton').addEventListener('click', function () {
+    // Attach click event to the Resend OTP button
+    resendOtpButton.addEventListener("click", function(event) {
+        event.preventDefault();
+
         Swal.fire({
             title: 'Resending OTP...',
             text: 'Please wait while we resend the OTP.',
@@ -151,42 +166,65 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+        // Send a POST request to resend the OTP
         fetch('/resend-otp', {
             method: 'POST',
             headers: {
-                'X-CSRF-TOKEN': csrfToken
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
             }
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to resend OTP.');  // Handle non-200 HTTP responses
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             Swal.close();
             if (data.success) {
                 Swal.fire({
                     icon: 'success',
                     title: 'OTP Resent',
-                    text: data.message
+                    text: data.message,
                 });
             } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
-                    text: 'Failed to resend OTP. Please try again.'
+                    html: data.errors.join('<br>')
                 });
             }
         })
         .catch(error => {
-            console.error('Error occurred during OTP resend:', error);  // Log the exact error
             Swal.close();
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'An unexpected error occurred.'
+                text: 'An unexpected error occurred.',
             });
+        });
+    });
+
+    // Attach click event to the Back button
+    backButton.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        otpSection.style.display = 'none';
+        signUpForm.style.display = 'flex';
+        signUpHeader.style.display = 'block'; // Show the <h1> tag
+    });
+});
+
+// Existing OTP input navigation logic (unchanged)
+document.addEventListener("DOMContentLoaded", function() {
+    const otpInputs = document.querySelectorAll('.otpInput');
+
+    otpInputs.forEach((input, index) => {
+        input.addEventListener('input', function() {
+            if (input.value.length === 1 && index < otpInputs.length - 1) {
+                otpInputs[index + 1].focus();
+            }
+        });
+
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Backspace' && input.value === '' && index > 0) {
+                otpInputs[index - 1].focus();
+            }
         });
     });
 });

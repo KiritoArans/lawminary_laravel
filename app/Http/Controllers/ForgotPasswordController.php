@@ -148,7 +148,14 @@ class ForgotPasswordController extends Controller
     public function updatePassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'password' => 'required|min:8|confirmed',
+            'password' => [
+                'required',
+                'min:8',
+                'confirmed',
+                'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/'
+            ],
+        ], [
+            'password.regex' => 'Password must contain at least one uppercase, lowercase, digit, and special character.'
         ]);
     
         if ($validator->fails()) {

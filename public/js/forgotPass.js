@@ -68,58 +68,80 @@ document.getElementById('forgotPassForm').addEventListener('submit', function(ev
     });
 });
 
-// Handle OTP submission
-document.getElementById('otpForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    const otp = document.getElementById('otpInput').value;
-
-    if (!otp) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Please enter the OTP.',
+// Handle OTP input fields navigation and submission
+document.addEventListener("DOMContentLoaded", function() {
+    const otpInputs = document.querySelectorAll('.otpInput');
+    
+    otpInputs.forEach((input, index) => {
+        input.addEventListener('input', function() {
+            if (input.value.length === 1 && index < otpInputs.length - 1) {
+                otpInputs[index + 1].focus(); // Move to the next input
+            }
         });
-        return;
-    }
 
-    Swal.fire({
-        title: 'Verifying OTP...',
-        text: 'Please wait while we verify the OTP.',
-        allowOutsideClick: false,
-        didOpen: () => {
-            Swal.showLoading();
-        }
+        input.addEventListener('keydown', function(event) {
+            if (event.key === 'Backspace' && input.value === '' && index > 0) {
+                otpInputs[index - 1].focus(); // Move to the previous input
+            }
+        });
     });
 
-    fetch('/verify-otp', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken
-        },
-        body: JSON.stringify({ otp })
-    })
-    .then(response => response.json())
-    .then(data => {
-        Swal.close();
-        if (data.success) {
-            otpDiv.style.display = 'none';
-            newPassDiv.style.display = 'flex';
-        } else {
+    // Handle OTP submission
+    document.getElementById('otpForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let otp = '';
+        otpInputs.forEach(input => {
+            otp += input.value; // Concatenate the values from all the OTP inputs
+        });
+
+        if (otp.length !== 6) {
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                html: data.errors.join('<br>')
+                text: 'Please enter the full 6-digit OTP.',
             });
+            return;
         }
-    })
-    .catch(error => {
-        Swal.close();
+
         Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'An unexpected error occurred.',
+            title: 'Verifying OTP...',
+            text: 'Please wait while we verify the OTP.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        fetch('/verify-otp', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken
+            },
+            body: JSON.stringify({ otp })
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.close();
+            if (data.success) {
+                otpDiv.style.display = 'none';
+                newPassDiv.style.display = 'flex';
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    html: data.errors.join('<br>')
+                });
+            }
+        })
+        .catch(error => {
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'An unexpected error occurred.',
+            });
         });
     });
 });
@@ -168,6 +190,31 @@ resendOtpButton.addEventListener('click', function() {
         });
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleNewPassword = document.getElementById('toggleNewPassword');
+    const newPasswordField = document.getElementById('newPassword');
+    const toggleNewPasswordConfirmation = document.getElementById('toggleNewPasswordConfirmation');
+    const newPasswordConfirmationField = document.getElementById('newPasswordConfirmation');
+
+    // Toggle visibility for the password field
+    toggleNewPassword.addEventListener('click', function () {
+        const type = newPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        newPasswordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    // Toggle visibility for the confirmation password field
+    toggleNewPasswordConfirmation.addEventListener('click', function () {
+        const type = newPasswordConfirmationField.getAttribute('type') === 'password' ? 'text' : 'password';
+        newPasswordConfirmationField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+});
+
 
 // Handle new password submission
 document.getElementById('newPassForm').addEventListener('submit', function(event) {
@@ -233,3 +280,5 @@ backButton3.addEventListener('click', function() {
     otpDiv.style.display = 'flex';
     newPassDiv.style.display = 'none';
 });
+
+// Handle toggle password visibility for the new password fields

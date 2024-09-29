@@ -33,25 +33,43 @@
 
             <form id="otpForm" class="verify-otp" style="display: none;">
                 <h1>Input One-Time Password</h1>
-                <label for="otp">6 Digit OTP</label>
-                <input type="text" id="otpInput" required maxlength="6" placeholder="Type the 6 Digit OTP from your Email">
+                <div class="otp-input">
+                    <label for="otpInput">6-Digit OTP</label>
+                    <div>
+                        <input type="text" class="otpInput" maxlength="1" required>
+                        <input type="text" class="otpInput" maxlength="1" required>
+                        <input type="text" class="otpInput" maxlength="1" required>
+                        <input type="text" class="otpInput" maxlength="1" required>
+                        <input type="text" class="otpInput" maxlength="1" required>
+                        <input type="text" class="otpInput" maxlength="1" required>
+                    </div>
+                </div>
                 <div class="btn">
                     <button id="backButton2" type="button">Back</button>
                     <button id="submitOtpButton" type="submit">Submit</button>
                 </div>
                 <div class="btn2">
-                    <label for="">Haven't recieved yet?</label>
+                    <label for="">Haven't received it yet?</label>
                     <a id="resendOtpButton" type="button">Resend OTP</a>
                 </div>
             </form>
+            
 
             <form id="newPassForm" class="new-pass" style="display: none;" action="/update-password" method="POST">
                 @csrf
                 <h1>Create New Password</h1>
                 <label for="password">Password</label>
-                <input type="password" name="password" required placeholder="Type new password">
+                <div>
+                    <input type="password" name="password" required placeholder="Type new password" id="newPassword">
+                    <i class="fas fa-eye toggle-password" id="toggleNewPassword"></i>
+                </div>
+
                 <label for="password_confirmation">Confirm Password</label>
-                <input type="password" name="password_confirmation" required placeholder="Confirm new password">
+                <div>
+                    <input type="password" name="password_confirmation" required placeholder="Confirm new password" id="newPasswordConfirmation">
+                    <i class="fas fa-eye toggle-password" id="toggleNewPasswordConfirmation"></i>
+                </div>
+
                 <div class="btn">
                     <button id="backButton3" type="button">Back</button>
                     <button type="submit" id="confirmButton">Confirm</button>

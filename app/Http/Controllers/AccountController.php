@@ -8,16 +8,27 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
+use App\Models\Otp;
+use App\Mail\SendOtpMail;
+use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
+
 class AccountController extends Controller
 {
-    public function createAccount(Request $request)
-    {
-        $data = $request->validate([
-            'user_id' => 'nullable',
 
+    public function createAccount(Request $request)
+{
+    try {
+        // Validate the form data with custom error message for password regex
+        $data = $request->validate([
             'username' => 'required|unique:tblaccounts,username',
-            'email' => 'required',
-            'password' => 'required|min:8|confirmed',
+            'email' => 'required|email',
+            'password' => [
+                'required',
+                'min:8',
+                'confirmed',
+                'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/'
+            ],
             'firstName' => 'required',
             'middleName' => 'nullable',
             'lastName' => 'required',
@@ -25,21 +36,123 @@ class AccountController extends Controller
             'nationality' => 'required',
             'sex' => 'required',
             'contactNumber' => 'required',
-            'accountType' => 'nullable',
-            'restrict' => 'nullable',
-            'restrictDays' => 'nullable',
+        ], [
+            'password.regex' => 'Password must contain at least one uppercase, lowercase, digit, and special character.'
         ]);
 
-        $data['accountType'] = 'User';
+        // Generate a random 6-digit OTP
+        $otp = rand(100000, 999999);
 
-        $data['password'] = Hash::make($data['password']);
+        // Store the OTP in the session
+        session(['otp' => $otp]);
 
-        $newAccount = UserAccount::create($data);
+        // Send OTP to user's email
+        \Mail::to($data['email'])->send(new \App\Mail\SendOtpMail($otp));
 
-        return redirect()
-            ->back()
-            ->with('success', 'Account created successfully.');
+        // Temporarily save the form data to the session until OTP is verified
+        session(['user_data' => $data]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'OTP sent to your email.',
+        ]);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        // Catch validation errors and return them as a JSON response
+        return response()->json([
+            'success' => false,
+            'errors' => $e->validator->errors()->all(), // Return all validation errors
+        ], 422); // 422 Unprocessable Entity
+    } catch (\Exception $e) {
+        // Handle other errors (e.g., mail sending failure)
+        return response()->json([
+            'success' => false,
+            'errors' => ['Error sending OTP. Please try again.'],
+        ], 500);
     }
+}
+
+
+
+
+    public function verifyOtp(Request $request)
+    {
+        // Get the OTP from the request
+        $otp = $request->input('otp');
+
+        // Check if OTP matches the one sent to the email
+        if ($otp != session('otp')) {
+            return response()->json(['success' => false, 'errors' => ['Invalid OTP.']], 400);
+        }
+
+        try {
+            // OTP is correct, create the account using the stored form data
+            $data = session('user_data');
+            $data['password'] = Hash::make($data['password']);
+            $data['accountType'] = 'User';  // Assign default account type
+
+            // Create the user account
+            $newAccount = UserAccount::create($data);
+
+            // Clear the session data
+            session()->forget(['otp', 'user_data']);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Account created successfully.',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['Error creating account. Please try again.'],
+            ], 500);
+        }
+    }
+
+    // New method for resending OTP
+    public function resendOtp(Request $request)
+    {
+        try {
+            // Check if we have user data in session
+            if (!session()->has('user_data')) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => ['Session expired. Please start the registration process again.']
+                ], 400);
+            }
+
+            // Generate a new 6-digit OTP
+            $otp = rand(100000, 999999);
+
+            // Get the stored email from session
+            $userData = session('user_data');
+            $email = $userData['email'];
+
+            // Store the new OTP in the session
+            session(['otp' => $otp]);
+
+            // Resend OTP to user's email
+            \Mail::to($email)->send(new \App\Mail\SendOtpMail($otp));
+
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP has been resent to your email.',
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'errors' => ['Error resending OTP. Please try again.'],
+            ], 500);
+        }
+    }
+    
+
+
+
+
+
+
 
     public function updateAccountNames(Request $request)
     {
@@ -75,7 +188,14 @@ class AccountController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'current_password' => 'required',
-            'new_password' => 'required|min:8|confirmed',
+            'new_password' => [
+                'required',
+                'min:8',
+                'confirmed',
+                'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/'
+            ],
+        ], [
+            'new_password.regex' => 'Password must contain at least one uppercase, lowercase, digit, and special character.'
         ]);
 
         if ($validator->fails()) {

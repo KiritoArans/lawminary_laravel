@@ -182,6 +182,7 @@ form label {
 form input,
 form textarea,
 form select {
+    width: 97.5%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
@@ -217,4 +218,19 @@ form button[type="button"] {
 .action-button{
     display: flex;
     justify-content: end;
+}
+
+
+.password-container input{
+    width: 96%;
+}
+.toggle-password {
+    /* position: relative; */
+    /* right: 0; */
+    /* top: 50%; */
+    /* top: 1rem; */
+    /* transform: translateY(-50%); */
+    cursor: pointer;
+    font-size: 18px;
+    color: var(--black-light-color);
 }

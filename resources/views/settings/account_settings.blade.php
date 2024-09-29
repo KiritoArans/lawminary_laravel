@@ -123,58 +123,58 @@
                                 <h2>Change Password</h2>
 
                                 <form
-                                    id="password-change-form"
-                                    method="POST"
-                                    action="{{ route('settings.changePassword') }}"
-                                >
-                                    @csrf
-                                    @include('inclusions/response')
+    id="password-change-form"
+    method="POST"
+    action="{{ route('settings.changePassword') }}"
+>
+    @csrf
+    @include('inclusions/response')
 
-                                    <label for="current-password">
-                                        Current Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        id="current-password"
-                                        name="current_password"
-                                        placeholder="Type your old password"
-                                        required
-                                    />
+    <label for="current-password">Current Password</label>
+    <div class="password-container">
+        <input
+            type="password"
+            id="current-password"
+            name="current_password"
+            placeholder="Type your old password"
+            required
+        />
+        <i class="fas fa-eye toggle-password" id="toggleCurrentPassword"></i>
+    </div>
 
-                                    <label for="new-password">
-                                        New Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        id="new-password"
-                                        name="new_password"
-                                        placeholder="Type your new password"
-                                        required
-                                    />
+    <label for="new-password">New Password</label>
+    <div class="password-container">
+        <input
+            type="password"
+            id="new-password"
+            name="new_password"
+            placeholder="Type your new password"
+            required
+        />
+        <i class="fas fa-eye toggle-password" id="toggleNewPassword"></i>
+    </div>
 
-                                    <label for="repeat-password">
-                                        Confirm New Password
-                                    </label>
-                                    <input
-                                        type="password"
-                                        id="repeat-password"
-                                        name="new_password_confirmation"
-                                        placeholder="Confirm new password"
-                                        required
-                                    />
+    <label for="repeat-password">Confirm New Password</label>
+    <div class="password-container">
+        <input
+            type="password"
+            id="repeat-password"
+            name="new_password_confirmation"
+            placeholder="Confirm new password"
+            required
+        />
+        <i class="fas fa-eye toggle-password" id="toggleRepeatPassword"></i>
+    </div>
 
-                                    <div class="action-button">
-                                        <button
-                                            type="button"
-                                            onclick="window.location.href='{{ url()->previous() }}'"
-                                        >
-                                            Cancel
-                                        </button>
-                                        <button type="submit">
-                                            Save changes
-                                        </button>
-                                    </div>
-                                </form>
+    <div class="action-button">
+        <button type="button" onclick="window.location.href='{{ url()->previous() }}'">
+            Cancel
+        </button>
+        <button type="submit">Save changes</button>
+    </div>
+</form>
+
+
                             </div>
                             <div id="info" class="tab-content">
                                 <h2>Info</h2>

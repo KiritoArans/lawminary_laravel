@@ -101,7 +101,7 @@ section {
     position: relative;
     width: 275px;
     }
-    .toggle-password {
+    .password-container .toggle-password {
         position: absolute;
         right: 0;
         top: 50%;
@@ -215,4 +215,24 @@ section {
         border: none;
         color: rgb(4, 136, 189);
         cursor: pointer;
-}
+    }       
+    .otp-input input{
+        text-align: center;
+        width: 2rem;
+        height: 2rem;
+        padding: .5rem;
+        margin: 8px 0 16px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    .new-pass .toggle-password {
+        position: relative;
+        /* right: 0; */
+        /* top: 50%; */
+        /* top: 1rem; */
+        /* transform: translateY(-50%); */
+        cursor: pointer;
+        font-size: 18px;
+        color: var(--black-light-color);
+    }

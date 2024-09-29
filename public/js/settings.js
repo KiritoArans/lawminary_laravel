@@ -41,3 +41,39 @@ document.getElementById('userPhotoInput').addEventListener('change', function(ev
         reader.readAsDataURL(file);
     }
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const toggleCurrentPassword = document.getElementById('toggleCurrentPassword');
+    const currentPasswordField = document.getElementById('current-password');
+
+    const toggleNewPassword = document.getElementById('toggleNewPassword');
+    const newPasswordField = document.getElementById('new-password');
+
+    const toggleRepeatPassword = document.getElementById('toggleRepeatPassword');
+    const repeatPasswordField = document.getElementById('repeat-password');
+
+    // Toggle visibility for current password
+    toggleCurrentPassword.addEventListener('click', function () {
+        const type = currentPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        currentPasswordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    // Toggle visibility for new password
+    toggleNewPassword.addEventListener('click', function () {
+        const type = newPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        newPasswordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    // Toggle visibility for repeat password
+    toggleRepeatPassword.addEventListener('click', function () {
+        const type = repeatPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        repeatPasswordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+});
