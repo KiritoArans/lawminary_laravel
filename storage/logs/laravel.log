@@ -202,6 +202,7 @@
 #46 C:\\xampp\\htdocs\\lawminary_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('...')
 #47 {main}
 "} 
+
 [2024-09-27 16:35:50] local.INFO: Validating user with: {"username":"larsdesu","email":"larspogiii03@gmail.com"} 
 [2024-09-27 16:35:51] local.ERROR: Class "App\Http\Controllers\SendOtpMail" not found {"exception":"[object] (Error(code: 0): Class \"App\\Http\\Controllers\\SendOtpMail\" not found at C:\\xampp\\htdocs\\lawminary_laravel\\app\\Http\\Controllers\\ForgotPasswordController.php:41)
 [stacktrace]

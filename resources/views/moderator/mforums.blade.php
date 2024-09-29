@@ -13,6 +13,7 @@
             rel="stylesheet"
             href="{{ asset('css/moderator/mforumsstyle.css') }}"
         />
+        <link rel="stylesheet" href="{{ asset('css/base_pagination.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
         <link
             rel="stylesheet"
@@ -44,29 +45,29 @@
                     </div>
                     <hr class="divider" />
                 </header>
-                <section class="filter-container">
-                    <div class="search-bar">
-                        <form
-                            action="{{ route('moderator.searchForums') }}"
-                            method="GET"
-                        >
-                            <div class="form-group">
-                                <input
-                                    type="text"
-                                    name="query"
-                                    class="form-control"
-                                    placeholder="Search for Forums or Key Words..."
-                                />
-                            </div>
-                            <button type="submit" class="btn btn-primary">
-                                Search
-                            </button>
-                        </form>
+
+                <form
+                    action="{{ route('moderator.searchForums') }}"
+                    method="GET"
+                >
+                    <div class="form-group">
+                        <div class="form-search" style="width: 100%">
+                            <input
+                                type="text"
+                                name="query"
+                                class="form-control"
+                                placeholder="Search for Forums or Key Words..."
+                            />
+                        </div>
+                        <button type="submit" class="custom-button">
+                            Search
+                        </button>
                     </div>
+                </form>
+
+                <section class="filter-container">
                     <div class="action-buttons">
                         <div class="container"></div>
-                        <h1>Forums</h1>
-
                         <!-- Filter Button and Modal -->
                         <div class="action-buttons">
                             <button class="custom-button" id="filterButton">

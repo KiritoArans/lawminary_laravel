@@ -1,23 +1,27 @@
 /filter button/;
 
-// Show/hide the filter modal
 document.getElementById('filterButton').onclick = function () {
-    document.getElementById('filterModal').style.display = 'block';
+    var modal = document.getElementById('filterModal');
+    modal.style.display = 'block';
 };
 
 document.getElementById('closeFilterModal').onclick = function () {
     document.getElementById('filterModal').style.display = 'none';
 };
 
-// Close modal when clicking outside of it
+// Close the filter modal when clicking outside the modal content
 window.onclick = function (event) {
     var modal = document.getElementById('filterModal');
-    if (event.target == modal) {
+    var modalContent = document.getElementById('filterModalContent');
+
+    if (event.target === modal && !modalContent.contains(event.target)) {
         modal.style.display = 'none';
     }
 };
+
+// Reset form when clicking the reset button
 document.getElementById('resetButton').onclick = function () {
-    document.getElementById('filterForm').reset();
+    document.getElementById('filterForm').reset(); // Reset form fields
 };
 
 /update button/;

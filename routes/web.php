@@ -41,10 +41,6 @@ Route::get('/admin/account', [AdminController::class, 'showAccount'])->name(
     'admin.account'
 );
 
-Route::get('/admin/forums', [ForumController::class, 'showMforums'])->name(
-    'admin.forums'
-);
-
 Route::get('/admin/systemcontent', [
     AdminController::class,
     'showSystemContent',
@@ -259,32 +255,38 @@ Route::prefix('admin')
 
 //admin forums route
 
+// Moderator Forums
 Route::prefix('admin')
     ->middleware(['auth']) // Use the default auth middleware
     ->group(function () {
-        Route::get('forums', [ForumController::class, 'showAdminForums'])->name(
+        Route::get('forums', [ForumController::class, 'showMforums'])->name(
             'admin.forums'
         );
 
-        Route::post('forums/add', [ForumController::class, 'store'])->name(
-            'admin.forums.add'
-        );
-        Route::post('forums/update/{id}', [
+        Route::post('createForum', [
             ForumController::class,
-            'update',
-        ])->name('admin.forums.update');
-        Route::delete('forums/delete/{id}', [
+            'createForum',
+        ])->name('createForum');
+
+        Route::get('forums/search', [
             ForumController::class,
-            'destroy',
-        ])->name('admin.forums.delete');
+            'searchMforums',
+        ])->name('admin.searchForums');
 
-        Route::get('forums/search', [ForumController::class, 'search'])->name(
-            'admin.forums.search'
-        );
+        Route::get('forums/filter', [
+            ForumController::class,
+            'filterMforums',
+        ])->name('admin.filterForums');
 
-        Route::get('forums/filter', [ForumController::class, 'filter'])->name(
-            'admin.forums.filter'
-        );
+        Route::post('forums/{forum_id}/edit', [
+            ForumController::class,
+            'updateForum',
+        ])->name('admin.updateForum');
+
+        Route::delete('forums/{forum_id}/delete', [
+            ForumController::class,
+            'deleteForum',
+        ])->name('admin.deleteForum');
     });
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -503,6 +505,7 @@ Route::post('/logoutAdMod', [AuthController::class, 'logoutAdMod'])->name(
 );
 
 // Forgot Password
+
 Route::middleware(['web'])->group(function () {
     Route::post('/validate-user', [ForgotPasswordController::class, 'validateUser']);
     Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp']);
@@ -511,18 +514,18 @@ Route::middleware(['web'])->group(function () {
 });
 
 
-Route::get('/test-email', function() {
+Route::get('/test-email', function () {
     try {
         Mail::raw('This is a test email', function ($message) {
-            $message->to('larspogiii03@gmail.com')
-                    ->subject('Sending to email test.');
+            $message
+                ->to('larspogiii03@gmail.com')
+                ->subject('Sending to email test.');
         });
         return 'Email sent successfully';
     } catch (\Exception $e) {
         return 'Error: ' . $e->getMessage();
     }
 });
-
 
 // Create Post
 Route::post('/home', [PostController::class, 'createPost'])->name(
