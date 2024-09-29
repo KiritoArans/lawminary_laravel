@@ -20,9 +20,7 @@ class SendOtpMail extends Mailable
         $this->otp = $otp;
     }
 
-    /**
-     * Get the message envelope.
-     */
+
     public function envelope(): Envelope
     {
         return new Envelope(
@@ -30,9 +28,6 @@ class SendOtpMail extends Mailable
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
