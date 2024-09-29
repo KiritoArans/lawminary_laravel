@@ -15,9 +15,12 @@ use Illuminate\Support\Facades\DB;
 
 class ForumController extends Controller
 {
-    public function showMforums()
+    public function showMforums(Request $request)
     {
-        $forums = DB::table('tblforums')
+        $search = $request->input('search'); // Capture the search query
+
+        // Start the query for forums
+        $forumsQuery = DB::table('tblforums')
             ->leftJoin(
                 'tblforummembers',
                 'tblforums.forum_id',
@@ -37,16 +40,34 @@ class ForumController extends Controller
                 'tblforums.forumDesc',
                 'tblforums.created_at'
             )
-            ->orderBy('tblforums.created_at', 'desc')
-            ->get();
+            ->orderBy('tblforums.created_at', 'desc');
 
-        return view('moderator.mforums', compact('forums'));
+        // Apply search filter if search query is present
+        if ($search) {
+            $forumsQuery
+                ->where('tblforums.forumName', 'LIKE', '%' . $search . '%')
+                ->orWhere('tblforums.forumDesc', 'LIKE', '%' . $search . '%');
+        }
+
+        // Paginate the result (10 records per page)
+        $forums = $forumsQuery->paginate(10);
+
+        // Return the appropriate view based on user role
+        if (auth()->user()->accountType === 'Admin') {
+            return view('admin.forums', compact('forums')); // Return the admin view
+        } elseif (auth()->user()->accountType === 'Moderator') {
+            return view('moderator.mforums', compact('forums')); // Return the moderator view
+        }
+
+        // Optionally handle other account types or redirect as needed
+        return redirect()->back()->with('error', 'Unauthorized access.');
     }
 
     public function searchMforums(Request $request)
     {
         $searchTerm = $request->input('query');
 
+        // Update to use paginate instead of get
         $forums = DB::table('tblforums')
             ->leftJoin(
                 'tblforummembers',
@@ -70,9 +91,18 @@ class ForumController extends Controller
                 'tblforums.created_at'
             )
             ->orderBy('tblforums.created_at', 'desc')
-            ->get();
+            ->paginate(10); // Paginate with 10 records per page
 
-        return view('moderator.mforums', compact('forums'));
+        // Pass the search term along with pagination links
+        $forums->appends(['query' => $searchTerm]);
+
+        if (auth()->user()->accountType === 'Admin') {
+            return view('admin.forums', compact('forums')); // Return the admin view
+        } elseif (auth()->user()->accountType === 'Moderator') {
+            return view('moderator.mforums', compact('forums')); // Return the moderator view
+        }
+
+        return redirect()->back()->with('error', 'Unauthorized access.');
     }
 
     public function filterMforums(Request $request)
@@ -127,13 +157,26 @@ class ForumController extends Controller
             $query->whereDate('tblforums.created_at', $dateCreated);
         }
 
-        // Fetch filtered results
-        $forums = $query->orderBy('tblforums.created_at', 'desc')->get();
+        // Paginate results
+        $forums = $query->orderBy('tblforums.created_at', 'desc')->paginate(10);
 
-        return view('moderator.mforums', compact('forums'));
+        // Append filters to pagination links
+        $forums->appends([
+            'filterForumId' => $forumId,
+            'filterForumName' => $forumName,
+            'filterForumDescription' => $forumDesc,
+            'filterMembersCount' => $membersCount,
+            'filterDateCreated' => $dateCreated,
+        ]);
+
+        if (auth()->user()->accountType === 'Admin') {
+            return view('admin.forums', compact('forums')); // Return the admin view
+        } elseif (auth()->user()->accountType === 'Moderator') {
+            return view('moderator.mforums', compact('forums')); // Return the moderator view
+        }
+
+        return redirect()->back()->with('error', 'Unauthorized access.');
     }
-
-    //admin
 
     public function getForumDetails($forum_id)
     {

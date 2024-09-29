@@ -109,3 +109,58 @@
         </div>
     </div>
 </div>
+
+<div style="text-align: center">
+    <!-- This inline style ensures it's centered with your existing CSS -->
+    <ul class="pagination">
+        <li
+            class="page-item {{ $forums->currentPage() == 1 ? 'disabled' : '' }}"
+            aria-disabled="{{ $forums->currentPage() == 1 }}"
+        >
+            <a
+                class="page-link"
+                href="{{ $forums->appends(request()->input())->previousPageUrl() }}"
+                rel="prev"
+            >
+                &laquo;
+            </a>
+        </li>
+
+        @for ($i = 1; $i <= $forums->lastPage(); $i++)
+            <li
+                class="page-item {{ $forums->currentPage() == $i ? 'active' : '' }}"
+            >
+                <a
+                    class="page-link"
+                    href="{{ $forums->appends(request()->input())->url($i) }}"
+                >
+                    {{ $i }}
+                </a>
+            </li>
+        @endfor
+
+        <li
+            class="page-item {{ $forums->hasMorePages() ? '' : 'disabled' }}"
+            aria-disabled="{{ ! $forums->hasMorePages() }}"
+        >
+            <a
+                class="page-link"
+                href="{{ $forums->appends(request()->input())->nextPageUrl() }}"
+                rel="next"
+            >
+                &raquo;
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- Modal Structure -->
+<div id="viewModal" class="modal">
+    <div class="modal-content">
+        <span class="close-buttonView" id="closeModal">&times;</span>
+        <h2>Activity Details</h2>
+        <div id="modalContent">
+            <!-- Dynamic content will be loaded here -->
+        </div>
+    </div>
+</div>
