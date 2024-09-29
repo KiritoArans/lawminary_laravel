@@ -50,16 +50,21 @@
                         @include('includes_syscon.syscon_logo_inc')
                     </div>
                     <hr class="divider" />
-
-                    <div class="search-bar">
-                        <input type="text" placeholder="Search FAQs..." />
-                        <div class="filter-btn">
-                            <button id="filterButton" class="custom-button">
-                                Filter
-                            </button>
-                        </div>
-                    </div>
                 </header>
+                <div class="search-bar">
+                    <form method="GET" action="{{ route('faqs.search') }}">
+                        <input
+                            type="text"
+                            name="search"
+                            placeholder="Search FAQs..."
+                            value="{{ request('search') }}"
+                        />
+                        <button type="submit" class="custom-button">
+                            Search
+                        </button>
+                    </form>
+                </div>
+
                 <content>
                     <h1>Frequently Asked Questions</h1>
                     <div class="container">

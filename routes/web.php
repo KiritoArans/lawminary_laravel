@@ -67,10 +67,6 @@ Route::get('/moderator/account', [
     'showaccount',
 ])->name('moderator.accounts');
 
-Route::get('/moderator/faqs', [ModeratorController::class, 'showMfaqs'])->name(
-    'moderator.faqs'
-);
-
 //user routes
 Route::get('/login', [PageController::class, 'showLoginPage']);
 Route::get('/signup', [PageController::class, 'showSignupPage'])->name(
@@ -480,8 +476,14 @@ Route::prefix('moderator')
 Route::prefix('moderator')
     ->middleware(['auth']) // Use the default auth middleware
     ->group(function () {
-        Route::get('faqs', [FaqsController::class, 'getFAQs'])->name(
+        // Route for displaying FAQs
+        Route::get('/faqs', [FaqsController::class, 'getFAQs'])->name(
             'moderator.faqs'
+        );
+
+        // Route for searching FAQs with a search query
+        Route::get('/faqs/search', [FaqsController::class, 'searchFAQs'])->name(
+            'faqs.search'
         );
     });
 
@@ -507,16 +509,27 @@ Route::post('/logoutAdMod', [AuthController::class, 'logoutAdMod'])->name(
 // Forgot Password
 
 Route::middleware(['web'])->group(function () {
-    Route::post('/validate-user', [ForgotPasswordController::class, 'validateUser']);
+    Route::post('/validate-user', [
+        ForgotPasswordController::class,
+        'validateUser',
+    ]);
     Route::post('/verify-otp', [ForgotPasswordController::class, 'verifyOtp']);
     Route::post('/resend-otp', [ForgotPasswordController::class, 'resendOtp']);
-    Route::post('/update-password', [ForgotPasswordController::class, 'updatePassword']);
+    Route::post('/update-password', [
+        ForgotPasswordController::class,
+        'updatePassword',
+    ]);
 });
 
 // OTP-related Routes
-Route::post('/account-verify-otp', [AccountController::class, 'verifyOtp'])->name('verify.otp');
-Route::post('/account-resend-otp', [AccountController::class, 'resendOtp'])->name('resend.otp');
-
+Route::post('/account-verify-otp', [
+    AccountController::class,
+    'verifyOtp',
+])->name('verify.otp');
+Route::post('/account-resend-otp', [
+    AccountController::class,
+    'resendOtp',
+])->name('resend.otp');
 
 // Create Post
 Route::post('/home', [PostController::class, 'createPost'])->name(
