@@ -17,63 +17,60 @@ class AccountController extends Controller
 {
 
     public function createAccount(Request $request)
-{
-    try {
-        // Validate the form data with custom error message for password regex
-        $data = $request->validate([
-            'username' => 'required|unique:tblaccounts,username',
-            'email' => 'required|email',
-            'password' => [
-                'required',
-                'min:8',
-                'confirmed',
-                'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/'
-            ],
-            'firstName' => 'required',
-            'middleName' => 'nullable',
-            'lastName' => 'required',
-            'birthDate' => 'required',
-            'nationality' => 'required',
-            'sex' => 'required',
-            'contactNumber' => 'required',
-        ], [
-            'password.regex' => 'Password must contain at least one uppercase, lowercase, digit, and special character.'
-        ]);
+    {
+        try {
+            // Validate the form data with custom error message for password regex
+            $data = $request->validate([
+                'username' => 'required|unique:tblaccounts,username',
+                'email' => 'required|email',
+                'password' => [
+                    'required',
+                    'min:8',
+                    'confirmed',
+                    'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/'
+                ],
+                'firstName' => 'required',
+                'middleName' => 'nullable',
+                'lastName' => 'required',
+                'birthDate' => 'required',
+                'nationality' => 'required',
+                'sex' => 'required',
+                'contactNumber' => 'required',
+            ], [
+                'password.regex' => 'Password must contain at least one uppercase, lowercase, digit, and special character.'
+            ]);
 
-        // Generate a random 6-digit OTP
-        $otp = rand(100000, 999999);
+            // Generate a random 6-digit OTP
+            $otp = rand(100000, 999999);
 
-        // Store the OTP in the session
-        session(['otp' => $otp]);
+            // Store the OTP in the session
+            session(['otp' => $otp]);
 
-        // Send OTP to user's email
-        \Mail::to($data['email'])->send(new \App\Mail\SendOtpMail($otp));
+            // Send OTP to user's email
+            \Mail::to($data['email'])->send(new \App\Mail\SendOtpMail($otp));
 
-        // Temporarily save the form data to the session until OTP is verified
-        session(['user_data' => $data]);
+            // Temporarily save the form data to the session until OTP is verified
+            session(['user_data' => $data]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'OTP sent to your email.',
-        ]);
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP sent to your email.',
+            ]);
 
-    } catch (\Illuminate\Validation\ValidationException $e) {
-        // Catch validation errors and return them as a JSON response
-        return response()->json([
-            'success' => false,
-            'errors' => $e->validator->errors()->all(), // Return all validation errors
-        ], 422); // 422 Unprocessable Entity
-    } catch (\Exception $e) {
-        // Handle other errors (e.g., mail sending failure)
-        return response()->json([
-            'success' => false,
-            'errors' => ['Error sending OTP. Please try again.'],
-        ], 500);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Catch validation errors and return them as a JSON response
+            return response()->json([
+                'success' => false,
+                'errors' => $e->validator->errors()->all(), // Return all validation errors
+            ], 422); // 422 Unprocessable Entity
+        } catch (\Exception $e) {
+            // Handle other errors (e.g., mail sending failure)
+            return response()->json([
+                'success' => false,
+                'errors' => ['Error sending OTP. Please try again.'],
+            ], 500);
+        }
     }
-}
-
-
-
 
     public function verifyOtp(Request $request)
     {
@@ -93,6 +90,11 @@ class AccountController extends Controller
 
             // Create the user account
             $newAccount = UserAccount::create($data);
+
+            \Mail::raw("Hello, " . $data['firstName'] . ".\n\nYour account has been created successfully.", function ($message) use ($data) {
+                $message->to($data['email'])
+                        ->subject('Account Creation');
+            });
 
             // Clear the session data
             session()->forget(['otp', 'user_data']);
@@ -147,12 +149,6 @@ class AccountController extends Controller
         }
     }
     
-
-
-
-
-
-
 
     public function updateAccountNames(Request $request)
     {

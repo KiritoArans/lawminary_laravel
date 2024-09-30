@@ -228,3 +228,26 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Fetch the nationalities from the JSON file
+    fetch('/nationalities.json') // Adjust the path if necessary
+        .then((response) => response.json())
+        .then((data) => {
+            const nationalitySelect = document.getElementById('nationality');
+            data.forEach((nationality) => {
+                const option = document.createElement('option');
+                option.value = nationality.name;
+                option.text = nationality.name;
+                nationalitySelect.appendChild(option);
+            });
+        })
+        .catch((error) => console.error('Error loading nationalities:', error));
+});
+//contact number
+document
+    .getElementById('contactNumber')
+    .addEventListener('input', function (e) {
+        // Replace any non-digit characters
+        this.value = this.value.replace(/\D/g, '');
+    });

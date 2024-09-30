@@ -187,3 +187,13 @@ section{
         color: rgb(4, 136, 189);
         cursor: pointer;
 }
+
+.contact-number-wrapper {
+    display: flex;
+    align-items: center; /* Align the +63 and input field vertically */
+    width: 144%;
+}
+.country-code {
+    margin-right: 10px; /* Space between +63 and input field */
+    font-weight: bold;
+}

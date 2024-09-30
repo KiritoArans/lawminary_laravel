@@ -15,32 +15,43 @@
         <div class="wrapper">
             <div class="container">
                 <h1>Sign Up</h1>
-                
+
                 <div class="signup-content">
                     <form class="signup-form">
 
                         <div class="left-column">
                             <div class="form-group">
                                 <label for="first-name">First Name</label>
-                                <input type="text" id="first-name" name="firstName" value="{{ old('firstName') }}">
+                                <input type="text" id="first-name" name="firstName" value="{{ old('firstName') }}" placeholder="Type your first name">
                             </div>
                             <div class="form-group">
                                 <label for="last-name">Last Name</label>
-                                <input type="text" id="last-name" name="lastName" value="{{ old('lastName') }}">
+                                <input type="text" id="last-name" name="lastName" value="{{ old('lastName') }}" placeholder="Type your last name">
                             </div>
                             <div class="form-group">
-                                <label for="nationality">Nationality</label>
-                                <input type="text" id="nationality" name="nationality" value="{{ old('nationality') }}">
+                                <label for="nationality" class="form-group">
+                                    Nationality:
+                                </label>
+                                <select
+                                    id="nationality"
+                                    name="nationality"
+                                    required
+                                >
+                                    <option value="">
+                                        Select Nationality
+                                    </option>
+                                    <!-- Nationalities will be populated here by JavaScript -->
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="email-address">Email Address</label>
-                                <input type="email" id="email-address" name="email" value="{{ old('email') }}">
+                                <input type="email" id="email-address" name="email" value="{{ old('email') }}" placeholder="Type your email">
                             </div>
                         </div>
                         <div class="middle-column">
                             <div class="form-group">
                                 <label for="middle-name">Middle Name <span>(Optional)</span></label>
-                                <input type="text" id="middle-name" name="middleName" value="{{ old('middleName') }}">
+                                <input type="text" id="middle-name" name="middleName" value="{{ old('middleName') }}" placeholder="Type your middle name">
                             </div>
                             <div class="form-group">
                                 <label for="birth-date">Birth Date</label>
@@ -56,26 +67,38 @@
                             </div>
                             <div class="form-group">
                                 <label for="contact-number">Contact Number</label>
-                                <input type="tel" id="contact-number" name="contactNumber" value="{{ old('contactNumber') }}">
+                                <div class="contact-number-wrapper">
+                                    <span class="country-code">+63</span>
+                                    <input
+                                        type="tel"
+                                        id="contactNumber"
+                                        name="contactNumber"
+                                        maxlength="10"
+                                        value="{{ old('contactNumber') }}"
+                                        placeholder="Enter phone number"
+                                        pattern="[0-9]{10}"
+                                        required
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div class="line"></div>
                         <div class="right-column">
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input type="text" id="username" name="username" value="{{ old('username') }}">
+                                <input type="text" id="username" name="username" value="{{ old('username') }}" placeholder="Create username">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <div class="password-container">
-                                    <input type="password" id="password" name="password" required>
+                                    <input type="password" id="password" name="password" required placeholder="Create password">
                                     <i class="fas fa-eye toggle-password" id="togglePassword"></i>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="password_confirmation">Confirm Password</label>
                                 <div class="password-container">
-                                    <input type="password" id="password_confirmation" name="password_confirmation" required>
+                                    <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Confirm password">
                                     <i class="fas fa-eye toggle-password" id="togglePasswordConfirmation"></i>
                                 </div>
                             </div>                        
