@@ -40,7 +40,6 @@
                                     <option value="">
                                         Select Nationality
                                     </option>
-                                    <!-- Nationalities will be populated here by JavaScript -->
                                 </select>
                             </div>
                             <div class="form-group">
@@ -119,41 +118,17 @@
                             <label for="otpInput">6-Digit OTP</label>
                             <div>
                                 <input
-                                    type="text"
-                                    class="otpInput"
-                                    maxlength="1"
-                                    required
-                                />
+                                    type="text" class="otpInput" maxlength="1" required/>
                                 <input
-                                    type="text"
-                                    class="otpInput"
-                                    maxlength="1"
-                                    required
-                                />
+                                    type="text" class="otpInput" maxlength="1" required/>
                                 <input
-                                    type="text"
-                                    class="otpInput"
-                                    maxlength="1"
-                                    required
-                                />
+                                    type="text" class="otpInput" maxlength="1" required/>
                                 <input
-                                    type="text"
-                                    class="otpInput"
-                                    maxlength="1"
-                                    required
-                                />
+                                    type="text" class="otpInput" maxlength="1" required/>
                                 <input
-                                    type="text"
-                                    class="otpInput"
-                                    maxlength="1"
-                                    required
-                                />
+                                    type="text" class="otpInput" maxlength="1" required/>
                                 <input
-                                    type="text"
-                                    class="otpInput"
-                                    maxlength="1"
-                                    required
-                                />
+                                    type="text" class="otpInput" maxlength="1" required/>
                             </div>
                         </div>
 
