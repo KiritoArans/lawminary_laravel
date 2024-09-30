@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         // Send a POST request to resend the OTP
-        fetch('/resend-otp', {
+        fetch('/account-resend-otp', {
             method: 'POST',
             headers: {
                 'X-CSRF-TOKEN': document

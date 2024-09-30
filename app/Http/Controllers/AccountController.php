@@ -91,7 +91,7 @@ class AccountController extends Controller
             // Create the user account
             $newAccount = UserAccount::create($data);
 
-            \Mail::raw("Hello, " . $data['firstName'] . ".\n\nYour account has been created successfully.", function ($message) use ($data) {
+            \Mail::raw("Hello " . $data['firstName'] . ",\n\nYour account has been created successfully.", function ($message) use ($data) {
                 $message->to($data['email'])
                         ->subject('Account Creation');
             });
@@ -149,6 +149,8 @@ class AccountController extends Controller
         }
     }
     
+
+
 
     public function updateAccountNames(Request $request)
     {

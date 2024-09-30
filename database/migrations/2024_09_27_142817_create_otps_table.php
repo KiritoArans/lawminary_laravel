@@ -10,10 +10,10 @@ class CreateOtpsTable extends Migration
     {
         Schema::create('otps', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('otp', 16);
             $table->timestamp('expires_at');
-            $table->string('purpose', 16);
+            $table->string('purpose', 24)->nullable();
             $table->timestamps();
 
             $table
