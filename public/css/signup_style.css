@@ -1,36 +1,36 @@
-*{
+* {
     margin: 0;
     padding: 0;
-    font-family: "Montserrat", sans-serif;
+    font-family: 'Montserrat', sans-serif;
 }
-:root{
-    --primary-color: #561C24;
-    --secondary-color: #FFAF45;
-    --panel-color: #FFF;
+:root {
+    --primary-color: #561c24;
+    --secondary-color: #ffaf45;
+    --panel-color: #fff;
     --text-color: #000;
     --text-color2: #fff;
     --text-color3: #999;
     --text-color4: #f5f5f5;
     --black-light-color: #707070;
     --border-color: #e6e5e5;
-    --toggle-color: #DDD;
+    --toggle-color: #ddd;
     --title-icon-color: #fff;
-    
+
     --tran-05: all 0.5s ease;
     --tran-03: all 0.3s ease;
     --tran-03: all 0.2s ease;
 }
-body{
-    background: linear-gradient(to top, #561c24, #7b2d37); 
+body {
+    background: linear-gradient(to top, #561c24, #7b2d37);
     min-height: 100vh;
 }
-section{
+section {
     background-image: url(/imgs/lawminarylogo.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
 }
-.wrapper{
+.wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -60,7 +60,7 @@ section{
 .right-column {
     width: 30%;
 }
-.line{
+.line {
     border: 1px solid;
     opacity: 50%;
     height: 250px;
@@ -72,14 +72,14 @@ section{
     display: block;
     margin-bottom: 5px;
 }
-.form-group input{
+.form-group input {
     width: 18rem;
     padding: 8px;
     margin-right: 8rem;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-.form-group select{
+.form-group select {
     width: 19rem;
     padding: 7.5px;
     border: 1px solid #ccc;
@@ -130,60 +130,65 @@ section{
     left: 16px;
 }
 
-
-
-
-
-
-.otp-section{
+.otp-section {
     display: flex;
     flex-direction: column;
-    }
-    .otp-section h2{
-        text-align: center;
-        color: var(--primary-color);
-        margin-bottom: 1rem;
-    }
-    .otp-input{
-        display: flex;
-        flex-direction: column;
-        font-size: 1rem;
-    }
-    .otp-input input{
-        text-align: center;
-        width: 2rem;
-        height: 2rem;
-        padding: .5rem;
-        margin: 8px 0 16px 0;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 1rem;
-    }
-    .otp-section button{
-        width: 100%;
-        padding: .75rem;
-        background-color: var(--primary-color);
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        font-size: 1rem;
-        font-weight: 600;
-        cursor: pointer;
-    }
-    .otp-section button:nth-child(1){
-        background-color: gray;
-    }
-    .btn{
-        display: flex;
-        gap: .5rem;
-    }
-    .btn2 {
-        text-align: center;
-        margin-top: 1rem;
-    }
-    .btn2 a{
-        background-color: transparent;
-        border: none;
-        color: rgb(4, 136, 189);
-        cursor: pointer;
+}
+.otp-section h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+.otp-input {
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+}
+.otp-input input {
+    text-align: center;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.5rem;
+    margin: 8px 0 16px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+.otp-section button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.otp-section button:nth-child(1) {
+    background-color: gray;
+}
+.btn {
+    display: flex;
+    gap: 0.5rem;
+}
+.btn2 {
+    text-align: center;
+    margin-top: 1rem;
+}
+.btn2 a {
+    background-color: transparent;
+    border: none;
+    color: rgb(4, 136, 189);
+    cursor: pointer;
+}
+.contact-number-wrapper {
+    display: flex;
+    align-items: center; /* Align the +63 and input field vertically */
+    width: 144%;
+}
+
+.country-code {
+    margin-right: 10px; /* Space between +63 and input field */
+    font-weight: bold;
 }

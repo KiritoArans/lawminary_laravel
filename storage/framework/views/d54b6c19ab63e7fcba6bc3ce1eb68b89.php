@@ -56,7 +56,11 @@
     </nav>
 </div>
 <div class="bottom-nav">
-    <a href="<?php echo e(route('logoutAdMod')); ?>" class="logout" id="logout-link">
+    <a
+        href="<?php echo e(route('logoutAdMod')); ?>"
+        class="logout"
+        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+    >
         <i class="fa-solid fa-right-from-bracket"></i>
         <span>Log out</span>
     </a>
