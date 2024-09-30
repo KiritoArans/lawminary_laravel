@@ -34,13 +34,21 @@ class CommentController extends Controller
         //     $addPoints->save();
         // }
 
-        return redirect()
-            ->back()
-            ->with([
-                'success' => 'Your comment has been posted!',
-                'post_id' => $request->post_id,
-                'new_comment' => $comment,
-            ]);
+        // return redirect()
+        //     ->back()
+        //     ->with([
+        //         'success' => 'Your comment has been posted!',
+        //         'post_id' => $request->post_id,
+        //         'new_comment' => $comment,
+        //     ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Your comment has been posted.',
+            'post_id' => $request->post_id,
+            'new_comment' => $comment,
+        ]);
+        
     }
 
     // Reply Function

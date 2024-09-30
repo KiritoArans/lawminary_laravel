@@ -32,12 +32,17 @@ class AccountController extends Controller
                 'firstName' => 'required',
                 'middleName' => 'nullable',
                 'lastName' => 'required',
-                'birthDate' => 'required',
+                'birthDate' => [
+                    'required',
+                    'date',
+                    'before_or_equal:' . now()->subYears(13)->format('Y-m-d') // Ensure the user is at least 13 years old
+                ],
                 'nationality' => 'required',
                 'sex' => 'required',
                 'contactNumber' => 'required',
             ], [
-                'password.regex' => 'Password must contain at least one uppercase, lowercase, digit, and special character.'
+                'password.regex' => 'Password must contain at least one uppercase, lowercase, digit, and special character.',
+                'birthDate.before_or_equal' => 'You must be 13 years old or above to create an account.'
             ]);
 
             // Generate a random 6-digit OTP
