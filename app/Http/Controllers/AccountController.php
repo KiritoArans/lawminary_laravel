@@ -15,30 +15,33 @@ use Carbon\Carbon;
 
 class AccountController extends Controller
 {
-
     public function createAccount(Request $request)
     {
         try {
             // Validate the form data with custom error message for password regex
-            $data = $request->validate([
-                'username' => 'required|unique:tblaccounts,username',
-                'email' => 'required|email',
-                'password' => [
-                    'required',
-                    'min:8',
-                    'confirmed',
-                    'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/'
+            $data = $request->validate(
+                [
+                    'username' => 'required|unique:tblaccounts,username',
+                    'email' => 'required|email',
+                    'password' => [
+                        'required',
+                        'min:8',
+                        'confirmed',
+                        'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/',
+                    ],
+                    'firstName' => 'required',
+                    'middleName' => 'nullable',
+                    'lastName' => 'required',
+                    'birthDate' => 'required',
+                    'nationality' => 'required',
+                    'sex' => 'required',
+                    'contactNumber' => 'required',
                 ],
-                'firstName' => 'required',
-                'middleName' => 'nullable',
-                'lastName' => 'required',
-                'birthDate' => 'required',
-                'nationality' => 'required',
-                'sex' => 'required',
-                'contactNumber' => 'required',
-            ], [
-                'password.regex' => 'Password must contain at least one uppercase, lowercase, digit, and special character.'
-            ]);
+                [
+                    'password.regex' =>
+                        'Password must contain at least one uppercase, lowercase, digit, and special character.',
+                ]
+            );
 
             // Generate a random 6-digit OTP
             $otp = rand(100000, 999999);
@@ -56,19 +59,24 @@ class AccountController extends Controller
                 'success' => true,
                 'message' => 'OTP sent to your email.',
             ]);
-
         } catch (\Illuminate\Validation\ValidationException $e) {
             // Catch validation errors and return them as a JSON response
-            return response()->json([
-                'success' => false,
-                'errors' => $e->validator->errors()->all(), // Return all validation errors
-            ], 422); // 422 Unprocessable Entity
+            return response()->json(
+                [
+                    'success' => false,
+                    'errors' => $e->validator->errors()->all(), // Return all validation errors
+                ],
+                422
+            ); // 422 Unprocessable Entity
         } catch (\Exception $e) {
             // Handle other errors (e.g., mail sending failure)
-            return response()->json([
-                'success' => false,
-                'errors' => ['Error sending OTP. Please try again.'],
-            ], 500);
+            return response()->json(
+                [
+                    'success' => false,
+                    'errors' => ['Error sending OTP. Please try again.'],
+                ],
+                500
+            );
         }
     }
 
@@ -79,22 +87,29 @@ class AccountController extends Controller
 
         // Check if OTP matches the one sent to the email
         if ($otp != session('otp')) {
-            return response()->json(['success' => false, 'errors' => ['Invalid OTP.']], 400);
+            return response()->json(
+                ['success' => false, 'errors' => ['Invalid OTP.']],
+                400
+            );
         }
 
         try {
             // OTP is correct, create the account using the stored form data
             $data = session('user_data');
             $data['password'] = Hash::make($data['password']);
-            $data['accountType'] = 'User';  // Assign default account type
+            $data['accountType'] = 'User'; // Assign default account type
 
             // Create the user account
             $newAccount = UserAccount::create($data);
 
-            \Mail::raw("Hello, " . $data['firstName'] . ".\n\nYour account has been created successfully.", function ($message) use ($data) {
-                $message->to($data['email'])
-                        ->subject('Account Creation');
-            });
+            \Mail::raw(
+                'Hello ' .
+                    $data['firstName'] .
+                    ",\n\nYour account has been created successfully.",
+                function ($message) use ($data) {
+                    $message->to($data['email'])->subject('Account Creation');
+                }
+            );
 
             // Clear the session data
             session()->forget(['otp', 'user_data']);
@@ -104,10 +119,13 @@ class AccountController extends Controller
                 'message' => 'Account created successfully.',
             ]);
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'errors' => ['Error creating account. Please try again.'],
-            ], 500);
+            return response()->json(
+                [
+                    'success' => false,
+                    'errors' => ['Error creating account. Please try again.'],
+                ],
+                500
+            );
         }
     }
 
@@ -117,10 +135,15 @@ class AccountController extends Controller
         try {
             // Check if we have user data in session
             if (!session()->has('user_data')) {
-                return response()->json([
-                    'success' => false,
-                    'errors' => ['Session expired. Please start the registration process again.']
-                ], 400);
+                return response()->json(
+                    [
+                        'success' => false,
+                        'errors' => [
+                            'Session expired. Please start the registration process again.',
+                        ],
+                    ],
+                    400
+                );
             }
 
             // Generate a new 6-digit OTP
@@ -140,15 +163,16 @@ class AccountController extends Controller
                 'success' => true,
                 'message' => 'OTP has been resent to your email.',
             ]);
-
         } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'errors' => ['Error resending OTP. Please try again.'],
-            ], 500);
+            return response()->json(
+                [
+                    'success' => false,
+                    'errors' => ['Error resending OTP. Please try again.'],
+                ],
+                500
+            );
         }
     }
-    
 
     public function updateAccountNames(Request $request)
     {
@@ -179,20 +203,25 @@ class AccountController extends Controller
             ->back()
             ->with('success', 'Your profile has been updated.');
     }
-    
+
     public function changePassword(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'current_password' => 'required',
-            'new_password' => [
-                'required',
-                'min:8',
-                'confirmed',
-                'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/'
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'current_password' => 'required',
+                'new_password' => [
+                    'required',
+                    'min:8',
+                    'confirmed',
+                    'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/',
+                ],
             ],
-        ], [
-            'new_password.regex' => 'Password must contain at least one uppercase, lowercase, digit, and special character.'
-        ]);
+            [
+                'new_password.regex' =>
+                    'Password must contain at least one uppercase, lowercase, digit, and special character.',
+            ]
+        );
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();

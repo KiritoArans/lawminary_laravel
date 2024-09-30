@@ -96,6 +96,9 @@ Route::get('/resources', [
     PageController::class,
     'showResourcesPage',
 ])->middleware('auth');
+Route::get('/resources', [ResourcepageController::class, 'showUserResources'])
+    ->name('user.resources')
+    ->middleware('auth');
 
 Route::get('/profile', [PageController::class, 'showProfilePage'])
     ->name('profile')

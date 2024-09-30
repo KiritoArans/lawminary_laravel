@@ -175,4 +175,28 @@ class ResourcepageController extends Controller
         // Return the file as a download
         return Storage::disk('private')->download($filePath);
     }
+
+    //user side table
+    public function showUserResources(Request $request)
+    {
+        // Fetch search query if it exists
+        $search = $request->query('search');
+
+        // Fetch resources based on search query
+        $resources = ResourceFile::when($search, function ($query, $search) {
+            return $query
+                ->where('documentTitle', 'like', "%{$search}%")
+                ->orWhere('documentDesc', 'like', "%{$search}%");
+        })
+            ->select(
+                'id',
+                'documentTitle as title',
+                'documentDesc as description',
+                'documentFile as file'
+            ) // Only select necessary fields
+            ->paginate(10); // Pagination with 10 items per page
+
+        // Return the view with resources for users
+        return view('users.resources', compact('resources'));
+    }
 }

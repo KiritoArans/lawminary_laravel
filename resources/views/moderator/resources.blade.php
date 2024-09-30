@@ -68,9 +68,11 @@
                                 @include('includes_resources.filter_res_inc')
                             </div>
                         </div>
-                        <button class="custom-button" id="addButton">
-                            Add
-                        </button>
+                        <div class="add-btn">
+                            <button class="custom-button" id="addButton">
+                                Add
+                            </button>
+                        </div>
                     </div>
                     <div id="addModal" class="modal">
                         <div class="modal-content">

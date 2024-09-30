@@ -26,7 +26,7 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-.header-top img{
+.header-top img {
     height: 32px;
     position: relative;
     left: -8px;
@@ -46,7 +46,6 @@ header hr {
     align-items: center;
     gap: 10px;
 }
-
 
 .filter-container {
     width: 100%;
@@ -84,4 +83,31 @@ header hr {
     border: 1px solid #ccc;
 }
 
+.add-container {
+    display: flex;
+    justify-content: space-between; /* Space between the buttons */
+    align-items: center;
+}
 
+.filter-btn {
+    flex-grow: 1; /* Moves the filter button all the way to the left */
+}
+
+.add-btn {
+    margin-left: 10px; /* Optional: Adds space between the filter and add button */
+}
+
+.custom-button,
+#filterButton {
+    padding: 10px 20px;
+    background-color: #999;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.custom-button:hover,
+#filterButton:hover {
+    background-color: #666; /* Darken on hover */
+}
