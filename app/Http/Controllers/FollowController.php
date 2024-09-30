@@ -12,26 +12,36 @@ class FollowController extends Controller
     public function followUser(Request $request)
     {
         $user = Auth::user();
-
+    
         $data = $request->validate([
             'following' => 'required|exists:tblaccounts,user_id',
         ]);
-
+    
         $follow = Follow::where('follower', $user->user_id)
                         ->where('following', $request->following)
                         ->first();
-
+    
+        $isFollowed = false; // Track if the user is followed or unfollowed
+    
         if ($follow) {
             $follow->delete();
-            return redirect()->back()->with('success', 'Unfollowed Successfully');
+            $isFollowed = false; // User unfollowed
+        } else {
+            Follow::create([
+                'follower' => $user->user_id,
+                'following' => $data['following'],
+            ]);
+            $isFollowed = true; // User followed
         }
-
-        Follow::create([
-            'follower' => $user->user_id,
+    
+        // Return a JSON response with the updated follow status
+        return response()->json([
+            'success' => true,
+            'message' => $isFollowed ? 'Followed Successfully' : 'Unfollowed Successfully',
+            'is_followed' => $isFollowed,
             'following' => $data['following'],
         ]);
-
-        return redirect()->back()->with('success', 'Followed Successfully');
     }
+    
 
 }

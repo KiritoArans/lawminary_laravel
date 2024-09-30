@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Reply;
 use App\Models\Rate;
 use App\Models\Points;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
@@ -44,9 +45,13 @@ class CommentController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Your comment has been posted.',
-            'post_id' => $request->post_id,
-            'new_comment' => $comment,
+            'message' => 'Your comment has been posted!',
+            'new_comment' => [
+                'comment' => $comment->comment,
+                'user_id' => $comment->user->user_id,
+                'user_name' => $comment->user->firstName . ' ' . $comment->user->lastName,
+                'user_photo_url' => $comment->user->userPhoto ? Storage::url($comment->user->userPhoto) : asset('imgs/user-img.png')
+            ],
         ]);
         
     }

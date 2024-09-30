@@ -33,15 +33,13 @@
                                 ->where('post_id', $post->post_id)
                                 ->exists();
                 @endphp
-                <form action="{{ route('post.like') }}" method="POST">
-                    @csrf
-                    <input type="hidden" name="post_id" value="{{ $post->post_id }}">
                 
-                    <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : "" }}">
-                        <i class="fa-solid fa-gavel"></i> Hit
-                        @if($post->likes_count > 0)
-                            <span>({{ $post->likes_count }})</span>
-                        @endif
+                <form class="like-form" data-post-id="{{ $post->post_id }}" action="{{ route('post.like') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="post_id" value="{{ $post->post_id }}" />
+                    <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : '' }}">
+                        <i class="fa-solid fa-gavel"></i>Hit
+                        <span id="likes-count-{{ $post->post_id }}">({{ $post->likes_count }})</span>
                     </button>
                 </form>
                 
@@ -51,21 +49,19 @@
                     @endif
                 </button>
 
-                <form action="{{ route('post.bookmark') }}" method="POST">
+                <form class="bookmark-form" data-post-id="{{ $post->post_id }}" action="{{ route('post.bookmark') }}" method="POST">
                     @csrf
-                    <input type="hidden" name="post_id" value="{{ $post->post_id }}">
-                
-                    <button type="submit" class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : "" }}">
+                    <input type="hidden" name="post_id" value="{{ $post->post_id }}" />
+                    <button type="submit" class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : '' }}">
                         <i class="fas fa-bookmark"></i> Bookmark
-                        @if($post->bookmarks_count > 0)
-                            <span>({{ $post->bookmarks_count }})</span>
-                        @endif
+                        <span id="bookmark-count-{{ $post->post_id }}">({{ $post->bookmarks_count }})</span>
                     </button>
                 </form>
+                
             </div>
             <hr>
-            <div class="comment-section">
-                <div class="comment-area">
+            <div class="comment-section" id="comments-section-{{ $post->post_id }}">
+                <div class="comment-area" id="comment-area-{{ $post->post_id }}">
                 @foreach($post->comments as $comment)
 
                     <div class="user-comment">
@@ -149,7 +145,7 @@
                 @endforeach
                 </div>
                 <hr>
-                <div class="comment-field" id="comment-field">
+                <div class="comment-field" id="comment-field comment-field-{{ $post->post_id }}">
                     @php
                         $attorneyComments = $post->comments->filter(function ($comment) {
                             return $comment->user->accountType === 'Attorney';
@@ -167,7 +163,7 @@
                     @if ($attorneyComments->isNotEmpty() && $isAttorney && !$isSameAttorney && !$isPostOwner)
                         <label class="comment-warning">An attorney has already commented on this post.</label>
                     @else
-                        <form id="commentForm" method="POST" action="{{ route('users.createComment') }}">
+                        <form id="commentForm commentForm-{{ $post->post_id }}" method="POST" action="{{ route('users.createComment') }}">
                             @csrf
                             <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture">
                             <input type="hidden" name="post_id" value="{{ $post->post_id }}">
