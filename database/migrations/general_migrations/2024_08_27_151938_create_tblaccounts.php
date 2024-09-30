@@ -11,8 +11,8 @@ return new class extends Migration {
     public function up()
     {
         Schema::create('tblaccounts', function (Blueprint $table) {
-            $table->id(); 
-            $table->unsignedBigInteger('user_id')->nullable(); 
+            $table->id();
+            $table->unsignedBigInteger('user_id')->unique();
             $table->string('username', 50)->unique();
             $table->string('email', 100)->unique();
             $table->string('userPhoto', 255)->nullable();
@@ -26,7 +26,7 @@ return new class extends Migration {
             $table->string('contactNumber', 11);
             $table->string('status', 15)->nullable();
             $table->boolean('restrict')->default(false);
-            $table->integer('restrictDays')->nullable(); 
+            $table->integer('restrictDays')->nullable();
             $table->enum('badge', [
                 'Wood',
                 'Steel',
