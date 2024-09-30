@@ -15,18 +15,18 @@
         <div class="wrapper">
             <div class="container">
                 <h1>Sign Up</h1>
-
+                
                 <div class="signup-content">
                     <form class="signup-form">
 
                         <div class="left-column">
                             <div class="form-group">
                                 <label for="first-name">First Name</label>
-                                <input type="text" id="first-name" name="firstName" value="{{ old('firstName') }}" placeholder="Type your first name">
+                                <input type="text" id="first-name" name="firstName" value="{{ old('firstName') }}">
                             </div>
                             <div class="form-group">
                                 <label for="last-name">Last Name</label>
-                                <input type="text" id="last-name" name="lastName" value="{{ old('lastName') }}" placeholder="Type your last name">
+                                <input type="text" id="last-name" name="lastName" value="{{ old('lastName') }}">
                             </div>
                             <div class="form-group">
                                 <label for="nationality" class="form-group">
@@ -45,13 +45,13 @@
                             </div>
                             <div class="form-group">
                                 <label for="email-address">Email Address</label>
-                                <input type="email" id="email-address" name="email" value="{{ old('email') }}" placeholder="Type your email">
+                                <input type="email" id="email-address" name="email" value="{{ old('email') }}">
                             </div>
                         </div>
                         <div class="middle-column">
                             <div class="form-group">
                                 <label for="middle-name">Middle Name <span>(Optional)</span></label>
-                                <input type="text" id="middle-name" name="middleName" value="{{ old('middleName') }}" placeholder="Type your middle name">
+                                <input type="text" id="middle-name" name="middleName" value="{{ old('middleName') }}">
                             </div>
                             <div class="form-group">
                                 <label for="birth-date">Birth Date</label>
@@ -86,58 +86,89 @@
                         <div class="right-column">
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input type="text" id="username" name="username" value="{{ old('username') }}" placeholder="Create username">
+                                <input type="text" id="username" name="username" value="{{ old('username') }}">
                             </div>
                             <div class="form-group">
                                 <label for="password">Password</label>
                                 <div class="password-container">
-                                    <input type="password" id="password" name="password" required placeholder="Create password">
+                                    <input type="password" id="password" name="password" required>
                                     <i class="fas fa-eye toggle-password" id="togglePassword"></i>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="password_confirmation">Confirm Password</label>
                                 <div class="password-container">
-                                    <input type="password" id="password_confirmation" name="password_confirmation" required placeholder="Confirm password">
+                                    <input type="password" id="password_confirmation" name="password_confirmation" required>
                                     <i class="fas fa-eye toggle-password" id="togglePasswordConfirmation"></i>
                                 </div>
-                            </div>                        
-                            <div class="buttons">
-                                <a href="login" class="back-home">Back to Login</a>
-                                <button id="create-btn">Create Account</button>
+                                <div class="buttons">
+                                    <a href="login" class="back-home">
+                                        Back to Login
+                                    </a>
+                                    <button id="create-btn">
+                                        Create Account
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="otp-section" style="display: none">
+                        <h2>Enter Your OTP</h2>
+                        <div class="otp-input">
+                            <label for="otpInput">6-Digit OTP</label>
+                            <div>
+                                <input
+                                    type="text"
+                                    class="otpInput"
+                                    maxlength="1"
+                                    required
+                                />
+                                <input
+                                    type="text"
+                                    class="otpInput"
+                                    maxlength="1"
+                                    required
+                                />
+                                <input
+                                    type="text"
+                                    class="otpInput"
+                                    maxlength="1"
+                                    required
+                                />
+                                <input
+                                    type="text"
+                                    class="otpInput"
+                                    maxlength="1"
+                                    required
+                                />
+                                <input
+                                    type="text"
+                                    class="otpInput"
+                                    maxlength="1"
+                                    required
+                                />
+                                <input
+                                    type="text"
+                                    class="otpInput"
+                                    maxlength="1"
+                                    required
+                                />
                             </div>
                         </div>
-                    </form>
-                </div>
 
-                <div class="otp-section" style="display: none">
-                    <h2>Enter Your OTP</h2>
-                    <div class="otp-input">
-                        <label for="otpInput">6-Digit OTP</label>
-                        <div>
-                            <input type="text" class="otpInput" maxlength="1" required>
-                            <input type="text" class="otpInput" maxlength="1" required>
-                            <input type="text" class="otpInput" maxlength="1" required>
-                            <input type="text" class="otpInput" maxlength="1" required>
-                            <input type="text" class="otpInput" maxlength="1" required>
-                            <input type="text" class="otpInput" maxlength="1" required>
+                        <div class="btn">
+                            <button id="back-btn">Back</button>
+                            <button id="verifyOtpButton">Verify OTP</button>
+                        </div>
+                        <div class="btn2">
+                            <label for="">Haven't recieved yet?</label>
+                            <a id="resendOtpButton" type="button">Resend OTP</a>
                         </div>
                     </div>
-            
-                    <div class="btn">
-                        <button id="back-btn">Back</button>
-                        <button id="verifyOtpButton">Verify OTP</button>
-                    </div>
-                    <div class="btn2">
-                        <label for="">Haven't recieved yet?</label>
-                        <a id="resendOtpButton" type="button">Resend OTP</a>
-                    </div>
                 </div>
-
-
             </div>
-        </div>
-    </section>
-    <script src="js/loginandsignup.js"></script>
-</body>
+        </section>
+        <script src="js/loginandsignup.js"></script>
+    </body>
 </html>

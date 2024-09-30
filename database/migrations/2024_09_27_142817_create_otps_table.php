@@ -16,7 +16,11 @@ class CreateOtpsTable extends Migration
             $table->string('purpose', 16);
             $table->timestamps();
 
-            $table->foreign('user_id')->references('user_id')->on('tblaccounts')->onDelete('cascade');
+            $table
+                ->foreign('user_id')
+                ->references('user_id')
+                ->on('tblaccounts')
+                ->onDelete('cascade');
         });
     }
 
