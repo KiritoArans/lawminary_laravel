@@ -17,6 +17,7 @@ class Otp extends Model
         'user_id',     // The user the OTP is for
         'otp',         // The OTP code
         'expires_at',  // The expiration time of the OTP
+        'purpose', 
     ];
 
     // Indicate the data types for the attributes

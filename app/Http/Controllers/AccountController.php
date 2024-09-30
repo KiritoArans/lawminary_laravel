@@ -103,9 +103,9 @@ class AccountController extends Controller
             $newAccount = UserAccount::create($data);
 
             \Mail::raw(
-                'Hello ' .
+                'Hello, ' .
                     $data['firstName'] .
-                    ",\n\nYour account has been created successfully.",
+                    ".\n\nYour account has been created successfully.",
                 function ($message) use ($data) {
                     $message->to($data['email'])->subject('Account Creation');
                 }

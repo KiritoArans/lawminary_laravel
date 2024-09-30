@@ -45,6 +45,7 @@ class ForgotPasswordController extends Controller
             'user_id' => $user->user_id,
             'otp' => $otpCode,
             'expires_at' => Carbon::now()->addMinutes(5),
+            'purpose' => 'Reset Password',
         ]);
     
         // Send OTP via email
