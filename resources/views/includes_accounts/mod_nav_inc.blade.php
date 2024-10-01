@@ -56,11 +56,7 @@
     </nav>
 </div>
 <div class="bottom-nav">
-    <a
-        href="{{ route('logoutAdMod') }}"
-        class="logout"
-        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-    >
+    <a href="{{ route('logoutAdMod') }}" id="logout-link" class="logout">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span>Log out</span>
     </a>
@@ -75,3 +71,6 @@
         @csrf
     </form>
 </div>
+<!-- Include SweetAlert and logout.js -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('js/logout.js') }}"></script>

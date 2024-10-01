@@ -56,11 +56,7 @@
     </nav>
 </div>
 <div class="bottom-nav">
-    <a
-        href="<?php echo e(route('logoutAdMod')); ?>"
-        class="logout"
-        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-    >
+    <a href="<?php echo e(route('logoutAdMod')); ?>" id="logout-link" class="logout">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span>Log out</span>
     </a>
@@ -75,4 +71,7 @@
         <?php echo csrf_field(); ?>
     </form>
 </div>
+<!-- Include SweetAlert and logout.js -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="<?php echo e(asset('js/logout.js')); ?>"></script>
 <?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/includes_accounts/mod_nav_inc.blade.php ENDPATH**/ ?>

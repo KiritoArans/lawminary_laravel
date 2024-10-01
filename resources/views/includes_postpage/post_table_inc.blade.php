@@ -25,7 +25,7 @@
                     <td>{{ $activity->post_id }}</td>
                     <td>{{ $activity->concern }}</td>
                     <td>{{ $activity->status }}</td>
-                    <td>{{ $activity->tags }}</td>
+
                     <td>{{ $activity->postedBy }}</td>
                     <td>{{ $activity->approvedBy }}</td>
                     <td>{{ $activity->reasonDisregard }}</td>

@@ -610,3 +610,16 @@ Route::post('/search', [
     SearchUserController::class,
     'findPossibleCharges',
 ])->name('find.charges');
+
+//testing for email
+
+Route::get('/test-email', function () {
+    try {
+        Mail::raw('Test 123 Test 123 K0p4l', function ($message) {
+            $message->to('lawminary@gmail.com')->subject('Email Test');
+        });
+        return 'Email sent successfully';
+    } catch (\Exception $e) {
+        return 'Error: ' . $e->getMessage();
+    }
+});
