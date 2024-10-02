@@ -11,10 +11,7 @@ class Feedback extends Model
 
     protected $table = 'tblfeedbacks';
 
-    protected $fillable = [
-        'user_id', 
-        'feedback',
-    ];
+    protected $fillable = ['user_id', 'feedback'];
 
     public function user()
     {

@@ -17,6 +17,7 @@ use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\SearchUserController;
 use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\FeedbackController;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -126,10 +127,20 @@ Route::get('/activitylogs', [
     PageController::class,
     'showActLogsPage',
 ])->middleware('auth');
-Route::get('/provide-feedback', [
-    PageController::class,
-    'showFeedbackPage',
-])->middleware('auth');
+//feed back route
+// feedback routes
+
+// Show feedback form
+Route::get('/provide-feedback', [PageController::class, 'showFeedbackPage'])
+    ->middleware('auth')
+    ->name('users.showFeedbackPage');
+
+// Handle form submission
+Route::post('/provide-feedback', [FeedbackController::class, 'createFeedback'])
+    ->middleware('auth')
+    ->name('users.createFeedback');
+
+//
 Route::get('/terms-of-service', [
     PageController::class,
     'showTOSPage',
@@ -524,11 +535,10 @@ Route::middleware(['web'])->group(function () {
     ]);
 });
 
-Route::get('/test-email', function() {
+Route::get('/test-email', function () {
     try {
         Mail::raw('Testing...', function ($message) {
-            $message->to('larsenatienza917@gmail.com')
-                    ->subject('Email Test');
+            $message->to('larsenatienza917@gmail.com')->subject('Email Test');
         });
         return 'Email sent successfully';
     } catch (\Exception $e) {

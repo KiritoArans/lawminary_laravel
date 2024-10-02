@@ -1,5 +1,6 @@
 /Get the modal/;
 
+// Get the modal
 var modal = document.getElementById('relatedFaqModal');
 
 // Get the <span> element that closes the modal
@@ -15,19 +16,23 @@ document.querySelectorAll('.view-related').forEach((button) => {
         contentDiv.innerHTML = ''; // Clear previous content
 
         questions.forEach((question) => {
-            contentDiv.innerHTML += `${question.concern}<br/>`;
+            // Check if the "text" field exists and is valid
+            const questionText = question.text
+                ? question.text
+                : 'No question available';
+            contentDiv.innerHTML += `<p>${questionText}</p>`;
         });
 
         modal.style.display = 'block';
     });
 });
 
-// When the user clicks on <span> (x), close the modal
+// Close the modal when the user clicks on <span> (X)
 closeButton.onclick = function () {
     modal.style.display = 'none';
 };
 
-// When the user clicks anywhere outside of the modal, close it
+// Close the modal when the user clicks anywhere outside the modal
 window.onclick = function (event) {
     if (event.target == modal) {
         modal.style.display = 'none';
