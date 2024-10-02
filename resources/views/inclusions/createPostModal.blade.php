@@ -3,7 +3,7 @@
 </div>
 <div id="postModal" class="post-modal">
     <div class="post-modal-content">
-        <span class="close">&times;</span>
+        <span class="create-post-close close">&times;</span>
         <form action="{{ route('users.createPost') }}" method="POST" enctype="multipart/form-data">
             @csrf 
             @include('inclusions/response')

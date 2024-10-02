@@ -198,13 +198,13 @@ document.addEventListener('DOMContentLoaded', function () {
 // Post Modal
 var newPostModal = document.getElementById("postModal");
 var createPostBtn = document.querySelector(".new-post");
-var span = document.getElementsByClassName("close")[0];
+var createPostClose = document.getElementsByClassName("create-post-close")[0];
 
     createPostBtn.onclick = function() {
         newPostModal.style.display = "flex";
     }
 
-    span.onclick = function() {
+    createPostClose.onclick = function() {
         newPostModal.style.display = "none";
     }
 

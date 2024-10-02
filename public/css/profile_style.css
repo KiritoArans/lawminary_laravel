@@ -184,6 +184,7 @@ header hr {
 .view-pendings{
     /* position: absolute; */
     padding: 8px 24px;
+    margin-top: 1rem;
     background-color: var(--text-color3);
     color: white;
     border: none;
@@ -351,7 +352,7 @@ header hr {
 
 .followModal-content {
     background-color: #fff;
-    border-radius: 12px;
+    border-radius: 4px;
     width: 400px;
     max-height: 80vh;
     overflow-y: auto;
@@ -470,4 +471,96 @@ header hr {
 
 .swal2-popup {
     z-index: 10001 !important;
+}
+
+
+
+/* The Modal (background) */
+.pendingModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 99999; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.pendingModal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 4px;
+    width: 80%; 
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+}
+
+/* The Close Button */
+.pen-post-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.pen-post-close:hover,
+.pen-post-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Style for the modal navigation (tabs) */
+.pendingModal-nav {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.pendingModal-nav span {
+    cursor: pointer;
+    color: var(--text-color3);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.pendingModal-nav .active {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    font-weight: 700;
+}
+
+/* Style for tab content */
+.pending-tab-content, .disregard-tab-content {
+    display: none;
+}
+
+.pending-tab-content.active, .disregard-tab-content.active {
+    display: block;
+}
+
+
+
+
+.pending-post-content, .disregard-post-content{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid;
+    margin-top: 1rem;
+}
+.disregard-reason p{
+    margin: 0;
 }

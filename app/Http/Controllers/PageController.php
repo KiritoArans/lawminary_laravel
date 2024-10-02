@@ -291,6 +291,18 @@ class PageController extends Controller
 
         session(['allPosts' => $allPosts]);
 
+        $pendingPosts = Posts::where('postedBy', $user->user_id)
+        ->where('status', 'Pending')
+        ->withCount('likes', 'comments', 'bookmarks')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+        $disregardPosts = Posts::where('postedBy', $user->user_id)
+        ->where('status', 'Disregard')
+        ->withCount('likes', 'comments', 'bookmarks')
+        ->orderBy('created_at', 'desc')
+        ->get();
+
         $comments = Comment::where('user_id', $user->user_id)
             ->orderBy('created_at', 'desc')
             ->get();
@@ -326,7 +338,9 @@ class PageController extends Controller
             'following',
             'followers',
             'followingCount',
-            'followerCount'
+            'followerCount',
+            'pendingPosts',
+            'disregardPosts'
         );
     }
     public function showProfilePage()

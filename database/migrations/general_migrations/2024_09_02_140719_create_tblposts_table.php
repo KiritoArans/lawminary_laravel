@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->string('concernPhoto', 255)->nullable();
             $table->string('postedBy', 50);
             $table->string('status', 15);
-            $table->string('tags', 255);
+            $table->string('tags', 125)->nullable();
             $table->string('approvedBy', 100)->nullable();
             $table->string('reasonDisregard', 100)->nullable();
             $table->timestamps();
