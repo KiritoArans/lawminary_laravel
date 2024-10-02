@@ -27,7 +27,7 @@ class CommentController extends Controller
 
         $comment->save();
 
-        // if (Auth::user()->accountType === 'Attorney') {
+        // if (Auth::user()->accountType === 'Lawyer') {
         //     $addPoints = new Points();
         //     $addPoints->lawyerUser_id = Auth::user()->user_id;
         //     $addPoints->points = "20";
@@ -73,7 +73,7 @@ class CommentController extends Controller
         $reply->reply = $request->input('reply');
         $reply->save();
 
-        // if (Auth::user()->accountType === 'Attorney') {
+        // if (Auth::user()->accountType === 'Lawyer') {
         //     $addPoints = new Points();
         //     $addPoints->lawyerUser_id = Auth::user()->user_id;
         //     $addPoints->points = "10";

@@ -7,7 +7,7 @@
                     <div class="clicked-post-info">
                         <h2 id="modalUserName">
                             <a href="{{ Auth::check() && Auth::user()->user_id == $post->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $post->user->user_id]) }}">
-                                {{ $post->user ? ($post->user->accountType === 'Attorney' ? 'Atty. ' : '') . $post->user->firstName . ' ' . $post->user->lastName : 'Unknown User' }}
+                                {{ $post->user ? ($post->user->accountType === 'Lawyer' ? 'Atty. ' : '') . $post->user->firstName . ' ' . $post->user->lastName : 'Unknown User' }}
                             </a>
                         </h2>  
                         <label>@<span id="modalUserUsername">{{ $post->user->username }}</span></label>
@@ -71,9 +71,9 @@
                         <div class="user-comment-content">
                             <span>
                                 <a href="{{ Auth::check() && Auth::user()->user_id == $comment->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $comment->user->user_id]) }}">
-                                    {{ $comment->user ? ($comment->user->accountType === 'Attorney' ? 'Atty. ' : '') . $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
+                                    {{ $comment->user ? ($comment->user->accountType === 'Lawyer' ? 'Atty. ' : '') . $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
                                 </a>
-                                @if($comment->user->accountType === 'Attorney')
+                                @if($comment->user->accountType === 'Lawyer')
                                     <i class="fa-regular fa-star rate-btn" 
                                         data-rating-comment-comment_id="{{ $comment->comment_id }}" 
                                         data-rating-comment-user_id="{{ $comment->user->user_id }}">
@@ -88,19 +88,19 @@
                             <div class="reply-field" id="reply-field-{{ $comment->id }}">
                                 @php
                                     $attorneyComments = $post->comments->filter(function ($comment) {
-                                        return $comment->user->accountType === 'Attorney';
+                                        return $comment->user->accountType === 'Lawyer';
                                     });
                             
-                                    $isSameAttorney = $attorneyComments->contains(function ($comment) {
+                                    $isSameLawyer = $attorneyComments->contains(function ($comment) {
                                         return $comment->user->user_id === Auth::user()->user_id;
                                     });
                             
-                                    $isAttorney = Auth::user()->accountType === 'Attorney';
+                                    $isLawyer = Auth::user()->accountType === 'Lawyer';
                             
                                     $isPostOwner = $post->user->user_id === Auth::user()->user_id;
                                 @endphp
                             
-                                @if ($attorneyComments->isNotEmpty() && $isAttorney && !$isSameAttorney && !$isPostOwner)
+                                @if ($attorneyComments->isNotEmpty() && $isLawyer && !$isSameLawyer && !$isPostOwner)
                                     <label class="comment-warning">Comments and Replies are not accomodated by this post anymore.</label>
                                 @else
                                     <form action="{{ route('users.createReply') }}" method="POST">
@@ -128,7 +128,7 @@
                                 <div class="user-reply-content">
                                     <span>
                                         <a href="{{ Auth::check() && Auth::user()->user_id == $reply->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $reply->user->user_id]) }}">
-                                            {{ $reply->user ? ($reply->user->accountType === 'Attorney' ? 'Atty. ' : '') . $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}
+                                            {{ $reply->user ? ($reply->user->accountType === 'Lawyer' ? 'Atty. ' : '') . $reply->user->firstName . ' ' . $reply->user->lastName : 'Unknown User' }}
                                         </a>
                                     </span>                                                        
                                     <label>replied to 
@@ -148,19 +148,19 @@
                 <div class="comment-field" id="comment-field comment-field-{{ $post->post_id }}">
                     @php
                         $attorneyComments = $post->comments->filter(function ($comment) {
-                            return $comment->user->accountType === 'Attorney';
+                            return $comment->user->accountType === 'Lawyer';
                         });
                 
-                        $isSameAttorney = $attorneyComments->contains(function ($comment) {
+                        $isSameLawyer = $attorneyComments->contains(function ($comment) {
                             return $comment->user->user_id === Auth::user()->user_id;
                         });
                 
-                        $isAttorney = Auth::user()->accountType === 'Attorney';
+                        $isLawyer = Auth::user()->accountType === 'Lawyer';
                 
                         $isPostOwner = $post->user->user_id === Auth::user()->user_id;
                     @endphp
                 
-                    @if ($attorneyComments->isNotEmpty() && $isAttorney && !$isSameAttorney && !$isPostOwner)
+                    @if ($attorneyComments->isNotEmpty() && $isLawyer && !$isSameLawyer && !$isPostOwner)
                         <label class="comment-warning">An attorney has already commented on this post.</label>
                     @else
                         <form id="commentForm commentForm-{{ $post->post_id }}" method="POST" action="{{ route('users.createComment') }}">

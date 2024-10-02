@@ -11,7 +11,7 @@
                         <div class="post-info">
                             <h2>
                                 <a href="{{ Auth::check() && Auth::user()->user_id == $post->postedBy ? route('profile') : route('visit-profile', ['user_id' => $post->postedBy]) }}">
-                                    {{ $post->user->accountType === 'Attorney' ? 'Atty. ' : '' }}{{ $post->user->firstName }} {{ $post->user->lastName }}
+                                    {{ $post->user->accountType === 'Lawyer' ? 'Atty. ' : '' }}{{ $post->user->firstName }} {{ $post->user->lastName }}
                                 </a>
                             </h2>                            
                             <label>@<span>{{ $post->user->username ?? 'username' }}</span></label>

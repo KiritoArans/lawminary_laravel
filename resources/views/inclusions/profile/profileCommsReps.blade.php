@@ -9,7 +9,7 @@
                             <div class="user-info">
                                 <img src="{{ $comment->user->userPhoto ? Storage::url($comment->user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo">
                                 <div class="comment-info">
-                                    <h2>{{ $comment->user->accountType === 'Attorney' ? 'Atty. ' : '' }}{{ $comment->user->firstName }} {{ $comment->user->lastName }}</h2>
+                                    <h2>{{ $comment->user->accountType === 'Lawyer' ? 'Atty. ' : '' }}{{ $comment->user->firstName }} {{ $comment->user->lastName }}</h2>
                                     <label>@<span>{{ $comment->user->username }}</span></label>
                                 </div>
                             </div>

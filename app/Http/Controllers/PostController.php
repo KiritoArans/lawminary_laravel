@@ -35,7 +35,7 @@ class PostController extends Controller
 
         $post->save();
 
-        // if (Auth::user()->accountType === 'Attorney') {
+        // if (Auth::user()->accountType === 'Lawyer') {
         //     $addPoints = new Points();
         //     $addPoints->lawyerUser_id = Auth::user()->user_id;
         //     $addPoints->points = "30";
@@ -94,7 +94,7 @@ class PostController extends Controller
     
             $post = Posts::where('post_id', $data['post_id'])->with('user')->first();
             
-            if ($post && $post->user->accountType === 'Attorney') {
+            if ($post && $post->user->accountType === 'Lawyer') {
                 $addPoints = new Points();
                 $addPoints->lawyerUser_id = $post->user->user_id; 
                 $addPoints->points = "15";
@@ -150,7 +150,7 @@ class PostController extends Controller
     
             $post = Posts::where('post_id', $data['post_id'])->with('user')->first();
     
-            if ($post && $post->user->accountType === 'Attorney') {
+            if ($post && $post->user->accountType === 'Lawyer') {
                 $addPoints = new Points();
                 $addPoints->lawyerUser_id = $post->user->user_id;
                 $addPoints->points = "20";

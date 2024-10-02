@@ -89,7 +89,7 @@
                                 <div class="name-follow">
                                     <h2>
                                         <a href="{{ Auth::check() && Auth::user()->user_id == $post->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $post->user->user_id]) }}">
-                                            {{ $post->user ? ($post->user->accountType === 'Attorney' ? 'Atty. ' : '') . $post->user->firstName . ' ' . $post->user->lastName : 'Unknown User' }}
+                                            {{ $post->user ? ($post->user->accountType === 'Lawyer' ? 'Atty. ' : '') . $post->user->firstName . ' ' . $post->user->lastName : 'Unknown User' }}
                                         </a>
                                     </h2>
                                     @if (Auth::user()->user_id != $post->user->user_id)
