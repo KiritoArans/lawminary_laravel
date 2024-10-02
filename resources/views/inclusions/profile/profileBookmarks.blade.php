@@ -38,34 +38,29 @@
                                     ->where('post_id', $post->post_id)
                                     ->exists();
                     @endphp
-                    <form action="{{ route('post.like') }}" method="POST">
+
+                    <form class="like-form" data-post-id="{{ $post->post_id }}" action="{{ route('post.like') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="post_id" value="{{ $post->post_id }}">
-                    
-                        <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : "" }}">
-                            <i class="fa-solid fa-gavel"></i> Hit
-                            @if($post->likes_count > 0)
-                                <span>({{ $post->likes_count }})</span>
-                            @endif
+                        <input type="hidden" name="post_id" value="{{ $post->post_id }}" />
+                        <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : '' }}">
+                            <i class="fa-solid fa-gavel"></i>Hit
+                            <span id="likes-count-{{ $post->post_id }}">({{ $post->likes_count }})</span>
                         </button>
                     </form>
-                    
+
                     <button class="btn-comment" data-post-id="{{ $post->post_id }}">
-                        <i class="fas fa-comment"></i> Comment
+                        <i class="fas fa-comment"></i>Comment
                         @if($post->comments_count > 0)
                             <span>({{ $post->comments_count }})</span>
                         @endif
                     </button>
 
-                    <form action="{{ route('post.bookmark') }}" method="POST">
+                    <form class="bookmark-form" data-post-id="{{ $post->post_id }}" action="{{ route('post.bookmark') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="post_id" value="{{ $post->post_id }}">
-                    
-                        <button type="submit" class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : "" }}">
+                        <input type="hidden" name="post_id" value="{{ $post->post_id }}" />
+                        <button type="submit" class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : '' }}">
                             <i class="fas fa-bookmark"></i> Bookmark
-                            @if($post->bookmarks_count > 0)
-                                <span>({{ $post->bookmarks_count }})</span>
-                            @endif
+                            <span id="bookmark-count-{{ $post->post_id }}">({{ $post->bookmarks_count }})</span>
                         </button>
                     </form>
 

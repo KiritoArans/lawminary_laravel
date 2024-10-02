@@ -338,7 +338,7 @@ header hr {
 .followModal {
     display: none; /* Ensure that this is the only rule */
     position: fixed;
-    z-index: 9999;
+    z-index: 9999; /* Modal should be below the SweetAlert */
     left: 0;
     top: 0;
     width: 100%;
@@ -462,4 +462,12 @@ header hr {
     .follow-btn:hover {
         background-color: var(--primary-color);
         color: var(--text-color2);
+}
+
+.swal2-container {
+    z-index: 10000 !important; 
+}
+
+.swal2-popup {
+    z-index: 10001 !important;
 }

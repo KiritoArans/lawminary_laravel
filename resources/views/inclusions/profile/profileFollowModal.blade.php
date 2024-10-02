@@ -24,15 +24,16 @@
                         ->where('following', $follower->followerUser->user_id)
                         ->exists();
                 @endphp
-                <form action="{{ route('followUser') }}" method="POST" style="display:inline;">
+
+                <form class="follow-form" action="{{ route('followUser') }}" method="POST" style="display:inline">
                     @csrf
-                    @include('inclusions/response')
                     <input type="hidden" name="following" value="{{ $follower->followerUser->user_id }}">
                     
-                    <button class="follow-btn {{ $haveFollowed ? 'following' : '' }}">
+                    <button type="submit" class="follow-btn {{ $haveFollowed ? 'following' : '' }}">
                         {{ $haveFollowed ? 'Unfollow' : 'Follow' }}
                     </button>
                 </form>
+
                 @endif
             </li>
             @endforeach
@@ -53,15 +54,16 @@
                         ->where('following', $follow->followedUser->user_id)
                         ->exists();
                 @endphp
-                <form action="{{ route('followUser') }}" method="POST" style="display:inline;">
+
+                <form class="follow-form" action="{{ route('followUser') }}" method="POST" style="display:inline;">
                     @csrf
-                    @include('inclusions/response')
                     <input type="hidden" name="following" value="{{ $follow->followedUser->user_id }}">
                     
-                    <button class="follow-btn {{ $haveFollowed ? 'following' : '' }}">
+                    <button type="submit" class="follow-btn {{ $haveFollowed ? 'following' : '' }}">
                         {{ $haveFollowed ? 'Unfollow' : 'Follow' }}
                     </button>
                 </form>
+
                 @endif
             </li>
             @endforeach
