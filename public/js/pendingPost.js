@@ -17,7 +17,7 @@ var disregardedContent = document.getElementById("disregarded-posts");
 
 // When the user clicks the button, open the modal
 btn.onclick = function() {
-    penPostModal.style.display = "block";
+    penPostModal.style.display = "flex";
 }
 
 // When the user clicks the close button, close the modal
@@ -48,3 +48,27 @@ disregardedTab.onclick = function() {
     pendingContent.style.display = "none";
     disregardedContent.style.display = "block";
 }
+
+
+// Function to update status colors based on post status
+function updateStatusColors() {
+    // Get all elements with class 'status-text'
+    var statusElements = document.querySelectorAll('.status-text');
+
+    // Loop through each element and check its data-status attribute
+    statusElements.forEach(function(element) {
+        var status = element.getAttribute('data-status');
+
+        // Apply the color based on the status
+        if (status === 'Pending') {
+            element.style.color = 'green';  // Green for pending
+        } else if (status === 'Disregard') {
+            element.style.color = 'red';    // Red for disregarded
+        }
+    });
+}
+
+// Run the function on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updateStatusColors();
+});

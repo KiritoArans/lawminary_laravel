@@ -1,4 +1,10 @@
 <div class="profile-posts">
+    @if (Auth::user()->user_id == $user->user_id)
+        <div class="pending-btn">
+            <button class="view-pendings">View Pending Posts</button>
+        </div>
+    @endif
+    
     @if($posts->isEmpty())
         <div class="empty">No posts yet.</div>
     @endif

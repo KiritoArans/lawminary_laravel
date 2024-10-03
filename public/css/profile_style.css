@@ -184,7 +184,6 @@ header hr {
 .view-pendings{
     /* position: absolute; */
     padding: 8px 24px;
-    margin-top: 1rem;
     background-color: var(--text-color3);
     color: white;
     border: none;
@@ -197,6 +196,8 @@ header hr {
 
 .profile-content > div {
     display: none;
+    
+    margin-top: 1rem;
 }
 
 .profile-content > div.active {
@@ -476,8 +477,8 @@ header hr {
 
 
 /* The Modal (background) */
+/* Modal container */
 .pendingModal {
-    display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 99999; /* Sit on top */
     left: 0;
@@ -485,21 +486,25 @@ header hr {
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(0, 0, 0, 0.4); /* Black with opacity */
+
+    /* Flexbox to center the modal */
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
 }
 
-/* Modal Content */
+/* Modal content */
 .pendingModal-content {
     background-color: #fefefe;
-    margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     border-radius: 4px;
-    width: 80%; 
-    overflow-y: auto;
+    width: 60%;
+    max-width: 1000px; /* Optional: set a maximum width */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-
+    max-height: 75vh; /* Ensure it fits within the viewport */
+    overflow-y: auto; /* Add scroll if content overflows */
 }
 
 /* The Close Button */
@@ -517,6 +522,9 @@ header hr {
     cursor: pointer;
 }
 
+
+
+
 /* Style for the modal navigation (tabs) */
 .pendingModal-nav {
     display: flex;
@@ -528,7 +536,7 @@ header hr {
 .pendingModal-nav span {
     cursor: pointer;
     color: var(--text-color3);
-    font-size: 14px;
+    font-size: 1rem;
     font-weight: 600;
     padding: 10px;
     text-align: center;
@@ -558,9 +566,38 @@ header hr {
 .pending-post-content, .disregard-post-content{
     display: flex;
     justify-content: space-between;
-    border: 1px solid;
     margin-top: 1rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: .75rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: auto;
+}
+.pending-post-details:nth-child(1){
+    max-width: 90%;
+}
+.pending-post-date{
+    font-size: 0.75rem;
+    color: var(--text-color3);
+    font-weight: 600;
+    margin-top: 0;
+}
+.pending-post-status{
+    color: var(--text-color3);
+    font-weight: 600;
+    text-align: center;
+    margin: 0; 
+}
+.status-text{
+    font-weight: 500;
+    /* margin-top: 0.5rem; */
 }
 .disregard-reason p{
-    margin: 0;
+    margin: 0.25rem 0 0 0.25rem;
+    color: var(--text-color3);
+    font-weight: 600;
 }

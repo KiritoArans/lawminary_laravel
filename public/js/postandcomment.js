@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     document.querySelectorAll('.comment-modal').forEach(function (commentModal) {
                         commentModal.style.display = 'none';
                     });
-                    commentModal.style.display = 'block';
+                    commentModal.style.display = 'flex';
                 } else {
                     Swal.fire({
                         title: 'Post Unavailable',

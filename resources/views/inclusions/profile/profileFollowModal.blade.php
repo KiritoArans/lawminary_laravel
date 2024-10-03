@@ -5,8 +5,9 @@
             <span id="followers-tab" class="active">Followers</span>
             <span id="following-tab">Following</span>
         </div>
+
         <div class="search-bar">
-            <input type="text" placeholder="Search">
+            <input type="text" id="searchInput" placeholder="Search">
         </div>
         
         <ul id="followers-list" class="user-list">

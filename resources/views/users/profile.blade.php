@@ -82,11 +82,7 @@
                         </ul>
                     </div>
                     <hr class="hr2">
-                    @if (Auth::user())
-                        <div class="pending-btn">
-                            <button class="view-pendings">View Pending Posts</button>
-                        </div>
-                    @endif
+
                     <div class="profile-content">
 
                         @include('inclusions/profile/profileFollowModal')
@@ -105,50 +101,7 @@
 
                     </div>
 
-<!-- Modal Structure -->
-<div id="pendingModal" class="pendingModal">
-    <div class="pendingModal-content">
-        <span class="pen-post-close">&times;</span>
-    
-        <div class="pendingModal-nav">
-            <span id="pending-posts-tab" class="active">Pending Posts</span>
-            <span id="disregarded-posts-tab">Disregarded Posts</span>
-        </div>
-    
-        <div id="pending-posts" class="tab-content active">
-            @if($pendingPosts->isEmpty())
-                <p>No pending posts yet.</p>
-            @else
-            <h2>Pending Posts</h2>
-            @foreach ($pendingPosts as $post)
-                <div class="pending-post-content">
-                    <p>{{ $post->concern }}</p>
-                    <p>Status: {{ $post->status }}</p>
-                </div>
-            @endforeach
-            @endif
-        </div>
-    
-        <div id="disregarded-posts" class="tab-content" style="display: none;">
-            @if($disregardPosts->isEmpty())
-                <p>No disregarded posts yet.</p>
-            @else
-            <h2>Disregarded Posts</h2>
-            @foreach ($disregardPosts as $post)
-                <div class="disregard-post-content">
-                    <p>{{ $post->concern }}</p>
-                    <p>Status: {{ $post->status }}</p>
-                </div>
-                <div class="disregard-reason">
-                    <p>Reason: {{ $post->reasonDisregard }}</p>
-                </div>
-            @endforeach
-            @endif
-        </div>
-    </div>
-    
-</div>
-
+                    @include('inclusions/profile/penPostModal')
                     
                     @include('inclusions/createPostModal')
 

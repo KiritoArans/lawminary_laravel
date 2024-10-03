@@ -59,6 +59,7 @@ header hr {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 1rem;
 }
 .header-buttons {
     display: flex;
@@ -128,7 +129,7 @@ header hr {
     position: absolute;
     align-items: center;
     /* margin: 8px 280px 20px 212px; */
-    margin-top: .5rem;
+    /* margin-top: .5rem; */
 }
 .filter-form select {
     padding: 4px;

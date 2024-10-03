@@ -5,8 +5,7 @@
     background-color: #ffffff;
     border: 1px solid #ddd;
     padding: 20px 20px 8px 20px;
-    /* margin: 20px 0; */
-    margin: 20px 360px 20px 300px;
+    margin: 0px 360px 16px 300px;
     /* margin: 20px 120px 20px 160px; */
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -309,6 +308,7 @@
 
 
 /* Open Comments Modal*/
+/* Modal container */
 .comment-modal {
     display: none; /* Hidden by default */
     position: fixed;
@@ -319,10 +319,12 @@
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     overflow: auto; 
-    justify-content: center;
-    align-items: center;
+    display: flex; /* Flexbox for centering */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
 }
 
+/* Show modal */
 .comment-modal.show {
     display: flex; /* Show modal */
 }
@@ -335,22 +337,15 @@
 /* Modal content box */
 .clicked-post-content {
     background-color: #fff;
-    margin: auto;
-    margin-top: 4%;
     padding: 20px;
     border-radius: 8px;
     width: 90%;
     max-width: 600px;
-    /* max-height: 600px; */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
     position: relative;
     animation: modalFadeIn 0.3s ease-in-out;
-    overflow: hidden;
-    /* overflow: auto; */
-}
-.clicked-post-content hr{
-    margin-bottom: .25rem;
-    opacity: 50%;
+    max-height: 80vh; /* Make sure modal content fits within the viewport */
+    overflow-y: auto; /* Scrollable content if too tall */
 }
 
 /* Fade-in animation */
@@ -364,6 +359,13 @@
         transform: translateY(0);
     }
 }
+
+/* Styling for modal content separators */
+.clicked-post-content hr {
+    margin-bottom: .25rem;
+    opacity: 50%;
+}
+
 
 /* User info section */
 .user-info {
@@ -473,7 +475,7 @@
 .comment-area{
     display: flex;
     flex-direction: column;
-    max-height: 400px;
+    max-height: 520px;
     overflow: auto;
 }
 
