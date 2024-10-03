@@ -3,8 +3,8 @@
         <span class="pen-post-close">&times;</span>
     
         <div class="pendingModal-nav">
-            <span id="pending-posts-tab" class="active">Pending Posts</span>
-            <span id="disregarded-posts-tab">Disregarded Posts</span>
+            <span id="pending-posts-tab" class="active">Pending Posts ({{ $pendingPosts->count() }})</span>
+            <span id="disregarded-posts-tab">Disregarded Posts ({{ $disregardPosts->count() }})</span>
         </div>
     
         <div id="pending-posts" class="tab-content active">
