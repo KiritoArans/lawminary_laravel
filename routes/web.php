@@ -207,6 +207,10 @@ Route::prefix('admin')
             DashboardController::class,
             'search',
         ])->name('admin.search');
+        Route::get('/dashboard/data', [
+            DashboardController::class,
+            'getDashboardData',
+        ]);
     });
 
 // Admin Post page

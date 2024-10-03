@@ -128,6 +128,7 @@
             <!-- Close main -->
 
             <script src="<?php echo e(asset('js/admin_js/dashboard_js.js')); ?>"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         </div>
     </body>
 </html>

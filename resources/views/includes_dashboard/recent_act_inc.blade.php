@@ -1,5 +1,4 @@
-<!-- resources/views/admin/dashboard.blade.php -->
-<table class="table" id="dashboardTableBody">
+<!-- resources/views/admin/dashboard.blade.php<table class="table" id="dashboardTableBody">
     <thead>
         <tr>
             <th>ID</th>
@@ -12,6 +11,11 @@
     <h1>Recent Activities</h1>
     <tbody>
         @foreach ($dashboardData as $activity)
+
+
+
+
+
             <tr>
                 <td>{{ $activity->act_id }}</td>
                 <td>{{ $activity->act_username }}</td>
@@ -29,6 +33,11 @@
                 </td>
             </tr>
         @endforeach
+
+
+
+
+
     </tbody>
 </table>
 <ul class="pagination">
@@ -46,6 +55,11 @@
     </li>
 
     @for ($i = 1; $i <= $dashboardData->lastPage(); $i++)
+
+
+
+
+
         <li
             class="page-item {{ $dashboardData->currentPage() == $i ? 'active' : '' }}"
         >
@@ -57,6 +71,11 @@
             </a>
         </li>
     @endfor
+
+
+
+
+
 
     <li
         class="page-item {{ $dashboardData->hasMorePages() ? '' : 'disabled' }}"
@@ -72,13 +91,35 @@
     </li>
 </ul>
 
-<!-- Modal Structure -->
 <div id="viewModal" class="modal">
     <div class="modal-content">
         <span class="close-buttonView" id="closeModal">&times;</span>
         <h2>Activity Details</h2>
         <div id="modalContent">
-            <!-- Dynamic content will be loaded here -->
         </div>
     </div>
 </div>
+ -->
+
+<!-- resources/views/admin/dashboard.blade.php -->
+
+<!-- Time Filter Buttons -->
+<div class="time-filter">
+    <button id="daily" onclick="filterData('daily')" class="custom-button">
+        Daily
+    </button>
+    <button id="weekly" onclick="filterData('weekly')" class="custom-button">
+        Weekly
+    </button>
+    <button id="monthly" onclick="filterData('monthly')" class="custom-button">
+        Monthly
+    </button>
+    <button id="yearly" onclick="filterData('yearly')" class="custom-button">
+        Yearly
+    </button>
+</div>
+
+<!-- Chart Canvas -->
+<canvas id="myChart" width="400" height="200"></canvas>
+
+<!-- Remove the table and pagination since you're replacing this with the chart -->

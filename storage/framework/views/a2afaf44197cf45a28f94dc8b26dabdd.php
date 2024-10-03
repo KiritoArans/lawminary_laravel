@@ -1,5 +1,4 @@
-<!-- resources/views/admin/dashboard.blade.php -->
-<table class="table" id="dashboardTableBody">
+<!-- resources/views/admin/dashboard.blade.php<table class="table" id="dashboardTableBody">
     <thead>
         <tr>
             <th>ID</th>
@@ -12,6 +11,11 @@
     <h1>Recent Activities</h1>
     <tbody>
         <?php $__currentLoopData = $dashboardData; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $activity): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+
+
+
+
+
             <tr>
                 <td><?php echo e($activity->act_id); ?></td>
                 <td><?php echo e($activity->act_username); ?></td>
@@ -30,6 +34,11 @@
                 </td>
             </tr>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+
+
+
     </tbody>
 </table>
 <ul class="pagination">
@@ -47,6 +56,11 @@
     </li>
 
     <?php for($i = 1; $i <= $dashboardData->lastPage(); $i++): ?>
+
+
+
+
+
         <li
             class="page-item <?php echo e($dashboardData->currentPage() == $i ? 'active' : ''); ?>"
         >
@@ -59,6 +73,11 @@
             </a>
         </li>
     <?php endfor; ?>
+
+
+
+
+
 
     <li
         class="page-item <?php echo e($dashboardData->hasMorePages() ? '' : 'disabled'); ?>"
@@ -74,14 +93,36 @@
     </li>
 </ul>
 
-<!-- Modal Structure -->
 <div id="viewModal" class="modal">
     <div class="modal-content">
         <span class="close-buttonView" id="closeModal">&times;</span>
         <h2>Activity Details</h2>
         <div id="modalContent">
-            <!-- Dynamic content will be loaded here -->
         </div>
     </div>
 </div>
+ -->
+
+<!-- resources/views/admin/dashboard.blade.php -->
+
+<!-- Time Filter Buttons -->
+<div class="time-filter">
+    <button id="daily" onclick="filterData('daily')" class="custom-button">
+        Daily
+    </button>
+    <button id="weekly" onclick="filterData('weekly')" class="custom-button">
+        Weekly
+    </button>
+    <button id="monthly" onclick="filterData('monthly')" class="custom-button">
+        Monthly
+    </button>
+    <button id="yearly" onclick="filterData('yearly')" class="custom-button">
+        Yearly
+    </button>
+</div>
+
+<!-- Chart Canvas -->
+<canvas id="myChart" width="400" height="200"></canvas>
+
+<!-- Remove the table and pagination since you're replacing this with the chart -->
 <?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/includes_dashboard/recent_act_inc.blade.php ENDPATH**/ ?>

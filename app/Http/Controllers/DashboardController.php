@@ -4,27 +4,138 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Dashboard;
 
 class DashboardController extends Controller
 {
-    // Helper function to get common dashboard data (boxes)
-    private function getDashboardData()
+    // Method to handle AJAX request for dashboard data (daily, weekly, monthly, yearly)
+    public function getDashboardData(Request $request)
     {
+        $range = $request->input('range', 'weekly'); // Set 'weekly' as the default range
+
+        switch ($range) {
+            case 'daily':
+                $data = $this->getDailyData();
+                break;
+            case 'weekly':
+                $data = $this->getWeeklyData(); // Weekly data is now the default
+                break;
+            case 'monthly':
+                $data = $this->getMonthlyData();
+                break;
+            case 'yearly':
+                $data = $this->getYearlyData();
+                break;
+            default:
+                $data = $this->getWeeklyData(); // Default to weekly
+        }
+
+        return response()->json($data); // Return the data as JSON for the chart
+    }
+
+    // Example method to get daily data (replace with real queries)
+    private function getDailyData()
+    {
+        $startDate = now()->startOfDay();
+        $endDate = now()->endOfDay();
+
+        $accounts = DB::table('tblaccounts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        $posts = DB::table('tblposts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        $forumPosts = DB::table('tblforumposts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
         return [
-            'pendingPosts' => DB::table('tblposts')
-                ->where('status', 'pending')
-                ->count(),
-            'pendingAccounts' => DB::table('tblaccounts')
-                ->where('status', 'pending')
-                ->count(),
-            'accountsCount' => DB::table('tblaccounts')->count(),
-            'forumsCount' => DB::table('tblforums')->count(),
+            'labels' => [$startDate->format('Y-m-d')], // Label for the current day
+            'accounts' => [$accounts],
+            'posts' => [$posts],
+            'forumPosts' => [$forumPosts],
         ];
     }
 
-    // Fetch recent activities with or without filters
-    // Fetch recent activities with or without filters and search
+    private function getWeeklyData()
+    {
+        $startDate = now()->startOfWeek();
+        $endDate = now()->endOfWeek();
+
+        $accounts = DB::table('tblaccounts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        $posts = DB::table('tblposts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        $forumPosts = DB::table('tblforumposts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        return [
+            'labels' => ['This Week'], // Replace with week labels if needed
+            'accounts' => [$accounts],
+            'posts' => [$posts],
+            'forumPosts' => [$forumPosts],
+        ];
+    }
+
+    private function getMonthlyData()
+    {
+        $startDate = now()->startOfMonth();
+        $endDate = now()->endOfMonth();
+
+        $accounts = DB::table('tblaccounts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        $posts = DB::table('tblposts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        $forumPosts = DB::table('tblforumposts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        return [
+            'labels' => ['This Month'], // Replace with actual month labels if needed
+            'accounts' => [$accounts],
+            'posts' => [$posts],
+            'forumPosts' => [$forumPosts],
+        ];
+    }
+
+    private function getYearlyData()
+    {
+        $startDate = now()->startOfYear();
+        $endDate = now()->endOfYear();
+
+        $accounts = DB::table('tblaccounts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        $posts = DB::table('tblposts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        $forumPosts = DB::table('tblforumposts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        return [
+            'labels' => ['This Year'], // Replace with actual year labels if needed
+            'accounts' => [$accounts],
+            'posts' => [$posts],
+            'forumPosts' => [$forumPosts],
+        ];
+    }
+
+    // Similarly, define getWeeklyData(), getMonthlyData(), and getYearlyData() methods
+
+    // Main dashboard method to render the view
     public function dashboard(Request $request)
     {
         // Start with a query builder for recent activities
@@ -66,12 +177,10 @@ class DashboardController extends Controller
         }
 
         // Fetch the filtered and/or searched results
-        $dashboardData = $query->get();
-
-        // Get the common dashboard data (for boxes, pending posts, accounts, etc.)
-        $dashboardCounts = $this->getDashboardData();
-
         $dashboardData = $query->paginate(10);
+
+        // Get the common dashboard counts (pending posts, accounts, etc.)
+        $dashboardCounts = $this->getDashboardCounts();
 
         // Merge the recent activities with dashboard counts
         $data = array_merge($dashboardCounts, [
@@ -86,46 +195,62 @@ class DashboardController extends Controller
         }
     }
 
-    //search function
-    public function search(Request $request)
+    // Helper function to get common dashboard counts (e.g., pending posts, accounts, etc.)
+    private function getDashboardCounts()
     {
-        $search = $request->input('search'); // Capture the search query
-
-        // Perform the search
-        if ($search) {
-            // Filter dashboard activities based on the search query (username or action)
-            $dashboardData = Dashboard::where(
-                'act_action',
-                'LIKE',
-                '%' . $search . '%'
-            )
-                ->orWhere('act_username', 'LIKE', '%' . $search . '%')
-                ->paginate(10);
-        } else {
-            // If no search term, show all activities
-            $dashboardData = Dashboard::paginate(10); // Use paginate instead of get()
-        }
-
-        // Fetch the additional dashboard data
-        $dashboardCounts = $this->getDashboardData();
-
-        // Pass both the search results and the dashboard counts to the view
-        if (request()->is('admin*')) {
-            return view('admin.dashboard', [
-                'dashboardData' => $dashboardData,
-                'pendingPosts' => $dashboardCounts['pendingPosts'],
-                'pendingAccounts' => $dashboardCounts['pendingAccounts'],
-                'accountsCount' => $dashboardCounts['accountsCount'],
-                'forumsCount' => $dashboardCounts['forumsCount'],
-            ]);
-        } elseif (request()->is('moderator*')) {
-            return view('moderator.dashboard', [
-                'dashboardData' => $dashboardData,
-                'pendingPosts' => $dashboardCounts['pendingPosts'],
-                'pendingAccounts' => $dashboardCounts['pendingAccounts'],
-                'accountsCount' => $dashboardCounts['accountsCount'],
-                'forumsCount' => $dashboardCounts['forumsCount'],
-            ]);
-        }
+        return [
+            'pendingPosts' => DB::table('tblposts')
+                ->where('status', 'pending')
+                ->count(),
+            'pendingAccounts' => DB::table('tblaccounts')
+                ->where('status', 'pending')
+                ->count(),
+            'accountsCount' => DB::table('tblaccounts')->count(),
+            'forumsCount' => DB::table('tblforums')->count(),
+        ];
     }
 }
+
+//search function
+//     public function search(Request $request)
+//     {
+//         $search = $request->input('search'); // Capture the search query
+
+//         // Perform the search
+//         if ($search) {
+//             // Filter dashboard activities based on the search query (username or action)
+//             $dashboardData = Dashboard::where(
+//                 'act_action',
+//                 'LIKE',
+//                 '%' . $search . '%'
+//             )
+//                 ->orWhere('act_username', 'LIKE', '%' . $search . '%')
+//                 ->paginate(10);
+//         } else {
+//             // If no search term, show all activities
+//             $dashboardData = Dashboard::paginate(10); // Use paginate instead of get()
+//         }
+
+//         // Fetch the additional dashboard data
+//         $dashboardCounts = $this->getDashboardData();
+
+//         // Pass both the search results and the dashboard counts to the view
+//         if (request()->is('admin*')) {
+//             return view('admin.dashboard', [
+//                 'dashboardData' => $dashboardData,
+//                 'pendingPosts' => $dashboardCounts['pendingPosts'],
+//                 'pendingAccounts' => $dashboardCounts['pendingAccounts'],
+//                 'accountsCount' => $dashboardCounts['accountsCount'],
+//                 'forumsCount' => $dashboardCounts['forumsCount'],
+//             ]);
+//         } elseif (request()->is('moderator*')) {
+//             return view('moderator.dashboard', [
+//                 'dashboardData' => $dashboardData,
+//                 'pendingPosts' => $dashboardCounts['pendingPosts'],
+//                 'pendingAccounts' => $dashboardCounts['pendingAccounts'],
+//                 'accountsCount' => $dashboardCounts['accountsCount'],
+//                 'forumsCount' => $dashboardCounts['forumsCount'],
+//             ]);
+//         }
+//     }
+// }
