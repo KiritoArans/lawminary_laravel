@@ -18,6 +18,7 @@ use App\Http\Controllers\FaqsController;
 use App\Http\Controllers\SearchUserController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -595,6 +596,10 @@ route::post('/rate-comment', [CommentController::class, 'rateComment'])->name(
 route::post('/reply', [CommentController::class, 'createReply'])->name(
     'users.createReply'
 );
+
+
+// Report Post
+Route::post('/report', [ReportController::class, 'submitReport'])->name('report.submit');
 
 // Follow User
 Route::post('/home-followed', [FollowController::class, 'followUser'])->name(

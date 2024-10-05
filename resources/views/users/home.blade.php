@@ -17,6 +17,7 @@
         <main>
             <header>
                 <div class="header-top">
+                    {{-- <i class="fa-solid fa-bars" style="font-size: 1.5rem"></i> --}}
                     @include('includes_syscon.syscon_logo_inc')
                     <div class="notification">
                         <a href="notifications">
@@ -81,10 +82,14 @@
                                     <p>Posted: {{ $post->created_at->diffForHumans() }}</p>
                                 </div>
                             </div>
+
                             <div class="post-options">
-                                <div class="options"><a href="#">Action</a></div>
+                                <div class="options">
+                                    <a id="reportLink" data-post-id="{{ $post->post_id }}">Report</a>
+                                </div>
                                 <i class="fas fa-ellipsis-v"></i>
                             </div>
+
                         </div>
                         <hr />
                         <div class="post-text">
@@ -297,8 +302,13 @@
                     </div>
                     @endforeach
                 </div>
+                
                 @include('inclusions/createPostModal')
+
                 @include('inclusions/rateCommentModal')
+
+                @include('inclusions/reportPostModal')
+
             </content>
         </main>
     </div>
@@ -306,10 +316,14 @@
         
 
     </script>
+    
     <script src="js/postandcomment.js"></script>
     <script src="js/likePost.js"></script>
     <script src="js/bookmarkPost.js"></script>
     <script src="js/comment.js"></script>
+
+    <script src="js/reportPost.js"></script>
+
     <script src="js/followUser.js"></script>
 
     <script src="js/homelocator.js"></script>
