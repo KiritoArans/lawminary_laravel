@@ -110,17 +110,43 @@
 // }
 
 // This function is called when a time range is selected (daily, weekly, monthly, yearly)
-// This function is called when a time range is selected (daily, weekly, monthly, yearly)
 function filterData(range) {
-    // Update the URL to include the admin prefix
+    console.log(`Button clicked for range: ${range}`);
+
+    // Fetch the data for bar chart and pie chart using /admin/dashboard/data
     fetch(`/admin/dashboard/data?range=${range}`)
         .then((response) => response.json())
         .then((data) => {
-            // Update the chart with the new data
-            updateChart(data);
+            console.log('Fetched Data for Bar and Pie:', data);
+
+            // Update the bar and pie charts with the fetched data
+            updateBarChart(data.barChart); // Update the bar chart
+            updatePieChart(data.pieChart); // Update the pie chart
+        })
+        .catch((error) => {
+            console.error('Error fetching data for Bar and Pie:', error);
+        });
+
+    // Fetch the data for line chart using /api/chart-data
+    fetch(`/api/chart-data?range=${range}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Fetched Data for Line Chart:', data);
+
+            // Update the line graph with the fetched data
+            updateLineGraph(data, range); // Update the line chart, pass the range to it
+        })
+        .catch((error) => {
+            console.error('Error fetching data for Line Chart:', error);
         });
 }
-function updateChart(data) {
+
+// Call the function to fetch default data (e.g., weekly) on page load
+document.addEventListener('DOMContentLoaded', function () {
+    filterData('weekly'); // Fetch 'weekly' data on page load
+});
+
+function updateBarChart(data) {
     const chartElement = document.getElementById('myChart').getContext('2d');
 
     // If a chart instance exists, destroy it before creating a new one
@@ -137,22 +163,29 @@ function updateChart(data) {
                 {
                     label: 'Accounts Created',
                     data: data.accounts, // Number of accounts created
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(255, 0, 0, 0.2)', // Red background
+                    borderColor: 'rgba(255, 0, 0, 1)', // Red border
                     borderWidth: 1
                 },
                 {
                     label: 'Posts Created',
                     data: data.posts, // Number of posts created
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 165, 0, 0.2)', // Orange background
+                    borderColor: 'rgba(255, 165, 0, 1)', // Orange border
                     borderWidth: 1
                 },
                 {
                     label: 'Forum Posts Created',
                     data: data.forumPosts, // Number of forum posts created
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(255, 255, 0, 0.2)', // Yellow background
+                    borderColor: 'rgba(255, 255, 0, 1)', // Yellow border
+                    borderWidth: 1
+                },
+                {
+                    label: 'Feedbacks Received',
+                    data: data.feedbacks, // Add feedback data here
+                    backgroundColor: 'rgba(0, 128, 0, 0.2)', // Green background
+                    borderColor: 'rgba(0, 128, 0, 1)', // Green border
                     borderWidth: 1
                 }
             ]
@@ -202,4 +235,162 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.myChart && typeof window.myChart.destroy === 'function') {
         window.myChart.destroy();
     }
+});
+
+function updatePieChart(data) {
+    const chartElement = document.getElementById('myPieChart').getContext('2d');
+
+    if (window.myPieChart && typeof window.myPieChart.destroy === 'function') {
+        window.myPieChart.destroy();
+    }
+
+    window.myPieChart = new Chart(chartElement, {
+        type: 'pie',
+        data: {
+            labels: ['Accounts', 'Posts', 'Forum Posts', 'Feedbacks'],
+            datasets: [
+                {
+                    label: 'Data Breakdown',
+                    data: [
+                        data.accounts[0],
+                        data.posts[0],
+                        data.forumPosts[0],
+                        data.feedbacks[0]
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 0, 0, 0.8)', // Red
+                        'rgba(255, 165, 0, 0.8)', // Orange
+                        'rgba(255, 255, 0, 0.8)', // Yellow
+                        'rgba(0, 128, 0, 0.8)' // Green
+                    ],
+                    borderColor: [
+                        'rgba(255, 0, 0, 1)', // Red
+                        'rgba(255, 165, 0, 1)', // Orange
+                        'rgba(255, 255, 0, 1)', // Yellow
+                        'rgba(0, 128, 0, 1)' // Green
+                    ],
+
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                datalabels: {
+                    formatter: (value, ctx) => {
+                        let sum = ctx.chart.data.datasets[0].data.reduce(
+                            (a, b) => a + b,
+                            0
+                        );
+                        let percentage = ((value / sum) * 100).toFixed(2) + '%';
+                        return percentage;
+                    },
+                    color: '#fff',
+                    font: {
+                        weight: 'bold'
+                    }
+                },
+                chart3d: {
+                    enable: true, // Enables the 3D effect
+                    depth: 10, // Depth of the 3D effect
+                    perspective: 1000,
+                    angleX: -30, // X-axis angle for 3D effect
+                    angleY: 30 // Y-axis angle for 3D effect
+                }
+            }
+        },
+        plugins: [ChartDataLabels] // Enable the plugins
+    });
+}
+
+function updateLineGraph(data, range) {
+    const chartElement = document
+        .getElementById('myLineChart')
+        .getContext('2d');
+
+    if (
+        window.myLineChart &&
+        typeof window.myLineChart.destroy === 'function'
+    ) {
+        window.myLineChart.destroy();
+    }
+
+    const timeUnit =
+        range === 'yearly'
+            ? 'month'
+            : range === 'monthly'
+              ? 'day'
+              : range === 'weekly'
+                ? 'day'
+                : 'hour';
+
+    // Make sure data arrays are correctly aligned with labels
+    window.myLineChart = new Chart(chartElement, {
+        type: 'line',
+        data: {
+            labels: data.labels, // X-axis labels (dates)
+            datasets: [
+                {
+                    label: 'Accounts Created',
+                    data: data.accounts, // Accounts data
+                    backgroundColor: 'rgba(255, 0, 0, 0.2)',
+                    borderColor: 'rgba(255, 0, 0, 1)',
+                    borderWidth: 1,
+                    fill: false
+                },
+                {
+                    label: 'Posts Created',
+                    data: data.posts, // Posts data
+                    backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                    borderColor: 'rgba(255, 165, 0, 1)',
+                    borderWidth: 1,
+                    fill: false
+                },
+                {
+                    label: 'Forum Posts Created',
+                    data: data.forumPosts, // Forum posts data
+                    backgroundColor: 'rgba(255, 255, 0, 0.2)',
+                    borderColor: 'rgba(255, 255, 0, 1)',
+                    borderWidth: 1,
+                    fill: false
+                },
+                {
+                    label: 'Feedbacks Received',
+                    data: data.feedbacks, // Feedbacks data
+                    backgroundColor: 'rgba(0, 128, 0, 0.2)',
+                    borderColor: 'rgba(0, 128, 0, 1)',
+                    borderWidth: 1,
+                    fill: false
+                }
+            ]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: timeUnit, // Time unit based on selected range
+                        tooltipFormat: 'YYYY-MM-DD HH:mm'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Time'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Items'
+                    }
+                }
+            }
+        }
+    });
+}
+
+// Call the function to fetch default data (e.g., weekly) on page load
+document.addEventListener('DOMContentLoaded', function () {
+    fetchChartData('weekly'); // Fetch 'weekly' data on page load
 });

@@ -217,3 +217,13 @@ header hr {
     list-style: none;
     border-radius: 0.25rem;
 }
+
+#myPieChart {
+    margin: 0 auto; /* Center the pie chart */
+    padding: 0; /* Remove any default padding */
+}
+
+/* Reduce space between the pie chart and the other charts */
+.chart-container {
+    margin-bottom: 10px; /* Adjust the margin between charts */
+}

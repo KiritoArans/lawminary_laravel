@@ -214,6 +214,8 @@ Route::prefix('admin')
         ]);
     });
 
+Route::get('/api/chart-data', [DashboardController::class, 'getDataForChart']);
+
 // Admin Post page
 Route::prefix('admin')
     ->middleware(['auth']) // Use the default auth middleware
@@ -324,6 +326,10 @@ Route::prefix('moderator')
             DashboardController::class,
             'search',
         ])->name('moderator.search');
+        Route::get('/dashboard/data', [
+            DashboardController::class,
+            'getDashboardData',
+        ]);
     });
 
 //moderator post page
@@ -597,9 +603,10 @@ route::post('/reply', [CommentController::class, 'createReply'])->name(
     'users.createReply'
 );
 
-
 // Report Post
-Route::post('/report', [ReportController::class, 'submitReport'])->name('report.submit');
+Route::post('/report', [ReportController::class, 'submitReport'])->name(
+    'report.submit'
+);
 
 // Follow User
 Route::post('/home-followed', [FollowController::class, 'followUser'])->name(

@@ -16,6 +16,17 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
             <tr>
                 <td><?php echo e($activity->act_id); ?></td>
                 <td><?php echo e($activity->act_username); ?></td>
@@ -34,6 +45,17 @@
                 </td>
             </tr>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -61,6 +83,17 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
         <li
             class="page-item <?php echo e($dashboardData->currentPage() == $i ? 'active' : ''); ?>"
         >
@@ -73,6 +106,17 @@
             </a>
         </li>
     <?php endfor; ?>
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -123,6 +167,10 @@
 
 <!-- Chart Canvas -->
 <canvas id="myChart" width="400" height="200"></canvas>
+<!-- Pie Chart -->
+<canvas id="myPieChart" width="600" height="300"></canvas>
+<!-- Line Chart -->
+<canvas id="myLineChart" width="100" height="50"></canvas>
 
 <!-- Remove the table and pagination since you're replacing this with the chart -->
 <?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/includes_dashboard/recent_act_inc.blade.php ENDPATH**/ ?>

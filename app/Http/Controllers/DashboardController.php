@@ -29,7 +29,17 @@ class DashboardController extends Controller
                 $data = $this->getWeeklyData(); // Default to weekly
         }
 
-        return response()->json($data); // Return the data as JSON for the chart
+        return response()->json([
+            'barChart' => $data, // Data for the bar chart
+            'pieChart' => $data, // You can use the same data for pie
+            'lineGraph' => [
+                'labels' => $data['labels'], // Make sure you're sending the labels
+                'accounts' => $data['accounts'], // Number of accounts
+                'posts' => $data['posts'], // Number of posts
+                'forumPosts' => $data['forumPosts'], // Number of forum posts
+                'feedbacks' => $data['feedbacks'], // Feedback data
+            ],
+        ]);
     }
 
     // Example method to get daily data (replace with real queries)
@@ -50,11 +60,16 @@ class DashboardController extends Controller
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
+        $feedbacks = DB::table('tblfeedbacks')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
         return [
             'labels' => [$startDate->format('Y-m-d')], // Label for the current day
             'accounts' => [$accounts],
             'posts' => [$posts],
             'forumPosts' => [$forumPosts],
+            'feedbacks' => [$feedbacks], // Include feedbacks count
         ];
     }
 
@@ -75,11 +90,16 @@ class DashboardController extends Controller
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
+        $feedbacks = DB::table('tblfeedbacks')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
         return [
             'labels' => ['This Week'], // Replace with week labels if needed
             'accounts' => [$accounts],
             'posts' => [$posts],
             'forumPosts' => [$forumPosts],
+            'feedbacks' => [$feedbacks],
         ];
     }
 
@@ -100,11 +120,16 @@ class DashboardController extends Controller
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
+        $feedbacks = DB::table('tblfeedbacks')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
         return [
-            'labels' => ['This Month'], // Replace with actual month labels if needed
+            'labels' => ['This Month'], // Replace with week labels if needed
             'accounts' => [$accounts],
             'posts' => [$posts],
             'forumPosts' => [$forumPosts],
+            'feedbacks' => [$feedbacks],
         ];
     }
 
@@ -125,11 +150,175 @@ class DashboardController extends Controller
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
 
+        $feedbacks = DB::table('tblfeedbacks')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
         return [
-            'labels' => ['This Year'], // Replace with actual year labels if needed
+            'labels' => ['This Year'], // Replace with week labels if needed
             'accounts' => [$accounts],
             'posts' => [$posts],
             'forumPosts' => [$forumPosts],
+            'feedbacks' => [$feedbacks],
+        ];
+    }
+
+    public function getDataForChart(Request $request)
+    {
+        $range = $request->input('range', 'weekly');
+
+        switch ($range) {
+            case 'daily':
+                $startDate = now()->startOfDay();
+                $endDate = now()->endOfDay();
+                $interval = 'HOUR'; // Group by hour
+                break;
+            case 'weekly':
+                $startDate = now()->startOfWeek();
+                $endDate = now()->endOfWeek();
+                $interval = 'DAY'; // Group by day
+                break;
+            case 'monthly':
+                $startDate = now()->startOfMonth();
+                $endDate = now()->endOfMonth();
+                $interval = 'DAY'; // Group by day
+                break;
+            case 'yearly':
+                $startDate = now()->startOfYear();
+                $endDate = now()->endOfYear();
+                $interval = 'MONTH'; // Group by month for yearly
+                break;
+            default:
+                $startDate = now()->startOfWeek();
+                $endDate = now()->endOfWeek();
+                $interval = 'DAY'; // Default group by day
+                break;
+        }
+
+        // Get all unique dates from all tables combined
+        $dates = DB::table('tblaccounts')
+            ->select(
+                DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d %H:00:00') as date")
+            )
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->groupBy('date')
+            ->union(
+                DB::table('tblposts')
+                    ->select(
+                        DB::raw(
+                            "DATE_FORMAT(created_at, '%Y-%m-%d %H:00:00') as date"
+                        )
+                    )
+                    ->whereBetween('created_at', [$startDate, $endDate])
+                    ->groupBy('date')
+            )
+            ->union(
+                DB::table('tblforumposts')
+                    ->select(
+                        DB::raw(
+                            "DATE_FORMAT(created_at, '%Y-%m-%d %H:00:00') as date"
+                        )
+                    )
+                    ->whereBetween('created_at', [$startDate, $endDate])
+                    ->groupBy('date')
+            )
+            ->union(
+                DB::table('tblfeedbacks')
+                    ->select(
+                        DB::raw(
+                            "DATE_FORMAT(created_at, '%Y-%m-%d %H:00:00') as date"
+                        )
+                    )
+                    ->whereBetween('created_at', [$startDate, $endDate])
+                    ->groupBy('date')
+            )
+            ->orderBy('date')
+            ->pluck('date');
+
+        // Now fetch the actual data counts
+        $data = [
+            'labels' => $dates,
+
+            'accounts' => DB::table('tblaccounts')
+                ->select(
+                    DB::raw(
+                        "DATE_FORMAT(created_at, '%Y-%m-%d %H:00:00') as date"
+                    ),
+                    DB::raw('count(*) as count')
+                )
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->groupBy('date')
+                ->orderBy('date')
+                ->pluck('count', 'date')
+                ->toArray(),
+
+            'posts' => DB::table('tblposts')
+                ->select(
+                    DB::raw(
+                        "DATE_FORMAT(created_at, '%Y-%m-%d %H:00:00') as date"
+                    ),
+                    DB::raw('count(*) as count')
+                )
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->groupBy('date')
+                ->orderBy('date')
+                ->pluck('count', 'date')
+                ->toArray(),
+
+            'forumPosts' => DB::table('tblforumposts')
+                ->select(
+                    DB::raw(
+                        "DATE_FORMAT(created_at, '%Y-%m-%d %H:00:00') as date"
+                    ),
+                    DB::raw('count(*) as count')
+                )
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->groupBy('date')
+                ->orderBy('date')
+                ->pluck('count', 'date')
+                ->toArray(),
+
+            'feedbacks' => DB::table('tblfeedbacks')
+                ->select(
+                    DB::raw(
+                        "DATE_FORMAT(created_at, '%Y-%m-%d %H:00:00') as date"
+                    ),
+                    DB::raw('count(*) as count')
+                )
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->groupBy('date')
+                ->orderBy('date')
+                ->pluck('count', 'date')
+                ->toArray(),
+        ];
+
+        // Transform the data so each dataset uses the unified 'labels' for the x-axis
+        $transformedData = $this->transformData($dates, $data);
+
+        return response()->json($transformedData);
+    }
+
+    private function transformData($dates, $data)
+    {
+        // Initialize the transformed data arrays
+        $accounts = [];
+        $posts = [];
+        $forumPosts = [];
+        $feedbacks = [];
+
+        foreach ($dates as $date) {
+            $accounts[] = $data['accounts'][$date] ?? 0;
+            $posts[] = $data['posts'][$date] ?? 0;
+            $forumPosts[] = $data['forumPosts'][$date] ?? 0;
+            $feedbacks[] = $data['feedbacks'][$date] ?? 0;
+        }
+
+        return [
+            'labels' => $dates,
+            'accounts' => $accounts,
+            'posts' => $posts,
+            'forumPosts' => $forumPosts,
+            'feedbacks' => $feedbacks,
         ];
     }
 

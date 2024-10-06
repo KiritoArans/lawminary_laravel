@@ -127,8 +127,12 @@
             </main>
             <!-- Close main -->
 
-            <script src="<?php echo e(asset('js/admin_js/dashboard_js.js')); ?>"></script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-3d"></script>
+            <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script>
+            <script src="<?php echo e(asset('js/admin_js/dashboard_js.js')); ?>"></script>
         </div>
     </body>
 </html>
