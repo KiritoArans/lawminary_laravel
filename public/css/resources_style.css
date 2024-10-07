@@ -209,7 +209,7 @@ header hr {
     padding: 10px 20px;
     background-color: var(--primary-color);
     color: white;
-    border: 1px solid #ddd;
+    border: 1px solid #561c24;
     border-radius: 5px; /* Fully rounded corners */
     cursor: pointer;
 }

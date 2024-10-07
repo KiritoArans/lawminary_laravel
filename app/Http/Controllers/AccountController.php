@@ -330,6 +330,10 @@ class AccountController extends Controller
             'restrictDays',
         ]);
 
+        if (!empty($data['accountType'])) {
+            $data['accountType'] = ucfirst(strtolower($data['accountType']));
+        }
+
         // Hash the password and include it in the data
         $data['password'] = Hash::make($request->password);
 

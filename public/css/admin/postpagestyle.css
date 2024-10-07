@@ -65,8 +65,8 @@ header hr {
     margin-left: auto;
 }
 .custom-button {
-    background-color: #b0b0b0;
-    border: 1px solid #ccc;
+    background-color: #561c24;
+    border: 1px solid #561c24;
     color: black;
     padding: 10px 20px;
     text-align: center;
@@ -78,8 +78,9 @@ header hr {
     transition: background-color 0.3s ease;
 }
 
-.custom-button:hover {
-    background-color: #a0a0a0;
+.custom-button,
+.editButton:hover {
+    background-color: #ffaf45;
 }
 
 .form-control {
@@ -89,10 +90,10 @@ header hr {
 .editButton,
 .btn-primary,
 .deleteButton {
-    background-color: #b0b0b0;
+    background-color: #561c24;
     margin: 5px;
-    border: 1px solid #ccc;
-    color: black;
+    border: 1px solid #561c24;
+    color: rgb(255, 255, 255);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -101,6 +102,16 @@ header hr {
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s ease;
+}
+
+.editButton:hover {
+    background-color: #ffaf45;
+}
+.btn-primary:hover {
+    background-color: #ffaf45;
+}
+.deleteButton:hover {
+    background-color: #ffaf45;
 }
 
 #editStatus {

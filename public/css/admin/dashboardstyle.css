@@ -83,10 +83,10 @@ header hr {
     margin-left: auto;
 }
 
-.custom-button {
-    background-color: #b0b0b0;
-    border: 1px solid #ccc;
-    color: black;
+.time-button {
+    background-color: #561c24;
+    border: 1px solid #ffffff;
+    color: rgb(255, 255, 255);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -96,8 +96,8 @@ header hr {
     border-radius: 4px; /* Rounded corners */
     transition: background-color 0.3s ease;
 }
-.custom-button:hover {
-    background-color: #a0a0a0;
+.time-button:hover {
+    background-color: #ffaf45;
 }
 .input-group {
     position: relative;
@@ -127,9 +127,9 @@ header hr {
 .btn-success,
 .btn-primary,
 .btn-danger {
-    background-color: #b0b0b0;
-    border: 1px solid #ccc;
-    color: black;
+    background-color: #561c24;
+    border: 1px solid #561c24;
+    color: rgb(255, 255, 255);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;

@@ -1,99 +1,62 @@
-<meta name="csrf-token" content="{{ csrf_token() }}" />
-
-<table class="table table-striped table-bordered">
+<table class="table table-striped">
     <thead>
         <tr>
-            <th>User ID</th>
+            <th>Lawyer ID</th>
+            <th>Username</th>
+            <th>Total Points</th>
             <th>Rank</th>
-            <th>Name</th>
-            <th>Points</th>
-            <th>Badge</th>
-            <th>Action</th>
+            <th>Position</th>
         </tr>
     </thead>
-    <tbody id="postTableBody">
-        @if ($lawyers->isEmpty())
+    <tbody>
+        @foreach ($leaderboards as $leaderboard)
             <tr>
-                <td colspan="7">No results found.</td>
+                <td>{{ $leaderboard->lawyerUser_id }}</td>
+                <td>{{ $leaderboard->username }}</td>
+                <td>{{ $leaderboard->rankPoints }}</td>
+                <td class="rank">
+                    <!-- Display rank as an image -->
+
+                    @if ($leaderboard->rank === 'Wood')
+                        <img
+                            src="{{ asset('imgs/badges/wood.png') }}"
+                            alt="Wood Badge"
+                            width="50"
+                        />
+                    @elseif ($leaderboard->rank === 'Steel')
+                        <img
+                            src="{{ asset('imgs/badges/steel.png') }}"
+                            alt="Steel Badge"
+                            width="50"
+                        />
+                    @elseif ($leaderboard->rank === 'Bronze')
+                        <img
+                            src="{{ asset('imgs/badges/bronze.png') }}"
+                            alt="Bronze Badge"
+                            width="50"
+                        />
+                    @elseif ($leaderboard->rank === 'Silver')
+                        <img
+                            src="{{ asset('imgs/badges/silver.png') }}"
+                            alt="Silver Badge"
+                            width="50"
+                        />
+                    @elseif ($leaderboard->rank === 'Gold')
+                        <img
+                            src="{{ asset('imgs/badges/gold.png') }}"
+                            alt="Gold Badge"
+                            width="50"
+                        />
+                    @elseif ($leaderboard->rank === 'Diamond')
+                        <img
+                            src="{{ asset('imgs/badges/diamond.png') }}"
+                            alt="Diamond Badge"
+                            width="50"
+                        />
+                    @endif
+                </td>
+                <td>{{ $loop->iteration }}</td>
             </tr>
-        @else
-            @foreach ($lawyers as $activity)
-                <tr>
-                    <td>{{ $activity->user_id }}</td>
-                    <td>
-                        {{ $loop->iteration + $lawyers->perPage() * ($lawyers->currentPage() - 1) }}
-                    </td>
-                    <td>{{ $activity->username }}</td>
-                    <td>{{ $activity->points }}</td>
-                    <td>{{ $activity->badge }}</td>
-                    <td>
-                        <button
-                            class="view-btn"
-                            data-user_id="{{ $activity->user_id }}"
-                            data-rank="{{ $loop->iteration }}"
-                            data-username="{{ $activity->username }}"
-                            data-points="{{ $activity->points }}"
-                            data-badge="{{ $activity->badge }}"
-                        >
-                            View
-                        </button>
-                        @include('includes_leaderboards.view_lead_inc')
-                    </td>
-                </tr>
-            @endforeach
-        @endif
+        @endforeach
     </tbody>
 </table>
-
-<div class="paginationContent">
-    <ul class="pagination">
-        <li
-            class="page-item {{ $lawyers->currentPage() == 1 ? 'disabled' : '' }}"
-            aria-disabled="{{ $lawyers->currentPage() == 1 }}"
-        >
-            <a
-                class="page-link"
-                href="{{ $lawyers->appends(request()->input())->previousPageUrl() }}"
-                rel="prev"
-            >
-                &laquo;
-            </a>
-        </li>
-
-        @for ($i = 1; $i <= $lawyers->lastPage(); $i++)
-            <li
-                class="page-item {{ $lawyers->currentPage() == $i ? 'active' : '' }}"
-            >
-                <a
-                    class="page-link"
-                    href="{{ $lawyers->appends(request()->input())->url($i) }}"
-                >
-                    {{ $i }}
-                </a>
-            </li>
-        @endfor
-
-        <li
-            class="page-item {{ $lawyers->hasMorePages() ? '' : 'disabled' }}"
-            aria-disabled="{{ ! $lawyers->hasMorePages() }}"
-        >
-            <a
-                class="page-link"
-                href="{{ $lawyers->appends(request()->input())->nextPageUrl() }}"
-                rel="next"
-            >
-                &raquo;
-            </a>
-        </li>
-    </ul>
-</div>
-
-<div id="viewModal" class="modal">
-    <div class="modal-content">
-        <span class="close-button" id="closeModal">&times;</span>
-        <h2>Activity Details</h2>
-        <div id="modalContent">
-            <!-- Dynamic content will be loaded here -->
-        </div>
-    </div>
-</div>

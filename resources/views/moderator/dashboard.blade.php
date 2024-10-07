@@ -56,28 +56,6 @@
                         <div class="header-ttl">
                             <h1>Dashboard</h1>
                         </div>
-
-                        <!-- Search Form -->
-                        @include('includes_dashboard.dash_search_inc')
-
-                        <!-- Filter Button -->
-                        <div class="filter-container">
-                            <button class="custom-button" id="filterButton">
-                                Filter
-                            </button>
-                            <div id="filterModal" class="modal">
-                                <div class="modal-content">
-                                    <span
-                                        class="close-button"
-                                        id="closeFilterModal"
-                                    >
-                                        &times;
-                                    </span>
-                                    <h2>Filter Accounts</h2>
-                                    @include('includes_dashboard.dash_filter_inc')
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Close .header-line -->
@@ -105,6 +83,11 @@
             </main>
             <!-- Close main -->
 
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-3d"></script>
+            <script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@1.0.0"></script>
             <script src="{{ asset('js/admin_js/dashboard_js.js') }}"></script>
         </div>
     </body>

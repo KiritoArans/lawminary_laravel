@@ -53,13 +53,12 @@ class ForumController extends Controller
         $forums = $forumsQuery->paginate(10);
 
         // Return the appropriate view based on user role
-        if (auth()->user()->accountType === 'Admin') {
-            return view('admin.forums', compact('forums')); // Return the admin view
-        } elseif (auth()->user()->accountType === 'Moderator') {
-            return view('moderator.mforums', compact('forums')); // Return the moderator view
+        if (request()->is('admin*')) {
+            return view('admin.forums', compact('forums'));
+        } elseif (request()->is('moderator*')) {
+            return view('moderator.mforums', compact('forums'));
         }
 
-        // Optionally handle other account types or redirect as needed
         return redirect()->back()->with('error', 'Unauthorized access.');
     }
 
@@ -96,10 +95,10 @@ class ForumController extends Controller
         // Pass the search term along with pagination links
         $forums->appends(['query' => $searchTerm]);
 
-        if (auth()->user()->accountType === 'Admin') {
-            return view('admin.forums', compact('forums')); // Return the admin view
-        } elseif (auth()->user()->accountType === 'Moderator') {
-            return view('moderator.mforums', compact('forums')); // Return the moderator view
+        if (request()->is('admin*')) {
+            return view('admin.forums', compact('forums'));
+        } elseif (request()->is('moderator*')) {
+            return view('moderator.mforums', compact('forums'));
         }
 
         return redirect()->back()->with('error', 'Unauthorized access.');
@@ -169,10 +168,10 @@ class ForumController extends Controller
             'filterDateCreated' => $dateCreated,
         ]);
 
-        if (auth()->user()->accountType === 'Admin') {
-            return view('admin.forums', compact('forums')); // Return the admin view
-        } elseif (auth()->user()->accountType === 'Moderator') {
-            return view('moderator.mforums', compact('forums')); // Return the moderator view
+        if (request()->is('admin*')) {
+            return view('admin.forums', compact('forums'));
+        } elseif (request()->is('moderator*')) {
+            return view('moderator.mforums', compact('forums'));
         }
 
         return redirect()->back()->with('error', 'Unauthorized access.');

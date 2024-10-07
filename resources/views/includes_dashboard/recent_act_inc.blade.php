@@ -27,6 +27,7 @@
 
 
 
+
             <tr>
                 <td>{{ $activity->act_id }}</td>
                 <td>{{ $activity->act_username }}</td>
@@ -44,6 +45,7 @@
                 </td>
             </tr>
         @endforeach
+
 
 
 
@@ -93,6 +95,7 @@
 
 
 
+
         <li
             class="page-item {{ $dashboardData->currentPage() == $i ? 'active' : '' }}"
         >
@@ -104,6 +107,7 @@
             </a>
         </li>
     @endfor
+
 
 
 
@@ -149,16 +153,16 @@
 
 <!-- Time Filter Buttons -->
 <div class="time-filter">
-    <button id="daily" onclick="filterData('daily')" class="custom-button">
+    <button id="daily" onclick="filterData('daily')" class="time-button">
         Daily
     </button>
-    <button id="weekly" onclick="filterData('weekly')" class="custom-button">
+    <button id="weekly" onclick="filterData('weekly')" class="time-button">
         Weekly
     </button>
-    <button id="monthly" onclick="filterData('monthly')" class="custom-button">
+    <button id="monthly" onclick="filterData('monthly')" class="time-button">
         Monthly
     </button>
-    <button id="yearly" onclick="filterData('yearly')" class="custom-button">
+    <button id="yearly" onclick="filterData('yearly')" class="time-button">
         Yearly
     </button>
 </div>

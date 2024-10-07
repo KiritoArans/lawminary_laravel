@@ -13,8 +13,8 @@
             rel="stylesheet"
             href="<?php echo e(asset('css/moderator/mforumsstyle.css')); ?>"
         />
-        <link rel="stylesheet" href="<?php echo e(asset('css/base_pagination.css')); ?>" />
         <link rel="stylesheet" href="<?php echo e(asset('css/nav_style.css')); ?>" />
+        <link rel="stylesheet" href="<?php echo e(asset('css/base_pagination.css')); ?>" />
         <link
             rel="stylesheet"
             href="<?php echo e(asset('css/admin/base_admin_table_style.css')); ?>"
@@ -45,7 +45,6 @@
                     </div>
                     <hr class="divider" />
                 </header>
-
                 <form
                     action="<?php echo e(route('moderator.searchForums')); ?>"
                     method="GET"
@@ -64,143 +63,155 @@
                         </button>
                     </div>
                 </form>
-
-                <div class="action-buttons">
-                    <!-- Filter Button and Modal -->
+                <section class="filter-container">
                     <div class="action-buttons">
-                        <button class="custom-button" id="filterButton">
-                            Filter
+                        <div class="container"></div>
+
+                        <!-- Filter Button and Modal -->
+                        <div class="action-buttons">
+                            <button class="custom-button" id="filterButton">
+                                Filter
+                            </button>
+
+                            <div id="filterModal" class="modal">
+                                <div class="modal-content">
+                                    <span
+                                        class="close-button"
+                                        id="closeFilterModal"
+                                    >
+                                        &times;
+                                    </span>
+                                    <h2>Filter Forums</h2>
+
+                                    <!-- Filter Form -->
+                                    <form
+                                        id="filterForm"
+                                        action="<?php echo e(route('moderator.filterForums')); ?>"
+                                        method="GET"
+                                    >
+                                        <label for="filterForumId">
+                                            Forum ID:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="filterForumId"
+                                            name="filterForumId"
+                                        />
+
+                                        <label for="filterForumName">
+                                            Forum Name:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="filterForumName"
+                                            name="filterForumName"
+                                        />
+
+                                        <label for="filterForumDescription">
+                                            Forum Description:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            id="filterForumDescription"
+                                            name="filterForumDescription"
+                                        />
+
+                                        <label for="filterMembersCount">
+                                            Members Count:
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="filterMembersCount"
+                                            name="filterMembersCount"
+                                        />
+
+                                        <label for="filterDateCreated">
+                                            Date Created:
+                                        </label>
+                                        <input
+                                            type="date"
+                                            id="filterDateCreated"
+                                            name="filterDateCreated"
+                                        />
+
+                                        <button
+                                            type="button"
+                                            class="custom-button"
+                                            id="resetButton"
+                                        >
+                                            Reset Filter
+                                        </button>
+
+                                        <button
+                                            type="submit"
+                                            class="custom-button"
+                                        >
+                                            Apply Filter
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Add Forum Button -->
+                        <button class="custom-button" id="addForumButton">
+                            Add Forum
                         </button>
 
-                        <div id="filterModal" class="modal">
-                            <div class="modal-content" id="filterModalContent">
+                        <!-- Add Forum Modal -->
+                        <div id="addForumModal" class="modal">
+                            <div class="modal-content">
                                 <span
                                     class="close-button"
-                                    id="closeFilterModal"
+                                    id="closeAddForumModal"
                                 >
                                     &times;
                                 </span>
-                                <h2>Filter Forums</h2>
-
-                                <!-- Filter Form -->
+                                <h2>Add Forum</h2>
                                 <form
-                                    id="filterForm"
-                                    action="<?php echo e(route('moderator.filterForums')); ?>"
-                                    method="GET"
+                                    id="addForumForm"
+                                    method="POST"
+                                    action="<?php echo e(route('createForum')); ?>"
+                                    enctype="multipart/form-data"
                                 >
-                                    <label for="filterForumId">Forum ID:</label>
-                                    <input
-                                        type="text"
-                                        id="filterForumId"
-                                        name="filterForumId"
-                                    />
-
-                                    <label for="filterForumName">
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo $__env->make('inclusions/response', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                    <label for="addForumName">
                                         Forum Name:
                                     </label>
                                     <input
                                         type="text"
-                                        id="filterForumName"
-                                        name="filterForumName"
+                                        id="addForumName"
+                                        name="forumName"
+                                        required
                                     />
 
-                                    <label for="filterForumDescription">
+                                    <label for="addForumPhoto">
+                                        Forum Photo:
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="addForumPhoto"
+                                        name="forumPhoto"
+                                    />
+
+                                    <label for="addForumDescription">
                                         Forum Description:
                                     </label>
                                     <input
                                         type="text"
-                                        id="filterForumDescription"
-                                        name="filterForumDescription"
+                                        id="addForumDescription"
+                                        name="forumDesc"
+                                        required
                                     />
 
-                                    <label for="filterMembersCount">
-                                        Members Count:
-                                    </label>
-                                    <input
-                                        type="number"
-                                        id="filterMembersCount"
-                                        name="filterMembersCount"
-                                    />
-
-                                    <label for="filterDateCreated">
-                                        Date Created:
-                                    </label>
-                                    <input
-                                        type="date"
-                                        id="filterDateCreated"
-                                        name="filterDateCreated"
-                                    />
-
-                                    <button
-                                        type="button"
-                                        class="custom-button"
-                                        id="resetButton"
-                                    >
-                                        Reset Filter
-                                    </button>
                                     <button type="submit" class="custom-button">
-                                        Apply Filter
+                                        Add Forum
                                     </button>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    <!-- Add Forum Button -->
-                    <button class="custom-button" id="addForumButton">
-                        Add Forum
-                    </button>
-
-                    <!-- Add Forum Modal -->
-                    <div id="addForumModal" class="modal">
-                        <div class="modal-content">
-                            <span
-                                class="filterModalContent"
-                                id="closeAddForumModal"
-                            >
-                                &times;
-                            </span>
-                            <h2>Add Forum</h2>
-                            <form
-                                id="addForumForm"
-                                method="POST"
-                                action="<?php echo e(route('createForum')); ?>"
-                                enctype="multipart/form-data"
-                            >
-                                <?php echo csrf_field(); ?>
-                                <?php echo $__env->make('inclusions/response', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                                <label for="addForumName">Forum Name:</label>
-                                <input
-                                    type="text"
-                                    id="addForumName"
-                                    name="forumName"
-                                    required
-                                />
-
-                                <label for="addForumPhoto">Forum Photo:</label>
-                                <input
-                                    type="file"
-                                    id="addForumPhoto"
-                                    name="forumPhoto"
-                                />
-
-                                <label for="addForumDescription">
-                                    Forum Description:
-                                </label>
-                                <input
-                                    type="text"
-                                    id="addForumDescription"
-                                    name="forumDesc"
-                                    required
-                                />
-
-                                <button type="submit" class="custom-button">
-                                    Add Forum
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-
+                </section>
                 <?php echo $__env->make('includes_forums.forums_view_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
             </main>
         </div>

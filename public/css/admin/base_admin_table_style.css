@@ -46,31 +46,7 @@ td:last-child {
     font-size: 0.875rem;
 }
 .btn-view:hover {
-    background-color: #218838;
-}
-
-.btn-view-approve {
-    background-color: #28a745;
-    border-radius: 3px;
-    border: none;
-    padding: 5%;
-    margin: 10%;
-    margin-right: 50px;
-}
-.btn-view-approve:hover {
-    background-color: #178b30;
-}
-
-.btn-view-reject {
-    background-color: #ec2720;
-    border-radius: 3px;
-    border: none;
-    padding: 5%;
-    margin: 10%;
-    margin-right: 50px;
-}
-.btn-view-reject:hover {
-    background-color: #bb0e0e;
+    background-color: #ffaf45;
 }
 
 .action-buttons {
@@ -93,9 +69,9 @@ td:last-child {
 }
 
 .custom-button {
-    background-color: #999;
+    background-color: #561c24;
     color: white;
-    border: 1px solid #ccc;
+    border: 1px solid #561c24;
     padding: 8px 8px;
     text-align: center;
     text-decoration: none;
@@ -107,13 +83,12 @@ td:last-child {
 }
 
 .custom-button:hover {
-    background-color: #333333;
+    background-color: #ffaf45;
 }
-
 .delete-button {
-    background-color: red;
+    background-color: #561c24;
     color: white;
-    border: 1px solid #ccc;
+    border: 1px solid #561c24;
     padding: 8px 8px;
     text-align: center;
     text-decoration: none;
@@ -124,5 +99,5 @@ td:last-child {
     transition: background-color 0.3s ease;
 }
 .delete-button:hover {
-    background-color: rgb(174, 0, 0);
+    background-color: #ffaf45;
 }
