@@ -201,7 +201,7 @@ class ForumController extends Controller
 
         $forum = new Forum();
 
-        $forum->forum_id = uniqid();
+        $forum->forum_id = uniqid('forum_');
         $forum->forumName = $request['forumName'];
         $forum->forumDesc = $request['forumDesc'];
 
@@ -219,34 +219,34 @@ class ForumController extends Controller
             ->with('success', 'Forum created successfully!');
     }
 
-    public function createPost(Request $request)
-    {
-        $data = $request->validate([
-            'forum_id' => 'required',
-            'concern' => 'required|string|max:255',
-            'concernPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-        ]);
+    // public function createPost(Request $request)
+    // {
+    //     $data = $request->validate([
+    //         'forum_id' => 'required',
+    //         'concern' => 'required|string|max:255',
+    //         'concernPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+    //     ]);
 
-        $activeForum = session('activeForum');
+    //     $activeForum = session('activeForum');
 
-        $post = new ForumPosts();
+    //     $post = new ForumPosts();
 
-        $post->forum_id = $data['forum_id'];
-        $post->post_id = uniqid();
-        $post->concern = $data['concern'];
-        $post->postedBy = Auth::user()->user_id;
+    //     $post->forum_id = $data['forum_id'];
+    //     $post->post_id = uniqid();
+    //     $post->concern = $data['concern'];
+    //     $post->postedBy = Auth::user()->user_id;
 
-        if ($request->hasFile('concernPhoto')) {
-            $photoPath = $request
-                ->file('concernPhoto')
-                ->store('public/files/forum_posts');
-            $post->concernPhoto = $photoPath;
-        }
+    //     if ($request->hasFile('concernPhoto')) {
+    //         $photoPath = $request
+    //             ->file('concernPhoto')
+    //             ->store('public/files/forum_posts');
+    //         $post->concernPhoto = $photoPath;
+    //     }
 
-        $post->save();
+    //     $post->save();
 
-        return redirect()->back()->with('success', 'Posted successfully.');
-    }
+    //     return redirect()->back()->with('success', 'Posted successfully.');
+    // }
 
     public function joinForum(Request $request)
     {

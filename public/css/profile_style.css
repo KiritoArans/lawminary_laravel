@@ -196,8 +196,6 @@ header hr {
 
 .profile-content > div {
     display: none;
-    
-    margin-top: 1rem;
 }
 
 .profile-content > div.active {
@@ -237,6 +235,9 @@ header hr {
 .hr2, .hr1{
     margin: 0;
     opacity: 40%;
+}
+.hr2{
+    margin-bottom: 1rem;
 }
 
 

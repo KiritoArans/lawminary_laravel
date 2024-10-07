@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tblforummembers', function (Blueprint $table) {
             $table->id();
-            $table->string('user_id', 20);
-            $table->string('forum_id', 20);
+            $table->string('user_id', 24);
+            $table->string('forum_id', 24);
             $table->string('status', 15)->nullable();
             $table->timestamps();
         });

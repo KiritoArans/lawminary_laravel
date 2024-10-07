@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Posts;
+use App\Models\ForumPosts;
 use App\Models\Points;
 use App\Models\Like;
 use App\Models\Bookmark;
@@ -22,7 +23,7 @@ class PostController extends Controller
 
         $post = new Posts;
 
-        $post->post_id = uniqid();
+        $post->post_id = uniqid('post_');
         $post->concern = $data['concern'];
         $post->postedBy = Auth::user()->user_id; 
         
@@ -46,9 +47,59 @@ class PostController extends Controller
         return redirect()->back()->with('success', 'Concern has been sent, please wait for approval.');
     }
 
+    public function createForumPost(Request $request)
+    {
+        $data = $request->validate([
+            'forum_id' => 'required',
+            'concern' => 'required|string|max:255',
+            'concernPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+        ]);
+
+        $activeForum = session('activeForum');
+
+        $post = new ForumPosts();
+
+        $post->forum_id = $data['forum_id'];
+        $post->post_id = uniqid('fpost_');
+        $post->concern = $data['concern'];
+        $post->postedBy = Auth::user()->user_id;
+
+        if ($request->hasFile('concernPhoto')) {
+            $photoPath = $request
+                ->file('concernPhoto')
+                ->store('public/files/forum_posts');
+            $post->concernPhoto = $photoPath;
+        }
+
+        $post->save();
+
+        return redirect()->back()->with('success', 'Posted successfully.');
+    }
+
     public function deletePost($postId)
     {
         $post = Posts::where('post_id', $postId)->first();
+
+        if (!$post) {
+            return redirect()->back()->with('error', 'Post not found.');
+        }
+
+        if ($post->postedBy != Auth::user()->user_id) {
+            return redirect()->back()->with('error', 'You are not authorized to delete this post.');
+        }
+
+        if ($post->concernPhoto) {
+            Storage::delete($post->concernPhoto);
+        }
+
+        $post->delete();
+
+        return redirect()->back()->with('success', 'Post deleted successfully.');
+    }
+
+    public function deleteForumPost($postId)
+    {
+        $post = ForumPosts::where('post_id', $postId)->first();
 
         if (!$post) {
             return redirect()->back()->with('error', 'Post not found.');

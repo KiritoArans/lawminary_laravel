@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lawminary | {{ $activeForum->forumName }}</title>
     <link rel="icon" href="/imgs/lawminarylogo.png" type="image/png">
@@ -97,67 +98,80 @@
                                     @php
                                         $haveFollowed = \App\Models\Follow::where('follower', Auth::user()->user_id)->where('following', $post->postedBy)->exists();
                                     @endphp
-                                    <form action="{{ route('followUser') }}" method="POST" style="display: inline">
+
+                                    <form class="follow-form" action="{{ route('followUser') }}" method="POST" style="display: inline">
                                         @csrf
-                                        @include('inclusions/response')
                                         <input type="hidden" name="following" value="{{ $post->user->user_id }}" />
-                                        <button class="follow-btn {{ $haveFollowed ? 'following' : '' }}">{{ $haveFollowed ? 'Unfollow' : 'Follow' }}</button>
+                                        <button type="submit" class="follow-btn {{ $haveFollowed ? 'following' : '' }}">{{ $haveFollowed ? 'Unfollow' : 'Follow' }}</button>
                                     </form>
+
                                     @endif
                                 </div>
                                 <label>@<span>{{ $post->user->username ?? 'unknownuser' }}</span></label>
                                 <p>Posted: {{ $post->created_at->diffForHumans() }}</p>
                             </div>
                         </div>
+
                         <div class="post-options">
-                            <div class="options"><a href="#">Action</a></div>
+                            <div class="options">
+                                @if (Auth::check() && Auth::user()->user_id == $post->user->user_id)
+                                    <!-- If the post belongs to the authenticated user, show the Delete button -->
+                                    <button onclick="confirmDelete('{{ $post->post_id }}')" class="btn-delete">
+                                        Delete
+                                    </button>
+                                    <form id="delete-form-{{ $post->post_id }}" action="{{ route('post.delete', $post->post_id) }}" method="POST" style="display: none;">
+                                        @csrf
+                                        @method('DELETE')
+                                    </form>
+                                @else
+                                    <a id="reportLink" data-post-id="{{ $post->post_id }}">Report</a>
+                                @endif
+                            </div>
                             <i class="fas fa-ellipsis-v"></i>
-                        </div>
-                      </div>
-                      <hr />
-                      <div class="post-text">
-                          <p>{{ $post->concern }}</p>
-                          @if ($post->concernPhoto)
-                          <img src="{{ Storage::url($post->concernPhoto) }}" alt="Post Image" style="max-width: 100%; height: auto;" />
-                          @endif
-                      </div>
-                      <hr />
-                      <div class="actions">
-                          @php
-                              $hasLiked = \App\Models\Like::where('user_id', Auth::user()->user_id)->where('post_id', $post->post_id)->exists();
-                              $hasBookmarked = \App\Models\Bookmark::where('user_id', Auth::user()->user_id)->where('post_id', $post->post_id)->exists();
-                          @endphp
+                        </div>                            
 
-                          <form action="{{ route('post.like') }}" method="POST">
-                              @csrf
-                              <input type="hidden" name="post_id" value="{{ $post->post_id }}" />
-                              <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : '' }}">
-                                  <i class="fa-solid fa-gavel"></i>Hit
-                                  @if($post->likes_count > 0)
-                                      <span>({{ $post->likes_count }})</span>
-                                  @endif
-                              </button>
-                          </form>
+                    </div>
+                    <hr />
+                    <div class="post-text">
+                        <p>{{ $post->concern }}</p>
+                        @if ($post->concernPhoto)
+                        <img src="{{ Storage::url($post->concernPhoto) }}" alt="Post Image" style="max-width: 100%; height: auto;" />
+                        @endif
+                    </div>
+                    <hr />
+                    <div class="actions">
+                        @php
+                            $hasLiked = \App\Models\Like::where('user_id', Auth::user()->user_id)->where('post_id', $post->post_id)->exists();
+                            $hasBookmarked = \App\Models\Bookmark::where('user_id', Auth::user()->user_id)->where('post_id', $post->post_id)->exists();
+                        @endphp
 
-                          <button class="btn-comment" data-post-id="{{ $post->post_id }}">
-                              <i class="fas fa-comment"></i>Comment
-                              @if($post->comments_count > 0)
-                                  <span>({{ $post->comments_count }})</span>
-                              @endif
-                          </button>
+                        <form class="like-form" data-post-id="{{ $post->post_id }}" action="{{ route('post.like') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="post_id" value="{{ $post->post_id }}" />
+                            <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : '' }}">
+                                <i class="fa-solid fa-gavel"></i>Hit
+                                <span id="likes-count-{{ $post->post_id }}">({{ $post->likes_count }})</span>
+                            </button>
+                        </form>
 
-                          <form action="{{ route('post.bookmark') }}" method="POST">
-                              @csrf
-                              <input type="hidden" name="post_id" value="{{ $post->post_id }}" />
-                              <button type="submit" class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : '' }}">
-                                  <i class="fas fa-bookmark"></i>Bookmark
-                                  @if($post->bookmarks_count > 0)
-                                      <span>({{ $post->bookmarks_count }})</span>
-                                  @endif
-                              </button>
-                          </form>
-                      </div>
-                  </div>
+                        <button class="btn-comment" data-post-id="{{ $post->post_id }}">
+                            <i class="fas fa-comment"></i>Comment
+                            @if($post->comments_count > 0)
+                                <span>({{ $post->comments_count }})</span>
+                            @endif
+                        </button>
+
+                        <form class="bookmark-form" data-post-id="{{ $post->post_id }}" action="{{ route('post.bookmark') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="post_id" value="{{ $post->post_id }}" />
+                            <button type="submit" class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : '' }}">
+                                <i class="fas fa-bookmark"></i> Bookmark
+                                <span id="bookmark-count-{{ $post->post_id }}">({{ $post->bookmarks_count }})</span>
+                            </button>
+                        </form>
+                        
+                    </div>
+                </div>
 
                   @include('inclusions/openComments')
 
@@ -209,13 +223,28 @@
           </div>
           
         </div>
+
+        @include('inclusions/rateCommentModal')
+
+        @include('inclusions/reportPostModal')
+
       </main>
     </div>
 
     <script src="js/user_js/forums.js"></script>
+    
+    <script src="js/reportPost.js"></script>
+
+    <script src="js/postandcomment.js"></script>
+    <script src="js/likePost.js"></script>
+    <script src="js/bookmarkPost.js"></script>
+    <script src="js/comment.js"></script>
+
+    <script src="js/followUser.js"></script>
+
     <script src="js/homelocator.js"></script>
     <script src="js/settings.js"></script>    
     <script src="js/logout.js"></script>
-    <script src="js/postandcomment.js"></script>
+
   </body>
 </html>

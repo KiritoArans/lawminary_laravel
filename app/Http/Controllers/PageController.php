@@ -215,6 +215,7 @@ class PageController extends Controller
 
         $posts = ForumPosts::with('user')
             ->where('forum_id', $forum_id)
+            ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('created_at', 'desc')
             ->get();
 

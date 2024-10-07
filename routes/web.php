@@ -575,6 +575,9 @@ Route::post('/home', [PostController::class, 'createPost'])->name(
 Route::delete('/home-{post}', [PostController::class, 'deletePost'])->name(
     'post.delete'
 );
+Route::delete('/forum-{post}', [PostController::class, 'deleteForumPost'])->name(
+    'post.delete'
+);
 
 // Like Post
 Route::post('/home-liked', [PostController::class, 'likePost'])->name(
@@ -632,7 +635,7 @@ route::get('/forum-{forum_id}', [
     PageController::class,
     'showVisitForum',
 ])->name('visit.forum');
-Route::post('/forum', [ForumController::class, 'createPost'])->name(
+Route::post('/forum', [PostController::class, 'createForumPost'])->name(
     'createForumPost'
 );
 // Join Forum

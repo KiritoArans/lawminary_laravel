@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('liked_id', 20);
             $table->boolean('like', 1);
-            $table->string('post_id', 20);
+            $table->string('post_id', 24);
             $table->string('user_id', 20);
             $table->timestamps();
         });
