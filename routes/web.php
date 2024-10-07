@@ -19,6 +19,8 @@ use App\Http\Controllers\SearchUserController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\SearchController;
+
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -81,6 +83,11 @@ Route::get('/forgot-password-otp', [PageController::class, 'showOtpPage']);
 Route::get('/home', [PageController::class, 'showHomePage'])
     ->name('home')
     ->middleware('auth');
+
+Route::get('/home-search', [PageController::class, 'showHomeSearchPage'])
+    ->name('home-search')
+    ->middleware('auth');
+
 Route::get('/article', [PageController::class, 'showArticlePage'])->middleware(
     'auth'
 );
@@ -642,6 +649,9 @@ Route::post('/forum', [PostController::class, 'createForumPost'])->name(
 Route::post('/forum-join', [ForumController::class, 'joinForum'])->name(
     'forum.join'
 );
+
+// Search Post and User
+Route::get('/home-search', [SearchController::class, 'searchPostUser'])->name('search.results');
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

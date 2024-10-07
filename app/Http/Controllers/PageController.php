@@ -44,27 +44,42 @@ class PageController extends Controller
 
         $filter = $request->input('filter', 'all');
 
-        if ($filter === 'following') {
-            $followingUserIds = \App\Models\Follow::where(
-                'follower',
-                $user->user_id
-            )->pluck('following');
+        $allPosts = Posts::with(
+            'user',
+            'comments',
+            'comments.user',
+            'comments.reply.user'
+            )
+                ->withCount('likes', 'comments', 'bookmarks')
+                ->orderBy('created_at', 'desc')
+                ->get();
 
-            $posts = Posts::with('user')
-                ->withCount('likes', 'comments', 'bookmarks')
-                ->where('status', 'Approved')
-                ->whereIn('postedBy', $followingUserIds)
-                ->orderBy('created_at', 'desc')
-                ->get();
-        } else {
-            $posts = Posts::with('user')
-                ->withCount('likes', 'comments', 'bookmarks')
-                ->where('status', 'Approved')
-                ->orderBy('created_at', 'desc')
-                ->get();
+            if ($filter === 'following') {
+                $followingUserIds = \App\Models\Follow::where(
+                    'follower',
+                    $user->user_id
+                )->pluck('following');
+
+                $posts = Posts::with('user')
+                    ->withCount('likes', 'comments', 'bookmarks')
+                    ->where('status', 'Approved')
+                    ->whereIn('postedBy', $followingUserIds)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            } else {
+                $posts = Posts::with('user')
+                    ->withCount('likes', 'comments', 'bookmarks')
+                    ->where('status', 'Approved')
+                    ->orderBy('created_at', 'desc')
+                    ->get();
         }
 
-        return view('users.home', compact('posts'));
+        return view('users.home', compact('posts', 'allPosts'));
+    }
+
+    public function showHomeSearchPage()
+    {
+        return view('users.home-search');
     }
 
     public function showArticlePage()
@@ -224,7 +239,7 @@ class PageController extends Controller
             'comments',
             'comments.user',
             'comments.reply.user'
-        )
+            )
             ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('created_at', 'desc')
             ->get();
