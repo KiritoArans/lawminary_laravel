@@ -57,52 +57,7 @@
                         <div class="header-ttl">
                             <h1>Dashboard</h1>
                         </div>
-
-                        <!-- Search Form -->
-                        <div class="search-container">
-                            <form
-                                action="{{ route('admin.dashboard') }}"
-                                method="GET"
-                            >
-                                <div class="input-group">
-                                    <input
-                                        type="text"
-                                        name="search"
-                                        class="form-control"
-                                        placeholder="Search for activities"
-                                        value="{{ request('search') }}"
-                                    />
-                                    <button
-                                        class="btn btn-primary"
-                                        type="submit"
-                                    >
-                                        Search
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <!-- Filter Button -->
-                        <div class="filter-container">
-                            <button class="custom-button" id="filterButton">
-                                Filter
-                            </button>
-                            <div id="filterModal" class="modal">
-                                <div class="modal-content">
-                                    <span
-                                        class="close-button"
-                                        id="closeFilterModal"
-                                    >
-                                        &times;
-                                    </span>
-                                    <h2>Filter Accounts</h2>
-                                    @include('includes_dashboard.dash_filter_inc')
-                                </div>
-                            </div>
-                        </div>
                     </div>
-
-                    <!-- Close .header-line -->
                 </header>
                 <!-- Correctly close header tag -->
 

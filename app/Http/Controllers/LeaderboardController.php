@@ -3,38 +3,76 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Leaderboard;
+use App\Models\Point;
 use App\Models\UserAccount;
+use Illuminate\Support\Facades\DB;
 
 class LeaderboardController extends Controller
 {
     public function leaderboards()
     {
-        $lawyers = UserAccount::where('accountType', 'lawyer')
-            ->orderBy('points', 'desc')
-            ->paginate(10);
+        // Calculate the total points for each lawyer and get the username from tblaccounts
+        $lawyers = DB::table('tblpoints')
+            ->join(
+                'tblaccounts',
+                'tblpoints.lawyerUser_id',
+                '=',
+                'tblaccounts.user_id'
+            ) // Join with tblaccounts to get username
+            ->select(
+                'tblpoints.lawyerUser_id',
+                'tblaccounts.username', // Select username from tblaccounts
+                DB::raw('SUM(tblpoints.points) as total_points')
+            )
+            ->groupBy('tblpoints.lawyerUser_id', 'tblaccounts.username') // Group by lawyerUser_id and username
+            ->get();
 
-        return view('moderator.mleaderboards', compact('lawyers'));
-    }
+        // Iterate through the list of lawyers and assign rank
+        foreach ($lawyers as $lawyer) {
+            $rank = '';
 
-    public function search(Request $request)
-    {
-        $searchQuery = $request->input('query');
+            // Assign badge based on total points
+            if ($lawyer->total_points >= 5000) {
+                $rank = 'Diamond';
+            } elseif ($lawyer->total_points >= 3500) {
+                $rank = 'Gold';
+            } elseif ($lawyer->total_points >= 2000) {
+                $rank = 'Silver';
+            } elseif ($lawyer->total_points >= 1000) {
+                $rank = 'Bronze';
+            } elseif ($lawyer->total_points >= 500) {
+                $rank = 'Steel';
+            } else {
+                $rank = 'Wood';
+            }
 
-        $lawyers = UserAccount::where(
-            'accountType',
-            'lawyer',
-            '%' . $searchQuery . '%'
-        )
-            ->orWhere('badge', 'like', '%' . $searchQuery . '%')
-            ->orWhere('username', 'like', '%' . $searchQuery . '%')
-            ->orWhere('user_id', 'like', '%' . $searchQuery . '%')
-            ->orderBy('points', 'desc')
-            ->paginate(10);
+            // Insert or update the lawyer's record in the leaderboards table
+            Leaderboard::updateOrInsert(
+                ['lawyerUser_id' => $lawyer->lawyerUser_id],
+                [
+                    'username' => $lawyer->username, // Insert the username
+                    'rankPoints' => $lawyer->total_points,
+                    'rank' => $rank,
+                    'updated_at' => now(),
+                ]
+            );
+        }
 
-        return view('moderator.mleaderboards', compact('lawyers'))->with(
-            'searchQuery',
-            $searchQuery
-        );
+        // Retrieve the leaderboards data along with user name by joining with tblaccounts
+        $leaderboards = DB::table('tblleaderboards')
+            ->join(
+                'tblaccounts',
+                'tblleaderboards.lawyerUser_id',
+                '=',
+                'tblaccounts.user_id'
+            ) // Adjusted join condition
+            ->select('tblleaderboards.*', 'tblaccounts.username') // Select leaderboards data and username
+            ->orderBy('tblleaderboards.rankPoints', 'desc')
+            ->get();
+
+        // Pass the data to the view
+        return view('moderator.mleaderboards', compact('leaderboards'));
     }
 
     //filter leaderboards
@@ -94,5 +132,63 @@ class LeaderboardController extends Controller
 
         // Return the view with the filtered results
         return view('moderator.mleaderboards', compact('lawyers'));
+    }
+    // New search function
+    public function search(Request $request)
+    {
+        $searchTerm = $request->input('query');
+
+        // Search leaderboards based on username or rank
+        $leaderboards = Leaderboard::where(
+            'username',
+            'LIKE',
+            "%{$searchTerm}%"
+        )
+            ->orWhere('rank', 'LIKE', "%{$searchTerm}%")
+            ->orderBy('rankPoints', 'desc')
+            ->paginate(10);
+
+        // Pass the search term to the view for pagination and display
+        $leaderboards->appends(['query' => $searchTerm]);
+
+        return view('moderator.mleaderboards', compact('leaderboards'));
+    }
+
+    // New filter function
+    public function filter(Request $request)
+    {
+        // Retrieve filter inputs
+        $filterRank = $request->input('filterRank');
+        $filterMinPoints = $request->input('filterMinPoints');
+        $filterMaxPoints = $request->input('filterMaxPoints');
+
+        // Build the query for filtering
+        $query = Leaderboard::query();
+
+        // Apply rank filter
+        if ($filterRank) {
+            $query->where('rank', $filterRank);
+        }
+
+        // Apply points filter
+        if ($filterMinPoints) {
+            $query->where('rankPoints', '>=', $filterMinPoints);
+        }
+
+        if ($filterMaxPoints) {
+            $query->where('rankPoints', '<=', $filterMaxPoints);
+        }
+
+        // Order the results by points and paginate
+        $leaderboards = $query->orderBy('rankPoints', 'desc')->paginate(10);
+
+        // Pass filters to pagination links
+        $leaderboards->appends([
+            'filterRank' => $filterRank,
+            'filterMinPoints' => $filterMinPoints,
+            'filterMaxPoints' => $filterMaxPoints,
+        ]);
+
+        return view('moderator.mleaderboards', compact('leaderboards'));
     }
 }

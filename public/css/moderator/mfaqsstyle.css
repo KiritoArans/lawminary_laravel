@@ -63,9 +63,9 @@ header hr {
 }
 
 .custom-button {
-    background-color: #999;
+    background-color: #561c24;
     color: white;
-    border: 1px solid #ccc;
+    border: 1px solid #561c24;
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -77,7 +77,7 @@ header hr {
 }
 
 .custom-button:hover {
-    background-color: #333333;
+    background-color: #561c24;
 }
 
 .search-bar {
@@ -102,7 +102,6 @@ header hr {
     padding: 10px 20px;
     border-radius: 4px;
     border: none;
-    background-color: #999;
     color: white;
     cursor: pointer;
     white-space: nowrap; /* Prevents button text from breaking */
@@ -110,5 +109,5 @@ header hr {
 }
 
 .custom-button:hover {
-    background-color: #333333;
+    background-color: #561c24;
 }

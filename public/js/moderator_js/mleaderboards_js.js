@@ -75,13 +75,11 @@ document.addEventListener('DOMContentLoaded', function () {
 //reset filter
 
 function resetFilter() {
-    // Clear all filter inputs
-    document.getElementById('filter_user_id').value = '';
+    // Clear the filter inputs
     document.getElementById('filterRank').value = '';
-    document.getElementById('filterName').value = '';
-    document.getElementById('filterPoints').value = '';
-    document.getElementById('filterBadge').value = '';
+    document.getElementById('filterMinPoints').value = '';
+    document.getElementById('filterMaxPoints').value = '';
 
-    // Optionally, submit the form to reset the filter in the backend or refresh the page
-    document.getElementById('filterForm').submit(); // This will refresh the page with cleared filters
+    // Optionally, submit the form to reset the filter in the backend
+    document.forms['filterForm'].submit(); // Submits the form after clearing filters
 }

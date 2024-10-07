@@ -27,6 +27,7 @@
 
 
 
+
             <tr>
                 <td><?php echo e($activity->act_id); ?></td>
                 <td><?php echo e($activity->act_username); ?></td>
@@ -45,6 +46,7 @@
                 </td>
             </tr>
         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
 
 
 
@@ -94,6 +96,7 @@
 
 
 
+
         <li
             class="page-item <?php echo e($dashboardData->currentPage() == $i ? 'active' : ''); ?>"
         >
@@ -106,6 +109,7 @@
             </a>
         </li>
     <?php endfor; ?>
+
 
 
 
@@ -151,16 +155,16 @@
 
 <!-- Time Filter Buttons -->
 <div class="time-filter">
-    <button id="daily" onclick="filterData('daily')" class="custom-button">
+    <button id="daily" onclick="filterData('daily')" class="time-button">
         Daily
     </button>
-    <button id="weekly" onclick="filterData('weekly')" class="custom-button">
+    <button id="weekly" onclick="filterData('weekly')" class="time-button">
         Weekly
     </button>
-    <button id="monthly" onclick="filterData('monthly')" class="custom-button">
+    <button id="monthly" onclick="filterData('monthly')" class="time-button">
         Monthly
     </button>
-    <button id="yearly" onclick="filterData('yearly')" class="custom-button">
+    <button id="yearly" onclick="filterData('yearly')" class="time-button">
         Yearly
     </button>
 </div>

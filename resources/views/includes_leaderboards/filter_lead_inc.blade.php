@@ -1,125 +1,72 @@
-<form
-    id="filterForm"
-    method="GET"
-    action="{{ route('moderator.filterLeaderboards') }}"
->
-    <label for="filter_user_id">ID:</label>
-    <input
-        type="text"
-        id="filter_user_id"
-        name="filter_user_id"
-        value="{{ request('filter_user_id') }}"
-    />
+<form action="{{ route('moderator.filterLeaderboards') }}" method="GET">
+    <div class="form-group">
+        <label for="filterRank">Rank:</label>
+        <select name="filterRank" id="filterRank" class="form-control">
+            <option value="">All Ranks</option>
+            <option
+                value="Wood"
+                {{ request('filterRank') == 'Wood' ? 'selected' : '' }}
+            >
+                Wood
+            </option>
+            <option
+                value="Steel"
+                {{ request('filterRank') == 'Steel' ? 'selected' : '' }}
+            >
+                Steel
+            </option>
+            <option
+                value="Bronze"
+                {{ request('filterRank') == 'Bronze' ? 'selected' : '' }}
+            >
+                Bronze
+            </option>
+            <option
+                value="Silver"
+                {{ request('filterRank') == 'Silver' ? 'selected' : '' }}
+            >
+                Silver
+            </option>
+            <option
+                value="Gold"
+                {{ request('filterRank') == 'Gold' ? 'selected' : '' }}
+            >
+                Gold
+            </option>
+            <option
+                value="Diamond"
+                {{ request('filterRank') == 'Diamond' ? 'selected' : '' }}
+            >
+                Diamond
+            </option>
+        </select>
+    </div>
 
-    <label for="filterRank">Rank:</label>
-    <input
-        type="text"
-        id="filterRank"
-        name="filterRank"
-        value="{{ request('filterRank') }}"
-    />
+    <div class="form-group">
+        <label for="filterMinPoints">Minimum Points:</label>
+        <input
+            type="number"
+            name="filterMinPoints"
+            id="filterMinPoints"
+            class="form-control"
+            value="{{ request('filterMinPoints') }}"
+        />
+    </div>
 
-    <label for="filterName">Name:</label>
-    <input
-        type="text"
-        id="filterName"
-        name="filterName"
-        value="{{ request('filterName') }}"
-    />
-
-    <label for="filterPoints">Points:</label>
-    <select id="filterPoints" name="filterPoints">
-        <option value="">-- Select Points Range --</option>
-        <!-- Default option -->
-        <option
-            value="0-200"
-            {{ request('filterPoints') == '0-200' ? 'selected' : '' }}
-        >
-            0-200
-        </option>
-        <option
-            value="201-500"
-            {{ request('filterPoints') == '201-500' ? 'selected' : '' }}
-        >
-            201-500
-        </option>
-        <option
-            value="501-1000"
-            {{ request('filterPoints') == '501-1000' ? 'selected' : '' }}
-        >
-            501-1000
-        </option>
-        <option
-            value="1001-2000"
-            {{ request('filterPoints') == '1001-2000' ? 'selected' : '' }}
-        >
-            1001-2000
-        </option>
-        <option
-            value="2001-3500"
-            {{ request('filterPoints') == '2001-3500' ? 'selected' : '' }}
-        >
-            2001-3500
-        </option>
-        <option
-            value="3501-5000"
-            {{ request('filterPoints') == '3501-5000' ? 'selected' : '' }}
-        >
-            3501-5000
-        </option>
-        <option
-            value="5001+"
-            {{ request('filterPoints') == '5001+' ? 'selected' : '' }}
-        >
-            5001+
-        </option>
-    </select>
-
-    <label for="filterBadge">Badge:</label>
-    <select id="filterBadge" name="filterBadge">
-        <option value="">-- Select Badge --</option>
-        <!-- Default option -->
-        <option
-            value="Wood"
-            {{ request('filterBadge') == 'Wood' ? 'selected' : '' }}
-        >
-            Wood
-        </option>
-        <option
-            value="Steel"
-            {{ request('filterBadge') == 'Steel' ? 'selected' : '' }}
-        >
-            Steel
-        </option>
-        <option
-            value="Bronze"
-            {{ request('filterBadge') == 'Bronze' ? 'selected' : '' }}
-        >
-            Bronze
-        </option>
-        <option
-            value="Silver"
-            {{ request('filterBadge') == 'Silver' ? 'selected' : '' }}
-        >
-            Silver
-        </option>
-        <option
-            value="Gold"
-            {{ request('filterBadge') == 'Gold' ? 'selected' : '' }}
-        >
-            Gold
-        </option>
-        <option
-            value="Diamond"
-            {{ request('filterBadge') == 'Diamond' ? 'selected' : '' }}
-        >
-            Diamond
-        </option>
-    </select>
+    <div class="form-group">
+        <label for="filterMaxPoints">Maximum Points:</label>
+        <input
+            type="number"
+            name="filterMaxPoints"
+            id="filterMaxPoints"
+            class="form-control"
+            value="{{ request('filterMaxPoints') }}"
+        />
+    </div>
 
     <button type="button" class="custom-button" onclick="resetFilter()">
         Reset Filter
     </button>
 
-    <button class="custom-button" type="submit">Apply Filters</button>
+    <button type="submit" class="custom-button">Apply Filter</button>
 </form>

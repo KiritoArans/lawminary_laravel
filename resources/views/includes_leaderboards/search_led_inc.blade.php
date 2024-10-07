@@ -9,7 +9,7 @@
             id="searchInput"
             name="query"
             placeholder="Search Leaderboards..."
-            value="{{ request()->query('query') }}"
+            value="{{ request('query') }}"
         />
         <button type="submit" class="custom-button">Search</button>
     </form>

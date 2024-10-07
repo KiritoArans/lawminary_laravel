@@ -85,9 +85,9 @@ section h1 {
 }
 
 button {
-    background-color: #b0b0b0;
-    border: 1px solid #ccc;
-    color: black;
+    background-color: #561c24;
+    border: 1px solid #561c24;
+    color: rgb(255, 255, 255);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -98,7 +98,7 @@ button {
     transition: background-color 0.3s ease;
 }
 button:hover {
-    background-color: #a0a0a0;
+    background-color: #ffaf45;
 }
 
 .form-control {
@@ -157,7 +157,7 @@ button:hover {
     margin-top: 10px;
     padding: 8px 12px;
     font-size: 0.9em;
-    background-color: #6c757d;
+    background-color: #561c24;
     border: none;
     border-radius: 5px;
     color: white;
@@ -166,7 +166,7 @@ button:hover {
 }
 
 .content-sections button:hover {
-    background-color: #5a6268;
+    background-color: #ffaf45;
 }
 
 @media screen and (max-width: 768px) {

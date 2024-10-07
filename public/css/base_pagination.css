@@ -4,16 +4,17 @@
 }
 
 .pagination .page-link {
-    color: #000;
+    color: #ffffff;
     padding: 0.5rem 1rem;
     text-decoration: none;
-    background-color: #fff;
-    border: 1px solid #ddd;
+    background-color: #561c24;
+    border: 1px solid #561c24;
     border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 .pagination .page-link:hover {
-    background-color: #f0f0f0;
+    background-color: #ffaf45;
 }
 
 .pagination .page-link svg {

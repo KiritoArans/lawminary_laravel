@@ -385,7 +385,7 @@ Route::prefix('moderator')
 
         Route::get('leaderboards/filter', [
             LeaderboardController::class,
-            'filterLeaderboards',
+            'filter',
         ])->name('moderator.filterLeaderboards');
     });
 

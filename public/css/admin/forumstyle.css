@@ -82,8 +82,8 @@ header hr {
 }
 
 .custom-button {
-    background-color: #b0b0b0;
-    border: 1px solid #ccc;
+    background-color: #561c24;
+    border: 1px solid #561c24;
     color: black;
     padding: 10px 20px;
     text-align: center;
@@ -95,7 +95,7 @@ header hr {
     transition: background-color 0.3s ease;
 }
 .custom-button:hover {
-    background-color: #a0a0a0;
+    background-color: #ffaf45;
 }
 .input-group {
     position: relative;

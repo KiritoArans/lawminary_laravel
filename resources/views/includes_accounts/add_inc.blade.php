@@ -96,26 +96,26 @@
     <label for="accountType">Account Type:</label>
     <select id="accountType" name="accountType" required>
         <option
-            value="user"
-            {{ old('accountType') == 'user' ? 'selected' : '' }}
+            value="User"
+            {{ old('accountType') == 'User' ? 'selected' : '' }}
         >
             User
         </option>
         <option
-            value="moderator"
-            {{ old('accountType') == 'moderator' ? 'selected' : '' }}
+            value="Moderator"
+            {{ old('accountType') == 'Moderator' ? 'selected' : '' }}
         >
             Moderator
         </option>
         <option
-            value="lawyer"
-            {{ old('accountType') == 'lawyer' ? 'selected' : '' }}
+            value="Lawyer"
+            {{ old('accountType') == 'Lawyer' ? 'selected' : '' }}
         >
             Lawyer
         </option>
         <option
-            value="admin"
-            {{ old('accountType') == 'admin' ? 'selected' : '' }}
+            value="Admin"
+            {{ old('accountType') == 'Admin' ? 'selected' : '' }}
         >
             Admin
         </option>
