@@ -10,9 +10,9 @@ return new class extends Migration
     {
         Schema::create('tblcomments', function (Blueprint $table) {
             $table->id();
-            $table->string('comment_id', 13);
-            $table->string('user_id', 50);
-            $table->string('post_id', 13);
+            $table->string('comment_id', 24);
+            $table->string('user_id', 20);
+            $table->string('post_id', 24);
             $table->string('comment', 255);
             $table->string('likes', 10)->nullable();
             $table->string('likesQty', 10)->nullable();

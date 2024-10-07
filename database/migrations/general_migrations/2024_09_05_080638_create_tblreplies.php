@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('tblreplies', function (Blueprint $table) {
             $table->id();
-            $table->string('reply_id', 13);
-            $table->string('comment_id', 13);
-            $table->string('user_id', 50);
-            $table->string('post_id', 13);
+            $table->string('reply_id', 24);
+            $table->string('comment_id', 24);
+            $table->string('user_id', 20);
+            $table->string('post_id', 24);
             $table->string('reply', 255);
             $table->timestamps();
         });

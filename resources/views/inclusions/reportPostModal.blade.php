@@ -4,7 +4,6 @@
         <h2>Report Post</h2>
         <p>Please select a reason for reporting this post:</p>
         
-        <!-- Radio Buttons for Report Reasons -->
         <div>
             <label><input type="radio" name="reportReason" value="Inappropriate Content"> Inappropriate Content</label><br>
             <label><input type="radio" name="reportReason" value="Harassment"> Harassment</label><br>
@@ -13,7 +12,6 @@
             <label><input type="radio" name="reportReason" value="Others"> Others</label><br>
         </div>
         
-        <!-- Textarea for "Others" option (hidden by default) -->
         <div id="otherReasonDiv" style="display: none;">
             <textarea id="otherReason" rows="5" placeholder="Please specify other reasons..."></textarea>
         </div>

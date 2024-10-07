@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('tblbookmarks', function (Blueprint $table) {
             $table->id();
             $table->boolean('bookmark', 1);
-            $table->string('post_id', 20)->nullable();
-            $table->string('resource_id', 20)->nullable();
+            $table->string('post_id', 24)->nullable();
+            $table->string('resource_id', 24)->nullable();
             $table->string('user_id', 20);
             $table->timestamps();
         });

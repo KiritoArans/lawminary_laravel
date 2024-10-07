@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tblreports', function (Blueprint $table) {
             $table->id();
             $table->string('report_id', 20);
-            $table->string('post_id', 20);
+            $table->string('post_id', 24);
             $table->string('user_id', 20);
             $table->string('reportContent', 100);
             $table->timestamps();

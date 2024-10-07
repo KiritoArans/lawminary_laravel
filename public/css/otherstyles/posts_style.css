@@ -728,3 +728,69 @@
     color: var(--text-color3);
     text-align: center;
 }
+
+
+
+.reportModal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Black background with transparency */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal content */
+.reportModal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+}
+.reportModal-content h2{
+    text-align: center;
+    color: var(--primary-color);
+}
+
+/* Close button */
+.report-close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.report-close:hover,
+.report-close:focus {
+    color: black;
+    cursor: pointer;
+}
+#otherReason {
+    width: 96%;
+    padding: 8px;
+    margin-top: 10px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    resize: vertical;
+}
+
+.reportModal-content button{
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: var(--panel-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+    width: 100%;
+}

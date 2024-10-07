@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('tblrates', function (Blueprint $table) {
             $table->id();
             $table->string('user_id', 20)->nullable();
-            $table->string('comment_id', 20)->nullable();
+            $table->string('comment_id', 24)->nullable();
             $table->string('lawyerUser_id', 20)->nullable();
             $table->integer('rate');
             $table->timestamps();

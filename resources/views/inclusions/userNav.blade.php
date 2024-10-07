@@ -21,7 +21,7 @@
                 <li>
                     <a href="search" class="{{ Request::is('search') ? 'active' : '' }}">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <span>Search</span>
+                        <span>Search Law</span>
                     </a>
                 </li>
                 <li>

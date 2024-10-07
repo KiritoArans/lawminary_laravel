@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Get the modal and related elements
     var reportModal = document.getElementById('reportModal');
-    var closeBtn = document.getElementsByClassName('report-close')[0];
+    var closeBtn = document.querySelector('.report-close'); // Use querySelector to be more explicit
     var submitButton = document.getElementById('submitReport');
     
     // Radio buttons and "Others" textarea
@@ -36,6 +36,12 @@ document.addEventListener('DOMContentLoaded', function () {
     reportLinks.forEach(function (link) {
         link.addEventListener('click', openReportModal); // Bind the click event to each report link
     });
+
+    // Attach event listener to the close button
+    closeBtn.addEventListener('click', closeReportModal);
+
+    // Event listener to close modal on outside click
+    window.addEventListener('click', clickOutsideModal);
 
     // Event listener to show textarea when "Others" is selected
     radioButtons.forEach(function (radio) {

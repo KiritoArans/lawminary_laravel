@@ -85,10 +85,20 @@
 
                             <div class="post-options">
                                 <div class="options">
-                                    <a id="reportLink" data-post-id="{{ $post->post_id }}">Report</a>
+                                    @if (Auth::check() && Auth::user()->user_id == $post->user->user_id)
+                                        <button onclick="confirmDelete('{{ $post->post_id }}')" class="btn-delete">
+                                            Delete
+                                        </button>
+                                        <form id="delete-form-{{ $post->post_id }}" action="{{ route('post.delete', $post->post_id) }}" method="POST" style="display: none;">
+                                            @csrf
+                                            @method('DELETE')
+                                        </form>
+                                    @else
+                                        <a id="reportLink" data-post-id="{{ $post->post_id }}">Report</a>
+                                    @endif
                                 </div>
                                 <i class="fas fa-ellipsis-v"></i>
-                            </div>
+                            </div>                            
 
                         </div>
                         <hr />
