@@ -46,4 +46,14 @@ class UserAccount extends Authenticatable
     {
         return self::where('user_id', $userId)->first();
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Posts::class, 'postedBy', 'user_id');
+    }
+
+    public function followers()
+    {
+        return $this->hasMany(Follow::class, 'following', 'user_id');
+    }
 }

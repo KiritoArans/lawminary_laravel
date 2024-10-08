@@ -45,36 +45,67 @@
             </div>
 
             <content>
-                <h2>Search Results for "{{ $query }}"</h2>
-            
                 <div class="search-results">
+
+                    <!-- Navigation Tabs -->
+                    <div class="home-search-nav">
+                        <span id="all-tab" class="active">All</span>
+                        <span id="user-tab">User</span>
+                        <span id="post-tab">Post</span>
+                    </div>
+                    
                     <!-- Users Section -->
-                    <h3>Users</h3>
-                    @if ($users->isEmpty())
-                        <p>No users found.</p>
-                    @else
-                        <ul>
+                    <div id="user-section">
+                        <h3>Users</h3>
+                        @if ($users->isEmpty())
+                            <p class="empty-search">No user found for {{$query}}.</p>
+                        @else
                             @foreach ($users as $user)
-                                <li>
-                                    <a href="{{ route('visit-profile', ['user_id' => $user->user_id]) }}">
-                                        {{ $user->firstName }} {{ $user->lastName }} ({{ $user->username }})
-                                    </a>
-                                </li>
+                            <div class="user-searched">
+                                <div class="user-details">
+                                    <img src="{{ $user->userPhoto ? Storage::url($user->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo" />
+                                    <div class="user-names">
+                                        <a href="{{ Auth::check() && Auth::user()->user_id == $user->user_id ? route('profile') : route('visit-profile', ['user_id' => $user->user_id]) }}">
+                                            {{ $user->firstName }} {{ $user->lastName }}
+                                        </a>
+                                        <p>@<span>{{ $user->username }}</span></p>
+                                        <span>{{ $user->posts_count }} Posts, {{ $user->followers_count }} Followers</span>
+                                    </div>
+                                </div>
+                                @php
+                                    $haveFollowed = \App\Models\Follow::where('follower', Auth::user()->user_id)
+                                        ->where('following', $user->user_id)
+                                        ->exists();
+                                @endphp
+                
+                                <form class="follow-form" action="{{ route('followUser') }}" method="POST" style="display: inline">
+                                    @csrf
+                                    <input type="hidden" name="following" value="{{ $user->user_id }}">
+                                    
+                                    <button type="submit" class="edit-profile-button follow-btn {{ $haveFollowed ? 'following followed-btn' : '' }}">
+                                        {{ $haveFollowed ? 'Unfollow' : 'Follow' }}
+                                    </button>
+                                    
+                                </form>
+                            </div>
                             @endforeach
-                        </ul>
-                        
-                    @endif
-            
+                        @endif
+                    </div>
+                
                     <!-- Posts Section -->
-                    <h3>Posts</h3>
-                    @if ($posts->isEmpty())
-                        <p>No posts found.</p>
-                    @else
-
-                    @include('inclusions/showPosts')
-
-                    @endif
+                    <div id="post-section">
+                        <h3>Posts</h3>
+                        @if ($posts->isEmpty())
+                            <p class="empty-search">No post found for {{$query}}.</p>
+                        @else
+                            @include('inclusions/showPosts')
+                        @endif
+                    </div>
+                
                 </div>
+                
+
+
             </content>
 
             @include('inclusions/openComments')
@@ -87,6 +118,8 @@
         </main>
     </div>
     
+    <script src="js/homeSearchNav.js"></script>
+
     <script src="js/postandcomment.js"></script>
     <script src="js/likePost.js"></script>
     <script src="js/bookmarkPost.js"></script>

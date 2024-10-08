@@ -11,40 +11,52 @@ class SearchController extends Controller
 
     public function searchPostUser(Request $request)
     {
-        // Get the search query
         $query = $request->input('query');
     
-        // Search users based on their name or username
-        $users = UserAccount::where('firstName', 'LIKE', "%$query%")
-            ->orWhere('lastName', 'LIKE', "%$query%")
-            ->orWhere('username', 'LIKE', "%$query%")
-            ->get();
+        $users = UserAccount::whereIn('accountType', ['User', 'Lawyer']) 
+            ->withCount([
+                'posts' => function ($query) {
+                    $query->where('status', 'Approved'); 
+                },
+                'followers' 
+            ])
+            ->get()
+            ->filter(function ($user) use ($query) {
+                $firstNameDistance = levenshtein(strtolower($query), strtolower($user->firstName));
+                $lastNameDistance = levenshtein(strtolower($query), strtolower($user->lastName));
+                $usernameDistance = levenshtein(strtolower($query), strtolower($user->username));
+                
+                // Allow close matches (distance less than or equal to 3, adjust as needed)
+                return $firstNameDistance <= 3 || $lastNameDistance <= 3 || $usernameDistance <= 3;
+            });
     
-        // Search posts based on their content (assuming `concern` is the field where the post content is stored)
-        $posts = Posts::where('status', 'Approved') // Filter only Approved posts
-            ->where(function($q) use ($query) {
-                $q->where('concern', 'LIKE', "%$query%") // Search in post content
-                ->orWhereHas('user', function ($q) use ($query) { // Search in user name/username
-                    $q->where('firstName', 'LIKE', "%$query%")
-                        ->orWhere('lastName', 'LIKE', "%$query%")
-                        ->orWhere('username', 'LIKE', "%$query%");
-                });
-            })
-            ->orderBy('created_at', 'desc')
-            ->get();
-
+        $posts = Posts::where('status', 'Approved') 
+            ->with('user') 
+            ->withCount('likes', 'comments', 'bookmarks') 
+            ->get()
+            ->filter(function ($post) use ($query) {
+                $concernDistance = levenshtein(strtolower($query), strtolower($post->concern));
+                $firstNameDistance = levenshtein(strtolower($query), strtolower($post->user->firstName));
+                $lastNameDistance = levenshtein(strtolower($query), strtolower($post->user->lastName));
+                $usernameDistance = levenshtein(strtolower($query), strtolower($post->user->username));
+    
+                // Allow close matches (distance less than or equal to 3, adjust as needed)
+                return $concernDistance <= 3 || $firstNameDistance <= 3 || $lastNameDistance <= 3 || $usernameDistance <= 3;
+            });
+    
         $allPosts = Posts::with(
             'user',
             'comments',
             'comments.user',
             'comments.reply.user'
-            )
-            ->withCount('likes', 'comments', 'bookmarks')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        )
+        ->withCount('likes', 'comments', 'bookmarks')
+        ->orderBy('created_at', 'desc')
+        ->get();
     
         // Return the search results to the view
         return view('users.home-search', compact('users', 'posts', 'query', 'allPosts'));
     }
+    
     
 }

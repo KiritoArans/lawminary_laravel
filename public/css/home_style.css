@@ -97,8 +97,18 @@ header hr {
 }
 .search-bar i {
     position: absolute;
-    left: 8px;
+    left: .5rem;
+    top: .6rem;
     color: var(--primary-color);
+}
+.search-bar button{
+    padding: .6rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    background-color: var(--primary-color);
 }
 
 .notification {
@@ -145,3 +155,92 @@ header hr {
 }
 
 
+
+/* Home Search CSS */
+
+.home-search-nav, .user-searched{
+    margin: 0 360px 0 300px;
+}
+
+.search-results h2, .search-results h3{
+    margin: .75rem 360px .5rem 300px;
+    color: var(--primary-color);
+}
+
+.home-search-nav {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ddd;
+}
+
+.home-search-nav span {
+    cursor: pointer;
+    color: var(--text-color3);
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0 .5rem .5rem .5rem;
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.home-search-nav .active {
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    font-weight: 700;
+}
+
+
+.user-searched{
+    display: flex;
+    justify-content: space-between;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+}
+
+.empty-search{
+    text-align: center;
+    color: var(--text-color3);
+}
+
+.user-searched .user-details{
+    display: flex;
+}
+
+.user-searched .user-details a{
+    text-decoration: none;
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-color);
+}
+.user-searched .user-details a:hover{
+    color: var(--primary-color);
+}
+.user-searched .user-details p{
+    color: var(--text-color3);
+    margin: 0;
+}
+.user-searched .user-details span:nth-child(3){
+    color: var(--text-color3);
+    margin: 0;
+    font-size: .8rem;
+}
+
+.user-searched .follow-btn{
+    padding: .5rem;
+    background-color: var(--text-color3);
+    color: var(--panel-color);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: bold;
+}
+.user-searched .followed-btn{
+    background-color: var(--primary-color);
+}
