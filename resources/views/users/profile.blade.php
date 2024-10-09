@@ -5,7 +5,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Lawminary | Profile</title>
-        <link rel="icon" href="../imgs/lawminarylogo.png" type="image/png" />
+        <link rel="icon" href="../imgs/lawminarylogo_v3.png" type="image/png" />
         <link rel="stylesheet" href="{{ asset('css/profile_style.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
         <link

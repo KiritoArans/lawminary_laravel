@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Lawminary | Provide Feedback</title>
-        <link rel="icon" href="../../imgs/lawminarylogo.png" type="image/png" />
+        <link rel="icon" href="../../imgs/lawminarylogo_v3.png" type="image/png" />
         <link
             rel="stylesheet"
             href="{{ asset('css/settings/provide_feedback_style.css') }}"
