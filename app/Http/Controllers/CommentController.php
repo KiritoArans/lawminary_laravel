@@ -59,12 +59,12 @@ class CommentController extends Controller
     // Reply Function
     public function createReply(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'reply' => 'required|string|max:2500',
-            'post_id' => 'required',
+            'post_id' => 'required|string|max:100',
             'comment_id' => 'required|exists:tblcomments,comment_id',
         ]);
-
+    
         $reply = new Reply();
         $reply->reply_id = uniqid();
         $reply->comment_id = $request->input('comment_id');
@@ -72,18 +72,20 @@ class CommentController extends Controller
         $reply->user_id = Auth::user()->user_id;
         $reply->reply = $request->input('reply');
         $reply->save();
-
-        // if (Auth::user()->accountType === 'Lawyer') {
-        //     $addPoints = new Points();
-        //     $addPoints->lawyerUser_id = Auth::user()->user_id;
-        //     $addPoints->points = "10";
-        //     $addPoints->pointsFrom = "Reply";
-        //     $addPoints->save();
-        // }
-
-        return redirect()->back()->with('success', 'Replied posted');
-        return redirect()->back();
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Your reply has been posted!',
+            'new_reply' => [
+                'reply' => $reply->reply,
+                'comment_id' => $reply->comment_id,
+                'user_id' => $reply->user->user_id,
+                'user_name' => $reply->user->firstName . ' ' . $reply->user->lastName,
+                'user_photo_url' => $reply->user->userPhoto ? Storage::url($reply->user->userPhoto) : asset('imgs/user-img.png')
+            ],
+        ]);
     }
+    
 
     public function checkIfRated($comment_id)
     {

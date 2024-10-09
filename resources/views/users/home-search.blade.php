@@ -78,15 +78,17 @@
                                         ->exists();
                                 @endphp
                 
-                                <form class="follow-form" action="{{ route('followUser') }}" method="POST" style="display: inline">
-                                    @csrf
-                                    <input type="hidden" name="following" value="{{ $user->user_id }}">
-                                    
-                                    <button type="submit" class="edit-profile-button follow-btn {{ $haveFollowed ? 'following followed-btn' : '' }}">
-                                        {{ $haveFollowed ? 'Unfollow' : 'Follow' }}
-                                    </button>
-                                    
-                                </form>
+                                @if (Auth::check() && Auth::user()->user_id !== $user->user_id)
+                                    <form class="follow-form" action="{{ route('followUser') }}" method="POST" style="display: inline">
+                                        @csrf
+                                        <input type="hidden" name="following" value="{{ $user->user_id }}">
+
+                                        <button type="submit" class="edit-profile-button follow-btn {{ $haveFollowed ? 'following followed-btn' : '' }}">
+                                            {{ $haveFollowed ? 'Unfollow' : 'Follow' }}
+                                        </button>
+                                    </form>
+                                @endif
+
                             </div>
                             @endforeach
                         @endif
@@ -123,7 +125,8 @@
     <script src="js/postandcomment.js"></script>
     <script src="js/likePost.js"></script>
     <script src="js/bookmarkPost.js"></script>
-    <script src="js/comment.js"></script>
+    <script src="js/commentPost.js"></script>
+    <script src="js/replyPost.js"></script>
 
     <script src="js/reportPost.js"></script>
 

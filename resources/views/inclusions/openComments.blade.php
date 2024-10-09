@@ -83,9 +83,9 @@
                             <p>{{ $comment->comment }}</p>
                             <div class="date-reply">
                                 <p class="comment-time">{{ $comment->created_at->diffForHumans() }}</p>
-                                <a href="javascript:void(0);" class="reply-btn" data-comment-id="{{ $comment->id }}">Reply</a>
+                                <a href="javascript:void(0);" class="reply-btn" data-comment-id="{{ $comment->comment_id }}">Reply</a>
                             </div>
-                            <div class="reply-field" id="reply-field-{{ $comment->id }}">
+                            <div class="reply-field" id="reply-field-{{ $comment->comment_id }}">
                                 @php
                                     $attorneyComments = $post->comments->filter(function ($comment) {
                                         return $comment->user->accountType === 'Lawyer';
@@ -103,23 +103,26 @@
                                 @if ($attorneyComments->isNotEmpty() && $isLawyer && !$isSameLawyer && !$isPostOwner)
                                     <label class="comment-warning">Comments and Replies are not accomodated by this post anymore.</label>
                                 @else
-                                    <form action="{{ route('users.createReply') }}" method="POST">
-                                        @csrf
-                                        <textarea name="reply" id="reply-textarea-{{ $comment->id }}" placeholder="Replying to {{ $comment->user ? $comment->user->firstName : 'Unknown User' }}"></textarea>
-                                        <input type="hidden" name="post_id" value="{{ $post->post_id }}">
-                                        <input type="hidden" name="comment_id" value="{{ $comment->comment_id }}">
-                                        <button type="submit">Send</button>
-                                    </form>
+                                <form id="reply-form-{{ $comment->comment_id }}" action="{{ route('users.createReply') }}" method="POST">
+
+                                    @csrf
+                                    <textarea name="reply" id="reply-textarea-{{ $comment->comment_id }}" placeholder="Replying to {{ $comment->user ? $comment->user->firstName : 'Unknown User' }}"></textarea>
+                                    <input type="hidden" name="post_id" value="{{ $post->post_id }}">
+                                    <input type="hidden" name="comment_id" value="{{ $comment->comment_id }}">
+                                    <button type="submit">Send</button>
+                                </form>
+                                
                                 @endif
                             </div>      
                         </div>
                     </div>
                     @if($comment->reply->isNotEmpty())
                         <div class="view-reply">
-                            <a href="javascript:void(0);" onclick="toggleReplies({{ $comment->id }}, this)">View Replies</a>
+                            <a href="javascript:void(0);" onclick="toggleReplies('{{ $comment->comment_id }}', this)">View Replies</a>
                         </div>
                     @endif
-                    <div id="replies-{{ $comment->id }}" style="display: none;">
+                    <div id="replies-{{ $comment->comment_id }}" style="display: none;">
+
                         @foreach($comment->reply as $reply)
                             <div class="user-reply">
                                 <div>

@@ -31,4 +31,5 @@ class Reply extends Model
     {
         return $this->belongsTo(Comment::class, 'user_id', 'user_id');
     }
+
 }

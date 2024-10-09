@@ -78,6 +78,7 @@ header hr {
     background-color: var(--text-color1);
 }
 .current-tab{
+    background-color: var(--primary-color);
     font-weight: bold;
     scale: 1.15;
     margin: 0 8px;

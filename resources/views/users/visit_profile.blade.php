@@ -104,7 +104,8 @@
 
     <script src="js/likePost.js"></script>
     <script src="js/bookmarkPost.js"></script>
-    <script src="js/comment.js"></script>
+    <script src="js/commentPost.js"></script>
+    <script src="js/replyPost.js"></script>
     
     <script src="js/followUser.js"></script>
 
