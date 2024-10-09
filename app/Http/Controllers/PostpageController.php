@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Posts;
 use App\Models\UserAccount;
+use App\Models\Report;
 
 class PostpageController extends Controller
 {
@@ -264,6 +265,47 @@ class PostpageController extends Controller
             return response()->json(['success' => true]);
         } else {
             return response()->json(['success' => false], 404); // Return an error if post not found
+        }
+    }
+
+    public function viewReportedPosts()
+    {
+        // Fetch the reported posts that are not disregarded
+        $reportedPosts = DB::table('tblposts')
+            ->join('tblreports', 'tblposts.post_id', '=', 'tblreports.post_id') // Join the posts and reports table on post_id
+            ->select(
+                'tblposts.post_id', // Specify the columns you need
+                'tblposts.concern', // Include other necessary columns from tblposts
+                DB::raw(
+                    'GROUP_CONCAT(tblreports.reportContent SEPARATOR "; ") as reportContents'
+                )
+            ) // Fetch post details and reports
+            ->where('tblposts.status', 'Approved') // Only select posts that are "Approved"
+            ->groupBy('tblposts.post_id', 'tblposts.concern') // Group by post_id and any other selected columns
+            ->get();
+
+        return response()->json($reportedPosts);
+    }
+
+    public function viewPostReports($postId)
+    {
+        $reports = DB::table('tblreports')
+            ->where('post_id', $postId)
+            ->select('report_id', 'reportContent')
+            ->get();
+
+        return response()->json($reports);
+    }
+
+    public function disregardPost($postId)
+    {
+        $post = Posts::where('post_id', $postId)->first();
+        if ($post) {
+            $post->status = 'Disregarded'; // Update status to 'Disregarded'
+            $post->save();
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false]);
         }
     }
 }

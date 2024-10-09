@@ -11,6 +11,6 @@
                 value="{{ request('search') }}"
             />
         </div>
-        <button class="btn btn-primary" type="submit">Search</button>
+        <button class="custom-button" type="submit">Search</button>
     </div>
 </form>

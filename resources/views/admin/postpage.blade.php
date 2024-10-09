@@ -56,9 +56,12 @@
                 <div class="filter-container">
                     <!-- search and edit function -->
                     @include('includes_postpage.post_search_inc')
+
                     <div class="action-buttons">
                         <!-- view pending post -->
                         @include('includes_postpage.post_pending_inc')
+
+                        @include('includes_postpage.post_report_inc')
                         <div id="pendingPostsModal" class="modal">
                             <div class="modal-content">
                                 <span

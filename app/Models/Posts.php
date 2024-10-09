@@ -31,7 +31,7 @@ class Posts extends Model
     public function likes()
     {
         return $this->hasMany(Like::class, 'post_id', 'post_id');
-    }     
+    }
 
     public function comments()
     {
@@ -41,10 +41,16 @@ class Posts extends Model
     public function bookmarks()
     {
         return $this->hasMany(Bookmark::class, 'post_id', 'post_id');
-    } 
-    
+    }
+
     public function reply()
     {
         return $this->hasMany(Reply::class, 'comment_id', 'comment_id');
+    }
+    // In App\Models\Posts.php
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'post_id'); // assuming 'post_id' is the foreign key in tblreports
     }
 }

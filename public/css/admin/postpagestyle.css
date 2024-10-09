@@ -64,10 +64,12 @@ header hr {
 .action-buttons #filterButton {
     margin-left: auto;
 }
-.custom-button {
+.custom-button,
+.btn-info,
+.btn-danger {
     background-color: #561c24;
     border: 1px solid #561c24;
-    color: black;
+    color: rgb(255, 255, 255);
     padding: 10px 20px;
     text-align: center;
     text-decoration: none;
@@ -78,8 +80,10 @@ header hr {
     transition: background-color 0.3s ease;
 }
 
-.custom-button,
-.editButton:hover {
+.custom-button:hover,
+.editButton:hover,
+.btn-info:hover,
+.btn-danger:hover {
     background-color: #ffaf45;
 }
 
@@ -122,4 +126,22 @@ header hr {
     display: flex;
     justify-content: center; /* Centers the content horizontally */
     align-items: center; /* Centers the content vertically, if needed */
+}
+.btn-view-approve,
+.btn-view-reject {
+    border: none; /* Removes the border */
+    background: none; /* Removes any background color */
+    padding: 0; /* Removes padding if there's any */
+    transition: background-color 0.4s ease;
+    border-radius: 60%;
+}
+
+.btn-view-approve:hover,
+.btn-view-reject:hover {
+    background-color: rgba(
+        92,
+        85,
+        75,
+        0.7
+    ); /* Example: transparent color using RGBA */
 }

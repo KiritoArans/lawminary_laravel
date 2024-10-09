@@ -21,7 +21,6 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SearchController;
 
-
 use App\Http\Controllers\data_general_controller\general_controller;
 
 Route::get('/', function () {
@@ -254,6 +253,23 @@ Route::prefix('admin')
         Route::post('update', [PostpageController::class, 'update'])->name(
             'update'
         );
+        // View reported posts
+        Route::get('/reported-posts', [
+            PostpageController::class,
+            'viewReportedPosts',
+        ])->name('admin.viewReportedPosts');
+
+        // View reports attached to a post
+        Route::get('/post-reports/{postId}', [
+            PostpageController::class,
+            'viewPostReports',
+        ])->name('admin.viewPostReports');
+
+        // Update post status to 'Disregarded'
+        Route::post('/disregard-post/{postId}', [
+            PostpageController::class,
+            'disregardPost',
+        ])->name('admin.disregardPost');
 
         // Deleting a Post
         Route::delete('posts/{id}', [
@@ -582,9 +598,10 @@ Route::post('/home', [PostController::class, 'createPost'])->name(
 Route::delete('/home-{post}', [PostController::class, 'deletePost'])->name(
     'post.delete'
 );
-Route::delete('/forum-{post}', [PostController::class, 'deleteForumPost'])->name(
-    'post.delete'
-);
+Route::delete('/forum-{post}', [
+    PostController::class,
+    'deleteForumPost',
+])->name('post.delete');
 
 // Like Post
 Route::post('/home-liked', [PostController::class, 'likePost'])->name(
@@ -651,7 +668,9 @@ Route::post('/forum-join', [ForumController::class, 'joinForum'])->name(
 );
 
 // Search Post and User
-Route::get('/home-search', [SearchController::class, 'searchPostUser'])->name('search.results');
+Route::get('/home-search', [SearchController::class, 'searchPostUser'])->name(
+    'search.results'
+);
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

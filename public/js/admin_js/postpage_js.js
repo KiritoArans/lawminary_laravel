@@ -216,3 +216,128 @@ window.addEventListener('click', function (event) {
         }
     });
 });
+
+//report button
+document.addEventListener('DOMContentLoaded', function () {
+    const viewReportedPostsButton = document.getElementById(
+        'viewReportedPostsButton'
+    );
+    const reportedPostsModal = document.getElementById('reportedPostsModal');
+    const postReportsModal = document.getElementById('postReportsModal');
+    const reportedPostsContainer = document.getElementById(
+        'reportedPostsContainer'
+    );
+    const postReportsContainer = document.getElementById(
+        'postReportsContainer'
+    );
+    const disregardPostButton = document.getElementById('disregardPostButton');
+
+    // Open modal to view reported posts
+    viewReportedPostsButton.addEventListener('click', function () {
+        fetch('/admin/reported-posts')
+            .then((response) => response.json())
+            .then((data) => {
+                reportedPostsContainer.innerHTML = ''; // Clear existing content
+                data.forEach((post) => {
+                    // Create an element for each reported post with a view reports button
+                    const postDiv = document.createElement('div');
+                    postDiv.innerHTML = `
+                        <p><strong>Post ID:</strong>${post.post_id}</p>
+                        <p><strong>Post Concern:</strong> ${post.concern}</p>
+                        <button class="btn btn-info" data-post-id="${post.post_id}">
+                            View reports
+                        </button>
+                    `;
+
+                    // Add event listener to the "View reports" button
+                    postDiv
+                        .querySelector('button')
+                        .addEventListener('click', function () {
+                            viewReportsForPost(post.post_id); // Show reports for this post
+                        });
+
+                    // Append the postDiv to the container
+                    reportedPostsContainer.appendChild(postDiv);
+                });
+                reportedPostsModal.style.display = 'block'; // Show the modal
+            })
+            .catch((error) => {
+                console.error('Error fetching reported posts:', error);
+            });
+    });
+
+    // Close modal when clicking on the close button
+    document
+        .querySelector('.close-reported-posts')
+        .addEventListener('click', function () {
+            reportedPostsModal.style.display = 'none';
+        });
+
+    // Fetch and display reports for a specific post
+    function viewReportsForPost(postId) {
+        fetch(`/admin/post-reports/${postId}`)
+            .then((response) => response.json())
+            .then((data) => {
+                postReportsContainer.innerHTML = ''; // Clear container
+                data.forEach((report) => {
+                    const reportDiv = document.createElement('div');
+                    reportDiv.textContent = `Reports: ${report.reportContent}`;
+                    postReportsContainer.appendChild(reportDiv);
+                });
+                disregardPostButton.setAttribute('data-post-id', postId); // Attach post ID to button
+                postReportsModal.style.display = 'block'; // Show the reports modal
+            });
+    }
+
+    // Disregard post when button is clicked
+    disregardPostButton.addEventListener('click', function () {
+        const postId = this.getAttribute('data-post-id');
+
+        // Show SweetAlert confirmation before proceeding
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, disregard it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`/admin/disregard-post/${postId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute('content')
+                    }
+                })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        if (data.success) {
+                            Swal.fire(
+                                'Disregarded!',
+                                'The post has been disregarded.',
+                                'success'
+                            );
+                            postReportsModal.style.display = 'none'; // Close modal
+                            viewReportedPostsButton.click(); // Refresh reported posts
+                        } else {
+                            Swal.fire(
+                                'Failed!',
+                                'There was an error disregarding the post.',
+                                'error'
+                            );
+                        }
+                    });
+            }
+        });
+    });
+
+    // Close post reports modal
+    document
+        .querySelector('.close-post-reports')
+        .addEventListener('click', function () {
+            postReportsModal.style.display = 'none';
+        });
+});
