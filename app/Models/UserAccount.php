@@ -56,4 +56,14 @@ class UserAccount extends Authenticatable
     {
         return $this->hasMany(Follow::class, 'following', 'user_id');
     }
+    
+    public function liker()
+    {
+        return $this->hasMany(Notification::class, 'notifiable_id', 'id');
+    }
+    
+    public function bookmarker()
+    {
+        return $this->hasMany(Notification::class, 'notifiable_id', 'id');
+    }
 }

@@ -11,6 +11,8 @@ use App\Models\Bookmark;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\PageController;
+use App\Notifications\PostLiked;
+use App\Notifications\PostBookmarked;
 
 class PostController extends Controller
 {
@@ -126,16 +128,19 @@ class PostController extends Controller
             'post_id' => 'required',
         ]);
     
+        // Check if the like already exists
         $like = Like::where('user_id', $user->user_id)
                     ->where('post_id', $data['post_id'])
                     ->first();
-        
+    
         $isLiked = false; // Track if the post is liked or unliked
     
         if ($like) {
+            // If the like exists, remove it (unlike)
             $like->delete();
             $isLiked = false; // Post unliked
         } else {
+            // Otherwise, create a new like entry
             $newLike = new Like();
             $newLike->liked_id = uniqid();
             $newLike->post_id = $data['post_id'];
@@ -143,14 +148,21 @@ class PostController extends Controller
             $newLike->like = 1;
             $newLike->save();
     
+            // Fetch the post and its user
             $post = Posts::where('post_id', $data['post_id'])->with('user')->first();
-            
-            if ($post && $post->user->accountType === 'Lawyer') {
-                $addPoints = new Points();
-                $addPoints->lawyerUser_id = $post->user->user_id; 
-                $addPoints->points = "15";
-                $addPoints->pointsFrom = "Like"; 
-                $addPoints->save();
+    
+            if ($post) {
+                // Notify the post's author about the like
+                $post->user->notify(new PostLiked($user, $post));
+    
+                // If the post's author is a lawyer, add points
+                if ($post->user->accountType === 'Lawyer') {
+                    $addPoints = new Points();
+                    $addPoints->lawyerUser_id = $post->user->user_id; 
+                    $addPoints->points = "15";
+                    $addPoints->pointsFrom = "Like"; 
+                    $addPoints->save();
+                }
             }
     
             $isLiked = true; // Post liked
@@ -159,8 +171,6 @@ class PostController extends Controller
         // Return the updated like count and whether it was liked/unliked
         $likeCount = Like::where('post_id', $data['post_id'])->count();
     
-        // return redirect()->back()->with('success', 'Post liked.');
-
         return response()->json([
             'success' => true,
             'message' => $isLiked ? 'Post liked.' : 'Post unliked.',
@@ -168,6 +178,7 @@ class PostController extends Controller
             'like_count' => $likeCount,
             'post_id' => $data['post_id'],
         ]);
+        
     }
     
 
@@ -201,12 +212,17 @@ class PostController extends Controller
     
             $post = Posts::where('post_id', $data['post_id'])->with('user')->first();
     
-            if ($post && $post->user->accountType === 'Lawyer') {
-                $addPoints = new Points();
-                $addPoints->lawyerUser_id = $post->user->user_id;
-                $addPoints->points = "20";
-                $addPoints->pointsFrom = "Bookmark";
-                $addPoints->save();
+            if ($post){
+            
+                $post->user->notify(new PostBookmarked($user, $post));
+
+                if ($post->user->accountType === 'Lawyer') {
+                    $addPoints = new Points();
+                    $addPoints->lawyerUser_id = $post->user->user_id;
+                    $addPoints->points = "20";
+                    $addPoints->pointsFrom = "Bookmark";
+                    $addPoints->save();
+                }
             }
         }
     
@@ -221,9 +237,5 @@ class PostController extends Controller
             'post_id' => $data['post_id'],
         ]);
     }
-    
-    
-    
-    
     
 }
