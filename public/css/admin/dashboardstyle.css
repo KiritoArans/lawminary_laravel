@@ -11,17 +11,37 @@ main {
     padding: 20px;
     margin: 0px 48px 0px 32px;
 }
-
 header h1 {
     margin: 0;
     font-size: 2em;
     color: var(--primary-color);
 }
-.header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+.row {
+    width: 100%; /* Make it span the full width */
+    padding: 10px 20px; /* Adjust padding as needed */
+    background-color: #fff; /* Optional: Set background color */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+    display: flex; /* Flexbox to align the logo and content */
+    justify-content: flex-start; /* Align items to the left */
+    align-items: center; /* Vertically center the content */
 }
+
+.header-top img {
+    max-width: 100px; /* Adjust logo size */
+    height: auto; /* Maintain aspect ratio */
+}
+
+.header-line {
+    text-align: center;
+    margin-top: 10px; /* Adjust for spacing */
+}
+
+.header-top img {
+    max-width: 100%; /* Ensure the image scales to fit the container */
+    height: auto; /* Maintain aspect ratio */
+}
+
 .header-top img {
     height: 32px;
     position: relative;
@@ -31,49 +51,6 @@ header hr {
     margin-top: 10px;
     border: 1px solid #b1b1b1;
 }
-
-.search-bar {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
-.search-bar input {
-    width: 450px;
-    padding: 10px 10px 10px 32px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-.search-bar i {
-    position: absolute;
-    left: 8px;
-    color: var(--primary-color);
-}
-
-.filter-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 1rem;
-}
-
-#filterButton {
-    width: 10%;
-}
-
-.search-bar {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.search-bar input {
-    flex: 1;
-    padding: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-}
-
 .action-buttons {
     display: flex;
     gap: 10px;
@@ -147,69 +124,55 @@ header hr {
 
 .boxes-row {
     display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px; /* Space between rows */
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
-.boxes-row .box {
-    flex: 1 1 calc(33.33% - 20px); /* Each box takes 1/3 of the row */
-    margin: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 12px;
-    padding: 20px 0;
-    background-color: #f75757;
-    transition: var(--tran-05);
+.box {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    background-color: #561c24; /* Red background */
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #fff; /* White text */
+    min-width: 150px;
+    font-weight: bold;
 }
 
-.box i {
-    font-size: 35px;
-    color: #f6f5f2;
+.box a.number {
+    text-decoration: none; /* Remove underline */
+    color: #fff; /* White text */
 }
 
-/* Text inside boxes */
-.box .text {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #f6f5f2;
+.box a.number:hover {
+    text-decoration: none; /* Keep no underline on hover */
 }
 
-/* Number inside boxes */
-.box .number {
-    font-size: 2rem;
-    font-weight: 400;
-    color: #f6f5f2;
-    text-decoration: none;
-}
-
-/* Adjustments for small screens */
-@media (max-width: 768px) {
-    .boxes-row .box {
-        flex: 1 1 calc(50% - 20px); /* 2 boxes per row on smaller screens */
+/* Media query for larger screens */
+@media (min-width: 1024px) {
+    .box {
+        flex: 0 0 22%; /* Wider for web view (landscape mode) */
+        margin: 15px;
     }
 }
 
-@media (max-width: 500px) {
-    .boxes-row .box {
-        flex: 1 1 100%; /* Single box per row on very small screens */
+/* Media query for medium screens */
+@media (min-width: 768px) {
+    .box {
+        flex: 0 0 45%; /* Two boxes per row on tablets */
+        margin: 10px;
     }
 }
-.boxes .box.box2 {
-    background-color: #ca8d31;
+
+/* For mobile (portrait) */
+@media (max-width: 767px) {
+    .box {
+        flex: 0 0 100%; /* Full width on smaller screens (portrait mode) */
+    }
 }
-.boxes .box.box3 {
-    background-color: #1ed5db;
-}
-.boxes .box.box4 {
-    background-color: #27af62;
-}
-.boxes .box.box5 {
-    background-color: #3b83a7;
-}
-.boxes .box.box6 {
-    background-color: #a62ac5;
-}
+
 .pagination {
     display: flex;
     justify-content: center;
@@ -222,8 +185,33 @@ header hr {
     margin: 0 auto; /* Center the pie chart */
     padding: 0; /* Remove any default padding */
 }
-
-/* Reduce space between the pie chart and the other charts */
+/* Default styles (applies to all screens) */
 .chart-container {
-    margin-bottom: 10px; /* Adjust the margin between charts */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%; /* Full width by default */
+    margin: 20px 0; /* Optional: Add margin for spacing */
+}
+
+/* Media query for larger screens (e.g., desktop) */
+@media (min-width: 1024px) {
+    .chart-container {
+        width: 60%; /* Reduce the width for larger screens */
+    }
+
+    /* Additional tweaks if needed */
+    .chart-container canvas {
+        max-width: 80%; /* Ensure the chart's canvas doesn't exceed container width */
+    }
+}
+
+/* Media query for smaller screens (e.g., mobile) */
+@media (max-width: 768px) {
+    .chart-container {
+        width: 100%; /* Full width on smaller screens */
+    }
+
+    /* No extra adjustments needed for mobile, charts will automatically fit */
 }

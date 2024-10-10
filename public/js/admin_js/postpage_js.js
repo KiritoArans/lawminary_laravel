@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     postDiv.innerHTML = `
                         <p><strong>Post ID:</strong>${post.post_id}</p>
                         <p><strong>Post Concern:</strong> ${post.concern}</p>
-                        <button class="btn btn-info" data-post-id="${post.post_id}">
+                        <button class="btn btn-info" data-post-id="${post.post_id}" id='viewReportsBtn'>
                             View reports
                         </button>
                     `;
