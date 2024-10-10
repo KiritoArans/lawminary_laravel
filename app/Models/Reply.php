@@ -29,7 +29,7 @@ class Reply extends Model
 
     public function comment()
     {
-        return $this->belongsTo(Comment::class, 'user_id', 'user_id');
+        return $this->belongsTo(Comment::class, 'comment_id', 'comment_id'); // Correct this to comment_id
     }
 
 }

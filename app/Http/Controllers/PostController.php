@@ -142,7 +142,7 @@ class PostController extends Controller
         } else {
             // Otherwise, create a new like entry
             $newLike = new Like();
-            $newLike->liked_id = uniqid();
+            $newLike->liked_id = uniqid('like_');
             $newLike->post_id = $data['post_id'];
             $newLike->user_id = $user->user_id;
             $newLike->like = 1;

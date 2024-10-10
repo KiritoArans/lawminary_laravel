@@ -34,6 +34,8 @@
                         $notification = $item['notification'];
                         $liker = $item['liker'];
                         $bookmarker = $item['bookmarker'];
+                        $commenter = $item['commenter'];
+                        $replier = $item['replier'];
                     @endphp
             
                     <!-- If the notification has a liker -->
@@ -80,6 +82,54 @@
                                 <div class="notifs-divider"></div>
                                 <div class="notifs-action">
                                     <span>{{ $bookmarker->firstName }} {{ $notification->data['message'] }}</span>
+                                </div>
+                                <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if ($commenter)
+                        <div class="notifs btn-comment" data-post-id="{{ $notification->data['post_id'] }}">
+                            <div class="notifs-content">
+                                <div class="user-info">
+                                    <img src="{{ $commenter->userPhoto ? Storage::url($commenter->userPhoto) : asset('imgs/user-img.png') }}" alt="Profile Picture" class="user-profile-photo" />
+            
+                                    <div class="notifs-info">
+                                        <h2>
+                                            <a href="{{ Auth::check() && Auth::user()->user_id == $commenter->user_id ? route('profile') : route('visit-profile', ['user_id' => $commenter->user_id]) }}">
+                                                {{ $commenter->firstName }} {{ $commenter->lastName }}
+                                            </a>
+                                        </h2>
+                                        <p>@<span>{{ $commenter->username }}</span></p>
+                                    </div>
+                                </div>
+                                <div class="notifs-divider"></div>
+                                <div class="notifs-action">
+                                    <span>{{ $commenter->firstName }} {{ $notification->data['message'] }}</span>
+                                </div>
+                                <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if ($replier)
+                        <div class="notifs btn-comment" data-post-id="{{ $notification->data['post_id'] }}">
+                            <div class="notifs-content">
+                                <div class="user-info">
+                                    <img src="{{ $replier->userPhoto ? Storage::url($replier->userPhoto) : asset('imgs/user-img.png') }}" alt="Profile Picture" class="user-profile-photo" />
+            
+                                    <div class="notifs-info">
+                                        <h2>
+                                            <a href="{{ Auth::check() && Auth::user()->user_id == $replier->user_id ? route('profile') : route('visit-profile', ['user_id' => $replier->user_id]) }}">
+                                                {{ $replier->firstName }} {{ $replier->lastName }}
+                                            </a>
+                                        </h2>
+                                        <p>@<span>{{ $replier->username }}</span></p>
+                                    </div>
+                                </div>
+                                <div class="notifs-divider"></div>
+                                <div class="notifs-action">
+                                    <span>{{ $replier->firstName }} {{ $notification->data['message'] }}</span>
                                 </div>
                                 <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                             </div>

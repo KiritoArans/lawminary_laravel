@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\UserAccount;
+use App\Models\Posts;
 use App\Models\Comment;
 use App\Models\Reply;
 use App\Models\Rate;
 use App\Models\Points;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\PostCommented;
+use App\Notifications\PostReplied;
 
 class CommentController extends Controller
 {
@@ -20,28 +24,21 @@ class CommentController extends Controller
         ]);
 
         $comment = new Comment();
-        $comment->comment_id = uniqid();
-        $comment->user_id = Auth::user()->user_id;
+        $comment->comment_id = uniqid('comm_');
+        $comment->user_id = Auth::user()->user_id; // The user who commented
         $comment->post_id = $request->post_id;
         $comment->comment = $request->comment;
 
         $comment->save();
 
-        // if (Auth::user()->accountType === 'Lawyer') {
-        //     $addPoints = new Points();
-        //     $addPoints->lawyerUser_id = Auth::user()->user_id;
-        //     $addPoints->points = "20";
-        //     $addPoints->pointsFrom = "Comment";
-        //     $addPoints->save();
-        // }
+        // Find the post and the post author (notifying the author)
+        $post = Posts::find($request->post_id);
+        $postAuthor = $post->user; // Assuming the Post model has a relationship with the User model
 
-        // return redirect()
-        //     ->back()
-        //     ->with([
-        //         'success' => 'Your comment has been posted!',
-        //         'post_id' => $request->post_id,
-        //         'new_comment' => $comment,
-        //     ]);
+        // Notify the post author about the new comment
+        if ($postAuthor && $postAuthor->id !== Auth::user()->id) { // Don't notify if the user comments on their own post
+            $postAuthor->notify(new PostCommented(Auth::user(), $comment));
+        }
 
         return response()->json([
             'success' => true,
@@ -53,7 +50,6 @@ class CommentController extends Controller
                 'user_photo_url' => $comment->user->userPhoto ? Storage::url($comment->user->userPhoto) : asset('imgs/user-img.png')
             ],
         ]);
-        
     }
 
     // Reply Function
@@ -62,16 +58,34 @@ class CommentController extends Controller
         $validated = $request->validate([
             'reply' => 'required|string|max:2500',
             'post_id' => 'required|string|max:100',
-            'comment_id' => 'required|exists:tblcomments,comment_id',
+            'comment_id' => 'required|string|max:100',
         ]);
     
+        // Create the reply
         $reply = new Reply();
-        $reply->reply_id = uniqid();
+        $reply->reply_id = uniqid('rply_');
         $reply->comment_id = $request->input('comment_id');
         $reply->post_id = $request->input('post_id');
         $reply->user_id = Auth::user()->user_id;
         $reply->reply = $request->input('reply');
         $reply->save();
+    
+        $post = Posts::find($request->post_id);
+        $postAuthor = $post->user; // Assuming the Post model has a relationship with the User model
+
+        // Notify the post author about the new comment
+        if ($postAuthor && $postAuthor->id !== Auth::user()->id) { // Don't notify if the user comments on their own post
+            $postAuthor->notify(new PostReplied(Auth::user(), $reply));
+        }
+
+        // Find the comment and the comment author
+        // $comment = Comment::find($request->comment_id);
+        // $commentAuthor = $comment->user; // Assuming the Comment model has a relationship with the User model
+    
+        // // Notify the comment author about the new reply
+        // if ($commentAuthor && $commentAuthor->id !== Auth::user()->id) { // Don't notify if the user replies to their own comment
+        //     $commentAuthor->notify(new PostReplied(Auth::user(), $reply));
+        // }
     
         return response()->json([
             'success' => true,
@@ -85,6 +99,7 @@ class CommentController extends Controller
             ],
         ]);
     }
+    
     
 
     public function checkIfRated($comment_id)

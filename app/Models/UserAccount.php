@@ -52,6 +52,16 @@ class UserAccount extends Authenticatable
         return $this->hasMany(Posts::class, 'postedBy', 'user_id');
     }
 
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'user_id');
+    }
+
+    public function reply()
+    {
+        return $this->hasMany(Reply::class, 'user_id', 'user_id');
+    }
+
     public function followers()
     {
         return $this->hasMany(Follow::class, 'following', 'user_id');
@@ -63,6 +73,21 @@ class UserAccount extends Authenticatable
     }
     
     public function bookmarker()
+    {
+        return $this->hasMany(Notification::class, 'notifiable_id', 'id');
+    }
+
+    public function commenter()
+    {
+        return $this->hasMany(Notification::class, 'notifiable_id', 'id');
+    }
+
+    public function replier()
+    {
+        return $this->hasMany(Notification::class, 'notifiable_id', 'id');
+    }
+
+    public function rater()
     {
         return $this->hasMany(Notification::class, 'notifiable_id', 'id');
     }

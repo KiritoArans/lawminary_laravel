@@ -272,10 +272,16 @@ class PageController extends Controller
 
             $bookmarker = isset($notification->data['bookmarker_id']) ? UserAccount::find($notification->data['bookmarker_id']) : null;
 
+            $commenter = isset($notification->data['commenter_id']) ? UserAccount::find($notification->data['commenter_id']) : null;
+
+            $replier = isset($notification->data['replier_id']) ? UserAccount::find($notification->data['replier_id']) : null;
+
             return [
                 'notification' => $notification,
                 'liker' => $liker,
                 'bookmarker' => $bookmarker,
+                'commenter' => $commenter,
+                'replier' => $replier,
             ];
         });
 
