@@ -34,7 +34,7 @@
                     </td>
                     <td>
                         <button
-                            class="btn btn-warning editButton"
+                            class="editButton"
                             data-id="{{ $activity->id }}"
                             data-concern="{{ $activity->concern }}"
                             data-status="{{ $activity->status }}"

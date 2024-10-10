@@ -28,6 +28,10 @@
 
 
 
+
+
+
+
             <tr>
                 <td>{{ $activity->act_id }}</td>
                 <td>{{ $activity->act_username }}</td>
@@ -45,6 +49,10 @@
                 </td>
             </tr>
         @endforeach
+
+
+
+
 
 
 
@@ -96,6 +104,10 @@
 
 
 
+
+
+
+
         <li
             class="page-item {{ $dashboardData->currentPage() == $i ? 'active' : '' }}"
         >
@@ -107,6 +119,10 @@
             </a>
         </li>
     @endfor
+
+
+
+
 
 
 
@@ -167,11 +183,13 @@
     </button>
 </div>
 
-<!-- Chart Canvas -->
-<canvas id="myChart" width="400" height="200"></canvas>
-<!-- Pie Chart -->
-<canvas id="myPieChart" width="600" height="300"></canvas>
-<!-- Line Chart -->
-<canvas id="myLineChart" width="100" height="50"></canvas>
-
+<div class="col-12 chart-container">
+    <canvas id="myChart" width="400" height="200"></canvas>
+</div>
+<div class="col-12 chart-container">
+    <canvas id="myPieChart" width="600" height="300"></canvas>
+</div>
+<div class="col-12 chart-container">
+    <canvas id="myLineChart" width="100" height="50"></canvas>
+</div>
 <!-- Remove the table and pagination since you're replacing this with the chart -->

@@ -1,5 +1,4 @@
 <div class="container">
-    <!-- First Row (3 boxes) -->
     <div class="boxes-row">
         <div class="box box1">
             <i class="uil uil-file-upload-alt"></i>
@@ -16,7 +15,6 @@
             <span class="text">Accounts</span>
             <a href="#" class="number"><h1>{{ $accountsCount }}</h1></a>
         </div>
-
         <div class="box box4">
             <i class="uil uil-bag"></i>
             <span class="text">Forums</span>

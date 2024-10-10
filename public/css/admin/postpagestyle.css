@@ -20,10 +20,16 @@ header h1 {
     color: var(--primary-color);
 }
 .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
 }
+
+.header-top img {
+    margin: 0 auto;
+    display: block;
+}
+
 .header-top img {
     height: 32px;
     position: relative;
@@ -66,9 +72,10 @@ header hr {
 }
 .custom-button,
 .btn-info,
-.btn-danger {
+.btn-danger,
+.editButton {
     background-color: #561c24;
-    border: 1px solid #561c24;
+    border: 1px solid #ffaf45;
     color: rgb(255, 255, 255);
     padding: 10px 20px;
     text-align: center;
@@ -78,13 +85,6 @@ header hr {
     cursor: pointer;
     border-radius: 4px;
     transition: background-color 0.3s ease;
-}
-
-.custom-button:hover,
-.editButton:hover,
-.btn-info:hover,
-.btn-danger:hover {
-    background-color: #ffaf45;
 }
 
 .form-control {
@@ -93,10 +93,13 @@ header hr {
 
 .editButton,
 .btn-primary,
-.deleteButton {
+.deleteButton,
+#disregardPostButton,
+#viewReportsBtn,
+#saveChangesPostBtn {
     background-color: #561c24;
     margin: 5px;
-    border: 1px solid #561c24;
+    border: 1px solid #ffffff;
     color: rgb(255, 255, 255);
     padding: 10px 20px;
     text-align: center;
@@ -108,13 +111,12 @@ header hr {
     transition: background-color 0.3s ease;
 }
 
-.editButton:hover {
-    background-color: #ffaf45;
-}
-.btn-primary:hover {
-    background-color: #ffaf45;
-}
-.deleteButton:hover {
+.editButton:hover,
+.btn-primary:hover,
+.deleteButton:hover,
+#disregardPostButton:hover,
+#viewReportsBtn:hover,
+#saveChangesPostBtn:hover {
     background-color: #ffaf45;
 }
 

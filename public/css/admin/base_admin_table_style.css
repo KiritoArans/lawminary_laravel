@@ -1,36 +1,90 @@
+/* Base table styling */
 table {
     width: 100%;
     margin-bottom: 1rem;
     color: #212529;
     border-collapse: collapse;
-    table-layout: fixed;
+    table-layout: fixed; /* Ensures uniform column width */
     font-size: 1rem;
 }
+
 .table th,
 .table td {
     padding: 0.5rem;
     vertical-align: top;
     border: 1px solid #dee2e6;
-    word-wrap: break-word;
+    word-wrap: break-word; /* Ensures text doesn't overflow the cell */
 }
+
 td:last-child {
     text-align: center;
     display: flex;
     justify-content: center;
     margin: 0;
 }
+
 .table thead th {
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6;
     background-color: #f8f9fa;
 }
+
 .table tbody tr:nth-of-type(odd) {
     background-color: rgba(0, 0, 0, 0.05);
 }
+
 .table tbody tr:hover {
     color: #212529;
     background-color: rgba(0, 0, 0, 0.075);
     cursor: pointer;
+}
+
+/* Responsive container */
+.table-responsive {
+    overflow-x: auto; /* Allows table to scroll horizontally on smaller screens */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.9rem; /* Slightly smaller font size for mobile */
+        table-layout: auto; /* Let the table adjust to content */
+    }
+
+    td:last-child {
+        display: block; /* Stacks the last column content for small screens */
+    }
+
+    th,
+    td {
+        display: block; /* Stack table headers and cells on small screens */
+        text-align: right; /* Right-align the text */
+        padding-left: 50%; /* Create space for the 'label' text */
+        position: relative;
+    }
+
+    th::before,
+    td::before {
+        content: attr(
+            data-label
+        ); /* Use data-label attribute to display header text */
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 10px;
+        font-weight: bold;
+        text-align: left;
+        background-color: #f8f9fa;
+    }
+}
+
+/* For very small screens, you may want to hide some columns */
+@media (max-width: 576px) {
+    td:nth-child(3), /* Example: hide the third column */
+    th:nth-child(3) {
+        display: none;
+    }
 }
 
 .btn-view {
@@ -55,10 +109,6 @@ td:last-child {
     margin: 2px;
 }
 
-#editButton {
-    margin-left: auto;
-}
-
 .add-container {
     display: flex;
     justify-content: end;
@@ -71,7 +121,7 @@ td:last-child {
 .custom-button {
     background-color: #561c24;
     color: white;
-    border: 1px solid #561c24;
+    border: 1px solid #ffffff;
     padding: 8px 8px;
     text-align: center;
     text-decoration: none;

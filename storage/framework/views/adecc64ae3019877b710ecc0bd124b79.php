@@ -1,14 +1,22 @@
 <div class="top-nav">
-    <div class="profile">
-        <div class="user-indicator">
-            <img
-                src="<?php echo e(Auth::user()->userPhoto ? asset('storage/' . Auth::user()->userPhoto) : asset('imgs/koi fish.png')); ?>"
-                alt="Profile Picture"
-            />
-            <label><?php echo e('@' . Auth::user()->username); ?></label>
-        </div>
+    <!-- Burger Menu Icon -->
+    <div class="burger-menu" id="burgerToggle">
+        <i class="fa-solid fa-bars"></i>
+        <!-- FontAwesome icon for the burger -->
     </div>
-    <nav>
+    <!-- Profile Section -->
+
+    <!-- Navigation Links (Hidden by default on mobile) -->
+    <nav id="navList">
+        <div class="profile">
+            <div class="user-indicator">
+                <img
+                    src="<?php echo e(Auth::user()->userPhoto ? asset('storage/' . Auth::user()->userPhoto) : asset('imgs/koi fish.png')); ?>"
+                    alt="Profile Picture"
+                />
+                <label><?php echo e('@' . Auth::user()->username); ?></label>
+            </div>
+        </div>
         <ul>
             <li>
                 <a href="<?php echo e(route('admin.dashboard')); ?>">
@@ -40,26 +48,55 @@
                     <span>System Content</span>
                 </a>
             </li>
+            <div class="bottom-nav">
+                <a
+                    href="<?php echo e(route('logoutAdMod')); ?>"
+                    id="logout-link"
+                    class="logout"
+                >
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Log out</span>
+                </a>
+
+                <!-- Hidden form to handle the logout request -->
+                <form
+                    id="logout-form"
+                    action="<?php echo e(route('logoutAdMod')); ?>"
+                    method="POST"
+                    style="display: none"
+                >
+                    <?php echo csrf_field(); ?>
+                </form>
+            </div>
         </ul>
     </nav>
 </div>
-<div class="bottom-nav">
-    <a href="<?php echo e(route('logoutAdMod')); ?>" id="logout-link" class="logout">
-        <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Log out</span>
-    </a>
 
-    <!-- Hidden form to handle the logout request -->
-    <form
-        id="logout-form"
-        action="<?php echo e(route('logoutAdMod')); ?>"
-        method="POST"
-        style="display: none"
-    >
-        <?php echo csrf_field(); ?>
-    </form>
-</div>
+<!-- Bottom Navigation for Logout -->
+
 <!-- Include SweetAlert and logout.js -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="<?php echo e(asset('js/logout.js')); ?>"></script>
+
+<!-- JavaScript for Burger Menu Toggle -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const burgerToggle = document.getElementById('burgerToggle');
+        const navList = document.getElementById('navList');
+
+        burgerToggle.addEventListener('click', function () {
+            navList.classList.toggle('show');
+        });
+
+        // Optional: Close nav if clicked outside of it
+        document.addEventListener('click', function (event) {
+            if (
+                !navList.contains(event.target) &&
+                !burgerToggle.contains(event.target)
+            ) {
+                navList.classList.remove('show');
+            }
+        });
+    });
+</script>
 <?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/includes_accounts/nav_inc.blade.php ENDPATH**/ ?>
