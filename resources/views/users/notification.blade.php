@@ -24,6 +24,11 @@
             </header>
             <content>
                 <h1>Notifications</h1>
+
+                @if ($notificationsWithUsers->isEmpty())
+                    <p class="empty-data">No notifications yet.</p>
+                @else
+
                 @foreach ($notificationsWithUsers as $item)
                     @php
                         $notification = $item['notification'];
@@ -82,6 +87,7 @@
                     @endif
             
                 @endforeach
+                @endif
             </content>
             
             
