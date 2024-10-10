@@ -29,7 +29,7 @@ class PostLiked extends Notification
         return [
             'liker_id' => $this->liker->id, // Storing user ID only for later retrieval
             'post_id' => $this->post->post_id,
-            'message' => "{$this->liker->firstName} liked your post.",
+            'message' => "liked your post.",
         ];
     }
 }

@@ -29,7 +29,7 @@ class PostBookmarked extends Notification
         return [
             'bookmarker_id' => $this->bookmarker->id, // Storing user ID only for later retrieval
             'post_id' => $this->post->post_id,
-            'message' => "{$this->bookmarker->firstName} bookmarked your post.",
+            'message' => "bookmarked your post.",
         ];
     }
 }
