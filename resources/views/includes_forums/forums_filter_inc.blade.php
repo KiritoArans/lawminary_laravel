@@ -1,45 +1,56 @@
-<!-- Button to trigger filter modal -->
-<button
-    id="filterButton"
-    class="btn btn-info mb-3"
-    data-bs-toggle="modal"
-    data-bs-target="#filterModal"
->
-    Filter Forums
-</button>
+<div class="action-buttons">
+    <button class="custom-button" id="filterButton">Filter</button>
 
-<!-- Filter Modal -->
-<div id="filterModal" class="modal">
-    <div class="modal-content">
-        <span class="close-buttonFilter">&times;</span>
-        <h2>Filter Forums</h2>
-        <form
-            id="filterForm"
-            method="GET"
-            action="{{ route('admin.forums.filter') }}"
-        >
-            <div class="form-group">
-                <label for="membersFilter">Filter by Members Count:</label>
-                <select name="members" id="membersFilter" class="form-control">
-                    <option value="">Select</option>
-                    <option value="1-10">1-10 members</option>
-                    <option value="11-50">11-50 members</option>
-                    <option value="51-100">51-100 members</option>
-                    <option value="101">More than 100 members</option>
-                </select>
-            </div>
+    <div id="filterModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="closeFilterModal">&times;</span>
+            <h2>Filter Forums</h2>
 
-            <div class="form-group">
-                <label for="dateFilter">Filter by Date Created:</label>
+            <!-- Filter Form -->
+            <form
+                id="filterForm"
+                action="{{ route('admin.filterForums') }}"
+                method="GET"
+            >
+                <label for="filterForumId">Forum ID:</label>
+                <input type="text" id="filterForumId" name="filterForumId" />
+
+                <label for="filterForumName">Forum Name:</label>
+                <input
+                    type="text"
+                    id="filterForumName"
+                    name="filterForumName"
+                />
+
+                <label for="filterForumDescription">Forum Description:</label>
+                <input
+                    type="text"
+                    id="filterForumDescription"
+                    name="filterForumDescription"
+                />
+
+                <label for="filterMembersCount">Members Count:</label>
+                <input
+                    type="number"
+                    id="filterMembersCount"
+                    name="filterMembersCount"
+                />
+
+                <label for="filterDateCreated">Date Created:</label>
                 <input
                     type="date"
-                    name="date_created"
-                    id="dateFilter"
-                    class="form-control"
+                    id="filterDateCreated"
+                    name="filterDateCreated"
                 />
-            </div>
 
-            <button type="submit" class="btn btn-primary">Apply Filters</button>
-        </form>
+                <button type="button" class="custom-button" id="resetButton">
+                    Reset Filter
+                </button>
+
+                <button type="submit" class="custom-button">
+                    Apply Filter
+                </button>
+            </form>
+        </div>
     </div>
 </div>

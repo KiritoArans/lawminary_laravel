@@ -110,8 +110,8 @@
     </div>
 </div>
 
-<div style="text-align: center">
-    <!-- This inline style ensures it's centered with your existing CSS -->
+<!-- Centering Pagination Wrapper -->
+<div class="pagination-wrapper d-flex justify-content-center mt-4">
     <ul class="pagination">
         <li
             class="page-item {{ $forums->currentPage() == 1 ? 'disabled' : '' }}"
@@ -152,15 +152,4 @@
             </a>
         </li>
     </ul>
-</div>
-
-<!-- Modal Structure -->
-<div id="viewModal" class="modal">
-    <div class="modal-content">
-        <span class="close-buttonView" id="closeModal">&times;</span>
-        <h2>Activity Details</h2>
-        <div id="modalContent">
-            <!-- Dynamic content will be loaded here -->
-        </div>
-    </div>
 </div>

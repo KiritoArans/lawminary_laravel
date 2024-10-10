@@ -13,7 +13,7 @@
             rel="stylesheet"
             href="{{ asset('css/admin/systemcontentstyle.css') }}"
         />
-        <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/nav_burger.css') }}" />
         <link
             rel="stylesheet"
             href="{{ asset('css/admin/base_admin_table_style.css') }}"
@@ -37,23 +37,25 @@
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
             rel="stylesheet"
         />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
     </head>
     <body>
-        <div class="container">
-            <aside>
-                @include('includes_accounts.nav_inc')
-            </aside>
+        <div class="container-fluid">
+            <header>
+                <div class="header-top">
+                    @include('includes_accounts.nav_inc')
+                    <img
+                        src="{{ Storage::url($sysconData->first()->logo_path) }}"
+                        alt=""
+                    />
+                    <div class="spacer"></div>
+                </div>
+                <hr class="divider" />
+            </header>
             <main>
-                <header>
-                    <div class="header-top">
-                        <img
-                            src="{{ Storage::url($sysconData->first()->logo_path) }}"
-                            alt=""
-                        />
-                        <div class="spacer"></div>
-                    </div>
-                    <hr class="divider" />
-                </header>
                 <content class="table-container">
                     <h1>System Content</h1>
                     @include('includes_syscon.syscon_table_inc')

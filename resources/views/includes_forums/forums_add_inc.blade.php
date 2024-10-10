@@ -1,57 +1,33 @@
-<!-- Add Forum Button -->
-<button
-    id="addForumButton"
-    class="btn btn-success"
-    data-bs-toggle="modal"
-    data-bs-target="#addForumModal"
->
-    Add Forum
-</button>
+<button class="custom-button" id="addForumButton">Add Forum</button>
 
 <!-- Add Forum Modal -->
 <div id="addForumModal" class="modal">
     <div class="modal-content">
-        <span id="closeAddForumModal" class="close-button">&times;</span>
-        <h2>Add New Forum</h2>
+        <span class="close-button" id="closeAddForumModal">&times;</span>
+        <h2>Add Forum</h2>
         <form
             id="addForumForm"
             method="POST"
-            action="{{ route('admin.forums.add') }}"
+            action="{{ route('createForum') }}"
+            enctype="multipart/form-data"
         >
             @csrf
-            <div class="form-group">
-                <label for="addForumName">Forum Name:</label>
-                <input
-                    type="text"
-                    id="addForumName"
-                    name="forum_name"
-                    class="form-control"
-                    required
-                />
-            </div>
+            @include('inclusions/response')
+            <label for="addForumName">Forum Name:</label>
+            <input type="text" id="addForumName" name="forumName" required />
 
-            <div class="form-group">
-                <label for="addForumDescription">Forum Description:</label>
-                <textarea
-                    id="addForumDescription"
-                    name="forum_desc"
-                    class="form-control"
-                    required
-                ></textarea>
-            </div>
+            <label for="addForumPhoto">Forum Photo:</label>
+            <input type="file" id="addForumPhoto" name="forumPhoto" />
 
-            <div class="form-group">
-                <label for="addMembersCount">Members Count:</label>
-                <input
-                    type="number"
-                    id="addMembersCount"
-                    name="mem_count"
-                    class="form-control"
-                    required
-                />
-            </div>
+            <label for="addForumDescription">Forum Description:</label>
+            <input
+                type="text"
+                id="addForumDescription"
+                name="forumDesc"
+                required
+            />
 
-            <button type="submit" class="btn btn-primary">Add Forum</button>
+            <button type="submit" class="custom-button">Add Forum</button>
         </form>
     </div>
 </div>

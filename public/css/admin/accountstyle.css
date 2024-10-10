@@ -2,13 +2,12 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    height: 120vh;
+    height: auto;
 }
 main {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;
     margin: 0px 48px 0px 32px;
 }
 header {
@@ -20,18 +19,21 @@ header h1 {
     color: var(--primary-color);
 }
 .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
 }
+
+.header-top img {
+    margin: 0 auto;
+    display: block;
+}
+
 .header-top img {
     height: 32px;
     position: relative;
+
     left: -8px;
-}
-header hr {
-    margin-top: 10px;
-    border: 1px solid #b1b1b1;
 }
 
 .search-bar {
@@ -87,7 +89,8 @@ header hr {
 
 .custom-button,
 .btn,
-.btn-primary {
+.btn-primary,
+#searchAccountBtn {
     background-color: #561c24;
     border: 1px solid #561c24;
     color: rgb(255, 255, 255);
@@ -103,8 +106,23 @@ header hr {
 
 .custom-button:hover,
 .btn:hover,
-.btn-primary:hover {
+.btn-primary:hover,
+.delete-button:hover {
     background-color: #ffaf45;
+}
+.delete-button {
+    width: 100%;
+    background-color: #561c24;
+    border: 1px solid #561c24;
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 .form-control {
     width: 96%;

@@ -43,33 +43,6 @@
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
             rel="stylesheet"
         />
-        <style>
-            /* Center content vertically and horizontally */
-            .dashboard-content-wrapper {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                min-height: 100vh;
-                flex-direction: column;
-                text-align: center;
-            }
-
-            /* Adjust card and chart layout for responsiveness */
-            .dashboard-cards {
-                display: flex;
-                justify-content: center;
-                flex-wrap: wrap;
-                margin-bottom: 20px;
-            }
-
-            .chart-container {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-direction: column;
-                width: 100%;
-            }
-        </style>
     </head>
     <body>
         <div class="container-fluid dashboard-content-wrapper">
@@ -95,9 +68,7 @@
                 </div>
 
                 <!-- Chart Section -->
-                <div class="col-12 chart-container">
-                    @include('includes_dashboard.recent_act_inc')
-                </div>
+                @include('includes_dashboard.recent_act_inc')
             </main>
         </div>
 

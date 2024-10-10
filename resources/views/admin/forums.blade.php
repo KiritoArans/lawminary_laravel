@@ -13,7 +13,7 @@
             rel="stylesheet"
             href="{{ asset('css/moderator/mforumsstyle.css') }}"
         />
-        <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/nav_burger.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/base_pagination.css') }}" />
         <link
             rel="stylesheet"
@@ -27,191 +27,65 @@
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
         />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         @include('inclusions/libraryLinks')
     </head>
     <body>
-        <div class="container">
-            <aside>
-                @include('includes_accounts.nav_inc')
-            </aside>
-            <main>
+        <div class="container-fluid">
+            <div class="row justify-content-center">
                 <header>
-                    <div class="header-top">
+                    <div
+                        class="header-top d-flex justify-content-between align-items-center"
+                    >
+                        @include('includes_accounts.nav_inc')
                         @include('includes_syscon.syscon_logo_inc')
                         <div class="spacer"></div>
                     </div>
-                    <hr class="divider" />
+                    <hr class="divider w-100" />
                 </header>
-                <form action="{{ route('admin.searchForums') }}" method="GET">
-                    <div class="form-group">
-                        <div class="form-search" style="width: 100%">
-                            <input
-                                type="text"
-                                name="query"
-                                class="form-control"
-                                placeholder="Search for Forums or Key Words..."
-                            />
-                        </div>
-                        <button type="submit" class="custom-button">
-                            Search
-                        </button>
-                    </div>
-                </form>
-                <section class="filter-container">
-                    <div class="action-buttons">
-                        <div class="container"></div>
 
-                        <!-- Filter Button and Modal -->
-                        <div class="action-buttons">
-                            <button class="custom-button" id="filterButton">
-                                Filter
-                            </button>
-
-                            <div id="filterModal" class="modal">
-                                <div class="modal-content">
-                                    <span
-                                        class="close-button"
-                                        id="closeFilterModal"
-                                    >
-                                        &times;
-                                    </span>
-                                    <h2>Filter Forums</h2>
-
-                                    <!-- Filter Form -->
-                                    <form
-                                        id="filterForm"
-                                        action="{{ route('admin.filterForums') }}"
-                                        method="GET"
-                                    >
-                                        <label for="filterForumId">
-                                            Forum ID:
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="filterForumId"
-                                            name="filterForumId"
-                                        />
-
-                                        <label for="filterForumName">
-                                            Forum Name:
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="filterForumName"
-                                            name="filterForumName"
-                                        />
-
-                                        <label for="filterForumDescription">
-                                            Forum Description:
-                                        </label>
-                                        <input
-                                            type="text"
-                                            id="filterForumDescription"
-                                            name="filterForumDescription"
-                                        />
-
-                                        <label for="filterMembersCount">
-                                            Members Count:
-                                        </label>
-                                        <input
-                                            type="number"
-                                            id="filterMembersCount"
-                                            name="filterMembersCount"
-                                        />
-
-                                        <label for="filterDateCreated">
-                                            Date Created:
-                                        </label>
-                                        <input
-                                            type="date"
-                                            id="filterDateCreated"
-                                            name="filterDateCreated"
-                                        />
-
-                                        <button
-                                            type="button"
-                                            class="custom-button"
-                                            id="resetButton"
-                                        >
-                                            Reset Filter
-                                        </button>
-
-                                        <button
-                                            type="submit"
-                                            class="custom-button"
-                                        >
-                                            Apply Filter
-                                        </button>
-                                    </form>
-                                </div>
+                <main class="col-12 col-md-9">
+                    <!-- Search Form -->
+                    <form
+                        action="{{ route('admin.searchForums') }}"
+                        method="GET"
+                    >
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input
+                                    type="text"
+                                    name="query"
+                                    class="form-control"
+                                    placeholder="Search for Forums or Key Words..."
+                                />
                             </div>
                         </div>
-                        <!-- Add Forum Button -->
-                        <button class="custom-button" id="addForumButton">
-                            Add Forum
-                        </button>
+                    </form>
 
-                        <!-- Add Forum Modal -->
-                        <div id="addForumModal" class="modal">
-                            <div class="modal-content">
-                                <span
-                                    class="close-button"
-                                    id="closeAddForumModal"
-                                >
-                                    &times;
-                                </span>
-                                <h2>Add Forum</h2>
-                                <form
-                                    id="addForumForm"
-                                    method="POST"
-                                    action="{{ route('createForum') }}"
-                                    enctype="multipart/form-data"
-                                >
-                                    @csrf
-                                    @include('inclusions/response')
-                                    <label for="addForumName">
-                                        Forum Name:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="addForumName"
-                                        name="forumName"
-                                        required
-                                    />
+                    <section class="filter-container my-4">
+                        <div class="d-flex justify-content-center">
+                            <!-- Filter Button and Modal -->
+                            @include('includes_forums.forums_filter_inc')
 
-                                    <label for="addForumPhoto">
-                                        Forum Photo:
-                                    </label>
-                                    <input
-                                        type="file"
-                                        id="addForumPhoto"
-                                        name="forumPhoto"
-                                    />
-
-                                    <label for="addForumDescription">
-                                        Forum Description:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="addForumDescription"
-                                        name="forumDesc"
-                                        required
-                                    />
-
-                                    <button type="submit" class="custom-button">
-                                        Add Forum
-                                    </button>
-                                </form>
-                            </div>
+                            <!-- Add Forum Button and Modal -->
+                            @include('includes_forums.forums_add_inc')
                         </div>
+                    </section>
+
+                    <!-- Forums View Section -->
+                    <div class="table-responsive">
+                        @include('includes_forums.forums_view_inc')
                     </div>
-                </section>
-                @include('includes_forums.forums_view_inc')
-            </main>
+                </main>
+            </div>
         </div>
+
         <script src="{{ asset('js/moderator_js/mforums_js.js') }}"></script>
     </body>
 </html>

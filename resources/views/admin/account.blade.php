@@ -14,7 +14,7 @@
             href="{{ asset('css/admin/accountstyle.css') }}"
         />
         <link rel="stylesheet" href="{{ asset('css/base_pagination.css') }}" />
-        <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/nav_burger.css') }}" />
         <link
             rel="stylesheet"
             href="{{ asset('css/admin/base_admin_table_style.css') }}"
@@ -39,62 +39,84 @@
             rel="stylesheet"
         />
         <script src="{{ asset('js/library_js/sweetalertV2.js') }}"></script>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
     </head>
     <body>
-        <div class="container-fluid my-4">
-            <aside>
-                @include('includes_accounts.nav_inc')
-            </aside>
-            <main>
+        <div class="container-fluid">
+            <div class="row">
                 <header>
-                    <div class="header-top">
+                    <div
+                        class="header-top d-flex justify-content-between align-items-center"
+                    >
+                        @include('includes_accounts.nav_inc')
                         @include('includes_syscon.syscon_logo_inc')
-                        <div class="spacer"></div>
                     </div>
-                    <hr class="divider" />
+                    <hr class="divider w-100" />
                 </header>
-                <section class="filter-container">
-                    @include('includes_accounts.search_inc')
-                    <div class="action-buttons">
-                        <button class="custom-button" id="filterButton">
-                            Filter
-                        </button>
-                        <div id="filterModal" class="modal">
-                            <div class="modal-content">
-                                <span
-                                    class="close-button"
-                                    id="closeFilterModal"
-                                >
-                                    &times;
-                                </span>
-                                <h2>Filter Accounts</h2>
-                                <!--filter accounts-->
-                                @include('includes_accounts.filter_inc')
-                            </div>
-                        </div>
-                        <!-- add accounts -->
-                        @include('includes_accounts.pending_inc')
-                        <button class="custom-button" id="addButton">
-                            Add
-                        </button>
-                        <div id="addModal" class="modal">
-                            <div class="modal-content">
-                                <span class="close-button" id="closeAddModal">
-                                    &times;
-                                </span>
-                                <h2>Add Account</h2>
+                <!-- Main Content Area -->
+                <main class="col-lg-10 col-md-9 col-sm-12 mx-auto">
+                    <!-- Header Section -->
 
-                                @include('includes_accounts.add_inc')
+                    <!-- Filter Section -->
+                    <section class="filter-container">
+                        <!-- Search and Filter Section -->
+                        @include('includes_accounts.search_inc')
+
+                        <div
+                            class="action-buttons d-flex flex-wrap justify-content-between"
+                        >
+                            <!-- Filter Button -->
+                            <button class="custom-button" id="filterButton">
+                                Filter
+                            </button>
+
+                            <!-- Filter Modal -->
+                            <div id="filterModal" class="modal">
+                                <div class="modal-content">
+                                    <span
+                                        class="close-button"
+                                        id="closeFilterModal"
+                                    >
+                                        &times;
+                                    </span>
+                                    <h2>Filter Accounts</h2>
+                                    @include('includes_accounts.filter_inc')
+                                </div>
+                            </div>
+
+                            <!-- Add Account Button -->
+                            @include('includes_accounts.pending_inc')
+                            <button class="custom-button" id="addButton">
+                                Add
+                            </button>
+
+                            <!-- Add Account Modal -->
+                            <div id="addModal" class="modal">
+                                <div class="modal-content">
+                                    <span
+                                        class="close-button"
+                                        id="closeAddModal"
+                                    >
+                                        &times;
+                                    </span>
+                                    <h2>Add Account</h2>
+                                    @include('includes_accounts.add_inc')
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-                <!-- display content on table -->
-                <content class="table-container">
-                    @include('includes_accounts.display_inc')
-                </content>
-            </main>
+                    </section>
+
+                    <!-- Display Content Section (Table) -->
+                    <section class="table-responsive">
+                        @include('includes_accounts.display_inc')
+                    </section>
+                </main>
+            </div>
         </div>
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="{{ asset('js/admin_js/accounts_js.js') }}"></script>
     </body>

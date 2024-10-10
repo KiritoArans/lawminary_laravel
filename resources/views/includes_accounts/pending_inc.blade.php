@@ -76,49 +76,5 @@
                 @endforeach
             </tbody>
         </table>
-
-        <!-- Pagination inside the modal -->
-        <div class="paginationContent">
-            <ul class="pagination">
-                <li
-                    class="page-item {{ $pendingAcc->currentPage() == 1 ? 'disabled' : '' }}"
-                    aria-disabled="{{ $pendingAcc->currentPage() == 1 }}"
-                >
-                    <a
-                        class="page-link"
-                        href="{{ $pendingAcc->appends(request()->input())->previousPageUrl() }}&modal=true"
-                        rel="prev"
-                    >
-                        &laquo;
-                    </a>
-                </li>
-
-                @for ($i = 1; $i <= $pendingAcc->lastPage(); $i++)
-                    <li
-                        class="page-item {{ $pendingAcc->currentPage() == $i ? 'active' : '' }}"
-                    >
-                        <a
-                            class="page-link"
-                            href="{{ $pendingAcc->appends(request()->input())->url($i) }}&modal=true"
-                        >
-                            {{ $i }}
-                        </a>
-                    </li>
-                @endfor
-
-                <li
-                    class="page-item {{ $pendingAcc->hasMorePages() ? '' : 'disabled' }}"
-                    aria-disabled="{{ ! $pendingAcc->hasMorePages() }}"
-                >
-                    <a
-                        class="page-link"
-                        href="{{ $pendingAcc->appends(request()->input())->nextPageUrl() }}&modal=true"
-                        rel="next"
-                    >
-                        &raquo;
-                    </a>
-                </li>
-            </ul>
-        </div>
     </div>
 </div>

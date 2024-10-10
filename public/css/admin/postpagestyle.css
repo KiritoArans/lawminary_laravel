@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    height: 120vh;
+    height: auto;
 }
 main {
     flex-grow: 1;

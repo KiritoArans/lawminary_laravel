@@ -84,7 +84,8 @@ section h1 {
     color: var(--primary-color);
 }
 
-button {
+button,
+#sysconButton {
     background-color: #561c24;
     border: 1px solid #561c24;
     color: rgb(255, 255, 255);

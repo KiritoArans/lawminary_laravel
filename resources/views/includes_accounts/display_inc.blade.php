@@ -114,7 +114,6 @@
                     </div>
 
                     <!--delete button-->
-                    @include('includes_accounts.delete_inc')
                 </td>
             </tr>
         @endforeach

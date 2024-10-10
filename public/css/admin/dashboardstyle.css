@@ -16,6 +16,23 @@ header h1 {
     font-size: 2em;
     color: var(--primary-color);
 }
+/* Center content vertically and horizontally */
+.dashboard-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* Adjust card and chart layout for responsiveness */
+.dashboard-cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
 
 .row {
     width: 100%; /* Make it span the full width */
@@ -135,10 +152,28 @@ header hr {
     background-color: #561c24; /* Red background */
     text-align: center;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow:
+        0 8px 16px rgba(0, 0, 0, 0.2),
+        0 6px 20px rgba(0, 0, 0, 0.35); /* Enhanced shadow */
     color: #fff; /* White text */
     min-width: 150px;
     font-weight: bold;
+}
+
+.box1 {
+    background-color: rgb(255, 0, 0);
+}
+
+.box2 {
+    background-color: rgb(255, 166, 0);
+}
+
+.box3 {
+    background-color: rgb(0, 72, 255);
+}
+
+.box4 {
+    background-color: rgb(0, 255, 132);
 }
 
 .box a.number {
@@ -214,4 +249,19 @@ header hr {
     }
 
     /* No extra adjustments needed for mobile, charts will automatically fit */
+}
+.chart-container {
+    background-color: #fff; /* Optional: If you want the container to have a different background */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow:
+        0 8px 16px rgba(0, 0, 0, 0.2),
+        0 6px 20px rgba(0, 0, 0, 0.19); /* Shadow effect */
+    margin-bottom: 20px; /* Add some spacing between chart containers */
+}
+.time-button {
+    margin-bottom: 10px;
+    box-shadow:
+        0 8px 16px rgba(0, 0, 0, 0.2),
+        0 6px 20px rgba(0, 0, 0, 0.35); /* Enhanced shadow */
 }

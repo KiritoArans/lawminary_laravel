@@ -1,23 +1,12 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <h1>Forums</h1>
-
-    <!-- Search Form -->
-    <form action="{{ route('admin.forums') }}" method="GET">
-        <div class="input-group mb-3">
+<form action="{{ route('admin.searchForums') }}" method="GET">
+    <div class="form-group">
+        <div class="form-search" style="width: 100%">
             <input
                 type="text"
-                name="search"
+                name="query"
                 class="form-control"
-                placeholder="Search for forums..."
-                value="{{ request('search') }}"
+                placeholder="Search for Forums or Key Words..."
             />
-            <button class="btn btn-primary" type="submit">Search</button>
         </div>
-    </form>
-
-    <!-- Existing table and content -->
-    <!-- ... -->
-</div>
+    </div>
+</form>

@@ -11,6 +11,5 @@
                 value="{{ request('search') }}"
             />
         </div>
-        <button class="custom-button" type="submit">Search</button>
     </div>
 </form>
