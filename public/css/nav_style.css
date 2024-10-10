@@ -196,6 +196,16 @@ aside:not(:hover) ~ main {
     color: red;
 }
 
+.empty-data{
+    margin-top: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 600;
+    color: var(--text-color3);
+    text-align: center;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 1024px) {
     aside {

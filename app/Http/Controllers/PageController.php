@@ -264,7 +264,22 @@ class PageController extends Controller
 
     public function showNotificationPage()
     {
-        return view('users.notification');
+        $notifications = Auth::user()->unreadNotifications;
+
+        $notificationsWithUsers = $notifications->map(function ($notification) {
+
+            $liker = isset($notification->data['liker_id']) ? UserAccount::find($notification->data['liker_id']) : null;
+
+            $bookmarker = isset($notification->data['bookmarker_id']) ? UserAccount::find($notification->data['bookmarker_id']) : null;
+
+            return [
+                'notification' => $notification,
+                'liker' => $liker,
+                'bookmarker' => $bookmarker,
+            ];
+        });
+
+        return view('users.notification', ['notificationsWithUsers' => $notificationsWithUsers]);
     }
 
     public function showSearchPage()
