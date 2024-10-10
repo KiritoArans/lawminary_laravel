@@ -11,11 +11,7 @@ main {
     padding: 20px;
     margin: 0px 48px 0px 32px;
 }
-header h1 {
-    margin: 0;
-    font-size: 2em;
-    color: var(--primary-color);
-}
+
 /* Center content vertically and horizontally */
 .dashboard-content-wrapper {
     display: flex;
@@ -43,7 +39,11 @@ header h1 {
     justify-content: flex-start; /* Align items to the left */
     align-items: center; /* Vertically center the content */
 }
-
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    color: var(--primary-color);
+}
 .header-top img {
     max-width: 100px; /* Adjust logo size */
     height: auto; /* Maintain aspect ratio */

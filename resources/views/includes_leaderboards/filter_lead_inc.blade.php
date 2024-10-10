@@ -70,3 +70,29 @@
 
     <button type="submit" class="custom-button">Apply Filter</button>
 </form>
+
+<div id="filterModal" class="modal">
+    <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2>Filter Posts</h2>
+
+        <form id="filterForm">
+            <label for="filterRank">Filter by Rank:</label>
+            <input type="text" id="filterRank" name="filterRank" />
+
+            <label for="filterUsername">Filter by Username:</label>
+            <input type="text" id="filterUsername" name="filterUsername" />
+
+            <label for="filterPoints">Filter by Activity Points:</label>
+            <input type="text" id="filterPoints" name="filterPoints" />
+
+            <label for="filterBadge">Filter by Badge:</label>
+            <input type="text" id="filterBadge" name="filterBadge" />
+
+            <label for="filterAction">Filter by Action:</label>
+            <input type="text" id="filterAction" name="filterAction" />
+
+            <button type="submit">Apply Filters</button>
+        </form>
+    </div>
+</div>

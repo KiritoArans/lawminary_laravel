@@ -11,6 +11,5 @@
             placeholder="Search resources..."
             value="{{ request()->query('query') }}"
         />
-        <button type="submit" class="custom-button">Search</button>
     </form>
 </div>

@@ -48,31 +48,30 @@
                     <span>System Content</span>
                 </a>
             </li>
-            <div class="bottom-nav">
-                <a
-                    href="<?php echo e(route('logoutAdMod')); ?>"
-                    id="logout-link"
-                    class="logout"
-                >
-                    <i class="fa-solid fa-right-from-bracket"></i>
-                    <span>Log out</span>
-                </a>
-
-                <!-- Hidden form to handle the logout request -->
-                <form
-                    id="logout-form"
-                    action="<?php echo e(route('logoutAdMod')); ?>"
-                    method="POST"
-                    style="display: none"
-                >
-                    <?php echo csrf_field(); ?>
-                </form>
-            </div>
         </ul>
+        <!-- Bottom Navigation for Logout -->
+        <div class="bottom-nav">
+            <a
+                href="<?php echo e(route('logoutAdMod')); ?>"
+                id="logout-link"
+                class="logout"
+            >
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Log out</span>
+            </a>
+
+            <!-- Hidden form to handle the logout request -->
+            <form
+                id="logout-form"
+                action="<?php echo e(route('logoutAdMod')); ?>"
+                method="POST"
+                style="display: none"
+            >
+                <?php echo csrf_field(); ?>
+            </form>
+        </div>
     </nav>
 </div>
-
-<!-- Bottom Navigation for Logout -->
 
 <!-- Include SweetAlert and logout.js -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

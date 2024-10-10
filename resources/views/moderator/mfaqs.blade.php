@@ -14,7 +14,7 @@
             href="{{ asset('css/moderator/mfaqsstyle.css') }}"
         />
         <link rel="stylesheet" href="{{ asset('css/base_pagination.css') }}" />
-        <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/nav_burger.css') }}" />
         <link
             rel="stylesheet"
             href="{{ asset('css/admin/base_admin_table_style.css') }}"
@@ -38,38 +38,47 @@
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
             rel="stylesheet"
         />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
     </head>
     <body>
-        <div class="container">
-            <aside>
-                @include('includes_accounts.mod_nav_inc')
-            </aside>
-            <main>
-                <header>
-                    <div class="header-top">
-                        @include('includes_syscon.syscon_logo_inc')
-                    </div>
-                    <hr class="divider" />
-                </header>
+        <div class="container-fluid">
+            <header class="text-center">
+                <div
+                    class="header-top d-flex justify-content-between align-items-center"
+                >
+                    @include('includes_accounts.mod_nav_inc')
+                    @include('includes_syscon.syscon_logo_inc')
+                </div>
+                <hr class="divider w-100" />
+            </header>
+            <main class="mx-auto col-12 col-md-10 col-lg-8">
+                <h1>Frequently Asked Questions.</h1>
+
                 <div class="search-bar">
-                    <form method="GET" action="{{ route('faqs.search') }}">
+                    <form
+                        method="GET"
+                        action="{{ route('faqs.search') }}"
+                        class="d-flex justify-content-center"
+                    >
                         <input
                             type="text"
                             name="search"
                             placeholder="Search FAQs..."
+                            class="form-control me-2"
                             value="{{ request('search') }}"
                         />
-                        <button type="submit" class="custom-button">
-                            Search
-                        </button>
                     </form>
                 </div>
 
-                <content>
-                    <h1>Frequently Asked Questions</h1>
-                    <div class="container">
+                <content class="text-center">
+                    <div class="table-responsive">
                         @if ($faqs->isNotEmpty())
-                            <table class="table table-striped">
+                            <table
+                                class="table table-striped table-bordered mt-3"
+                            >
                                 <thead>
                                     <tr>
                                         <th>Question</th>
@@ -82,7 +91,8 @@
                                             <td>{{ $keyword }}</td>
                                             <td>
                                                 <button
-                                                    class="custom-button view-related"
+                                                    class="btn btn-info view-related"
+                                                    id="btnInfo"
                                                     data-questions="{{ json_encode($questions) }}"
                                                 >
                                                     View
@@ -93,8 +103,10 @@
                                 </tbody>
                             </table>
 
-                            <!-- Move Pagination Outside of the Table -->
-                            <div class="paginationContent">
+                            <!-- Pagination Section -->
+                            <div
+                                class="paginationContent d-flex justify-content-center mt-3"
+                            >
                                 <ul class="pagination">
                                     <li
                                         class="page-item {{ $faqs->currentPage() == 1 ? 'disabled' : '' }}"
@@ -107,6 +119,7 @@
                                             <i class="fas fa-chevron-left"></i>
                                         </a>
                                     </li>
+
                                     @for ($i = 1; $i <= $faqs->lastPage(); $i++)
                                         <li
                                             class="page-item {{ $faqs->currentPage() == $i ? 'active' : '' }}"
@@ -151,6 +164,7 @@
                 </content>
             </main>
         </div>
+
         <script src="{{ asset('js/moderator_js/mfaqs_js.js') }}"></script>
     </body>
 </html>

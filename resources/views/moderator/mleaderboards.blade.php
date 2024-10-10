@@ -14,7 +14,7 @@
             href="{{ asset('css/moderator/mleaderboardsstyle.css') }}"
         />
         <link rel="stylesheet" href="{{ asset('css/base_pagination.css') }}" />
-        <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/nav_burger.css') }}" />
         <link
             rel="stylesheet"
             href="{{ asset('css/admin/base_admin_table_style.css') }}"
@@ -38,112 +38,37 @@
             href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
             rel="stylesheet"
         />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
     </head>
     <body>
-        <div class="container">
-            <aside>
-                @include('includes_accounts.mod_nav_inc')
-            </aside>
+        <div class="container-fluid">
+            <header>
+                <div class="header-top">
+                    @include('includes_accounts.mod_nav_inc')
+
+                    @include('includes_syscon.syscon_logo_inc')
+                </div>
+                <hr class="divider" />
+            </header>
             <main>
-                <header>
-                    <div class="header-top">
-                        @include('includes_syscon.syscon_logo_inc')
+                <div class="filter-container">
+                    @include('includes_leaderboards.search_led_inc')
+                    <div class="filter-btn">
+                        <button id="filterButton">Filter</button>
                     </div>
-                    <hr class="divider" />
-
-                    <div class="filter-container">
-                        @include('includes_leaderboards.search_led_inc')
-                        <div class="filter-btn">
-                            <button id="filterButton">Filter</button>
-                        </div>
-                        <div id="filterModal" class="modal">
-                            <div class="modal-content">
-                                <span class="close-button">&times;</span>
-                                <h2>Filter Leaderboards</h2>
-                                @include('includes_leaderboards.filter_lead_inc')
-                            </div>
-                        </div>
-                        <div id="filterModal" class="modal">
-                            <div class="modal-content">
-                                <span class="close-button">&times;</span>
-                                <h2>Filter Posts</h2>
-
-                                <form id="filterForm">
-                                    <label for="filterRank">
-                                        Filter by Rank:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="filterRank"
-                                        name="filterRank"
-                                    />
-
-                                    <label for="filterUsername">
-                                        Filter by Username:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="filterUsername"
-                                        name="filterUsername"
-                                    />
-
-                                    <label for="filterPoints">
-                                        Filter by Activity Points:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="filterPoints"
-                                        name="filterPoints"
-                                    />
-
-                                    <label for="filterBadge">
-                                        Filter by Badge:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="filterBadge"
-                                        name="filterBadge"
-                                    />
-
-                                    <label for="filterAction">
-                                        Filter by Action:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="filterAction"
-                                        name="filterAction"
-                                    />
-
-                                    <button type="submit">Apply Filters</button>
-                                </form>
-                            </div>
-                        </div>
+                </div>
+                <div id="filterModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button">&times;</span>
+                        <h2>Filter Leaderboards</h2>
+                        @include('includes_leaderboards.filter_lead_inc')
                     </div>
-                </header>
+                </div>
                 <content>
                     @include('includes_leaderboards.display_lead_inc')
-                    <div id="actionModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close-button">&times;</span>
-                            <h2>Activity Details</h2>
-                            <p>
-                                <strong>Rank:</strong>
-                                <span id="modalRank"></span>
-                            </p>
-                            <p>
-                                <strong>Username:</strong>
-                                <span id="modalUsername"></span>
-                            </p>
-                            <p>
-                                <strong>Activity Points:</strong>
-                                <span id="modalPoints"></span>
-                            </p>
-                            <p>
-                                <strong>Badge:</strong>
-                                <span id="modalBadge"></span>
-                            </p>
-                        </div>
-                    </div>
                 </content>
             </main>
         </div>

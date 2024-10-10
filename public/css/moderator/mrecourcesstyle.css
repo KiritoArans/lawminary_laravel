@@ -14,57 +14,44 @@ main {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;
     margin: 0px 48px 0px 32px;
 }
 header {
     text-align: center;
-    padding-bottom: 10px;
+}
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    color: var(--primary-color);
 }
 .header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    text-align: center;
+    background-color: #fff;
 }
+
+.header-top img {
+    margin: 0 auto;
+    display: block;
+}
+
 .header-top img {
     height: 32px;
     position: relative;
-    left: -8px;
 }
 header hr {
-    margin-top: 10px;
     border: 1px solid #b1b1b1;
 }
-.header-line {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    margin-top: 10px;
-}
-.header-ttl {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
 
-.filter-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
 .filter-btn {
     display: flex;
     gap: 10px;
 }
 .filter-btn button {
-    padding: 10px 20px;
     border: none;
     background-color: #999;
     color: #fff;
     border-radius: 4px;
     cursor: pointer;
-    margin: 3px;
 }
 .filter-btn button:hover {
     background-color: #333333;
@@ -83,31 +70,27 @@ header hr {
     border: 1px solid #ccc;
 }
 
-.add-container {
-    display: flex;
-    justify-content: space-between; /* Space between the buttons */
-    align-items: center;
-}
-
-.filter-btn {
-    flex-grow: 1; /* Moves the filter button all the way to the left */
-}
-
-.add-btn {
-    margin-left: 10px; /* Optional: Adds space between the filter and add button */
-}
-
 .custom-button,
-#filterButton {
-    padding: 10px 20px;
+#filterButton,
+#addButton,
+.view-button {
     background-color: #561c24;
-    color: white;
-    border: none;
-    border-radius: 5px;
+    margin: 5px;
+    border: 1px solid #ffffff;
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
     cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
 }
 
 .custom-button:hover,
-#filterButton:hover {
-    background-color: #666; /* Darken on hover */
+#filterButton:hover,
+#addButton:hover,
+.view-button:hover {
+    background-color: #ffaf45; /* Darken on hover */
 }

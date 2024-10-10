@@ -1,38 +1,93 @@
+/* Base table styling */
 table {
     width: 100%;
     margin-bottom: 1rem;
     color: #212529;
     border-collapse: collapse;
-    table-layout: fixed;
+    table-layout: fixed; /* Ensures uniform column width */
     font-size: 1rem;
 }
+
 .table th,
 .table td {
     padding: 0.5rem;
     vertical-align: top;
     border: 1px solid #dee2e6;
-    word-wrap: break-word;
+    word-wrap: break-word; /* Ensures text doesn't overflow the cell */
 }
+
 td:last-child {
     text-align: center;
     display: flex;
     justify-content: center;
     margin: 0;
 }
+
 .table thead th {
     vertical-align: bottom;
     border-bottom: 2px solid #dee2e6;
     background-color: #f8f9fa;
 }
+
 .table tbody tr:nth-of-type(odd) {
     background-color: rgba(0, 0, 0, 0.05);
 }
+
 .table tbody tr:hover {
     color: #212529;
     background-color: rgba(0, 0, 0, 0.075);
     cursor: pointer;
 }
 
+/* Responsive container */
+.table-responsive {
+    overflow-x: auto; /* Allows table to scroll horizontally on smaller screens */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.9rem; /* Slightly smaller font size for mobile */
+        table-layout: auto; /* Let the table adjust to content */
+    }
+
+    td:last-child {
+        display: block; /* Stacks the last column content for small screens */
+    }
+
+    th,
+    td {
+        display: block; /* Stack table headers and cells on small screens */
+        text-align: right; /* Right-align the text */
+        padding-left: 50%; /* Create space for the 'label' text */
+        position: relative;
+    }
+
+    th::before,
+    td::before {
+        content: attr(
+            data-label
+        ); /* Use data-label attribute to display header text */
+        position: absolute;
+        left: 0;
+        width: 50%;
+        padding-left: 10px;
+        font-weight: bold;
+        text-align: left;
+        background-color: #f8f9fa;
+    }
+}
+
+/* For very small screens, you may want to hide some columns */
+@media (max-width: 576px) {
+    td:nth-child(3), /* Example: hide the third column */
+    th:nth-child(3) {
+        display: none;
+    }
+}
+
+/* Button Styling */
 .btn-view {
     background-color: #28a745;
     color: white;
@@ -46,17 +101,13 @@ td:last-child {
     font-size: 0.875rem;
 }
 .btn-view:hover {
-    background-color: #218838;
+    background-color: #ffaf45;
 }
 
 .action-buttons {
     display: flex;
     gap: 10px;
     margin: 2px;
-}
-
-#editButton {
-    margin-left: auto;
 }
 
 .add-container {
@@ -68,11 +119,10 @@ td:last-child {
     padding: 10px 22px;
 }
 
-.custom-button,
-.view-button {
+.custom-button {
     background-color: #561c24;
     color: white;
-    border: 1px solid #561c24;
+    border: 1px solid #ffffff;
     padding: 8px 8px;
     text-align: center;
     text-decoration: none;
@@ -84,8 +134,9 @@ td:last-child {
 }
 
 .custom-button:hover {
-    background-color: #333333;
+    background-color: #ffaf45;
 }
+
 .delete-button {
     background-color: #561c24;
     color: white;
@@ -99,17 +150,12 @@ td:last-child {
     border-radius: 4px;
     transition: background-color 0.3s ease;
 }
+
 .delete-button:hover {
-    background-color: rgb(174, 0, 0);
+    background-color: #ffaf45;
 }
 
-#rsrcDocumentFileLink {
-    display: inline-block;
-    max-width: 100%; /* Ensure it doesn't exceed the container */
-    white-space: nowrap; /* Prevents the text from wrapping to a new line */
-    overflow: hidden; /* Hides any overflowed text */
-    text-overflow: ellipsis; /* Adds "..." to the truncated text */
-}
+/* Pagination Centering */
 .paginationContent {
     display: flex;
     justify-content: center;
