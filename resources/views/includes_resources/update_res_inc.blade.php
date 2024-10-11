@@ -11,10 +11,8 @@
 <!-- Modal structure -->
 <div id="editResourceModal" class="modal">
     <div class="modal-content">
-        <div class="modal-header">
-            <span class="close-btnEdit">&times;</span>
-            <h2>Edit Resource</h2>
-        </div>
+        <span class="close-btnEdit">&times;</span>
+
         <div class="modal-body">
             <form
                 id="editResourceForm"

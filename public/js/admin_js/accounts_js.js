@@ -295,3 +295,40 @@ document
             this.style.display = 'none';
         }
     });
+
+//table click
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Select all table cells except for "Display Photo" (2nd column) and "Action" (last column)
+    const cells = document.querySelectorAll(
+        '.table td:not(:nth-child(2)):not(:last-child)'
+    );
+
+    // Get the modal and modal content elements
+    const modal = document.getElementById('textModal');
+    const modalContent = document.getElementById('fullText');
+
+    // Close button in the modal
+    const closeModal = document.querySelector('.close-modal');
+
+    // Add click event to each table cell
+    cells.forEach((cell) => {
+        cell.addEventListener('click', function () {
+            const fullText = this.textContent.trim(); // Get the clicked cell's content
+            modalContent.textContent = fullText; // Set modal content
+            modal.style.display = 'flex'; // Show the modal
+        });
+    });
+
+    // Close modal on clicking the close button
+    closeModal.addEventListener('click', function () {
+        modal.style.display = 'none'; // Hide modal
+    });
+
+    // Close modal when clicking outside of modal content
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none'; // Hide modal
+        }
+    };
+});

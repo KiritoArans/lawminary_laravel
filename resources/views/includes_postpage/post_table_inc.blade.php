@@ -1,5 +1,5 @@
 <meta name="csrf-token" content="{{ csrf_token() }}" />
-
+<p>*click cell to view data</p>
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
@@ -22,25 +22,35 @@
         @else
             @foreach ($posts as $activity)
                 <tr>
-                    <td>{{ $activity->post_id }}</td>
-                    <td>{{ $activity->concern }}</td>
+                    <td
+                        class="clickable-cell"
+                        data-full-text="{{ $activity->post_id }}"
+                    >
+                        {{ Str::limit($activity->post_id, 10) }}
+                    </td>
+                    <td
+                        class="clickable-cell"
+                        data-full-text="{{ $activity->concern }}"
+                    >
+                        {{ Str::limit($activity->concern, 15) }}
+                    </td>
                     <td>{{ $activity->status }}</td>
                     <td>{{ $activity->tags }}</td>
                     <td>{{ $activity->postedBy }}</td>
                     <td>{{ $activity->approvedBy }}</td>
-                    <td>{{ $activity->reasonDisregard }}</td>
+                    <td
+                        class="clickable-cell"
+                        data-full-text="{{ $activity->reasonDisregard }}"
+                    >
+                        {{ Str::limit($activity->reasonDisregard, 20) }}
+                    </td>
                     <td>
                         {{ \Carbon\Carbon::parse($activity->updated_at)->format('Y-m-d') }}
                     </td>
-                    <td>
+                    <td class="non-clickable">
                         <button
                             class="editButton"
                             data-id="{{ $activity->id }}"
-                            data-concern="{{ $activity->concern }}"
-                            data-status="{{ $activity->status }}"
-                            data-tags="{{ $activity->tags }}"
-                            data-postedby="{{ $activity->postedBy }}"
-                            data-approvedby="{{ $activity->approvedBy }}"
                         >
                             Edit
                         </button>
@@ -51,6 +61,16 @@
         @endif
     </tbody>
 </table>
+
+<!-- Modal for showing full content -->
+<div id="textModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-body">
+            <p id="fullText"></p>
+        </div>
+    </div>
+</div>
 
 <div class="paginationContent">
     <ul class="pagination">

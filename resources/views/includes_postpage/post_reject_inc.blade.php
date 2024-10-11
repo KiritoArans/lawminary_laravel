@@ -1,7 +1,6 @@
 <button
     type="button"
     class="btn-view-reject"
-    data-toggle="modal"
     data-target="#disregardModal-{{ $post->post_id }}"
     name="reject"
 >
@@ -22,9 +21,8 @@
 >
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <button type="button" class="close-button" data-dismiss="modal">
-                X
-            </button>
+            <div class="close-button-reason" id="closeModal">&times;</div>
+
             <div class="modal-header">
                 <h5 class="modal-title" id="disregardModalLabel">
                     Provide reason for rejection
@@ -50,13 +48,6 @@
                         ></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button
-                            type="button"
-                            class="custom-button"
-                            data-dismiss="modal"
-                        >
-                            Cancel
-                        </button>
                         <button
                             type="submit"
                             class="custom-button"

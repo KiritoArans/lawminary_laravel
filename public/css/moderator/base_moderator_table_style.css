@@ -1,89 +1,28 @@
-/* Base table styling */
-table {
-    width: 100%;
-    margin-bottom: 1rem;
-    color: #212529;
-    border-collapse: collapse;
-    table-layout: fixed; /* Ensures uniform column width */
-    font-size: 1rem;
+.table td {
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 200px; /* Set a reasonable max-width */
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .table th,
 .table td {
-    padding: 0.5rem;
-    vertical-align: top;
-    border: 1px solid #dee2e6;
-    word-wrap: break-word; /* Ensures text doesn't overflow the cell */
+    padding: 0.75rem;
+    vertical-align: middle;
+    text-align: left;
 }
 
-td:last-child {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    margin: 0;
+.btn {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
 }
 
-.table thead th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #dee2e6;
-    background-color: #f8f9fa;
-}
-
-.table tbody tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.table tbody tr:hover {
-    color: #212529;
-    background-color: rgba(0, 0, 0, 0.075);
-    cursor: pointer;
-}
-
-/* Responsive container */
-.table-responsive {
-    overflow-x: auto; /* Allows table to scroll horizontally on smaller screens */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-    .table {
-        font-size: 0.9rem; /* Slightly smaller font size for mobile */
-        table-layout: auto; /* Let the table adjust to content */
-    }
-
-    td:last-child {
-        display: block; /* Stacks the last column content for small screens */
-    }
-
-    th,
-    td {
-        display: block; /* Stack table headers and cells on small screens */
-        text-align: right; /* Right-align the text */
-        padding-left: 50%; /* Create space for the 'label' text */
-        position: relative;
-    }
-
-    th::before,
-    td::before {
-        content: attr(
-            data-label
-        ); /* Use data-label attribute to display header text */
-        position: absolute;
-        left: 0;
-        width: 50%;
-        padding-left: 10px;
-        font-weight: bold;
-        text-align: left;
-        background-color: #f8f9fa;
-    }
-}
-
-/* For very small screens, you may want to hide some columns */
 @media (max-width: 576px) {
-    td:nth-child(3), /* Example: hide the third column */
-    th:nth-child(3) {
-        display: none;
+    .table td,
+    .table th {
+        font-size: 0.875rem;
+        padding: 0.5rem;
     }
 }
 
@@ -159,4 +98,55 @@ td:last-child {
 .paginationContent {
     display: flex;
     justify-content: center;
+}
+
+/* Modal close button */
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Modal content structure */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    max-height: 80vh; /* Limit the height of the modal */
+    overflow-y: auto; /* Enable vertical scrolling */
+    word-wrap: break-word; /* Ensure long words break properly */
+}
+
+/* Content inside the modal */
+#modalContent {
+    white-space: normal; /* Allow text to wrap within the modal */
+    line-height: 1.5; /* Improve readability */
+    font-size: 1.1rem;
+    max-height: 60vh; /* Limit the height of the content */
+    overflow-y: auto; /* Enable vertical scroll */
+}
+
+/* Responsive behavior for mobile devices */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%; /* On smaller screens, make modal almost full-width */
+        padding: 15px;
+    }
+
+    #modalContent {
+        font-size: 1rem; /* Slightly smaller font size on mobile */
+    }
 }

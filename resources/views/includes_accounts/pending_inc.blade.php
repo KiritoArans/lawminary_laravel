@@ -48,7 +48,11 @@
                                         name="approve"
                                         class="btn-view-approve"
                                     >
-                                        Approve
+                                        <img
+                                            src="{{ asset('imgs/buttons/approve.png') }}"
+                                            alt="Approve Button"
+                                            width="35"
+                                        />
                                     </button>
                                 </form>
 
@@ -65,9 +69,14 @@
                                     <button
                                         type="button"
                                         class="delete-button"
+                                        id="btn-view-reject"
                                         data-account-id="{{ $pending->id }}"
                                     >
-                                        Delete
+                                        <img
+                                            src="{{ asset('imgs/buttons/reject.png') }}"
+                                            alt="Approve Button"
+                                            width="35"
+                                        />
                                     </button>
                                 </form>
                             </div>

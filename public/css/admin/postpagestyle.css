@@ -147,3 +147,27 @@ header hr {
         0.7
     ); /* Example: transparent color using RGBA */
 }
+
+/* Close Button */
+.close-button-reason,
+.close-buttonEdit,
+.close-reported-posts,
+.close-button,
+.close-post-reports {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: right;
+    transition: background-color 0.3s ease;
+}
+
+.close-button-reason:hover,
+.close-buttonEdit:hover,
+.close-reported-posts:hover,
+.close-button:hover,
+.close-post-reports:hover {
+    color: black;
+    text-decoration: none;
+}

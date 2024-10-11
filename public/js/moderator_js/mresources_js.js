@@ -182,3 +182,32 @@ function resetFilter() {
     // Optionally, submit the form to reset the filter in the backend or refresh the page
     document.getElementById('filterForm').submit(); // This will refresh the page with cleared filters
 }
+
+//table click
+
+document.addEventListener('DOMContentLoaded', function () {
+    const clickableCells = document.querySelectorAll('.clickable-cell');
+
+    clickableCells.forEach((cell) => {
+        cell.addEventListener('click', function () {
+            const fullText = this.getAttribute('data-full-text'); // Get the content of the clicked cell
+            document.getElementById('modalContent').textContent = fullText;
+
+            // Show the modal
+            document.getElementById('textModal').style.display = 'block';
+        });
+    });
+
+    // Close modal logic
+    const closeModal = document.querySelector('.close-modal');
+    closeModal.addEventListener('click', function () {
+        document.getElementById('textModal').style.display = 'none';
+    });
+
+    window.onclick = function (event) {
+        const modal = document.getElementById('textModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+});

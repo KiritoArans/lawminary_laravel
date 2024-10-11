@@ -90,7 +90,7 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <span class="close-button">&times;</span>
-                                <h2>Filter Resources</h2>
+
                                 @include('includes_resources.filter_res_inc')
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <span class="close-button">&times;</span>
-                                <h2>Add Resource</h2>
+
                                 <div class="error">
                                     @if ($errors->any())
                                         <ul>

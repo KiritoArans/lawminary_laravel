@@ -120,6 +120,16 @@
     </tbody>
 </table>
 
+<!-- Modal for full text -->
+<div id="textModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-body">
+            <p id="fullText"></p>
+        </div>
+    </div>
+</div>
+
 <div class="paginationContent">
     <ul class="pagination">
         <li

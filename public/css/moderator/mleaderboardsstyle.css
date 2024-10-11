@@ -70,9 +70,10 @@ header hr {
     border-radius: 4px;
     cursor: pointer;
     margin: 3px;
+    transition: background-color 0.3s ease;
 }
 .filter-btn button:hover {
-    background-color: #333333;
+    background-color: #ffaf45;
 }
 
 .search-bar {
@@ -110,7 +111,7 @@ header hr {
 
 .custom-button:hover,
 .view-btn:hover {
-    background-color: #333333;
+    background-color: #ffaf45;
 }
 
 .action-btn {
@@ -128,7 +129,7 @@ header hr {
 }
 
 .action-btn:hover {
-    background-color: #333333;
+    background-color: #ffaf45;
 }
 
 input[type='text'][name='lead-content'] {
@@ -179,4 +180,19 @@ td.rank img {
 .form-control:focus {
     outline: none; /* Remove default focus outline */
     border-color: #561c24; /* Blue border on focus */
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: right;
+    transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+    color: black;
+    text-decoration: none;
 }

@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }).then((result) => {
                 if (result.isConfirmed) {
                     // If user confirms deletion, send the DELETE request
-                    fetch(`/posts/${postId}`, {
+                    fetch(`/admin/posts/${postId}`, {
                         method: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': document
@@ -195,15 +195,35 @@ document.querySelectorAll('.btn-view-reject').forEach((button) => {
     button.addEventListener('click', function () {
         var postId = this.getAttribute('data-target').split('-')[1]; // Get the post ID from data-target attribute
         var modal = document.getElementById('disregardModal-' + postId);
-        modal.style.display = 'block'; // Show the modal by setting display to block
+
+        // Add Bootstrap modal classes to show the modal
+        modal.classList.add('show');
+        modal.style.display = 'block';
+        modal.setAttribute('aria-hidden', 'false');
+        modal.setAttribute('role', 'dialog');
+
+        // Add backdrop (optional if you want to simulate Bootstrap's backdrop)
+        var backdrop = document.createElement('div');
+        backdrop.className = 'modal-backdrop fade show';
+        document.body.appendChild(backdrop);
     });
 });
 
 // Function to close the modal when the close button is clicked
-document.querySelectorAll('.close-button').forEach((closeButton) => {
+document.querySelectorAll('.close-button-reason').forEach((closeButton) => {
     closeButton.addEventListener('click', function () {
         var modal = this.closest('.modal');
-        modal.style.display = 'none'; // Hide the modal by setting display to none
+
+        // Remove Bootstrap modal classes to hide the modal
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden', 'true');
+
+        // Remove backdrop
+        var backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) {
+            backdrop.remove();
+        }
     });
 });
 
@@ -212,7 +232,15 @@ window.addEventListener('click', function (event) {
     var modals = document.querySelectorAll('.modal');
     modals.forEach(function (modal) {
         if (event.target === modal) {
-            modal.style.display = 'none'; // Hide the modal if clicked outside
+            modal.classList.remove('show');
+            modal.style.display = 'none';
+            modal.setAttribute('aria-hidden', 'true');
+
+            // Remove backdrop
+            var backdrop = document.querySelector('.modal-backdrop');
+            if (backdrop) {
+                backdrop.remove();
+            }
         }
     });
 });
@@ -340,4 +368,34 @@ document.addEventListener('DOMContentLoaded', function () {
         .addEventListener('click', function () {
             postReportsModal.style.display = 'none';
         });
+});
+
+//table click
+
+// Function to open a modal showing the full content
+document.addEventListener('DOMContentLoaded', function () {
+    // Target all table cells except the last column (Action column)
+    const cells = document.querySelectorAll('.table td:not(:last-child)');
+
+    cells.forEach((cell) => {
+        cell.addEventListener('click', function () {
+            const fullText =
+                this.getAttribute('data-full-text') || this.textContent; // Get full text from data attribute or content
+            document.getElementById('fullText').textContent = fullText;
+            document.getElementById('textModal').style.display = 'block';
+        });
+    });
+
+    // Close modal logic
+    const closeModal = document.querySelector('.close-modal');
+    closeModal.addEventListener('click', function () {
+        document.getElementById('textModal').style.display = 'none';
+    });
+
+    window.onclick = function (event) {
+        const modal = document.getElementById('textModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
 });

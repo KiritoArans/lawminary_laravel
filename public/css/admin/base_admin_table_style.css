@@ -1,89 +1,28 @@
-/* Base table styling */
-table {
-    width: 100%;
-    margin-bottom: 1rem;
-    color: #212529;
-    border-collapse: collapse;
-    table-layout: fixed; /* Ensures uniform column width */
-    font-size: 1rem;
+.table td {
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 200px; /* Set a reasonable max-width */
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .table th,
 .table td {
-    padding: 0.5rem;
-    vertical-align: top;
-    border: 1px solid #dee2e6;
-    word-wrap: break-word; /* Ensures text doesn't overflow the cell */
+    padding: 0.75rem;
+    vertical-align: middle;
+    text-align: left;
 }
 
-td:last-child {
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    margin: 0;
+.btn {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
 }
 
-.table thead th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #dee2e6;
-    background-color: #f8f9fa;
-}
-
-.table tbody tr:nth-of-type(odd) {
-    background-color: rgba(0, 0, 0, 0.05);
-}
-
-.table tbody tr:hover {
-    color: #212529;
-    background-color: rgba(0, 0, 0, 0.075);
-    cursor: pointer;
-}
-
-/* Responsive container */
-.table-responsive {
-    overflow-x: auto; /* Allows table to scroll horizontally on smaller screens */
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
-}
-
-/* Media query for smaller screens */
-@media (max-width: 768px) {
-    .table {
-        font-size: 0.9rem; /* Slightly smaller font size for mobile */
-        table-layout: auto; /* Let the table adjust to content */
-    }
-
-    td:last-child {
-        display: block; /* Stacks the last column content for small screens */
-    }
-
-    th,
-    td {
-        display: block; /* Stack table headers and cells on small screens */
-        text-align: right; /* Right-align the text */
-        padding-left: 50%; /* Create space for the 'label' text */
-        position: relative;
-    }
-
-    th::before,
-    td::before {
-        content: attr(
-            data-label
-        ); /* Use data-label attribute to display header text */
-        position: absolute;
-        left: 0;
-        width: 50%;
-        padding-left: 10px;
-        font-weight: bold;
-        text-align: left;
-        background-color: #f8f9fa;
-    }
-}
-
-/* For very small screens, you may want to hide some columns */
 @media (max-width: 576px) {
-    td:nth-child(3), /* Example: hide the third column */
-    th:nth-child(3) {
-        display: none;
+    .table td,
+    .table th {
+        font-size: 0.875rem;
+        padding: 0.5rem;
     }
 }
 
@@ -150,4 +89,71 @@ td:last-child {
 }
 .delete-button:hover {
     background-color: #ffaf45;
+}
+
+/* Modal container */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center modal vertically and horizontally */
+}
+
+/* Modal content box */
+.modal-content {
+    background-color: white;
+    margin: 15px;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%; /* Set a width relative to screen */
+    max-width: 800px; /* Max width */
+    max-height: 80vh; /* Limit height to 80% of viewport */
+    overflow-y: auto; /* Add vertical scroll if content overflows */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal close button */
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Text inside modal */
+#fullText {
+    word-wrap: break-word; /* Ensures text doesn't overflow horizontally */
+    white-space: normal; /* Break long words */
+    line-height: 1.5; /* Improve readability */
+    font-size: 1.1rem;
+    margin-top: 20px;
+}
+
+/* Responsive behavior for mobile devices */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 90%; /* On smaller screens, make modal almost full-width */
+        padding: 15px;
+    }
+
+    #fullText {
+        font-size: 1rem; /* Slightly smaller font size on mobile */
+    }
 }
