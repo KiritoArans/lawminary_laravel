@@ -91,4 +91,8 @@ class UserAccount extends Authenticatable
     {
         return $this->hasMany(Notification::class, 'notifiable_id', 'id');
     }
+    public function follower()
+    {
+        return $this->hasMany(Notification::class, 'notifiable_id', 'id');
+    }
 }

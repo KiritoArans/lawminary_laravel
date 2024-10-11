@@ -37,6 +37,7 @@
                         $commenter = $item['commenter'];
                         $replier = $item['replier'];
                         $rater = $item['rater'];
+                        $follower = $item['follower'];
                     @endphp
             
                     <!-- If the notification has a liker -->
@@ -114,7 +115,7 @@
                     @endif
 
                     @if ($replier)
-                        <div class="notifs btn-comment" data-post-id="{{ $notification->data['post_id'] }}">
+                        <div class="notifs btn-comment">
                             <div class="notifs-content">
                                 <div class="user-info">
                                     <img src="{{ $replier->userPhoto ? Storage::url($replier->userPhoto) : asset('imgs/user-img.png') }}" alt="Profile Picture" class="user-profile-photo" />
@@ -138,7 +139,7 @@
                     @endif
 
                     @if ($rater)
-                        <div class="notifs btn-comment" data-post-id="{{ $notification->data['post_id'] }}">
+                        <div class="notifs btn-comment">
                             <div class="notifs-content">
                                 <div class="user-info">
                                     <img src="{{ $rater->userPhoto ? Storage::url($rater->userPhoto) : asset('imgs/user-img.png') }}" alt="Profile Picture" class="user-profile-photo" />
@@ -155,6 +156,30 @@
                                 <div class="notifs-divider"></div>
                                 <div class="notifs-action">
                                     <span>{{ $rater->firstName }} {{ $notification->data['message'] }}</span>
+                                </div>
+                                <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                            </div>
+                        </div>
+                    @endif
+
+                    @if ($follower)
+                        <div class="notifs btn-comment">
+                            <div class="notifs-content">
+                                <div class="user-info">
+                                    <img src="{{ $follower->userPhoto ? Storage::url($follower->userPhoto) : asset('imgs/user-img.png') }}" alt="Profile Picture" class="user-profile-photo" />
+            
+                                    <div class="notifs-info">
+                                        <h2>
+                                            <a href="{{ Auth::check() && Auth::user()->user_id == $follower->user_id ? route('profile') : route('visit-profile', ['user_id' => $follower->user_id]) }}">
+                                                {{ $follower->firstName }} {{ $follower->lastName }}
+                                            </a>
+                                        </h2>
+                                        <p>@<span>{{ $follower->username }}</span></p>
+                                    </div>
+                                </div>
+                                <div class="notifs-divider"></div>
+                                <div class="notifs-action">
+                                    <span>{{ $follower->firstName }} {{ $notification->data['message'] }}</span>
                                 </div>
                                 <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                             </div>

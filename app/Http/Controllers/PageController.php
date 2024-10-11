@@ -276,6 +276,7 @@ class PageController extends Controller
                 'commenter' => isset($data['commenter_id']) ? UserAccount::find($data['commenter_id']) : null,
                 'replier' => isset($data['replier_id']) ? UserAccount::find($data['replier_id']) : null,
                 'rater' => isset($data['rater_id']) ? UserAccount::find($data['rater_id']) : null,
+                'follower' => isset($data['follower_id']) ? UserAccount::find($data['follower_id']) : null,
             ];
         });
     
