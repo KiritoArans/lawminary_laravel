@@ -70,22 +70,24 @@ class CommentController extends Controller
         $reply->reply = $request->input('reply');
         $reply->save();
     
-        $post = Posts::find($request->post_id);
-        $postAuthor = $post->user; // Assuming the Post model has a relationship with the User model
+        // $post = Posts::find($request->post_id);
+        // $postAuthor = $post->user; // Assuming the Post model has a relationship with the User model
 
-        // Notify the post author about the new comment
-        if ($postAuthor && $postAuthor->id !== Auth::user()->id) { // Don't notify if the user comments on their own post
-            $postAuthor->notify(new PostReplied(Auth::user(), $reply));
-        }
+        // // Notify the post author about the new comment
+        // if ($postAuthor && $postAuthor->id !== Auth::user()->id) { // Don't notify if the user comments on their own post
+        //     $postAuthor->notify(new PostReplied(Auth::user(), $reply));
+        // }
 
         // Find the comment and the comment author
         // $comment = Comment::find($request->comment_id);
         // $commentAuthor = $comment->user; // Assuming the Comment model has a relationship with the User model
     
         // // Notify the comment author about the new reply
-        // if ($commentAuthor && $commentAuthor->id !== Auth::user()->id) { // Don't notify if the user replies to their own comment
+        // if ($commentAuthor && $commentAuthor->user_id !== Auth::user()->user_id) { // Don't notify if the user replies to their own comment
         //     $commentAuthor->notify(new PostReplied(Auth::user(), $reply));
         // }
+
+        // $comment->user->notify(new PostReplied($user, $post));
     
         return response()->json([
             'success' => true,

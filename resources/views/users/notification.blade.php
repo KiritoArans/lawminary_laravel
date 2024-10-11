@@ -36,6 +36,7 @@
                         $bookmarker = $item['bookmarker'];
                         $commenter = $item['commenter'];
                         $replier = $item['replier'];
+                        $rater = $item['rater'];
                     @endphp
             
                     <!-- If the notification has a liker -->
@@ -135,6 +136,30 @@
                             </div>
                         </div>
                     @endif
+
+                    @if ($rater)
+                        <div class="notifs btn-comment" data-post-id="{{ $notification->data['post_id'] }}">
+                            <div class="notifs-content">
+                                <div class="user-info">
+                                    <img src="{{ $rater->userPhoto ? Storage::url($rater->userPhoto) : asset('imgs/user-img.png') }}" alt="Profile Picture" class="user-profile-photo" />
+            
+                                    <div class="notifs-info">
+                                        <h2>
+                                            <a href="{{ Auth::check() && Auth::user()->user_id == $rater->user_id ? route('profile') : route('visit-profile', ['user_id' => $rater->user_id]) }}">
+                                                {{ $rater->firstName }} {{ $rater->lastName }}
+                                            </a>
+                                        </h2>
+                                        <p>@<span>{{ $rater->username }}</span></p>
+                                    </div>
+                                </div>
+                                <div class="notifs-divider"></div>
+                                <div class="notifs-action">
+                                    <span>{{ $rater->firstName }} {{ $notification->data['message'] }}</span>
+                                </div>
+                                <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                            </div>
+                        </div>
+                    @endif
             
                 @endforeach
                 @endif
@@ -143,7 +168,7 @@
             
         </main>
     </div>
-    <script src="js/postandcomment.js"></script>
+    {{-- <script src="js/postandcomment.js"></script> --}}
     <script src="../js/settings.js"></script>    
     <script src="js/logout.js"></script>
 </body>
