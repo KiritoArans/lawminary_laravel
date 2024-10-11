@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use App\Notifications\PostCommented;
 use App\Notifications\PostReplied;
+use App\Notifications\CommentRated;
 
 class CommentController extends Controller
 {
@@ -22,24 +23,24 @@ class CommentController extends Controller
             'comment' => 'required|string|max:255',
             'post_id' => 'required|string|max:100',
         ]);
-
+    
+        $user = Auth::user(); // The user who is commenting
         $comment = new Comment();
         $comment->comment_id = uniqid('comm_');
-        $comment->user_id = Auth::user()->user_id; // The user who commented
+        $comment->user_id = $user->user_id; // The user who commented
         $comment->post_id = $request->post_id;
         $comment->comment = $request->comment;
-
+    
         $comment->save();
-
-        // Find the post and the post author (notifying the author)
-        $post = Posts::find($request->post_id);
-        $postAuthor = $post->user; // Assuming the Post model has a relationship with the User model
-
-        // Notify the post author about the new comment
-        if ($postAuthor && $postAuthor->id !== Auth::user()->id) { // Don't notify if the user comments on their own post
-            $postAuthor->notify(new PostCommented(Auth::user(), $comment));
+    
+        // Fetch the post and its user
+        $post = Posts::where('post_id', $request->post_id)->with('user')->first();
+    
+        if ($post && $post->user) {
+            // Notify the post's author about the new comment
+            $post->user->notify(new PostCommented($user, $post, $comment));
         }
-
+    
         return response()->json([
             'success' => true,
             'message' => 'Your comment has been posted!',
@@ -61,31 +62,24 @@ class CommentController extends Controller
             'comment_id' => 'required|string|max:100',
         ]);
     
+        $user = Auth::user(); // The user who is replying
+    
         // Create the reply
         $reply = new Reply();
         $reply->reply_id = uniqid('rply_');
         $reply->comment_id = $request->input('comment_id');
         $reply->post_id = $request->input('post_id');
-        $reply->user_id = Auth::user()->user_id;
+        $reply->user_id = $user->user_id;
         $reply->reply = $request->input('reply');
         $reply->save();
     
-        $post = Posts::find($request->post_id);
-        $postAuthor = $post->user; // Assuming the Post model has a relationship with the User model
-
-        // Notify the post author about the new comment
-        if ($postAuthor && $postAuthor->id !== Auth::user()->id) { // Don't notify if the user comments on their own post
-            $postAuthor->notify(new PostReplied(Auth::user(), $reply));
-        }
-
-        // Find the comment and the comment author
-        // $comment = Comment::find($request->comment_id);
-        // $commentAuthor = $comment->user; // Assuming the Comment model has a relationship with the User model
+        // Fetch the comment and its user (the original commenter)
+        $comment = Comment::where('comment_id', $request->comment_id)->with('user')->first();
     
-        // // Notify the comment author about the new reply
-        // if ($commentAuthor && $commentAuthor->id !== Auth::user()->id) { // Don't notify if the user replies to their own comment
-        //     $commentAuthor->notify(new PostReplied(Auth::user(), $reply));
-        // }
+        if ($comment && $comment->user) {
+            // Notify the original commenter about the reply
+            $comment->user->notify(new PostReplied($user, $comment, $reply));
+        }
     
         return response()->json([
             'success' => true,
@@ -99,6 +93,7 @@ class CommentController extends Controller
             ],
         ]);
     }
+    
     
     
 
@@ -118,24 +113,35 @@ class CommentController extends Controller
             'comment_id' => 'required|exists:tblcomments,comment_id', 
             'rating' => 'required|integer|min:1|max:5',
         ]);
-
+    
+        $user = Auth::user(); // The user who is rating the comment
+    
+        // Create a new rating
         $rate = new Rate();
-        $rate->user_id = Auth::user()->user_id; 
+        $rate->user_id = $user->user_id; 
         $rate->comment_id = $request->input('comment_id'); 
         $rate->lawyerUser_id = $request->input('lawyerUser_id');
         $rate->rate = $request->input('rating'); 
         $rate->save();
-
-
+    
+        // Calculate points based on rating
         $points = $request->input('rating') * 10;
-
+    
+        // Add points to the lawyer's account
         $addPoints = new Points();
         $addPoints->lawyerUser_id = $request->input('lawyerUser_id');
         $addPoints->points = $points; 
         $addPoints->pointsFrom = "Rate";
         $addPoints->save();
-
+    
+        // Fetch the comment and its user (the comment's author)
+        $comment = Comment::where('comment_id', $request->input('comment_id'))->with('user')->first();
+    
+        if ($comment && $comment->user) {
+            // Notify the user about the rating
+            $comment->user->notify(new CommentRated($user, $comment, $request->input('rating')));
+        }
+    
         return redirect()->back()->with('success', 'Your rating has been submitted.');
     }
-
 }

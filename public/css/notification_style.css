@@ -75,14 +75,14 @@ header hr {
 }
 
 content h1{
-    margin: 0;
+    margin: 0 0 .5rem 0;
     display: flex;
     justify-content: center;
     color: var(--text-color1);
 }
 
 .notifs{
-    margin-top: .5rem;
+    margin-bottom: .5rem;
     background-color: #ffffff;
     border: 1px solid #ddd;
     padding: 20px;
@@ -102,6 +102,7 @@ content h1{
     width: 50px;
     height: 50px;
     margin-right: 10px;
+    object-fit: cover;
 }
 .notifs-info h2 {
     margin: 0;

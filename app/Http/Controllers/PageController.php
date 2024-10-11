@@ -264,29 +264,25 @@ class PageController extends Controller
 
     public function showNotificationPage()
     {
-        $notifications = Auth::user()->unreadNotifications;
-
+        $notifications = auth()->user()->notifications()->get();
+    
         $notificationsWithUsers = $notifications->map(function ($notification) {
-
-            $liker = isset($notification->data['liker_id']) ? UserAccount::find($notification->data['liker_id']) : null;
-
-            $bookmarker = isset($notification->data['bookmarker_id']) ? UserAccount::find($notification->data['bookmarker_id']) : null;
-
-            $commenter = isset($notification->data['commenter_id']) ? UserAccount::find($notification->data['commenter_id']) : null;
-
-            $replier = isset($notification->data['replier_id']) ? UserAccount::find($notification->data['replier_id']) : null;
-
+            $data = $notification->data;
+            
             return [
                 'notification' => $notification,
-                'liker' => $liker,
-                'bookmarker' => $bookmarker,
-                'commenter' => $commenter,
-                'replier' => $replier,
+                'liker' => isset($data['liker_id']) ? UserAccount::find($data['liker_id']) : null,
+                'bookmarker' => isset($data['bookmarker_id']) ? UserAccount::find($data['bookmarker_id']) : null,
+                'commenter' => isset($data['commenter_id']) ? UserAccount::find($data['commenter_id']) : null,
+                'replier' => isset($data['replier_id']) ? UserAccount::find($data['replier_id']) : null,
+                'rater' => isset($data['rater_id']) ? UserAccount::find($data['rater_id']) : null,
+                'follower' => isset($data['follower_id']) ? UserAccount::find($data['follower_id']) : null,
             ];
         });
-
+    
         return view('users.notification', ['notificationsWithUsers' => $notificationsWithUsers]);
     }
+    
 
     public function showSearchPage()
     {

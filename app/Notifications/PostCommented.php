@@ -2,17 +2,22 @@
 
 namespace App\Notifications;
 
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Messages\DatabaseMessage;
 use App\Models\UserAccount;
 
 class PostCommented extends Notification
 {
     protected $commenter;
+    protected $post;
     protected $comment;
 
-    public function __construct(UserAccount $commenter, $comment)
+    public function __construct(UserAccount $commenter, $post, $comment)
     {
-        $this->commenter = $commenter; 
+        $this->commenter = $commenter;
+        $this->post = $post;
         $this->comment = $comment;
     }
 
@@ -24,10 +29,10 @@ class PostCommented extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'commenter_id' => $this->commenter->id, // ID of the user who commented
-            'comment_id' => $this->comment->comment_id, // Comment ID
-            'post_id' => $this->comment->post_id, // Post ID
-            'message' => "commented on your post",
+            'commenter_id' => $this->commenter->id, // Storing commenter user ID for later retrieval
+            'post_id' => $this->post->post_id,
+            'comment_id' => $this->comment->comment_id, // Storing the comment ID
+            'message' => "commented on your post.",
         ];
     }
 }

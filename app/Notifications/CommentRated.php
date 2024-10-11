@@ -11,12 +11,14 @@ use App\Models\UserAccount;
 class CommentRated extends Notification
 {
     protected $rater;
-    protected $post;
+    protected $comment;
+    protected $rating;
 
-    public function __construct(UserAccount $rater, $post)
+    public function __construct(UserAccount $rater, $comment, $rating)
     {
         $this->rater = $rater;
-        $this->post = $post;
+        $this->comment = $comment;
+        $this->rating = $rating;
     }
 
     public function via($notifiable)
@@ -27,9 +29,10 @@ class CommentRated extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'rater_id' => $this->rater->id, // Storing user ID only for later retrieval
-            'post_id' => $this->post->post_id,
-            'message' => "bookmarked your post.",
+            'rater_id' => $this->rater->id, // Storing the rater's user ID
+            'comment_id' => $this->comment->comment_id,
+            'rating' => $this->rating,
+            'message' => "rated your comment.",
         ];
     }
 }
