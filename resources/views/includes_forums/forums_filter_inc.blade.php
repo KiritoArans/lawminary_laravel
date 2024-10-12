@@ -4,14 +4,13 @@
     <div id="filterModal" class="modal">
         <div class="modal-content">
             <span class="close-button" id="closeFilterModal">&times;</span>
-            <h2>Filter Forums</h2>
 
             <!-- Filter Form -->
             <form
                 id="filterForm"
-                action="{{ route('admin.filterForums') }}"
-                method="GET"
+                action="{{ request()->is('admin*') ? route('admin.filterForums') : route('moderator.filterForums') }}"
             >
+                method="GET" >
                 <label for="filterForumId">Forum ID:</label>
                 <input type="text" id="filterForumId" name="filterForumId" />
 

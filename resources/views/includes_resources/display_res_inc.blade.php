@@ -20,13 +20,13 @@
                             class="clickable-cell"
                             data-full-text="{{ $resource->documentTitle }}"
                         >
-                            {{ \Illuminate\Support\Str::limit($resource->documentTitle, 30) }}
+                            {{ \Illuminate\Support\Str::limit($resource->documentTitle, 10) }}
                         </td>
                         <td
                             class="clickable-cell"
                             data-full-text="{{ $resource->documentDesc }}"
                         >
-                            {{ \Illuminate\Support\Str::limit($resource->documentDesc, 50) }}
+                            {{ \Illuminate\Support\Str::limit($resource->documentDesc, 15) }}
                         </td>
                         <td>
                             <a

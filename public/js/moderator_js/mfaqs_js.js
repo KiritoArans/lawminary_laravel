@@ -113,3 +113,38 @@ document.addEventListener('DOMContentLoaded', function () {
         filterFaqModal.style.display = 'none';
     });
 });
+
+// table click
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Select all table cells with the "clickable-cell" class
+    const questionCells = document.querySelectorAll('.clickable-cell');
+
+    // Get the modal and modal content elements
+    const questionModal = document.getElementById('textModal');
+    const questionContent = document.getElementById('fullText');
+
+    // Close button in the modal
+    const closeQuestionModal = questionModal.querySelector('.close-modal');
+
+    // Add click event to each clickable question cell
+    questionCells.forEach((cell) => {
+        cell.addEventListener('click', function () {
+            const fullText = this.getAttribute('data-full-text'); // Get the full question from the data attribute
+            questionContent.textContent = fullText; // Set modal content with full question
+            questionModal.style.display = 'block'; // Show modal
+        });
+    });
+
+    // Close modal on clicking the close button
+    closeQuestionModal.addEventListener('click', function () {
+        questionModal.style.display = 'none'; // Hide modal
+    });
+
+    // Close modal when clicking outside of modal content
+    window.addEventListener('click', function (event) {
+        if (event.target === questionModal) {
+            questionModal.style.display = 'none'; // Hide modal
+        }
+    });
+});

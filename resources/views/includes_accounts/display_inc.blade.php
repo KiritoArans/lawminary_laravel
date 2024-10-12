@@ -18,7 +18,9 @@
     <tbody id="accountTableBody">
         @foreach ($accounts as $account)
             <tr>
-                <td>{{ $account->id }}</td>
+                <td class="clickable-cell" data-full-text="{{ $account->id }}">
+                    {{ Str::limit($account->id, 10) }}
+                </td>
                 <td>
                     @if ($account->userPhoto)
                         <img
@@ -59,24 +61,55 @@
                         style="width: 50%; height: 50%"
                     />
                 </div>
-
-                <td>{{ $account->username }}</td>
-                <td>
-                    {{ $account->lastName . ', ' . $account->firstName . ', ' . $account->middleName . '.' }}
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ $account->username }}"
+                >
+                    {{ Str::limit($account->username, 15) }}
                 </td>
-                <td>{{ $account->email }}</td>
-                <td>{{ $account->accountType }}</td>
-                <td>{{ $account->sex }}</td>
-                <td>{{ $account->status }}</td>
-                <td>
-                    @if ($account->restrict === 'Yes')
-                        Yes - {{ $account->restrictDays }} day/s
-                    @else
-                            No - 0 day/s
-                    @endif
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ $account->lastName . ', ' . $account->firstName . ', ' . $account->middleName . '.' }}"
+                >
+                    {{ Str::limit($account->lastName . ', ' . $account->firstName . ', ' . $account->middleName . '.', 20) }}
+                </td>
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ $account->email }}"
+                >
+                    {{ Str::limit($account->email, 25) }}
+                </td>
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ $account->accountType }}"
+                >
+                    {{ Str::limit($account->accountType, 15) }}
+                </td>
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ $account->sex }}"
+                >
+                    {{ Str::limit($account->sex, 10) }}
+                </td>
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ $account->status }}"
+                >
+                    {{ Str::limit($account->status, 10) }}
+                </td>
+                <td
+                    class="clickable-cell"
+                    data-full-text="@if ($account->restrict === 'Yes') Yes - {{ $account->restrictDays }} day/s @else No - 0 day/s @endif"
+                >
+                    {{ Str::limit($account->restrict === 'Yes' ? 'Yes - ' . $account->restrictDays . ' day/s' : 'No - 0 day/s', 15) }}
+                </td>
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ $account->created_at }}"
+                >
+                    {{ Str::limit($account->created_at, 10) }}
                 </td>
 
-                <td>{{ $account->created_at }}</td>
                 <td>
                     <!--view/edit button-->
                     <button
@@ -107,7 +140,6 @@
                             <span class="close-button" id="closeEditModalX">
                                 &times;
                             </span>
-                            <h2>Edit Account</h2>
 
                             @include('includes_accounts.edit_inc')
                         </div>

@@ -4,7 +4,7 @@
 <div id="addForumModal" class="modal">
     <div class="modal-content">
         <span class="close-button" id="closeAddForumModal">&times;</span>
-        <h2>Add Forum</h2>
+
         <form
             id="addForumForm"
             method="POST"

@@ -300,9 +300,7 @@ document
 
 document.addEventListener('DOMContentLoaded', function () {
     // Select all table cells except for "Display Photo" (2nd column) and "Action" (last column)
-    const cells = document.querySelectorAll(
-        '.table td:not(:nth-child(2)):not(:last-child)'
-    );
+    const cells = document.querySelectorAll('.clickable-cell');
 
     // Get the modal and modal content elements
     const modal = document.getElementById('textModal');
@@ -311,10 +309,10 @@ document.addEventListener('DOMContentLoaded', function () {
     // Close button in the modal
     const closeModal = document.querySelector('.close-modal');
 
-    // Add click event to each table cell
+    // Add click event to each clickable cell
     cells.forEach((cell) => {
         cell.addEventListener('click', function () {
-            const fullText = this.textContent.trim(); // Get the clicked cell's content
+            const fullText = this.getAttribute('data-full-text'); // Get the full text from the data attribute
             modalContent.textContent = fullText; // Set modal content
             modal.style.display = 'flex'; // Show the modal
         });

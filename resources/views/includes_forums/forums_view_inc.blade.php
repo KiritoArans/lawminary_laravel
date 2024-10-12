@@ -13,13 +13,37 @@
         <tbody id="forumsTableBody">
             @foreach ($forums as $forum)
                 <tr>
-                    <td>{{ $forum->forum_id }}</td>
-                    <td>{{ $forum->forumName }}</td>
-                    <td>{{ $forum->forumDesc }}</td>
-                    <td>{{ $forum->membersCount }}</td>
-                    <td>
-                        {{ \Carbon\Carbon::parse($forum->created_at)->format('Y-m-d') }}
+                    <td
+                        class="clickable-cell"
+                        data-full-text="{{ $forum->forum_id }}"
+                    >
+                        {{ Str::limit($forum->forum_id, 10) }}
                     </td>
+                    <td
+                        class="clickable-cell"
+                        data-full-text="{{ $forum->forumName }}"
+                    >
+                        {{ Str::limit($forum->forumName, 15) }}
+                    </td>
+                    <td
+                        class="clickable-cell"
+                        data-full-text="{{ $forum->forumDesc }}"
+                    >
+                        {{ Str::limit($forum->forumDesc, 25) }}
+                    </td>
+                    <td
+                        class="clickable-cell"
+                        data-full-text="{{ $forum->membersCount }}"
+                    >
+                        {{ Str::limit($forum->membersCount, 5) }}
+                    </td>
+                    <td
+                        class="clickable-cell"
+                        data-full-text="{{ \Carbon\Carbon::parse($forum->created_at)->format('Y-m-d') }}"
+                    >
+                        {{ Str::limit(\Carbon\Carbon::parse($forum->created_at)->format('Y-m-d'), 10) }}
+                    </td>
+
                     <td>
                         <!-- Edit Button to open the modal -->
                         <button
@@ -32,35 +56,24 @@
                         >
                             Edit
                         </button>
-
-                        <form
-                            action="{{ route('moderator.deleteForum', ['forum_id' => $forum->forum_id]) }}"
-                            method="POST"
-                            style="display: inline-block"
-                            class="delete-form"
-                        >
-                            @csrf
-                            @method('DELETE')
-
-                            <button
-                                type="button"
-                                class="custom-button delete-button"
-                                onclick="confirmDelete(this)"
-                            >
-                                Delete
-                            </button>
-                        </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
 
+    <!-- Modal for showing cell data -->
+    <div id="textModalCell" class="modal unique-modal">
+        <div class="modal-content">
+            <span class="close-modal unique-close">&times;</span>
+            <p id="fullText"></p>
+        </div>
+    </div>
+
     <!-- Modal for editing forum -->
     <div id="editForumModal" class="modal">
         <div class="modal-content">
             <span class="close-button" id="closeEditForumModal">&times;</span>
-            <h2>Edit Forum</h2>
 
             <!-- Edit Forum Form -->
             <form
@@ -104,6 +117,24 @@
                 <!-- Submit Button -->
                 <button type="submit" class="custom-button">
                     Save Changes
+                </button>
+            </form>
+
+            <form
+                action="{{ route('moderator.deleteForum', ['forum_id' => $forum->forum_id]) }}"
+                method="POST"
+                style="display: inline-block"
+                class="delete-form"
+            >
+                @csrf
+                @method('DELETE')
+
+                <button
+                    type="button"
+                    class="custom-button delete-button"
+                    onclick="confirmDelete(this)"
+                >
+                    Delete
                 </button>
             </form>
         </div>

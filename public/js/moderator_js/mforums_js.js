@@ -116,3 +116,38 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+/table click/;
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Select all table cells with the "clickable-cell" class
+    const cells = document.querySelectorAll('.clickable-cell');
+
+    // Get the unique modal and modal content elements
+    const modal = document.getElementById('textModalCell');
+    const modalContent = document.getElementById('fullText');
+
+    // Close button in the modal
+    const closeModal = document.querySelector('.unique-close');
+
+    // Add click event to each clickable cell
+    cells.forEach((cell) => {
+        cell.addEventListener('click', function () {
+            const fullText = this.getAttribute('data-full-text'); // Get the full text from the data attribute
+            modalContent.textContent = fullText; // Set modal content
+            modal.style.display = 'flex'; // Show the modal
+        });
+    });
+
+    // Close modal on clicking the close button
+    closeModal.addEventListener('click', function () {
+        modal.style.display = 'none'; // Hide modal
+    });
+
+    // Close modal when clicking outside of modal content
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none'; // Hide modal
+        }
+    });
+});

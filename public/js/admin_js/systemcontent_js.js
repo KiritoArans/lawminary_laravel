@@ -79,3 +79,69 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+//table click
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Select all clickable text elements
+    const clickableTexts = document.querySelectorAll('.clickable-text');
+
+    // Get the modal and modal content elements
+    const modal = document.getElementById('textModal');
+    const modalContent = document.getElementById('fullText');
+
+    // Close button in the modal
+    const closeModal = document.querySelector('.close-modal');
+
+    // Add click event to each clickable text
+    clickableTexts.forEach((text) => {
+        text.addEventListener('click', function () {
+            const fullText = this.getAttribute('data-full-text'); // Get the full text from the data attribute
+            modalContent.textContent = fullText; // Set modal content
+            modal.style.display = 'flex'; // Show the modal
+        });
+    });
+
+    // Close modal on clicking the close button
+    closeModal.addEventListener('click', function () {
+        modal.style.display = 'none'; // Hide modal
+    });
+
+    // Close modal when clicking outside of modal content
+    window.onclick = function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none'; // Hide modal
+        }
+    };
+});
+
+// photo open
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Open modal when the image is clicked
+    document.querySelectorAll('.clickable-photo').forEach((img) => {
+        img.addEventListener('click', function () {
+            var modal = document.getElementById('imageModalPic');
+            var fullImage = document.getElementById('fullImage');
+            fullImage.src = this.getAttribute('data-fullsize');
+            modal.style.display = 'flex'; // Use flex to center the image
+        });
+    });
+
+    // Close modal when the "X" button is clicked
+    document
+        .getElementById('closeModalPic')
+        .addEventListener('click', function () {
+            var modal = document.getElementById('imageModalPic');
+            modal.style.display = 'none';
+        });
+
+    // Close modal when clicking outside the image
+    document
+        .getElementById('imageModalPic')
+        .addEventListener('click', function (event) {
+            if (event.target === this) {
+                this.style.display = 'none';
+            }
+        });
+});

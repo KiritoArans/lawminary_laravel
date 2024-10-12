@@ -111,3 +111,20 @@ header hr {
 .custom-button:hover {
     background-color: #561c24;
 }
+
+.close-button,
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: right;
+    transition: background-color 0.3s ease;
+}
+
+.close-button:hover,
+.close-modal:hover {
+    color: black;
+    text-decoration: none;
+}

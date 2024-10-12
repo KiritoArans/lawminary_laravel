@@ -88,7 +88,13 @@
                                 <tbody>
                                     @foreach ($faqs as $keyword => $questions)
                                         <tr>
-                                            <td>{{ $keyword }}</td>
+                                            <td
+                                                class="clickable-cell"
+                                                data-full-text="{{ $keyword }}"
+                                            >
+                                                {{ Str::limit($keyword, 10) }}
+                                                <!-- Limit to 10 characters -->
+                                            </td>
                                             <td>
                                                 <button
                                                     class="btn btn-info view-related"
@@ -102,6 +108,16 @@
                                     @endforeach
                                 </tbody>
                             </table>
+
+                            <div id="textModal" class="modal">
+                                <div class="modal-content">
+                                    <span class="close-modal">&times;</span>
+                                    <div class="modal-body">
+                                        <p id="fullText"></p>
+                                        <!-- Full question text will be injected here -->
+                                    </div>
+                                </div>
+                            </div>
 
                             <!-- Pagination Section -->
                             <div
@@ -155,7 +171,7 @@
                     <div id="relatedFaqModal" class="modal">
                         <div class="modal-content">
                             <span class="close-button">&times;</span>
-                            <h2>Related Questions</h2>
+
                             <div id="relatedQuestionsContent">
                                 <!-- Dynamic related questions will be loaded here -->
                             </div>

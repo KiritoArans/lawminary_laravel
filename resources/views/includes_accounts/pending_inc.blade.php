@@ -7,7 +7,6 @@
 <div id="pendingAccountsModal" class="modal">
     <div class="modal-content">
         <span class="close-button" id="closeModal">&times;</span>
-        <h2>Pending Accounts</h2>
 
         <!-- Pending Accounts Table -->
         <table class="table table-striped table-bordered">

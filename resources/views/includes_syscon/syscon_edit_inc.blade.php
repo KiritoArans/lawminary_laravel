@@ -1,7 +1,7 @@
 <div id="editModal" class="modal">
     <div class="modal-content">
         <span class="close-buttonEdit">&times;</span>
-        <h2>Edit System Content</h2>
+
         @if ($errors->any())
             <div class="alert alert-danger">
                 <ul>
@@ -27,7 +27,6 @@
 
             <!-- System Name Section -->
             <div class="form-group" id="nameField" style="display: none">
-                <label for="editName">Name:</label>
                 <input
                     type="text"
                     id="editName"
@@ -42,7 +41,6 @@
                 id="about_LawminaryField"
                 style="display: none"
             >
-                <label for="editAboutLawminary">About Lawminary:</label>
                 <textarea
                     id="editAboutLawminary"
                     name="about_lawminary"
@@ -53,7 +51,6 @@
 
             <!-- About PAO Section -->
             <div class="form-group" id="aboutPaoField" style="display: none">
-                <label for="editAboutPao">About PAO:</label>
                 <textarea
                     id="editAboutPao"
                     name="about_pao"
@@ -68,7 +65,6 @@
                 id="termsOfServiceField"
                 style="display: none"
             >
-                <label for="editTermsOfService">Terms of Service:</label>
                 <textarea
                     id="editTermsOfService"
                     name="terms_of_service"
@@ -79,7 +75,6 @@
 
             <!-- File input for Logo -->
             <div class="form-group" id="fileContentField" style="display: none">
-                <label for="editLogo">Upload New Logo:</label>
                 <input
                     type="file"
                     name="logo"

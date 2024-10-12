@@ -82,7 +82,7 @@
                                     >
                                         &times;
                                     </span>
-                                    <h2>Filter Accounts</h2>
+
                                     @include('includes_accounts.filter_inc')
                                 </div>
                             </div>
@@ -102,7 +102,7 @@
                                     >
                                         &times;
                                     </span>
-                                    <h2>Add Account</h2>
+
                                     @include('includes_accounts.add_inc')
                                 </div>
                             </div>
