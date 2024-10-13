@@ -67,8 +67,7 @@
                                     @include('inclusions.response')
                                     <button
                                         type="button"
-                                        class="delete-button"
-                                        id="btn-view-reject"
+                                        class="btn-view-reject"
                                         data-account-id="{{ $pending->id }}"
                                     >
                                         <img

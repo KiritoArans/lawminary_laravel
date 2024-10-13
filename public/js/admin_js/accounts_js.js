@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.delete-button').forEach((button) => {
+    document.querySelectorAll('.btn-view-reject').forEach((button) => {
         button.addEventListener('click', function () {
             const accountId = this.getAttribute('data-account-id');
             confirmDelete(accountId);

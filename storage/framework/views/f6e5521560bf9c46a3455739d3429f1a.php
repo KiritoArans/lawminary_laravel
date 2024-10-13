@@ -68,8 +68,7 @@
                                     <?php echo $__env->make('inclusions.response', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                                     <button
                                         type="button"
-                                        class="delete-button"
-                                        id="btn-view-reject"
+                                        class="btn-view-reject"
                                         data-account-id="<?php echo e($pending->id); ?>"
                                     >
                                         <img

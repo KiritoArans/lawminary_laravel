@@ -161,3 +161,22 @@ header h1 {
     color: black;
     text-decoration: none;
 }
+
+.btn-view-approve,
+.btn-view-reject {
+    border: none; /* Removes the border */
+    background: none; /* Removes any background color */
+    padding: 0; /* Removes padding if there's any */
+    transition: background-color 0.4s ease;
+    border-radius: 60%;
+}
+
+.btn-view-approve:hover,
+.btn-view-reject:hover {
+    background-color: rgba(
+        92,
+        85,
+        75,
+        0.7
+    ); /* Example: transparent color using RGBA */
+}
