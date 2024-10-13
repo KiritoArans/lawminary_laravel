@@ -2,7 +2,8 @@
     <div class="rate-modal-content">
         <span class="close-rate-modal">&times;</span>
 
-        <form id="rateForm" action="{{ route('rateComment') }}" method="POST">
+        <!-- Add the class rate-comment-form to match the JS selector -->
+        <form id="rateForm" action="{{ route('rateComment') }}" method="POST" class="rate-comment-form">
             @csrf
             <h2>Rate Comment</h2>
             <input type="hidden" name="comment_id" id="rating_comment_id">
