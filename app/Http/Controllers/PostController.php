@@ -127,14 +127,14 @@ class PostController extends Controller
         $data = $request->validate([
             'post_id' => 'required',
         ]);
-    
+
         // Check if the like already exists
         $like = Like::where('user_id', $user->user_id)
                     ->where('post_id', $data['post_id'])
                     ->first();
-    
+
         $isLiked = false; // Track if the post is liked or unliked
-    
+
         if ($like) {
             // If the like exists, remove it (unlike)
             $like->delete();
@@ -147,14 +147,16 @@ class PostController extends Controller
             $newLike->user_id = $user->user_id;
             $newLike->like = 1;
             $newLike->save();
-    
+
             // Fetch the post and its user
             $post = Posts::where('post_id', $data['post_id'])->with('user')->first();
-    
+
             if ($post) {
-                // Notify the post's author about the like
-                $post->user->notify(new PostLiked($user, $post));
-    
+                // Check if the post author is not the current user
+                if ($post->user->user_id !== $user->user_id) {
+                    $post->user->notify(new PostLiked($user, $post));
+                }
+
                 // If the post's author is a lawyer, add points
                 if ($post->user->accountType === 'Lawyer') {
                     $addPoints = new Points();
@@ -164,13 +166,13 @@ class PostController extends Controller
                     $addPoints->save();
                 }
             }
-    
+
             $isLiked = true; // Post liked
         }
-    
+
         // Return the updated like count and whether it was liked/unliked
         $likeCount = Like::where('post_id', $data['post_id'])->count();
-    
+
         return response()->json([
             'success' => true,
             'message' => $isLiked ? 'Post liked.' : 'Post unliked.',
@@ -178,8 +180,8 @@ class PostController extends Controller
             'like_count' => $likeCount,
             'post_id' => $data['post_id'],
         ]);
-        
     }
+
     
 
 
@@ -214,8 +216,10 @@ class PostController extends Controller
     
             if ($post){
             
-                $post->user->notify(new PostBookmarked($user, $post));
-
+                if ($post->user->user_id !== $user->user_id) {
+                    $post->user->notify(new PostBookmarked($user, $post));
+                }
+                
                 if ($post->user->accountType === 'Lawyer') {
                     $addPoints = new Points();
                     $addPoints->lawyerUser_id = $post->user->user_id;
