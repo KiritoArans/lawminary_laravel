@@ -1,7 +1,7 @@
 <div id="editModal" class="modal">
     <div class="modal-content">
         <span class="close-buttonEdit">&times;</span>
-        <h2>Edit Post</h2>
+
         <form id="editForm" method="POST" action="<?php echo e(route('update')); ?>">
             <?php echo csrf_field(); ?>
             <input type="hidden" name="post_id" id="editPostId" />
