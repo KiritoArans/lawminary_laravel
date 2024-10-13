@@ -1,4 +1,5 @@
-<table class="table table-striped">
+<table class="table table-striped table-bordered">
+    <p>*click cell to view data</p>
     <thead>
         <tr>
             <th>Lawyer ID</th>
@@ -11,52 +12,101 @@
     <tbody>
         @foreach ($leaderboards as $leaderboard)
             <tr>
-                <td>{{ $leaderboard->lawyerUser_id }}</td>
-                <td>{{ $leaderboard->username }}</td>
-                <td>{{ $leaderboard->rankPoints }}</td>
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ $leaderboard->lawyerUser_id }}"
+                >
+                    {{ Str::limit($leaderboard->lawyerUser_id, 10) }}
+                </td>
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ $leaderboard->username }}"
+                >
+                    {{ Str::limit($leaderboard->username, 15) }}
+                </td>
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ $leaderboard->rankPoints }}"
+                >
+                    {{ Str::limit($leaderboard->rankPoints, 10) }}
+                </td>
                 <td class="rank">
-                    <!-- Display rank as an image -->
+                    <!-- Clickable image that opens in a modal -->
 
                     @if ($leaderboard->rank === 'Wood')
                         <img
                             src="{{ asset('imgs/badges/wood.png') }}"
                             alt="Wood Badge"
+                            class="clickable-photo"
                             width="50"
+                            data-fullsize="{{ asset('imgs/badges/wood.png') }}"
                         />
                     @elseif ($leaderboard->rank === 'Steel')
                         <img
                             src="{{ asset('imgs/badges/steel.png') }}"
                             alt="Steel Badge"
+                            class="clickable-photo"
                             width="50"
+                            data-fullsize="{{ asset('imgs/badges/steel.png') }}"
                         />
                     @elseif ($leaderboard->rank === 'Bronze')
                         <img
                             src="{{ asset('imgs/badges/bronze.png') }}"
                             alt="Bronze Badge"
+                            class="clickable-photo"
                             width="50"
+                            data-fullsize="{{ asset('imgs/badges/bronze.png') }}"
                         />
                     @elseif ($leaderboard->rank === 'Silver')
                         <img
                             src="{{ asset('imgs/badges/silver.png') }}"
                             alt="Silver Badge"
+                            class="clickable-photo"
                             width="50"
+                            data-fullsize="{{ asset('imgs/badges/silver.png') }}"
                         />
                     @elseif ($leaderboard->rank === 'Gold')
                         <img
                             src="{{ asset('imgs/badges/gold.png') }}"
                             alt="Gold Badge"
+                            class="clickable-photo"
                             width="50"
+                            data-fullsize="{{ asset('imgs/badges/gold.png') }}"
                         />
                     @elseif ($leaderboard->rank === 'Diamond')
                         <img
                             src="{{ asset('imgs/badges/diamond.png') }}"
                             alt="Diamond Badge"
+                            class="clickable-photo"
                             width="50"
+                            data-fullsize="{{ asset('imgs/badges/diamond.png') }}"
                         />
                     @endif
                 </td>
-                <td>{{ $loop->iteration }}</td>
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ $loop->iteration }}"
+                >
+                    {{ $loop->iteration }}
+                </td>
             </tr>
         @endforeach
     </tbody>
 </table>
+
+<!-- Modal for showing cell data -->
+<div id="textModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <p id="fullText"></p>
+        <!-- Full text content will be injected here -->
+    </div>
+</div>
+
+<!-- Modal for showing full-size image -->
+<div id="imageModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <img id="fullImage" src="" alt="Full Size Image" style="width: 100%" />
+    </div>
+</div>

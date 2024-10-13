@@ -73,6 +73,7 @@
                         />
                     </form>
                 </div>
+                <p>*click cell to view data</p>
 
                 <content class="text-center">
                     <div class="table-responsive">

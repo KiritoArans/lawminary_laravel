@@ -1,4 +1,5 @@
 <div class="table-container">
+    <p>*click cell to view data</p>
     <table class="table table-striped table-bordered">
         <thead>
             <tr>

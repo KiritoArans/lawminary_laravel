@@ -2,15 +2,8 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
+    height: auto;
 }
-
-.container {
-    display: flex;
-    height: 100vh;
-}
-
 main {
     flex-grow: 1;
     display: flex;
@@ -18,30 +11,36 @@ main {
     padding: 20px;
     margin: 0px 48px 0px 32px;
 }
+
 header {
     text-align: center;
     padding-bottom: 10px;
 }
+
 .header-top {
     width: 100%;
     text-align: center;
     background-color: #fff;
 }
+
 .header-top img {
     height: 32px;
     position: relative;
     left: -8px;
 }
+
 header hr {
     margin-top: 10px;
     border: 1px solid #b1b1b1;
 }
+
 .header-line {
     display: flex;
     justify-content: end;
     align-items: center;
     margin-top: 10px;
 }
+
 .header-ttl {
     display: flex;
     align-items: center;
@@ -49,21 +48,21 @@ header hr {
 }
 
 .filter-container {
-    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
+
 .filter-container h1 {
     margin: 0;
     color: var(--primary-color);
 }
+
 .filter-btn {
     display: flex;
-    gap: 10px;
 }
+
 .filter-btn button {
-    padding: 10px 20px;
+    padding: 5px 10px;
     border: none;
     background-color: #561c24;
     color: #fff;
@@ -72,6 +71,7 @@ header hr {
     margin: 3px;
     transition: background-color 0.3s ease;
 }
+
 .filter-btn button:hover {
     background-color: #ffaf45;
 }
@@ -135,54 +135,58 @@ header hr {
 input[type='text'][name='lead-content'] {
     width: 96%;
 }
+
 /* Center the badges horizontally and vertically */
 td.rank {
-    text-align: center; /* Horizontal centering */
-    vertical-align: middle; /* Vertical centering */
+    text-align: center;
+    vertical-align: middle;
 }
 
 /* Adjust the size of the badge if necessary */
 td.rank img {
-    width: 50px; /* Adjust this value as needed */
-    height: auto; /* Maintain the aspect ratio */
+    width: 50px;
+    height: auto;
 }
+
 /* Customize the select dropdown */
 .form-control {
-    appearance: none; /* Remove the default dropdown icon */
-    -webkit-appearance: none; /* Remove icon in Safari */
-    -moz-appearance: none; /* Remove icon in Firefox */
-    background-color: #f8f9fa; /* Light background color */
-    border: 2px solid #ddd; /* Light gray border */
-    padding: 8px 12px; /* Add padding */
-    font-size: 16px; /* Font size */
-    color: #333; /* Text color */
-    border-radius: 4px; /* Rounded corners */
-    width: 100%; /* Full width */
-    cursor: pointer; /* Pointer cursor */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #f8f9fa;
+    border: 2px solid #ddd;
+    padding: 8px 12px;
+    font-size: 16px;
+    color: #333;
+    border-radius: 4px;
+    width: 100%;
+    cursor: pointer;
     position: relative;
 }
 
 /* Custom dropdown arrow */
 .form-control::after {
-    content: '\25BC'; /* Unicode for the dropdown arrow */
+    content: '\25BC';
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    pointer-events: none; /* Prevent clicking on the arrow */
+    pointer-events: none;
 }
 
 /* Add hover and focus effects */
 .form-control:hover {
-    border-color: #888; /* Darker border on hover */
+    border-color: #888;
 }
 
 .form-control:focus {
-    outline: none; /* Remove default focus outline */
-    border-color: #561c24; /* Blue border on focus */
+    outline: none;
+    border-color: #561c24;
 }
 
-.close-button {
+/* Close button */
+.close-button,
+.close-modal {
     color: #aaa;
     float: right;
     font-size: 28px;
@@ -192,7 +196,44 @@ td.rank img {
     transition: background-color 0.3s ease;
 }
 
-.close-button:hover {
+.close-button:hover,
+.close-modal:hover {
     color: black;
-    text-decoration: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    main {
+        margin: 0;
+        padding: 10px;
+    }
+
+    .custom-button,
+    .view-btn {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+    }
+
+    .header-top img {
+        height: 24px;
+    }
+}
+
+/* Extra Small Devices */
+@media (max-width: 576px) {
+    .header-line {
+        flex-direction: column;
+    }
+
+    .search-bar {
+        flex-direction: column;
+    }
+
+    .search-bar input {
+        width: 100%;
+    }
+
+    td.rank img {
+        width: 30px;
+    }
 }

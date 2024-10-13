@@ -68,7 +68,9 @@
                     </div>
                 </div>
                 <content>
-                    @include('includes_leaderboards.display_lead_inc')
+                    <div class="table-responsive">
+                        @include('includes_leaderboards.display_lead_inc')
+                    </div>
                 </content>
             </main>
         </div>

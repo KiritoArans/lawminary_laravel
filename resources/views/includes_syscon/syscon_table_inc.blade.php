@@ -1,4 +1,6 @@
 <div class="content-sections">
+    <p>*click cell to view data</p>
+
     <!-- System Logo Section -->
     <div class="mb-4">
         <strong>Logo:</strong>

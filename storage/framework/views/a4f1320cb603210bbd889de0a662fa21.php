@@ -1,4 +1,5 @@
 <table class="table table-striped table-bordered">
+    <p>*click cell to view data</p>
     <thead>
         <tr>
             <th>ID</th>
