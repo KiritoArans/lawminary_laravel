@@ -45,11 +45,12 @@
     </head>
     <body>
         <div class="container-fluid">
+            @include('includes_accounts.mod_nav_inc')
+
             <header class="text-center">
                 <div
                     class="header-top d-flex justify-content-between align-items-center"
                 >
-                    @include('includes_accounts.mod_nav_inc')
                     @include('includes_syscon.syscon_logo_inc')
                 </div>
                 <hr class="divider w-100" />
