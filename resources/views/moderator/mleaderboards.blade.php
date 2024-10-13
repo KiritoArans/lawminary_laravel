@@ -45,10 +45,10 @@
     </head>
     <body>
         <div class="container-fluid">
+            @include('includes_accounts.mod_nav_inc')
+
             <header>
                 <div class="header-top">
-                    @include('includes_accounts.mod_nav_inc')
-
                     @include('includes_syscon.syscon_logo_inc')
                 </div>
                 <hr class="divider" />
