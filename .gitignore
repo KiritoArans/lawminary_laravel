@@ -1,4 +1,4 @@
-/.phpunit.cache
+/phpunit.cache
 /node_modules
 /public/build
 /public/hot
@@ -38,9 +38,15 @@ yarn-error.log
 # Ignore large files and directories
 /node_modules/
 /vendor/
-/storage/
 /public/uploads/
 /public/storage/
+
+# Keep the storage folder but ignore the logs directory
+/storage/*
+!/storage/app
+!/storage/framework
+!/storage/logs
+/storage/logs/*  # Specifically ignore log files within storage/logs
 
 # Ignore environment and sensitive files
 .env
@@ -62,4 +68,3 @@ Thumbs.db
 # Ignore other unnecessary files
 *.bak
 *.tmp
-

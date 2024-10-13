@@ -37,8 +37,9 @@ class CommentController extends Controller
         $post = Posts::where('post_id', $request->post_id)->with('user')->first();
     
         if ($post && $post->user) {
-            // Notify the post's author about the new comment
-            $post->user->notify(new PostCommented($user, $post, $comment));
+            if ($post->user->user_id !== $user->user_id) {
+                $post->user->notify(new PostCommented($user, $post, $comment));
+            }
         }
     
         return response()->json([
@@ -77,8 +78,9 @@ class CommentController extends Controller
         $comment = Comment::where('comment_id', $request->comment_id)->with('user')->first();
     
         if ($comment && $comment->user) {
-            // Notify the original commenter about the reply
-            $comment->user->notify(new PostReplied($user, $comment, $reply));
+            if ($comment->user->user_id !== $user->user_id) {
+                $comment->user->notify(new PostReplied($user, $comment, $reply));
+            }
         }
     
         return response()->json([
@@ -93,8 +95,6 @@ class CommentController extends Controller
             ],
         ]);
     }
-    
-    
     
 
     public function checkIfRated($comment_id)
@@ -138,8 +138,9 @@ class CommentController extends Controller
         $comment = Comment::where('comment_id', $request->input('comment_id'))->with('user')->first();
     
         if ($comment && $comment->user) {
-            // Notify the user about the rating
-            $comment->user->notify(new CommentRated($user, $comment, $request->input('rating')));
+            if ($comment->user->user_id !== $user->user_id) {
+                $comment->user->notify(new CommentRated($user, $comment, $request->input('rating')));
+            }
         }
     
         return redirect()->back()->with('success', 'Your rating has been submitted.');

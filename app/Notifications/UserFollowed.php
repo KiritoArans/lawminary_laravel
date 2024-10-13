@@ -19,13 +19,13 @@ class UserFollowed extends Notification
 
     public function via($notifiable)
     {
-        return ['database'];
+        return ['database']; 
     }
 
     public function toDatabase($notifiable)
     {
         return [
-            'follower_id' => $this->follower->id, // Storing follower's user ID
+            'follower_id' => $this->follower->id, 
             'message' => "started following you.",
         ];
     }
