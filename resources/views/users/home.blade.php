@@ -8,6 +8,7 @@
     <link rel="icon" href="../imgs/lawminarylogo_v3.png" type="image/png" />
     <link rel="stylesheet" href="{{ asset('css/home_style.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/responsive/navres.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/otherstyles/posts_style.css') }}" />
     @include('inclusions/libraryLinks')
 </head>
@@ -17,7 +18,6 @@
         <main>
             <header>
                 <div class="header-top">
-                    {{-- <i class="fa-solid fa-bars" style="font-size: 1.5rem"></i> --}}
                     @include('includes_syscon.syscon_logo_inc')
                     <div class="notification">
                         <a href="notifications">

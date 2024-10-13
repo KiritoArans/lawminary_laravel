@@ -43,6 +43,7 @@ section {
 }
 .logo-content img {
     height: 500px;
+    /* height: 80px; */
 }
 .line {
     border: 1px solid;
@@ -236,3 +237,23 @@ section {
         font-size: 18px;
         color: var(--black-light-color);
     }
+
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
+}
+
+
+@media (max-width: 576px) {
+    .wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 40px;
+    }
+    .logo-content, .line{
+        display: none;
+    }
+
+}

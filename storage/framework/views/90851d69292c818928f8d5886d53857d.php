@@ -8,6 +8,7 @@
     <link rel="icon" href="../imgs/lawminarylogo_v3.png" type="image/png" />
     <link rel="stylesheet" href="<?php echo e(asset('css/home_style.css')); ?>" />
     <link rel="stylesheet" href="<?php echo e(asset('css/nav_style.css')); ?>" />
+    <link rel="stylesheet" href="<?php echo e(asset('css/responsive/navres.css')); ?>" />
     <link rel="stylesheet" href="<?php echo e(asset('css/otherstyles/posts_style.css')); ?>" />
     <?php echo $__env->make('inclusions/libraryLinks', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 </head>
@@ -17,7 +18,6 @@
         <main>
             <header>
                 <div class="header-top">
-                    
                     <?php echo $__env->make('includes_syscon.syscon_logo_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                     <div class="notification">
                         <a href="notifications">
