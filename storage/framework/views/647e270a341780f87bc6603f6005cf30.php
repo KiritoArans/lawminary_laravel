@@ -82,7 +82,7 @@
                                     >
                                         &times;
                                     </span>
-                                    <h2>Pending Posts</h2>
+                                 
                                     <div id="pendingPostsContainer">
                                         <!-- Dynamic content will be added here -->
                                     </div>
