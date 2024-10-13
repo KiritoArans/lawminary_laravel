@@ -6,7 +6,6 @@
     border: 1px solid #ddd;
     padding: 20px 20px 8px 20px;
     margin: 0px 360px 16px 300px;
-    /* margin: 20px 120px 20px 160px; */
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
@@ -793,4 +792,16 @@
     transition: background-color 0.3s;
     font-weight: bold;
     width: 100%;
+}
+
+
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Styles for tablets */
+}
+
+
+@media (max-width: 576px) {
+
+
 }

@@ -40,7 +40,6 @@
                         $follower = $item['follower'];
                     @endphp
             
-                    <!-- If the notification has a liker -->
                     @if ($liker)
                         <div class="notifs btn-comment" data-post-id="{{ $notification->data['post_id'] }}">
                             <div class="notifs-content">
@@ -56,7 +55,7 @@
                                         <p>@<span>{{ $liker->username }}</span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $liker->firstName }} {{ $notification->data['message'] }}</span>
                                 </div>
@@ -64,8 +63,7 @@
                             </div>
                         </div>
                     @endif
-            
-                    <!-- If the notification has a bookmarker -->
+                    
                     @if ($bookmarker)
                         <div class="notifs btn-comment" data-post-id="{{ $notification->data['post_id'] }}">
                             <div class="notifs-content">
@@ -81,7 +79,7 @@
                                         <p>@<span>{{ $bookmarker->username }}</span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $bookmarker->firstName }} {{ $notification->data['message'] }}</span>
                                 </div>
@@ -105,7 +103,7 @@
                                         <p>@<span>{{ $commenter->username }}</span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $commenter->firstName }} {{ $notification->data['message'] }}</span>
                                 </div>
@@ -129,7 +127,7 @@
                                         <p>@<span>{{ $replier->username }}</span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $replier->firstName }} {{ $notification->data['message'] }}</span>
                                 </div>
@@ -153,7 +151,7 @@
                                         <p>@<span>{{ $rater->username }}</span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $rater->firstName }} {{ $notification->data['message'] }}</span>
                                 </div>
@@ -177,7 +175,7 @@
                                         <p>@<span>{{ $follower->username }}</span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $follower->firstName }} {{ $notification->data['message'] }}</span>
                                 </div>

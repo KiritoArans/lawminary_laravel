@@ -2,7 +2,7 @@
     <div class="rate-modal-content">
         <span class="close-rate-modal">&times;</span>
 
-        <form id="rateForm" action="<?php echo e(route('rateComment')); ?>" method="POST">
+        <form id="rateForm" action="<?php echo e(route('rateComment')); ?>" method="POST" class="rate-comment-form">
             <?php echo csrf_field(); ?>
             <h2>Rate Comment</h2>
             <input type="hidden" name="comment_id" id="rating_comment_id">
@@ -18,4 +18,5 @@
             <button type="submit">Submit Rating</button>
         </form>
     </div>
-</div><?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/inclusions/rateCommentModal.blade.php ENDPATH**/ ?>
+</div>
+<?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/inclusions/rateCommentModal.blade.php ENDPATH**/ ?>
