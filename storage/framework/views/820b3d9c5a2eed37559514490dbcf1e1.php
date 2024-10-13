@@ -40,7 +40,6 @@
                         $follower = $item['follower'];
                     ?>
             
-                    <!-- If the notification has a liker -->
                     <?php if($liker): ?>
                         <div class="notifs btn-comment" data-post-id="<?php echo e($notification->data['post_id']); ?>">
                             <div class="notifs-content">
@@ -57,7 +56,7 @@
                                         <p>@<span><?php echo e($liker->username); ?></span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                
                                 <div class="notifs-action">
                                     <span><?php echo e($liker->firstName); ?> <?php echo e($notification->data['message']); ?></span>
                                 </div>
@@ -65,8 +64,7 @@
                             </div>
                         </div>
                     <?php endif; ?>
-            
-                    <!-- If the notification has a bookmarker -->
+                    
                     <?php if($bookmarker): ?>
                         <div class="notifs btn-comment" data-post-id="<?php echo e($notification->data['post_id']); ?>">
                             <div class="notifs-content">
@@ -83,7 +81,7 @@
                                         <p>@<span><?php echo e($bookmarker->username); ?></span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                
                                 <div class="notifs-action">
                                     <span><?php echo e($bookmarker->firstName); ?> <?php echo e($notification->data['message']); ?></span>
                                 </div>
@@ -108,7 +106,7 @@
                                         <p>@<span><?php echo e($commenter->username); ?></span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                
                                 <div class="notifs-action">
                                     <span><?php echo e($commenter->firstName); ?> <?php echo e($notification->data['message']); ?></span>
                                 </div>
@@ -133,7 +131,7 @@
                                         <p>@<span><?php echo e($replier->username); ?></span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                
                                 <div class="notifs-action">
                                     <span><?php echo e($replier->firstName); ?> <?php echo e($notification->data['message']); ?></span>
                                 </div>
@@ -158,7 +156,7 @@
                                         <p>@<span><?php echo e($rater->username); ?></span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                
                                 <div class="notifs-action">
                                     <span><?php echo e($rater->firstName); ?> <?php echo e($notification->data['message']); ?></span>
                                 </div>
@@ -183,7 +181,7 @@
                                         <p>@<span><?php echo e($follower->username); ?></span></p>
                                     </div>
                                 </div>
-                                <div class="notifs-divider"></div>
+                                
                                 <div class="notifs-action">
                                     <span><?php echo e($follower->firstName); ?> <?php echo e($notification->data['message']); ?></span>
                                 </div>

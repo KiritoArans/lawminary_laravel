@@ -2,7 +2,6 @@
     <div class="rate-modal-content">
         <span class="close-rate-modal">&times;</span>
 
-        <!-- Add the class rate-comment-form to match the JS selector -->
         <form id="rateForm" action="<?php echo e(route('rateComment')); ?>" method="POST" class="rate-comment-form">
             <?php echo csrf_field(); ?>
             <h2>Rate Comment</h2>
