@@ -238,7 +238,7 @@ class PostpageController extends Controller
         // Validate the input data
         $request->validate([
             'concern' => 'required|string|max:255',
-            'status' => 'required|in:pending,approved,disregarded',
+            'status' => 'required|in:Pending,Approved,Disregarded',
             'tags' => 'nullable|string|max:255',
             'postedBy' => 'required|string|max:255',
             'approvedBy' => 'nullable|string|max:255',

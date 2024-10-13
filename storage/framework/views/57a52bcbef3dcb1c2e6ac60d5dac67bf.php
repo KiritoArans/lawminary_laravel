@@ -53,11 +53,18 @@
                     </td>
                     <td class="non-clickable">
                         <button
-                            class="editButton"
+                            type="button"
+                            class="btn btn-primary editButton"
                             data-id="<?php echo e($activity->id); ?>"
+                            data-concern="<?php echo e($activity->concern); ?>"
+                            data-status="<?php echo e($activity->status); ?>"
+                            data-tags="<?php echo e($activity->tags); ?>"
+                            data-postedby="<?php echo e($activity->postedBy); ?>"
+                            data-approvedby="<?php echo e($activity->approvedBy); ?>"
                         >
                             Edit
                         </button>
+
                         <?php echo $__env->make('includes_postpage.post_edit_inc', ['postDelete' => $activity], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                     </td>
                 </tr>

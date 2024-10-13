@@ -91,7 +91,7 @@ header hr {
     width: 96%;
 }
 
-.editButton,
+#editbtn,
 .btn-primary,
 .deleteButton,
 #disregardPostButton,
@@ -111,7 +111,7 @@ header hr {
     transition: background-color 0.3s ease;
 }
 
-.editButton:hover,
+#editbtn:hover,
 .btn-primary:hover,
 .deleteButton:hover,
 #disregardPostButton:hover,

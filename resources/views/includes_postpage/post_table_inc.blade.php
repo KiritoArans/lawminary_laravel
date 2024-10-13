@@ -49,11 +49,18 @@
                     </td>
                     <td class="non-clickable">
                         <button
-                            class="editButton"
+                            type="button"
+                            class="btn btn-primary editButton"
                             data-id="{{ $activity->id }}"
+                            data-concern="{{ $activity->concern }}"
+                            data-status="{{ $activity->status }}"
+                            data-tags="{{ $activity->tags }}"
+                            data-postedby="{{ $activity->postedBy }}"
+                            data-approvedby="{{ $activity->approvedBy }}"
                         >
                             Edit
                         </button>
+
                         @include('includes_postpage.post_edit_inc', ['postDelete' => $activity])
                     </td>
                 </tr>

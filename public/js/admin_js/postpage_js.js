@@ -47,8 +47,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // Let the form submit normally, no need for JS filtering here
 });
 
-//search function
-
 //edit and update function
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -68,20 +66,23 @@ document.addEventListener('DOMContentLoaded', function () {
         button.addEventListener('click', function () {
             const postId = button.getAttribute('data-id');
             const concern = button.getAttribute('data-concern');
-            const status = button.getAttribute('data-status');
+            const status = button.getAttribute('data-status').trim(); // Ensure there's no extra space
             const tags = button.getAttribute('data-tags');
             const postedBy = button.getAttribute('data-postedby');
             const approvedBy = button.getAttribute('data-approvedby');
+            console.log('Status:', status); // Add this line for debugging
 
-            // Fill the form
+            // Fill the form fields
             postIdInput.value = postId;
             concernInput.value = concern;
-            statusInput.value = status;
             tagsInput.value = tags;
             postedByInput.value = postedBy;
             approvedByInput.value = approvedBy;
 
-            // Show modal
+            // Directly set the value of the dropdown
+            statusInput.value = status;
+
+            // Show the modal
             editModal.style.display = 'block';
         });
     });

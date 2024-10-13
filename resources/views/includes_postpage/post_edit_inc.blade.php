@@ -22,11 +22,12 @@
                     class="form-control"
                     required
                 >
-                    <option value="pending">Pending</option>
-                    <option value="approved">Approved</option>
-                    <option value="disregarded">Disregarded</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Disregarded">Disregarded</option>
                 </select>
             </div>
+
             <div class="form-group">
                 <label for="editTags">Tags:</label>
                 <input
