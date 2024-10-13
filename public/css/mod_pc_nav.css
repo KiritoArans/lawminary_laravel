@@ -1,0 +1,117 @@
+/* Sidebar (fixed on the left side of the page) */
+.mod-nav {
+    position: fixed; /* Keep the sidebar fixed on the left side */
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 60px; /* Collapsed width */
+    background-color: #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.5s ease; /* Smooth expansion on hover */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional for styling */
+    z-index: 1;
+}
+
+/* Sidebar expands on hover */
+.mod-nav:hover {
+    width: 250px; /* Expanded width */
+}
+
+/* Main content shifting with sidebar */
+.container-fluid .content {
+    margin-left: 60px; /* Default margin for collapsed sidebar */
+    transition: margin-left 0.5s ease;
+}
+
+/* Shift the content when the sidebar is hovered */
+.mod-nav:hover ~ .container-fluid .content {
+    margin-left: 250px; /* Shift content when sidebar expands */
+}
+
+.mod-nav ul {
+    text-decoration: none; /* Removes the underline from links */
+    list-style-type: none; /* Removes the dots */
+    padding: 0;
+    margin: 0;
+}
+
+/* Navigation icons and text */
+.mod-nav ul li a {
+    color: #561c24; /* Optional hover effect */
+}
+
+.mod-nav ul li a:hover {
+    text-decoration: none; /* Removes the underline from links */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #ffaf45;
+}
+.mod-nav ul li a span {
+    display: none; /* Hide the text when collapsed */
+}
+
+.mod-nav:hover ul li a span {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+/* Profile section */
+.mod-nav .profile {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 16px;
+}
+
+.mod-nav .profile .user-indicator img {
+    object-fit: cover;
+    border-radius: 10%;
+    width: 50px;
+    height: 50px;
+}
+
+.mod-nav:hover .profile label {
+    display: block;
+}
+
+/* Bottom navigation */
+.bottom-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 80px;
+    width: calc(100% - 40px);
+}
+
+.bottom-nav a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+}
+
+.bottom-nav span {
+    display: none;
+}
+
+.mod-nav:hover .bottom-nav span {
+    display: inline-block;
+    margin-left: 8px;
+}
+
+@media screen and (max-width: 768px) {
+    .mod-nav {
+        display: none; /* Hide sidebar on phones and tablets */
+    }
+
+    /* Remove left margin for content so it centers properly */
+    .container-fluid .content {
+        margin-left: 0; /* No margin on smaller screens */
+        width: 100%; /* Full width */
+    }
+}
