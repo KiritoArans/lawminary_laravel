@@ -1,20 +1,22 @@
-/* Hide the nav by default */
+/* Mobile and Tablet (Burger Navigation) */
 #navList {
     position: fixed;
     top: 0;
     right: -300px; /* Start it off-screen */
-    width: 250px;
+    width: 200px;
     height: 100vh;
     background-color: #fff;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+
     transition: right 0.4s ease;
     z-index: 1000;
     padding: 20px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Show the nav when the burger is clicked */
 #navList.show {
     right: 0;
 }
@@ -31,40 +33,190 @@
 }
 
 #navList ul li a {
+    display: flex;
+    align-items: center;
+    color: #561c24;
     text-decoration: none;
-    color: #333;
+    transition: color 0.3s ease;
     font-size: 18px;
     font-weight: bold;
-}
-
-.burger-menu {
-    cursor: pointer;
-    font-size: 24px;
-    position: absolute;
-    right: 20px; /* Make sure the burger menu is on the right side */
-    top: 0px;
 }
 
 /* Profile section inside the nav */
 .profile {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
+    height: 80px; /* Reserve space for profile and username, even when collapsed */
+    flex-direction: column;
+    transition: none; /* Prevent any shifting during hover */
 }
 
 .profile img {
+    object-fit: cover;
+    border-radius: 50%;
     width: 50px;
     height: 50px;
-    border-radius: 50%;
+    margin-bottom: 5px; /* Space between profile picture and username */
+    transition: none; /* No transition to avoid movement */
 }
 
 .profile label {
     margin-top: 10px;
     font-weight: bold;
+    white-space: nowrap; /* Prevents text from wrapping */
+    overflow: hidden; /* Hides overflowed text */
+    text-overflow: ellipsis; /* Adds "..." when text overflows */
+    max-width: 150px; /* Ensure the label does not exceed a limited width */
+    text-align: center; /* Center align the text */
+    display: inline-block;
 }
 
 /* Bottom logout navigation */
+.bottom-nav-burger {
+    margin-top: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bottom-nav-burger a {
+    text-decoration: none;
+    color: #561c24;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Burger menu button */
+.burger-menu {
+    cursor: pointer;
+    font-size: 24px;
+    position: absolute;
+    right: 20px;
+    top: 0px;
+}
+
+/* Hide burger menu for PC */
+@media screen and (min-width: 769px) {
+    .burger-menu {
+        display: none;
+    }
+}
+
+/* Show burger menu for mobile/tablet */
+@media screen and (max-width: 768px) {
+    .burger-menu {
+        display: block;
+    }
+}
+
+/* Sidebar (fixed on the left side of the page) */
+.mod-nav {
+    position: fixed; /* Keep the sidebar fixed on the left side */
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 60px; /* Collapsed width */
+    background-color: #ffffff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.4s ease; /* Smooth expansion on hover */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Optional for styling */
+    z-index: 1;
+}
+
+/* Sidebar expands on hover */
+.mod-nav:hover {
+    width: 200px; /* Expanded width */
+}
+
+/* Sidebar profile */
+.mod-nav .profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 16px;
+    height: 80px; /* Reserve space for profile and username, even when collapsed */
+    flex-direction: column;
+    transition: none; /* Prevent any shifting during hover */
+}
+
+.mod-nav .profile .user-indicator img {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-bottom: 5px; /* Space between profile picture and username */
+    transition: none; /* No transition to avoid movement */
+}
+
+.mod-nav .profile label {
+    opacity: 0; /* Hide the username text but keep the space */
+    transition: opacity 0.3s ease; /* Only opacity transition */
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    width: 110%; /* Reserve space for the username */
+    line-height: 1; /* Ensure the text doesn't push content down */
+    height: 20px; /* Fixed height for username text */
+}
+
+/* Show the username text on hover */
+.mod-nav:hover .profile label {
+    opacity: 1; /* Show username when the nav expands */
+}
+
+/* Navigation items */
+.mod-nav ul {
+    text-decoration: none; /* Removes the underline from links */
+    list-style-type: none; /* Removes the dots */
+    padding: 0;
+    margin: 0;
+}
+
+/* Navigation icons and text */
+.mod-nav ul li a {
+    display: flex;
+    align-items: center;
+    color: #561c24;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    padding: 10px 0; /* Add padding for consistent vertical spacing */
+    line-height: 1.5; /* Ensure consistent line height */
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Icon styling */
+.mod-nav ul li a i {
+    font-size: 24px;
+    width: 40px; /* Reserve space for icon */
+    text-align: center; /* Center align the icon */
+    line-height: 1.5; /* Match the text line height */
+}
+
+/* Reserve space for text even when collapsed */
+.mod-nav ul li a span {
+    display: inline-block;
+    opacity: 0; /* Initially hide the text but keep its space */
+    width: 150px; /* Reserve enough space for text */
+    transition: opacity 0.3s ease; /* Smooth transition for showing text */
+    line-height: 1.5; /* Ensure text line height matches the icon */
+}
+
+/* Show text on hover */
+.mod-nav:hover ul li a span {
+    opacity: 1; /* Show text on hover */
+    font-size: 18px;
+}
+
+/* Hover effect for the links */
+.mod-nav ul li a:hover {
+    color: #ffaf45; /* Optional hover effect */
+}
+
 .bottom-nav {
     margin-top: auto;
     display: flex;
@@ -72,35 +224,58 @@
     align-items: center;
 }
 
+/* Ensure consistent alignment of logout icon with other icons */
+.bottom-nav i {
+    font-size: 24px;
+    width: 40px; /* Reserve space for icon */
+    text-align: center; /* Align the icon consistently with others */
+    line-height: 1.5; /* Match the line-height of the other icons */
+}
+
+/* Prevent text from wrapping and shifting */
+.bottom-nav span {
+    opacity: 0; /* Initially hide the text */
+    transition: opacity 0.3s ease;
+    display: inline-block;
+    width: 150px; /* Reserve enough space for text */
+    margin-left: 10px;
+    line-height: 1.5; /* Ensure text line height matches the icon */
+    white-space: nowrap; /* Prevent wrapping of text */
+    height: 20px; /* Fix the height to prevent shifting */
+}
+
+/* Show the text on hover (when expanded) */
+.mod-nav:hover .bottom-nav span {
+    opacity: 1;
+}
+
+/* Make sure the logout button and icon are aligned like the others */
 .bottom-nav a {
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    color: #333;
-    font-size: 16px;
+    color: #561c24;
+    padding: 10px 0;
+    width: 100%; /* Ensure the full width so icon and text align properly */
+    transition: color 0.3s ease;
+    height: 40px; /* Ensure the same height for consistent alignment */
+    font-size: 18px;
+    font-weight: bold;
 }
 
-/* Animation effect for smooth sliding */
-@keyframes slideIn {
-    from {
-        right: -300px;
+/* Mobile and Tablet adjustments */
+@media screen and (max-width: 768px) {
+    .mod-nav {
+        display: none; /* Hide sidebar on phones and tablets */
     }
-    to {
-        right: 0;
+
+    /* Remove left margin for content so it centers properly */
+    .container-fluid .content {
+        margin-left: 0; /* No margin on smaller screens */
+        width: 100%; /* Full width */
     }
 }
 
-@keyframes slideOut {
-    from {
-        right: 0;
-    }
-    to {
-        right: -300px;
-    }
-}
-
-#navList.show {
-    animation: slideIn 0.4s forwards;
-}
-
-#navList:not(.show) {
-    animation: slideOut 0.4s forwards;
+.bottom-nav a:hover {
+    color: #ffaf45; /* Optional hover effect */
 }

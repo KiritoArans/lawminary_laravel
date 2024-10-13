@@ -9,8 +9,8 @@
             <form
                 id="filterForm"
                 action="{{ request()->is('admin*') ? route('admin.filterForums') : route('moderator.filterForums') }}"
+                method="GET"
             >
-                method="GET" >
                 <label for="filterForumId">Forum ID:</label>
                 <input type="text" id="filterForumId" name="filterForumId" />
 

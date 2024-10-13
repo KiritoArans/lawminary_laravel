@@ -15,6 +15,7 @@
         />
         <link rel="stylesheet" href="{{ asset('css/base_pagination.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/nav_burger.css') }}" />
+
         <link
             rel="stylesheet"
             href="{{ asset('css/admin/base_admin_table_style.css') }}"
@@ -46,32 +47,34 @@
     </head>
     <body>
         <div class="container-fluid dashboard-content-wrapper">
-            <!-- Header Section -->
-            <header class="row">
-                <div class="col-12 header-top">
-                    @include('includes_syscon.syscon_logo_inc')
-                    @include('includes_accounts.mod_nav_inc')
-                </div>
-                <hr class="divider w-100" />
-                <div class="col-12 header-line">
-                    <h1 class="text-center">Dashboard</h1>
-                    <!-- Centered heading below the logo -->
-                </div>
-            </header>
-            <!-- Main Content Section -->
-            <main class="row w-100">
-                <!-- Dashboard Cards and Chart -->
-                <div class="col-12 dashboard-cards">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        @include('includes_dashboard.pending_inc')
+            @include('includes_accounts.mod_nav_inc')
+
+            <div class="content">
+                <!-- Header Section -->
+                <header class="row">
+                    <div class="col-12 header-top">
+                        @include('includes_syscon.syscon_logo_inc')
                     </div>
-                </div>
+                    <hr class="divider w-100" />
+                    <div class="col-12 header-line">
+                        <h1 class="text-center">Dashboard</h1>
+                        <!-- Centered heading below the logo -->
+                    </div>
+                </header>
+                <!-- Main Content Section -->
+                <main class="row w-100">
+                    <!-- Dashboard Cards and Chart -->
+                    <div class="col-12 dashboard-cards">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            @include('includes_dashboard.pending_inc')
+                        </div>
+                    </div>
 
-                <!-- Chart Section -->
-                @include('includes_dashboard.recent_act_inc')
-            </main>
+                    <!-- Chart Section -->
+                    @include('includes_dashboard.recent_act_inc')
+                </main>
+            </div>
         </div>
-
         <!-- Close main -->
 
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
