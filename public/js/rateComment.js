@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
     const rateForm = document.getElementById('rateForm');
-    const rateModal = document.getElementById('rateModal'); // Get the modal element
+    const rateModal = document.getElementById('rateModal');
 
     rateForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the form from submitting traditionally
+        event.preventDefault(); 
 
-        const formData = new FormData(rateForm); // Prepare form data for AJAX
+        const formData = new FormData(rateForm); 
 
         fetch(rateForm.action, {
             method: 'POST',
@@ -14,20 +14,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             },
         })
-        .then(response => response.json()) // Parse the JSON response
+        .then(response => response.json()) 
         .then(data => {
             if (data.success) {
-                // Display SweetAlert success message
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
                     text: data.message,
                 });
 
-                // Hide the rate modal after success
                 rateModal.style.display = 'none';
             } else {
-                // Display SweetAlert error message
                 Swal.fire({
                     icon: 'error',
                     title: 'Error',
@@ -36,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .catch(error => {
-            // Display error in SweetAlert if something unexpected happens
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
