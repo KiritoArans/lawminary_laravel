@@ -44,6 +44,7 @@
                     id="editPostedBy"
                     name="postedBy"
                     class="form-control"
+                    readonly
                 />
             </div>
             <div class="form-group">
@@ -53,6 +54,7 @@
                     id="editApprovedBy"
                     name="approvedBy"
                     class="form-control"
+                    readonly
                 />
             </div>
             <button

@@ -44,18 +44,18 @@
     <label for="nationality">Nationality:</label>
     <select id="nationality" name="nationality" required>
         <option value="">Select Nationality</option>
-        <!-- Nationalities will be populated here by JavaScript -->
+        <!-- Nationalities will be populated here by JavaScript sssssss-->
     </select>
 
     <label for="sex">Sex:</label>
     <select id="sex" name="sex" required>
-        <option value="male" <?php echo e(old('sex') == 'male' ? 'selected' : ''); ?>>
+        <option value="Male" <?php echo e(old('sex') == 'Male' ? 'selected' : ''); ?>>
             Male
         </option>
-        <option value="female" <?php echo e(old('sex') == 'female' ? 'selected' : ''); ?>>
+        <option value="Female" <?php echo e(old('sex') == 'Female' ? 'selected' : ''); ?>>
             Female
         </option>
-        <option value="other" <?php echo e(old('sex') == 'other' ? 'selected' : ''); ?>>
+        <option value="Other" <?php echo e(old('sex') == 'Other' ? 'selected' : ''); ?>>
             Other
         </option>
     </select>

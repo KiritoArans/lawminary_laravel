@@ -83,6 +83,7 @@ class ForumController extends Controller
             )
             ->where('tblforums.forumName', 'LIKE', "%{$searchTerm}%")
             ->orWhere('tblforums.forumDesc', 'LIKE', "%{$searchTerm}%")
+            ->orWhere('tblforums.forum_id', 'LIKE', "%{$searchTerm}%")
             ->groupBy(
                 'tblforums.forum_id',
                 'tblforums.forumName',

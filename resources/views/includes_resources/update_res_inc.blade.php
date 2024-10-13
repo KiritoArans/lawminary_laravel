@@ -63,13 +63,20 @@
                 </button>
             </form>
             <form
+                id="delete-form-{{ $resource->id }}"
                 method="POST"
                 action="{{ route('moderator.deleteResource', $resource->id) }}"
-                onsubmit="return confirm('Are you sure you want to delete this resource?');"
             >
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="custom-button">Delete</button>
+                @include('inclusions.response')
+                <button
+                    type="button"
+                    class="custom-button"
+                    onclick="confirmDelete('{{ $resource->id }}')"
+                >
+                    Delete
+                </button>
             </form>
         </div>
     </div>

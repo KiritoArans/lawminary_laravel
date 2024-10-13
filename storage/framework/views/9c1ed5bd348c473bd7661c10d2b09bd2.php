@@ -60,8 +60,9 @@
                                 <label for="sex">Sex</label>
                                 <select name="sex" id="" value="<?php echo e(old('sex')); ?>">
                                     <option value="" disabled <?php echo e(old('sex') === null ? 'selected' : ''); ?>>Option</option>
-                                    <option value="male" <?php echo e(old('sex') === 'male' ? 'selected' : ''); ?>>Male</option>
-                                    <option value="female" <?php echo e(old('sex') === 'female' ? 'selected' : ''); ?>>Female</option>
+                                    <option value="Male" <?php echo e(old('sex') === 'Male' ? 'selected' : ''); ?>>Male</option>
+                                    <option value="Female" <?php echo e(old('sex') === 'Female' ? 'selected' : ''); ?>>Female</option>
+                                    <option value="Other" <?php echo e(old('sex') === 'Other' ? 'selected' : ''); ?>>Other</option>
                                 </select>
                             </div>
                             <div class="form-group">

@@ -117,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var formAction = `/admin/account/${id}`;
             document.getElementById('editAccountForm').action = formAction;
+            console.log('Sex:', sex); // Debugging to see the value passed
 
             modal.style.display = 'block';
         });

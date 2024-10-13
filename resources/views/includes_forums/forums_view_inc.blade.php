@@ -57,6 +57,23 @@
                         >
                             Edit
                         </button>
+                        <form
+                            action="{{ route('moderator.deleteForum', ['forum_id' => $forum->forum_id]) }}"
+                            method="POST"
+                            style="display: inline-block"
+                            class="delete-form"
+                        >
+                            @csrf
+                            @method('DELETE')
+
+                            <button
+                                type="button"
+                                class="custom-button delete-button"
+                                onclick="confirmDelete(this)"
+                            >
+                                Delete
+                            </button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
@@ -112,30 +129,12 @@
                     type="date"
                     id="editDateCreated"
                     name="dateCreated"
-                    required
+                    readonly
                 />
 
                 <!-- Submit Button -->
                 <button type="submit" class="custom-button">
                     Save Changes
-                </button>
-            </form>
-
-            <form
-                action="{{ route('moderator.deleteForum', ['forum_id' => $forum->forum_id]) }}"
-                method="POST"
-                style="display: inline-block"
-                class="delete-form"
-            >
-                @csrf
-                @method('DELETE')
-
-                <button
-                    type="button"
-                    class="custom-button delete-button"
-                    onclick="confirmDelete(this)"
-                >
-                    Delete
                 </button>
             </form>
         </div>

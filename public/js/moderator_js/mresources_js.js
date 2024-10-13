@@ -146,7 +146,6 @@ function bindViewButtons() {
         });
     });
 }
-
 function confirmDelete(resourceId) {
     // Show SweetAlert2 confirmation dialog
     Swal.fire({
@@ -163,10 +162,15 @@ function confirmDelete(resourceId) {
             // If user confirms, submit the form programmatically
             document.getElementById(`delete-form-${resourceId}`).submit();
 
-            // Optionally show another alert after submission
-            Swal.fire('Deleted!', 'The resource has been deleted.', 'success');
+            // Show a success message after submission
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'The resource has been deleted.',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });
         } else {
-            // Optional: Handle the case when user cancels
+            // Optional: Show cancellation message
             Swal.fire('Cancelled', 'Your resource is safe!', 'info');
         }
     });

@@ -46,12 +46,13 @@
     </head>
     <body>
         <div class="container-fluid">
+            <?php echo $__env->make('includes_accounts.nav_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
             <div class="row justify-content-center">
                 <header>
                     <div
                         class="header-top d-flex justify-content-between align-items-center"
                     >
-                        <?php echo $__env->make('includes_accounts.nav_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                         <?php echo $__env->make('includes_syscon.syscon_logo_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                     </div>
                     <hr class="divider w-100" />
@@ -82,7 +83,7 @@
                                     >
                                         &times;
                                     </span>
-                                 
+
                                     <div id="pendingPostsContainer">
                                         <!-- Dynamic content will be added here -->
                                     </div>

@@ -60,8 +60,9 @@
                                 <label for="sex">Sex</label>
                                 <select name="sex" id="" value="{{ old('sex') }}">
                                     <option value="" disabled {{ old('sex') === null ? 'selected' : '' }}>Option</option>
-                                    <option value="male" {{ old('sex') === 'male' ? 'selected' : '' }}>Male</option>
-                                    <option value="female" {{ old('sex') === 'female' ? 'selected' : '' }}>Female</option>
+                                    <option value="Male" {{ old('sex') === 'Male' ? 'selected' : '' }}>Male</option>
+                                    <option value="Female" {{ old('sex') === 'Female' ? 'selected' : '' }}>Female</option>
+                                    <option value="Other" {{ old('sex') === 'Other' ? 'selected' : '' }}>Other</option>
                                 </select>
                             </div>
                             <div class="form-group">

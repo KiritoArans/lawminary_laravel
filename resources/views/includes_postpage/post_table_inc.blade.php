@@ -36,7 +36,7 @@
                     </td>
                     <td>{{ $activity->status }}</td>
                     <td>{{ $activity->tags }}</td>
-                    <td>{{ $activity->postedBy }}</td>
+                    <td>{{ $activity->user->username }}</td>
                     <td>{{ $activity->approvedBy }}</td>
                     <td
                         class="clickable-cell"

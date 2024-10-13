@@ -38,7 +38,7 @@
                     </td>
                     <td><?php echo e($activity->status); ?></td>
                     <td><?php echo e($activity->tags); ?></td>
-                    <td><?php echo e($activity->postedBy); ?></td>
+                    <td><?php echo e($activity->user->username); ?></td>
                     <td><?php echo e($activity->approvedBy); ?></td>
                     <td
                         class="clickable-cell"
