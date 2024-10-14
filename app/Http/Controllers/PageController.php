@@ -340,27 +340,33 @@ class PageController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $likes = Posts::whereIn('post_id', function ($query) use ($user) {
-            $query
-                ->select('post_id')
-                ->from('tbllikes')
-                ->where('user_id', $user->user_id);
-        })
+        $likes = Posts::whereIn('tblposts.post_id', function ($query) use ($user) {
+                $query
+                    ->select('post_id')
+                    ->from('tbllikes')
+                    ->where('user_id', $user->user_id);
+            })
+            ->join('tbllikes', 'tblposts.post_id', '=', 'tbllikes.post_id')
+            ->where('tbllikes.user_id', $user->user_id)
             ->with(['user'])
             ->withCount('likes', 'comments', 'bookmarks')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('tbllikes.created_at', 'desc') 
             ->get();
+    
 
-        $bookmarks = Posts::whereIn('post_id', function ($query) use ($user) {
-            $query
-                ->select('post_id')
-                ->from('tblbookmarks')
-                ->where('user_id', $user->user_id);
-        })
+        $bookmarks = Posts::whereIn('tblposts.post_id', function ($query) use ($user) {
+                $query
+                    ->select('post_id')
+                    ->from('tblbookmarks')
+                    ->where('user_id', $user->user_id);
+            })
+            ->join('tblbookmarks', 'tblposts.post_id', '=', 'tblbookmarks.post_id')
+            ->where('tblbookmarks.user_id', $user->user_id)
             ->with('user')
             ->withCount('likes', 'comments', 'bookmarks')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('tblbookmarks.created_at', 'desc') 
             ->get();
+    
 
         return compact(
             'posts',

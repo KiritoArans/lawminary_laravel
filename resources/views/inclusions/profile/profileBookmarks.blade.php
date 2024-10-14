@@ -24,7 +24,13 @@
                 </div>
                 <hr>
                 <div class="post-text">
-                    <p>{{ $post->concern ?? 'No content available' }}</p> 
+                    <p>{{ $post->concern }}</p>
+                    @if ($post->concernPhoto)
+                        <img
+                            src="{{ Storage::url($post->concernPhoto) }}"
+                            alt="Concern Photo"
+                        />
+                    @endif
                 </div>
                 <hr>
                 <div class="actions">

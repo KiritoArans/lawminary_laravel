@@ -25,7 +25,13 @@
                 </div>
                 <hr>
                 <div class="post-text">
-                    <p><?php echo e($post->concern ?? 'No content available'); ?></p> <!-- Post content -->
+                    <p><?php echo e($post->concern); ?></p>
+                    <?php if($post->concernPhoto): ?>
+                        <img
+                            src="<?php echo e(Storage::url($post->concernPhoto)); ?>"
+                            alt="Concern Photo"
+                        />
+                    <?php endif; ?>
                 </div>
                 <hr>
                 <div class="actions">
