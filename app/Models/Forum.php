@@ -11,16 +11,12 @@ class Forum extends Model
 
     protected $table = 'tblforums';
 
-    protected $fillable = [
-        'forum_id',
-        'forumName',
-        'forumDesc',
-    ];
+    protected $fillable = ['forum_id', 'forumName', 'forumPhoto', 'forumDesc'];
 
     public function likes()
     {
         return $this->hasMany(Like::class, 'post_id', 'post_id');
-    }    
+    }
 
     public function comments()
     {
@@ -30,7 +26,7 @@ class Forum extends Model
     public function bookmarks()
     {
         return $this->hasMany(Bookmark::class, 'post_id', 'post_id');
-    } 
+    }
 
     public function user()
     {

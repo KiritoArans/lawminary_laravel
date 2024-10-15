@@ -46,16 +46,10 @@
                 </td>
 
                 <!-- Modal Structure -->
-                <div id="imageModalPic" class="modalPic">
+                <div id="imageModalPic" class="modalPic" style="display: none">
                     <span class="close-modalPic" id="closeModalPic">
                         &times;
                     </span>
-                    <img id="fullImage" src="" alt="Full Image" />
-                </div>
-
-                <!-- Modal Structure -->
-                <div id="imageModalPic" class="modalPic" style="display: none">
-                    <span class="close-modalPic">&times;</span>
                     <img
                         id="fullImage"
                         src=""
@@ -63,6 +57,7 @@
                         style="width: 50%; height: 50%"
                     />
                 </div>
+
                 <td
                     class="clickable-cell"
                     data-full-text="<?php echo e($account->username); ?>"

@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var editButtons = document.querySelectorAll('.edit-button');
     var editModal = document.getElementById('editForumModal');
     var closeEditModal = document.getElementById('closeEditForumModal');
+    var deleteForm = document.getElementById('deleteForumForm');
 
     // Add click event listener to each edit button
     editButtons.forEach(function (button) {
@@ -48,9 +49,12 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('editForumDescription').value = forumDesc;
             document.getElementById('editDateCreated').value = dateCreated;
 
-            // Set the form action dynamically
-            var form = document.getElementById('editForumForm');
-            form.action = form.action.replace(':forum_id', forumId);
+            // Set the form action dynamically for the edit form
+            var editForm = document.getElementById('editForumForm');
+            editForm.action = `/moderator/forums/${forumId}/edit`;
+
+            // Set the form action dynamically for the delete form
+            deleteForm.action = `/moderator/forums/${forumId}/delete`;
 
             // Show the modal
             editModal.style.display = 'block';
@@ -68,6 +72,26 @@ document.addEventListener('DOMContentLoaded', function () {
             editModal.style.display = 'none';
         }
     };
+
+    // Delete button event inside the modal
+    document.querySelectorAll('.delete-button').forEach(function (button) {
+        button.addEventListener('click', function () {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to undo this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Submit the form associated with the delete button
+                    button.closest('form').submit();
+                }
+            });
+        });
+    });
 });
 
 /delete button/;
@@ -151,3 +175,28 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+// Open modal when the image is clicked
+document.querySelectorAll('.clickable-photo').forEach((img) => {
+    img.addEventListener('click', function () {
+        var modal = document.getElementById('imageModalPic');
+        var fullImage = document.getElementById('fullImage');
+        fullImage.src = this.getAttribute('data-fullsize');
+        modal.style.display = 'flex'; // Use flex to center the image
+    });
+});
+
+// Close modal when the "X" button is clicked
+document.getElementById('closeModalPic').addEventListener('click', function () {
+    var modal = document.getElementById('imageModalPic');
+    modal.style.display = 'none';
+});
+
+// Close modal when clicking outside the image
+document
+    .getElementById('imageModalPic')
+    .addEventListener('click', function (event) {
+        if (event.target === this) {
+            this.style.display = 'none';
+        }
+    });

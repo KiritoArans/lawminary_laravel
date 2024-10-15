@@ -32,13 +32,15 @@ class ForumController extends Controller
                 'tblforums.forumName',
                 'tblforums.forumDesc',
                 'tblforums.created_at',
+                'tblforums.forumPhoto',
                 DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
             )
             ->groupBy(
                 'tblforums.forum_id',
                 'tblforums.forumName',
                 'tblforums.forumDesc',
-                'tblforums.created_at'
+                'tblforums.created_at',
+                'tblforums.forumPhoto'
             )
             ->orderBy('tblforums.created_at', 'desc');
 

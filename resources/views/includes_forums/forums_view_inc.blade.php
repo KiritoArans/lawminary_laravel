@@ -20,6 +20,27 @@
                     >
                         {{ Str::limit($forum->forum_id, 10) }}
                     </td>
+                    <td>
+                        @if ($forum->forumPhoto)
+                            <img
+                                src="{{ Storage::url($forum->forumPhoto) }}"
+                                alt=" Photo"
+                                width="50"
+                                height="50"
+                                class="clickable-photo"
+                                data-fullsize="{{ Storage::url($forum->forumPhoto) }}"
+                            />
+                        @else
+                            <img
+                                src="{{ asset('imgs/user-img.png') }}"
+                                alt="No Photo Available"
+                                width="50"
+                                height="50"
+                                class="clickable-photo"
+                                data-fullsize="{{ asset('imgs/user-img.png') }}"
+                            />
+                        @endif
+                    </td>
                     <td
                         class="clickable-cell"
                         data-full-text="{{ $forum->forumName }}"
@@ -52,41 +73,16 @@
                             data-forum-id="{{ $forum->forum_id }}"
                             data-forum-name="{{ $forum->forumName }}"
                             data-forum-desc="{{ $forum->forumDesc }}"
-                            data-members-count="{{ $forum->membersCount }}"
                             data-date-created="{{ \Carbon\Carbon::parse($forum->created_at)->format('Y-m-d') }}"
+                            onclick="openEditForumModal(this)"
                         >
                             Edit
                         </button>
-                        <form
-                            action="{{ route('moderator.deleteForum', ['forum_id' => $forum->forum_id]) }}"
-                            method="POST"
-                            style="display: inline-block"
-                            class="delete-form"
-                        >
-                            @csrf
-                            @method('DELETE')
-
-                            <button
-                                type="button"
-                                class="custom-button delete-button"
-                                onclick="confirmDelete(this)"
-                            >
-                                Delete
-                            </button>
-                        </form>
                     </td>
                 </tr>
             @endforeach
         </tbody>
     </table>
-
-    <!-- Modal for showing cell data -->
-    <div id="textModalCell" class="modal unique-modal">
-        <div class="modal-content">
-            <span class="close-modal unique-close">&times;</span>
-            <p id="fullText"></p>
-        </div>
-    </div>
 
     <!-- Modal for editing forum -->
     <div id="editForumModal" class="modal">
@@ -137,6 +133,25 @@
                     Save Changes
                 </button>
             </form>
+
+            <!-- Delete Forum Form (Inside the Modal) -->
+            <form
+                id="deleteForumForm"
+                method="POST"
+                class="delete-form"
+                style="margin-top: 20px"
+            >
+                @csrf
+                @method('DELETE')
+
+                <button
+                    type="button"
+                    class="custom-button delete-button"
+                    onclick="confirmDelete(this)"
+                >
+                    Delete
+                </button>
+            </form>
         </div>
     </div>
 </div>
@@ -183,4 +198,15 @@
             </a>
         </li>
     </ul>
+</div>
+
+<!-- Modal Structure -->
+<div id="imageModalPic" class="modalPic" style="display: none">
+    <span class="close-modalPic" id="closeModalPic">&times;</span>
+    <img
+        id="fullImage"
+        src=""
+        alt="Full Image"
+        style="width: 50%; height: 50%"
+    />
 </div>
