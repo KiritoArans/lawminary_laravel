@@ -69,7 +69,7 @@ class LeaderboardController extends Controller
             ) // Adjusted join condition
             ->select('tblleaderboards.*', 'tblaccounts.username') // Select leaderboards data and username
             ->orderBy('tblleaderboards.rankPoints', 'desc')
-            ->get();
+            ->paginate(10);
 
         // Pass the data to the view
         return view('moderator.mleaderboards', compact('leaderboards'));

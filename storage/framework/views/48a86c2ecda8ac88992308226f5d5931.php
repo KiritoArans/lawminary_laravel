@@ -23,6 +23,4 @@
         </button>
     </div>
 </div>
-<?php
-/**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/includes_postpage/post_report_inc.blade.php ENDPATH**/
-?>
+<?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/includes_postpage/post_report_inc.blade.php ENDPATH**/ ?>

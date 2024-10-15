@@ -110,3 +110,46 @@
         <img id="fullImage" src="" alt="Full Size Image" style="width: 100%" />
     </div>
 </div>
+
+<div class="paginationContent">
+    <ul class="pagination">
+        <li
+            class="page-item {{ $leaderboards->currentPage() == 1 ? 'disabled' : '' }}"
+            aria-disabled="{{ $leaderboards->currentPage() == 1 }}"
+        >
+            <a
+                class="page-link"
+                href="{{ $leaderboards->appends(request()->input())->previousPageUrl() }}"
+                rel="prev"
+            >
+                &laquo;
+            </a>
+        </li>
+
+        @for ($i = 1; $i <= $leaderboards->lastPage(); $i++)
+            <li
+                class="page-item {{ $leaderboards->currentPage() == $i ? 'active' : '' }}"
+            >
+                <a
+                    class="page-link"
+                    href="{{ $leaderboards->appends(request()->input())->url($i) }}"
+                >
+                    {{ $i }}
+                </a>
+            </li>
+        @endfor
+
+        <li
+            class="page-item {{ $leaderboards->hasMorePages() ? '' : 'disabled' }}"
+            aria-disabled="{{ ! $leaderboards->hasMorePages() }}"
+        >
+            <a
+                class="page-link"
+                href="{{ $leaderboards->appends(request()->input())->nextPageUrl() }}"
+                rel="next"
+            >
+                &raquo;
+            </a>
+        </li>
+    </ul>
+</div>

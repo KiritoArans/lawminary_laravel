@@ -5,7 +5,6 @@
 <div id="pendingPostsModal" class="modal">
     <div class="modal-content">
         <span class="close-button" id="closeModal">&times;</span>
-      
 
         <!-- Your Pending Posts Table goes here -->
         <table class="table table-striped table-bordered">

@@ -2,7 +2,7 @@
 <div id="filterModal" class="modal">
     <div class="modal-content">
         <span class="close-button" id="closeFilterModal">&times;</span>
-       
+
         <form
             id="filterForm"
             method="GET"
