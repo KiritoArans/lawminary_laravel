@@ -50,7 +50,9 @@
                         {{ $loop->index + 1 }}
                     </div>
                     <div class="lawyer-user">
+                        {{-- <a href="{{ Auth::check() && Auth::user()->user_id == $leaderboard->lawyerUser_id ? route('profile') : route('visit-profile', ['user_id' => $leaderboard->lawyerUser_id]) }}"> --}}
                         <span>Atty. {{ $leaderboard->firstName }} {{ $leaderboard->lastName }}</span>
+                        {{-- </a> --}}
                     </div>
                     <div class="points">
                         <span>{{ $leaderboard->rankPoints }} Points</span>

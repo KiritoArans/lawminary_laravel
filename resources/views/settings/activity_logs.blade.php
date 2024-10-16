@@ -28,41 +28,43 @@
                     <hr class="divider" />
                 </header>
                 <content>
-                    <div class="logs">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Activity</th>
-                                    <th>Details</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>2024-06-14</td>
-                                    <td>Like</td>
-                                    <td>You liked a post by John Doe</td>
-                                </tr>
-                                <tr>
-                                    <td>2024-06-13</td>
-                                    <td>Comment</td>
-                                    <td>
-                                        You commented on a post by Jane Smith
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>2024-06-12</td>
-                                    <td>Post</td>
-                                    <td>You created a new post</td>
-                                </tr>
-                                <tr>
-                                    <td>2024-06-11</td>
-                                    <td>Share</td>
-                                    <td>You shared a post by Alex Brown</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="log-header">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <h1>Activity Logs</h1>
                     </div>
+
+                    @if($activities->isEmpty())
+                        <p>No activities found for this user.</p>
+                    @else
+                        @foreach($activities as $activity)
+                            <div class="logs">
+                                @if($activity->type === 'post')
+                                    <p><strong>You Posted:</strong> Post ID {{ $activity->post_id }} on {{ $activity->created_at }}</p>
+                                @elseif($activity->type === 'comment')
+                                    <p><strong>You Commented:</strong> Comment ID {{ $activity->comment_id }} on Post ID {{ $activity->post_id }} on {{ $activity->created_at }}</p>
+                                @elseif($activity->type === 'like')
+                                    <p><strong>You Liked:</strong> Post ID {{ $activity->post_id }} on {{ $activity->created_at }}</p>
+                                @elseif($activity->type === 'bookmark')
+                                    <p><strong>You Bookmarked:</strong> Post ID {{ $activity->post_id }} on {{ $activity->created_at }}</p>
+                                @elseif($activity->type === 'point')
+                                    <p><strong>You Earned Points:</strong> {{ $activity->points }} on {{ $activity->created_at }}</p>
+                                @elseif($activity->type === 'rate')
+                                    <p><strong>You Rated:</strong> {{ $activity->rate }} stars on {{ $activity->created_at }}</p>
+                                @elseif($activity->type === 'forum_post')
+                                    <p><strong>You Forum Post:</strong> Forum ID {{ $activity->forum_id }} on {{ $activity->created_at }}</p>
+                                @elseif($activity->type === 'forum_member')
+                                    <p><strong>You Joined Forum:</strong> Forum ID {{ $activity->forum_id }} on {{ $activity->created_at }}</p>
+                                @elseif($activity->type === 'following')
+                                    <p><strong>You Followed:</strong> User ID {{ $activity->following }} on {{ $activity->created_at }}</p>
+                                @elseif($activity->type === 'follower')
+                                    <p><strong>You Was Followed by:</strong> User ID {{ $activity->follower }} on {{ $activity->created_at }}</p>
+                                @endif
+                                <a type="button">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>
+                            </div>
+                        @endforeach
+                    @endif
                 </content>
             </main>
         </div>

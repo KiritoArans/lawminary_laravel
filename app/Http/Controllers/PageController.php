@@ -17,6 +17,7 @@ use App\Models\Point;
 use App\Http\Controllers\LeaderboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 
 class PageController extends Controller
 {
@@ -89,7 +90,6 @@ class PageController extends Controller
     {
         $searchTerm = $request->input('query');
         
-        // If a search term exists, fetch articles matching the search term
         if ($searchTerm) {
             $articles = DB::table('tblbooktwo')
                 ->where('article_name', 'LIKE', '%' . $searchTerm . '%')
@@ -97,14 +97,13 @@ class PageController extends Controller
                 ->orWhere('title', 'LIKE', '%' . $searchTerm . '%')
                 ->paginate(3); // Adjust the number of articles per page
         } 
-        // If no search term, fetch random articles
+
         else {
             $articles = DB::table('tblbooktwo')
                 ->inRandomOrder()
                 ->paginate(3); // Adjust the number of articles per page
         }
     
-        // Return the view with articles
         return view('users.article', compact('articles', 'searchTerm'));
     }
     
@@ -439,8 +438,13 @@ class PageController extends Controller
         ->get();
 
         $comments = Comment::where('user_id', $user->user_id)
+            ->whereIn('post_id', function($query) {
+                $query->select('post_id')
+                    ->from('tblposts'); 
+            })
             ->orderBy('created_at', 'desc')
             ->get();
+
 
         $likes = Posts::whereIn('tblposts.post_id', function ($query) use ($user) {
                 $query
@@ -533,7 +537,82 @@ class PageController extends Controller
 
     public function showActLogsPage()
     {
-        return view('settings.activity_logs');
+        $user_id = Auth::user()->user_id; // This fetches the user's 'user_id' from the database
+    
+        // 1. Get activities from different tables
+    
+        // Posts
+        $followings = DB::table('tblfollowings')
+            ->where('follower', $user_id)  // Fetch where the user is the follower
+            ->orWhere('following', $user_id) // Fetch where the user is being followed
+            ->select('follower', 'following', 'created_at', 'updated_at', DB::raw("'following' as type"))
+            ->get();
+
+        $posts = DB::table('tblposts')
+            ->where('postedBy', $user_id)
+            ->select('post_id', 'concern', 'created_at', 'updated_at', DB::raw("'post' as type"))
+            ->get();
+    
+        // Comments
+        $comments = DB::table('tblcomments')
+            ->where('user_id', $user_id)
+            ->select('comment_id', 'post_id', 'created_at', 'updated_at', DB::raw("'comment' as type"))
+            ->get();
+    
+        // Likes
+        $likes = DB::table('tbllikes')
+            ->where('user_id', $user_id)
+            ->select('post_id', 'created_at', 'updated_at', DB::raw("'like' as type"))
+            ->get();
+    
+        // Bookmarks
+        $bookmarks = DB::table('tblbookmarks')
+            ->where('user_id', $user_id)
+            ->select('post_id', 'created_at', 'updated_at', DB::raw("'bookmark' as type"))
+            ->get();
+    
+        // Points (if user has points activity)
+        $points = DB::table('tblpoints')
+            ->where('lawyerUser_id', $user_id)
+            ->select('id', 'points', 'created_at', 'updated_at', DB::raw("'point' as type"))
+            ->get();
+    
+        // Ratings (if user has ratings activity)
+        $ratings = DB::table('tblrates')
+            ->where('user_id', $user_id)
+            ->select('id', 'rate', 'created_at', 'updated_at', DB::raw("'rate' as type"))
+            ->get();
+    
+        // Forum Posts (if user participated in forums)
+        $forumPosts = DB::table('tblforumposts')
+            ->where('postedBy', $user_id)
+            ->select('forum_id', 'created_at', 'updated_at', DB::raw("'forum_post' as type"))
+            ->get();
+    
+        // Forum Memberships (if user is a member of any forums)
+        $forumMemberships = DB::table('tblforummembers')
+            ->where('user_id', $user_id)
+            ->select('forum_id', 'created_at', 'updated_at', DB::raw("'forum_member' as type"))
+            ->get();
+    
+        // 2. Merge and sort all activities
+    
+        $activities = collect()
+            ->merge($followings)
+            ->merge($posts)
+            ->merge($comments)
+            ->merge($likes)
+            ->merge($bookmarks)
+            ->merge($points)
+            ->merge($ratings)
+            ->merge($forumPosts)
+            ->merge($forumMemberships);
+    
+
+        $sortedActivities = $activities->sortByDesc('created_at')->values();
+    
+        // 3. Pass the sorted activities to the view
+        return view('settings.activity_logs', ['activities' => $sortedActivities]);
     }
 
     public function showFeedbackPage()

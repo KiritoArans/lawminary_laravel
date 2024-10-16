@@ -154,18 +154,19 @@ header hr {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     align-items: center; 
 }
+.leaderboards-content a{
+    
+    text-decoration: none;
+}
 .leaderboards-content:nth-child(2){
-    /* background-color: #F3C623; */
     background: linear-gradient(135deg, #F3C623, #F5D547, #E0B821);
     color: #8B6508;
 }
 .leaderboards-content:nth-child(3){
-    /* background-color: silver; */
     background: linear-gradient(135deg, #C0C0C0, #D3D3D3, #A9A9A9);
     color: #686D76;
 }
 .leaderboards-content:nth-child(4){
-    /* background-color: #654520; */
     background: linear-gradient(135deg, #CD7F32, #D8A285, #A97142);
     color: #654520;
 }

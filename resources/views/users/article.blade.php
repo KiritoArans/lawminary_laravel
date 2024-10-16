@@ -38,27 +38,11 @@
                 </div>
             </header>
         <content>
-            {{-- <div class="article">
-                <div class="article-content">
-                    <h1>Article 1</h1>
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid culpa libero soluta quibusdam, itaque delectus. Est vitae veritatis quibusdam, esse enim porro, cupiditate magni iure voluptatem, voluptate recusandae ad ratione!</p>
-                </div>
-                <div class="more-article">
-                    <div class="article-content">
-                        <h1>Article 2</h1>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid culpa libero soluta quibusdam, itaque delectus. Est vitae veritatis quibusdam, esse enim porro, cupiditate magni iure voluptatem, voluptate recusandae ad ratione!</p>
-                    </div>
-                    <div class="article-content">
-                        <h1>Article 3</h1>
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid culpa libero soluta quibusdam, itaque delectus. Est vitae veritatis quibusdam, esse enim porro, cupiditate magni iure voluptatem, voluptate recusandae ad ratione!</p>
-                    </div>
-                </div>
-            </div> --}}
             @if($articles->isNotEmpty())
                 <div class="article">
                     <div class="article-content">
                         <h1>Article {{ $articles[0]->article_no }}: {{ $articles[0]->article_name }}</h1>
-                        <p>{{ $articles[0]->description }}</p> <!-- Summarized version -->
+                        <p>{{ $articles[0]->description }}</p> 
                     </div>
                     <div class="more-article">
                         @if(isset($articles[1]))
