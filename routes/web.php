@@ -90,6 +90,8 @@ Route::get('/home-search', [PageController::class, 'showHomeSearchPage'])
 Route::get('/article', [PageController::class, 'showArticlePage'])->middleware(
     'auth'
 );
+Route::get('/article-searched', [PageController::class, 'showArticlePage'])->name('search.articles');
+
 
 Route::get('/leaderboards', [PageController::class, 'showLeaderboardsPage'])->middleware(
     'auth'

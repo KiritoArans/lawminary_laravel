@@ -41,17 +41,20 @@
                                     class="profile-photo"
                                     alt="Profile Picture"/>
                                 <div class="profile-info">
-                                    <h2>
-                                        {{ Auth::user()->firstName }}
-                                        {{ Auth::user()->lastName }}
-                                    </h2>
-                                    <h4>
-                                        @<span>{{ Auth::user()->username }}</span>
-                                    </h4>
+                                    <div class="profile-names">
+                                        <h2>
+                                            {{ $user->accountType === 'Lawyer' ? 'Atty. ' : '' }}
+                                            {{ $user->firstName }} {{ $user->lastName }}
+                                        </h2>
+                                        @if ($user->accountType === 'Lawyer')
+                                            <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank">
+                                        @endif
+                                    </div>
+                                    <h4>@<span>{{ $user->username }}</span></h4>
                                     <div class="profile-badge">
                                         <span class="badge">
-                                            {{ Auth::user()->accountType }}
-                                        </span>
+                                            {{ $user->accountType }}{{ $user->accountType === 'Lawyer' ? ' | ' . $averageRating : '' }}
+                                        </span>                                    
                                     </div>
                                 </div>
                             </div>

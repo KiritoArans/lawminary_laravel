@@ -73,12 +73,13 @@ header hr {
     cursor: pointer;
 }
 .header-buttons button:hover {
-    background-color: var(--text-color1);
+    background-color: var(--primary-color);
 }
-.current-tab{
+.header-buttons .current-tab{
     font-weight: bold;
     scale: 1.15;
     margin: 0 8px;
+    background-color: var(--primary-color);
 }
 
 .search-bar {
@@ -95,8 +96,18 @@ header hr {
 }
 .search-bar i {
     position: absolute;
-    left: 8px;
+    left: .5rem;
+    top: .6rem;
     color: var(--primary-color);
+}
+.search-bar button{
+    padding: .6rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    background-color: var(--primary-color);
 }
 
 .notification {

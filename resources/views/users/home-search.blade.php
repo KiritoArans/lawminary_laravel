@@ -48,7 +48,6 @@
             <content>
                 <div class="search-results">
 
-                    <!-- Navigation Tabs -->
                     <div class="home-search-nav">
                         <span id="all-tab" class="active">All</span>
                         <span id="user-tab">User</span>

@@ -33,10 +33,20 @@
                         <div class="profile-left">
                             <img src="{{ $user->userPhoto ? Storage::url($user->userPhoto) : '../../imgs/user-img.png' }}" class="profile-photo" alt="Profile Picture">
                             <div class="profile-info">
-                                <h2>{{ $user->accountType === 'Lawyer' ? 'Atty. ' : '' }}{{ $user->firstName }} {{ $user->lastName }}</h2>
+                                <div class="profile-names">
+                                    <h2>
+                                        {{ $user->accountType === 'Lawyer' ? 'Atty. ' : '' }}
+                                        {{ $user->firstName }} {{ $user->lastName }}
+                                    </h2>
+                                    @if ($user->accountType === 'Lawyer')
+                                        <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank">
+                                    @endif
+                                </div>
                                 <h4>@<span>{{ $user->username }}</span></h4>
                                 <div class="profile-badge">
-                                    <span class="badge">{{ $user->accountType }}</span>
+                                    <span class="badge">
+                                        {{ $user->accountType }}{{ $user->accountType === 'Lawyer' ? ' | ' . $averageRating : '' }}
+                                    </span>                                    
                                 </div>
                             </div>
                         </div>

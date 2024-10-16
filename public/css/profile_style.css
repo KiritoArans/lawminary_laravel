@@ -117,10 +117,21 @@ header hr {
     align-items: flex-start;
 }
 
-.profile-info h2 {
-    margin: 0;
+.profile-names{
+    display: flex;
+}
+
+.profile-names h2 {
+    margin: .1rem 0 0 0;
     font-size: 24px;
     color: var(--text-color1);
+    align-items: center;
+}
+
+.profile-info .badge-rank{
+    height: auto;
+    width: 2rem;
+    margin: 0 0 0 .5rem;
 }
 
 .profile-info h4 {
@@ -129,16 +140,23 @@ header hr {
     color: var(--text-color3);
 }
 
+.ratings{
+    margin-left: 1rem;
+    align-items: center;
+}
+
 .profile-badge{
-    margin-top: 1rem;
+    margin-top: .5rem;
+    display: flex;
+    font-size: 1rem;
 }
 
 .badge{
-    font-size: .8rem;
+    font-size: .9rem;
     border: 1px solid gray;
     padding: 4px 8px;
     background-color: gray;
-    border-radius: 10%;
+    border-radius: 4px;
     cursor: pointer;
     color: var(--text-color4);
 }
@@ -438,7 +456,7 @@ header hr {
         height: 40px;
         object-fit: cover;
     }
-    .user-info {
+    .user-list .user-info {
         flex-grow: 1;
         margin-left: 10px;
     }

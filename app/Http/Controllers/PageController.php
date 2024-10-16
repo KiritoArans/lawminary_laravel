@@ -85,10 +85,30 @@ class PageController extends Controller
         return view('users.home-search');
     }
 
-    public function showArticlePage()
+    public function showArticlePage(Request $request)
     {
-        return view('users.article');
+        $searchTerm = $request->input('query');
+        
+        // If a search term exists, fetch articles matching the search term
+        if ($searchTerm) {
+            $articles = DB::table('tblbooktwo')
+                ->where('article_name', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('description', 'LIKE', '%' . $searchTerm . '%')
+                ->orWhere('title', 'LIKE', '%' . $searchTerm . '%')
+                ->paginate(3); // Adjust the number of articles per page
+        } 
+        // If no search term, fetch random articles
+        else {
+            $articles = DB::table('tblbooktwo')
+                ->inRandomOrder()
+                ->paginate(3); // Adjust the number of articles per page
+        }
+    
+        // Return the view with articles
+        return view('users.article', compact('articles', 'searchTerm'));
     }
+    
+    
     
     public function showLeaderboardsPage()
     {
@@ -371,6 +391,23 @@ class PageController extends Controller
         $followingCount = Follow::where('follower', $user->user_id)->count();
         $followerCount = Follow::where('following', $user->user_id)->count();
 
+
+        $averageRating = DB::table('tblrates')
+        ->where('lawyerUser_id', $user->user_id)
+        ->avg('rate');
+
+        // If no ratings exist, default the average to 0 or N/A
+        $averageRating = $averageRating ? number_format($averageRating, 1) : 'N/A';
+
+
+        $leaderboard = DB::table('tblleaderboards')
+            ->where('lawyerUser_id', $user->user_id)
+            ->first();
+
+        // Default rank if the user is not found in the leaderboard
+        $rank = $leaderboard ? $leaderboard->rank : 'No Rank';
+
+
         $posts = Posts::where('postedBy', $user->user_id)
             ->withCount('likes', 'comments', 'bookmarks')
             ->where('status', 'Approved')
@@ -439,6 +476,8 @@ class PageController extends Controller
             'comments',
             'likes',
             'bookmarks',
+            'averageRating',
+            'rank',
             'following',
             'followers',
             'followingCount',

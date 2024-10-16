@@ -81,12 +81,13 @@ main .header-top {
     cursor: pointer;
 }
 .header-buttons button:hover {
-    background-color: var(--text-color1);
+    background-color: var(--primary-color);
 }
-.current-tab{
+.header-buttons .current-tab{
     font-weight: bold;
     scale: 1.15;
     margin: 0 8px;
+    background-color: var(--primary-color);
 }
 
 #showForumLists{
