@@ -32,6 +32,7 @@
                     <button id="postsTab" class="posts-tab current-tab">Posts</button>
                     <button id="forumsTab" class="forums-tab">Forums</button>
                     <button id="articlesTab" class="articles-tab">Article</button>
+                    <button id="leaderboardsTab" class="leaderboards-tab">Leaderboards</button>
                 </div>
 
                 <div class="search-bar">

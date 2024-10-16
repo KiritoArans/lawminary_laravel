@@ -32,12 +32,9 @@
                 <div class="header-buttons-search">
                     <div class="header-buttons">
                         <button id="postsTab" class="posts-tab">Posts</button>
-                        <button id="forumsTab" class="forums-tab current-tab">
-                            Forums
-                        </button>
-                        <button id="articlesTab" class="articles-tab">
-                            Article
-                        </button>
+                        <button id="forumsTab" class="forums-tab current-tab">Forums</button>
+                        <button id="articlesTab" class="articles-tab">Article</button>
+                        <button id="leaderboardsTab" class="leaderboards-tab">Leaderboards</button>
                     </div>
                     <button id="showForumLists">See Forum Lists</button>
                 </div>

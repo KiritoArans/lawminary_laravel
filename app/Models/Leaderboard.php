@@ -18,4 +18,9 @@ class Leaderboard extends Model
     {
         return $this->hasMany(Point::class, 'lawyerUser_id', 'lawyerUser_id');
     }
+
+    public function leaduser()
+    {
+        return $this->hasMany(UserAccount::class, 'lawyerUser_id', 'user_id');
+    }
 }

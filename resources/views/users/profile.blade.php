@@ -115,6 +115,7 @@
         <script src="js/bookmarkPost.js"></script>
         <script src="js/commentPost.js"></script>
         <script src="js/replyPost.js"></script>
+        <script src="js/rateComment.js"></script>
 
         <script src="js/followUser.js"></script>
         

@@ -13,7 +13,7 @@
         <nav>
             <ul>
                 <li>
-                    <a href="home" class="{{ Request::is('home', 'article', 'forums') ? 'active' : '' }}">
+                    <a href="home" class="{{ Request::is('home', 'article', 'forums', 'leaderboards') ? 'active' : '' }}">
                         <i class="fa-solid fa-house"></i>
                         <span>Home</span>
                     </a>

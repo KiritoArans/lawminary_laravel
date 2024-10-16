@@ -12,6 +12,9 @@ use App\Models\Comment;
 use App\Models\Forum;
 use App\Models\JoinForum;
 use App\Models\Follow;
+use App\Models\Leaderboard;
+use App\Models\Point;
+use App\Http\Controllers\LeaderboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -86,6 +89,68 @@ class PageController extends Controller
     {
         return view('users.article');
     }
+    
+    public function showLeaderboardsPage()
+    {
+        $lawyers = DB::table('tblpoints')
+            ->join(
+                'tblaccounts',
+                'tblpoints.lawyerUser_id',
+                '=',
+                'tblaccounts.user_id'
+            ) // Join with tblaccounts to get username
+            ->select(
+                'tblpoints.lawyerUser_id',
+                'tblaccounts.username', // Select username from tblaccounts
+                DB::raw('SUM(tblpoints.points) as total_points')
+            )
+            ->groupBy('tblpoints.lawyerUser_id', 'tblaccounts.username') // Group by lawyerUser_id and username
+            ->get();
+
+        // Iterate through the list of lawyers and assign rank
+        foreach ($lawyers as $lawyer) {
+            $rank = '';
+
+            // Assign badge based on total points
+            if ($lawyer->total_points >= 5000) {
+                $rank = 'Diamond';
+            } elseif ($lawyer->total_points >= 3500) {
+                $rank = 'Gold';
+            } elseif ($lawyer->total_points >= 2000) {
+                $rank = 'Silver';
+            } elseif ($lawyer->total_points >= 1000) {
+                $rank = 'Bronze';
+            } elseif ($lawyer->total_points >= 500) {
+                $rank = 'Steel';
+            } else {
+                $rank = 'Wood';
+            }
+
+            // Insert or update the lawyer's record in the leaderboards table
+            Leaderboard::updateOrInsert(
+                ['lawyerUser_id' => $lawyer->lawyerUser_id],
+                [
+                    'username' => $lawyer->username, // Insert the username
+                    'rankPoints' => $lawyer->total_points,
+                    'rank' => $rank,
+                    'updated_at' => now(),
+                ]
+            );
+        }
+        // Retrieve the leaderboards data along with user name by joining with tblaccounts
+        $leaderboards = DB::table('tblleaderboards')
+            ->join(
+                'tblaccounts',
+                'tblleaderboards.lawyerUser_id',
+                '=',
+                'tblaccounts.user_id'
+            ) // Adjusted join condition
+            ->select('tblleaderboards.*', 'tblaccounts.username', 'tblaccounts.firstName', 'tblaccounts.lastName') // Select leaderboards data and username
+            ->orderBy('tblleaderboards.rankPoints', 'desc')
+            ->paginate(10);
+
+        return view('users.leaderboards', compact('leaderboards'));
+    } 
 
     public function forumFunctions($user)
     {

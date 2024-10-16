@@ -90,6 +90,11 @@ Route::get('/home-search', [PageController::class, 'showHomeSearchPage'])
 Route::get('/article', [PageController::class, 'showArticlePage'])->middleware(
     'auth'
 );
+
+Route::get('/leaderboards', [PageController::class, 'showLeaderboardsPage'])->middleware(
+    'auth'
+);
+
 Route::get('/forums', [PageController::class, 'showForumsPage']);
 Route::get('/notifications', [
     PageController::class,
