@@ -679,6 +679,19 @@ Route::get('/home-search', [SearchController::class, 'searchPostUser'])->name(
     'search.results'
 );
 
+// Delete Notification
+Route::delete('/notification-{id}', function($id) {
+    $notification = auth()->user()->notifications()->find($id);
+    
+    if ($notification) {
+        $notification->delete();
+    }
+
+    return back()->with('success', 'Notification deleted successfully.');
+})->name('notification.delete');
+
+
+
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //search user function routing

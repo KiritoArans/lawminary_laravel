@@ -13,7 +13,7 @@ class SearchController extends Controller
     {
         $query = $request->input('query');
     
-        $users = UserAccount::whereIn('accountType', ['User', 'Lawyer']) 
+        $users = UserAccount::where('accountType', 'User') 
             ->withCount([
                 'posts' => function ($query) {
                     $query->where('status', 'Approved'); 
@@ -25,6 +25,23 @@ class SearchController extends Controller
                 $firstNameDistance = levenshtein(strtolower($query), strtolower($user->firstName));
                 $lastNameDistance = levenshtein(strtolower($query), strtolower($user->lastName));
                 $usernameDistance = levenshtein(strtolower($query), strtolower($user->username));
+                
+                // Allow close matches (distance less than or equal to 3, adjust as needed)
+                return $firstNameDistance <= 3 || $lastNameDistance <= 3 || $usernameDistance <= 3;
+            });
+
+        $lawyers = UserAccount::where('accountType', 'Lawyer') 
+            ->withCount([
+                'posts' => function ($query) {
+                    $query->where('status', 'Approved'); 
+                },
+                'followers' 
+            ])
+            ->get()
+            ->filter(function ($lawyer) use ($query) {
+                $firstNameDistance = levenshtein(strtolower($query), strtolower($lawyer->firstName));
+                $lastNameDistance = levenshtein(strtolower($query), strtolower($lawyer->lastName));
+                $usernameDistance = levenshtein(strtolower($query), strtolower($lawyer->username));
                 
                 // Allow close matches (distance less than or equal to 3, adjust as needed)
                 return $firstNameDistance <= 3 || $lastNameDistance <= 3 || $usernameDistance <= 3;
@@ -55,7 +72,7 @@ class SearchController extends Controller
         ->get();
     
         // Return the search results to the view
-        return view('users.home-search', compact('users', 'posts', 'query', 'allPosts'));
+        return view('users.home-search', compact('users', 'lawyers', 'posts', 'query', 'allPosts'));
     }
     
     

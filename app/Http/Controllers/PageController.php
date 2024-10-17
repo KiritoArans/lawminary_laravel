@@ -158,15 +158,12 @@ class PageController extends Controller
         }
         // Retrieve the leaderboards data along with user name by joining with tblaccounts
         $leaderboards = DB::table('tblleaderboards')
-            ->join(
-                'tblaccounts',
-                'tblleaderboards.lawyerUser_id',
-                '=',
-                'tblaccounts.user_id'
-            ) // Adjusted join condition
-            ->select('tblleaderboards.*', 'tblaccounts.username', 'tblaccounts.firstName', 'tblaccounts.lastName') // Select leaderboards data and username
+            ->join('tblaccounts', 'tblleaderboards.lawyerUser_id', '=', 'tblaccounts.user_id')
+            ->select('tblleaderboards.*', 'tblaccounts.username', 'tblaccounts.firstName', 'tblaccounts.lastName')
             ->orderBy('tblleaderboards.rankPoints', 'desc')
-            ->paginate(10);
+            ->take(10) // Limit to 10 records
+            ->get();
+        
 
         return view('users.leaderboards', compact('leaderboards'));
     } 

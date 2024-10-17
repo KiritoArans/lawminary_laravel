@@ -51,10 +51,10 @@
                     <div class="home-search-nav">
                         <span id="all-tab" class="active">All</span>
                         <span id="user-tab">User</span>
+                        <span id="lawyer-tab">Lawyer</span>
                         <span id="post-tab">Post</span>
                     </div>
                     
-                    <!-- Users Section -->
                     <div id="user-section">
                         <h3>Users</h3>
                         <?php if($users->isEmpty()): ?>
@@ -95,8 +95,48 @@
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <?php endif; ?>
                     </div>
+
+                    <div id="lawyer-section">
+                        <h3>Lawyers</h3>
+                        <?php if($lawyers->isEmpty()): ?>
+                            <p class="empty-search">No user found for <?php echo e($query); ?>.</p>
+                        <?php else: ?>
+                            <?php $__currentLoopData = $lawyers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $lawyer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <div class="user-searched">
+                                <div class="user-details">
+                                    <img src="<?php echo e($lawyer->userPhoto ? Storage::url($lawyer->userPhoto) : '../imgs/user-img.png'); ?>" alt="Profile Picture" class="user-profile-photo" />
+                                    <div class="user-names">
+                                        <a href="<?php echo e(Auth::check() && Auth::user()->user_id == $lawyer->user_id ? route('profile') : route('visit-profile', ['user_id' => $lawyer->user_id])); ?>">
+                                            Atty. <?php echo e($lawyer->firstName); ?> <?php echo e($lawyer->lastName); ?>
+
+                                        </a>
+                                        <p>@<span><?php echo e($lawyer->username); ?></span></p>
+                                        <span><?php echo e($lawyer->posts_count); ?> Posts, <?php echo e($lawyer->followers_count); ?> Followers</span>
+                                    </div>
+                                </div>
+                                <?php
+                                    $haveFollowed = \App\Models\Follow::where('follower', Auth::user()->user_id)
+                                        ->where('following', $lawyer->user_id)
+                                        ->exists();
+                                ?>
                 
-                    <!-- Posts Section -->
+                                <?php if(Auth::check() && Auth::user()->user_id !== $lawyer->user_id): ?>
+                                    <form class="follow-form" action="<?php echo e(route('followUser')); ?>" method="POST" style="display: inline">
+                                        <?php echo csrf_field(); ?>
+                                        <input type="hidden" name="following" value="<?php echo e($lawyer->user_id); ?>">
+
+                                        <button type="submit" class="edit-profile-button follow-btn <?php echo e($haveFollowed ? 'following followed-btn' : ''); ?>">
+                                            <?php echo e($haveFollowed ? 'Unfollow' : 'Follow'); ?>
+
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
+
+                            </div>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        <?php endif; ?>
+                    </div>
+                
                     <div id="post-section">
                         <h3>Posts</h3>
                         <?php if($posts->isEmpty()): ?>
