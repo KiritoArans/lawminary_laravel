@@ -65,6 +65,12 @@
                     <span>FAQs</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('moderator.about-law') }}">
+                    <i class="fa-solid fa-hammer"></i>
+                    <span>About Law</span>
+                </a>
+            </li>
         </ul>
         <div class="bottom-nav-burger">
             <a href="javascript:void(0);" id="logout-link" class="logout">
@@ -141,6 +147,12 @@
                 <a href="{{ route('moderator.faqs') }}">
                     <i class="fa-solid fa-circle-question"></i>
                     <span>FAQs</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('moderator.about-law') }}">
+                    <i class="fa-solid fa-hammer"></i>
+                    <span>About Law</span>
                 </a>
             </li>
         </ul>

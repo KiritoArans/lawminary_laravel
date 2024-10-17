@@ -20,6 +20,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\AboutLawController;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -90,12 +91,15 @@ Route::get('/home-search', [PageController::class, 'showHomeSearchPage'])
 Route::get('/article', [PageController::class, 'showArticlePage'])->middleware(
     'auth'
 );
-Route::get('/article-searched', [PageController::class, 'showArticlePage'])->name('search.articles');
+Route::get('/article-searched', [
+    PageController::class,
+    'showArticlePage',
+])->name('search.articles');
 
-
-Route::get('/leaderboards', [PageController::class, 'showLeaderboardsPage'])->middleware(
-    'auth'
-);
+Route::get('/leaderboards', [
+    PageController::class,
+    'showLeaderboardsPage',
+])->middleware('auth');
 
 Route::get('/forums', [PageController::class, 'showForumsPage']);
 Route::get('/notifications', [
@@ -540,6 +544,34 @@ Route::prefix('moderator')
         Route::get('/faqs/search', [FaqsController::class, 'searchFAQs'])->name(
             'faqs.search'
         );
+    });
+
+//about law page
+
+Route::prefix('moderator')
+    ->middleware(['auth']) // Use the default auth middleware
+    ->group(function () {
+        Route::get('/about-law', [
+            AboutLawController::class,
+            'showArticlePage',
+        ])->name('moderator.about-law');
+        Route::get('/article-searched', [
+            AboutLawController::class,
+            'searchArticlePage',
+        ])->name('search.articles');
+        Route::post('/add-law', [AboutLawController::class, 'addLaw'])->name(
+            'add.law'
+        );
+        Route::put('/laws/{id}', [
+            AboutLawController::class,
+            'updateLaw',
+        ])->name('update.law');
+
+        // Route to delete a law
+        Route::delete('/laws/{id}', [
+            AboutLawController::class,
+            'deleteLaw',
+        ])->name('delete.law');
     });
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------

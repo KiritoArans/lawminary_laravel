@@ -1,0 +1,158 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    height: auto;
+}
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    margin: 0px 48px 0px 32px;
+}
+header {
+    text-align: center;
+}
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    color: var(--primary-color);
+}
+.header-top {
+    width: 100%;
+    text-align: center;
+    background-color: #fff;
+}
+
+.header-top img {
+    margin: 0 auto;
+    display: block;
+}
+
+.header-top img {
+    height: 32px;
+    position: relative;
+    left: -8px;
+}
+header hr {
+    margin-top: 10px;
+    border: 1px solid #b1b1b1;
+}
+
+.filter-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1rem;
+}
+
+.search-bar-content {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+.search-bar {
+    width: 100%;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+}
+.action-buttons #filterButton {
+    margin-left: auto;
+}
+.custom-button,
+.btn-info,
+.btn-danger,
+.editButton,
+.delete-button {
+    background-color: #561c24;
+    border: 1px solid #ffaf45;
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.form-control {
+    width: 96%;
+}
+
+.edit-button,
+#delete-button {
+    background-color: #561c24;
+
+    border: 1px solid #ffffff;
+    color: rgb(255, 255, 255);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    width: 100%;
+}
+
+.edit-button:hover,
+#delete-button:hover {
+    background-color: #ffaf45;
+}
+
+#editStatus {
+    width: 100%;
+}
+
+.paginationContent {
+    display: flex;
+    justify-content: center; /* Centers the content horizontally */
+    align-items: center; /* Centers the content vertically, if needed */
+}
+.btn-view-approve,
+.btn-view-reject {
+    border: none; /* Removes the border */
+    background: none; /* Removes any background color */
+    padding: 0; /* Removes padding if there's any */
+    transition: background-color 0.4s ease;
+    border-radius: 60%;
+}
+
+.btn-view-approve:hover,
+.btn-view-reject:hover {
+    background-color: rgba(
+        92,
+        85,
+        75,
+        0.7
+    ); /* Example: transparent color using RGBA */
+}
+
+.close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: right;
+    transition: background-color 0.3s ease;
+}
+
+.close-modal:hover {
+    color: black;
+    text-decoration: none;
+}
