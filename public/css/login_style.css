@@ -240,20 +240,49 @@ section {
 
 
 
-@media (min-width: 768px) and (max-width: 1024px) {
-    /* Styles for tablets */
-}
-
-
-@media (max-width: 576px) {
+/* Styles for tablets and medium devices */
+@media (min-width: 576px) and (max-width: 1024px) {
     .wrapper {
-        display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 40px;
+        gap: 80px;
+        margin-right: 2rem;
+        scale: .95;
     }
-    .logo-content, .line{
+    .logo-content img {
+        height: 400px;
+    }
+}
+
+/* Styles for mobile phones */
+@media (max-width: 576px) {
+    .wrapper {
+        justify-content: center;
+        align-items: center;
+    }
+    .logo-content, .line {
         display: none;
     }
-
+    .logo-content img {
+        display: none;
+    }
+    .login-content {
+        width: 20rem;
+    }
+    .username, .password{
+        margin-right: .5rem;
+    }
+    .username input, .password input {
+        width: 100%;
+        height: 40px;
+    }
+    .password-container {
+        width: 100%;
+    }
+    .buttons {
+        gap: 10px;
+    }
+    .buttons button, .buttons a {
+        width: 100%;
+    }
 }

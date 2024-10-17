@@ -51,10 +51,10 @@
                     <div class="home-search-nav">
                         <span id="all-tab" class="active">All</span>
                         <span id="user-tab">User</span>
+                        <span id="lawyer-tab">Lawyer</span>
                         <span id="post-tab">Post</span>
                     </div>
                     
-                    <!-- Users Section -->
                     <div id="user-section">
                         <h3>Users</h3>
                         @if ($users->isEmpty())
@@ -93,8 +93,46 @@
                             @endforeach
                         @endif
                     </div>
+
+                    <div id="lawyer-section">
+                        <h3>Lawyers</h3>
+                        @if ($lawyers->isEmpty())
+                            <p class="empty-search">No user found for {{$query}}.</p>
+                        @else
+                            @foreach ($lawyers as $lawyer)
+                            <div class="user-searched">
+                                <div class="user-details">
+                                    <img src="{{ $lawyer->userPhoto ? Storage::url($lawyer->userPhoto) : '../imgs/user-img.png' }}" alt="Profile Picture" class="user-profile-photo" />
+                                    <div class="user-names">
+                                        <a href="{{ Auth::check() && Auth::user()->user_id == $lawyer->user_id ? route('profile') : route('visit-profile', ['user_id' => $lawyer->user_id]) }}">
+                                            Atty. {{ $lawyer->firstName }} {{ $lawyer->lastName }}
+                                        </a>
+                                        <p>@<span>{{ $lawyer->username }}</span></p>
+                                        <span>{{ $lawyer->posts_count }} Posts, {{ $lawyer->followers_count }} Followers</span>
+                                    </div>
+                                </div>
+                                @php
+                                    $haveFollowed = \App\Models\Follow::where('follower', Auth::user()->user_id)
+                                        ->where('following', $lawyer->user_id)
+                                        ->exists();
+                                @endphp
                 
-                    <!-- Posts Section -->
+                                @if (Auth::check() && Auth::user()->user_id !== $lawyer->user_id)
+                                    <form class="follow-form" action="{{ route('followUser') }}" method="POST" style="display: inline">
+                                        @csrf
+                                        <input type="hidden" name="following" value="{{ $lawyer->user_id }}">
+
+                                        <button type="submit" class="edit-profile-button follow-btn {{ $haveFollowed ? 'following followed-btn' : '' }}">
+                                            {{ $haveFollowed ? 'Unfollow' : 'Follow' }}
+                                        </button>
+                                    </form>
+                                @endif
+
+                            </div>
+                            @endforeach
+                        @endif
+                    </div>
+                
                     <div id="post-section">
                         <h3>Posts</h3>
                         @if ($posts->isEmpty())

@@ -38,64 +38,33 @@
                 </div>
             </header>
         <content>
-            <div class="leaderboards">
+            <div id="leaderboards" data-logged-in-user-id="{{ Auth::check() ? Auth::user()->user_id : 'null' }}">
                 <div class="leaderboards-header">
                     <i class="fa-solid fa-chart-simple"></i>
                     <h1>Leaderboards</h1>
                 </div>
 
                 @foreach ($leaderboards as $leaderboard)
-                <div class="leaderboards-content">
+                <div class="leaderboards-content" data-lawyer-id="{{ $leaderboard->lawyerUser_id }}">
                     <div class="rank">
                         {{ $loop->index + 1 }}
                     </div>
                     <div class="lawyer-user">
-                        {{-- <a href="{{ Auth::check() && Auth::user()->user_id == $leaderboard->lawyerUser_id ? route('profile') : route('visit-profile', ['user_id' => $leaderboard->lawyerUser_id]) }}"> --}}
                         <span>Atty. {{ $leaderboard->firstName }} {{ $leaderboard->lastName }}</span>
-                        {{-- </a> --}}
                     </div>
                     <div class="points">
                         <span>{{ $leaderboard->rankPoints }} Points</span>
                     </div>
                     <div class="badge">
-                        @if ($leaderboard->rank === 'Wood')
-                            <img src="{{ asset('imgs/badges/wood.png') }}"
-                            alt="Wood Badge" class="clickable-photo" width="40" 
-                            data-fullsize="{{ asset('imgs/badges/wood.png') }}"/>
-
-                        @elseif ($leaderboard->rank === 'Steel')
-                            <img src="{{ asset('imgs/badges/steel.png') }}"
-                            alt="Steel Badge" class="clickable-photo" width="40" 
-                            data-fullsize="{{ asset('imgs/badges/steel.png') }}"/>
-
-                        @elseif ($leaderboard->rank === 'Bronze')
-                            <img src="{{ asset('imgs/badges/bronze.png') }}"
-                            alt="Bronze Badge" class="clickable-photo" width="40" 
-                            data-fullsize="{{ asset('imgs/badges/bronze.png') }}"/>
-
-                        @elseif ($leaderboard->rank === 'Silver')
-                            <img src="{{ asset('imgs/badges/silver.png') }}"
-                            alt="Silver Badge" class="clickable-photo" width="40" 
-                            data-fullsize="{{ asset('imgs/badges/silver.png') }}"/>
-
-                        @elseif ($leaderboard->rank === 'Gold')
-                            <img src="{{ asset('imgs/badges/gold.png') }}"
-                            alt="Gold Badge" class="clickable-photo" width="40" 
-                            data-fullsize="{{ asset('imgs/badges/gold.png') }}"/>
-
-                        @elseif ($leaderboard->rank === 'Diamond')
-                            <img src="{{ asset('imgs/badges/diamond.png') }}"
-                            alt="Diamond Badge" class="clickable-photo" width="40" 
-                            data-fullsize="{{ asset('imgs/badges/diamond.png') }}"/>
-                            
-                        @endif
+                        <img src="{{ asset('imgs/badges/' . strtolower($leaderboard->rank) . '.png') }}" alt="{{ $leaderboard->rank }} Badge" width="40" class="badge-rank" title="{{ $leaderboard->rank }} Badge">
                     </div>
                 </div>
-                @endforeach
 
+                @endforeach
             </div>
         </content>
         </main>
+    <script src="js/visitProfileLb.js"></script>
     <script src="js/homelocator.js"></script>
     <script src="js/settings.js"></script>    
     <script src="js/logout.js"></script>

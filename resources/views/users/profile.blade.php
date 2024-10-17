@@ -47,7 +47,9 @@
                                             {{ $user->firstName }} {{ $user->lastName }}
                                         </h2>
                                         @if ($user->accountType === 'Lawyer')
-                                            <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank">
+                                            <a href="/leaderboards">
+                                                <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank" title="{{ $rank }} Badge">
+                                            </a>
                                         @endif
                                     </div>
                                     <h4>@<span>{{ $user->username }}</span></h4>

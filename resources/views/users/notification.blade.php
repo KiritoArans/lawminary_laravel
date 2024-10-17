@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lawminary | Notifications</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="../imgs/lawminarylogo_v3.png" type="image/png">
     <link rel="stylesheet" href="{{ asset ('css/notification_style.css') }}">
     <link rel="stylesheet" href="{{ asset ('css/nav_style.css') }}">
@@ -23,12 +24,13 @@
                 <hr class="divider">
             </header>
             <content>
+                @include('inclusions/response')
                 <h1>Notifications</h1>
-
+                
                 @if ($notificationsWithUsers->isEmpty())
                     <p class="empty-data">No notifications yet.</p>
                 @else
-
+                
                 @foreach ($notificationsWithUsers as $item)
                     @php
                         $notification = $item['notification'];
@@ -58,9 +60,16 @@
                                 {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $liker->firstName }} {{ $notification->data['message'] }}</span>
+                                    <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
-                                <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
-                            </div>
+                                <form action="{{ route('notification.delete', $notification->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="border:none; background:none;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>                           
                         </div>
                     @endif
                     
@@ -82,8 +91,15 @@
                                 {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $bookmarker->firstName }} {{ $notification->data['message'] }}</span>
+                                    <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
-                                <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                                <form action="{{ route('notification.delete', $notification->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="border:none; background:none;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     @endif
@@ -106,8 +122,15 @@
                                 {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $commenter->firstName }} {{ $notification->data['message'] }}</span>
+                                    <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
-                                <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                                <form action="{{ route('notification.delete', $notification->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="border:none; background:none;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     @endif
@@ -130,8 +153,15 @@
                                 {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $replier->firstName }} {{ $notification->data['message'] }}</span>
+                                    <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
-                                <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                                <form action="{{ route('notification.delete', $notification->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="border:none; background:none;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     @endif
@@ -154,8 +184,15 @@
                                 {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $rater->firstName }} {{ $notification->data['message'] }}</span>
+                                    <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
-                                <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                                <form action="{{ route('notification.delete', $notification->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="border:none; background:none;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     @endif
@@ -178,8 +215,15 @@
                                 {{-- <div class="notifs-divider"></div> --}}
                                 <div class="notifs-action">
                                     <span>{{ $follower->firstName }} {{ $notification->data['message'] }}</span>
+                                    <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
-                                <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                                <form action="{{ route('notification.delete', $notification->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="border:none; background:none;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     @endif
@@ -187,11 +231,9 @@
                 @endforeach
                 @endif
             </content>
-            
-            
         </main>
     </div>
-    {{-- <script src="js/postandcomment.js"></script> --}}
+    
     <script src="../js/settings.js"></script>    
     <script src="js/logout.js"></script>
 </body>
