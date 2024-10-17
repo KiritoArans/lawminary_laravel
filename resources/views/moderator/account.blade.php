@@ -48,7 +48,7 @@
         <div class="container-fluid">
             @include('includes_accounts.mod_nav_inc')
 
-            <div class="row">
+            <div class="row justify-content-center">
                 <header>
                     <div
                         class="header-top d-flex justify-content-between align-items-center"
@@ -58,7 +58,7 @@
                     <hr class="divider w-100" />
                 </header>
                 <!-- Main Content Area -->
-                <main class="col-lg-10 col-md-9 col-sm-12 mx-auto">
+                <main class="col-lg-8 col-md-10 col-sm-12">
                     <!-- Header Section -->
 
                     <!-- Filter Section -->

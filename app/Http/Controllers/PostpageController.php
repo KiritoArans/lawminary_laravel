@@ -101,7 +101,7 @@ class PostpageController extends Controller
     public function filterPosts(Request $request)
     {
         // Handle GET request (for displaying or filtering posts)
-        $query = DB::table('tblposts')->orderBy('updated_at', 'desc');
+        $query = Posts::with('user')->orderBy('updated_at', 'desc');
 
         // Apply filters based on user input
         if ($request->filled('filterPostId')) {

@@ -373,17 +373,51 @@ document.addEventListener('DOMContentLoaded', function () {
 
 //table click
 
-// Function to open a modal showing the full content
 document.addEventListener('DOMContentLoaded', function () {
-    // Target all table cells except the last column (Action column)
-    const cells = document.querySelectorAll('.table td:not(:last-child)');
+    // Make only the images clickable
+    document.querySelectorAll('.clickable-photo').forEach((img) => {
+        img.addEventListener('click', function (event) {
+            // Prevent the event from propagating to the cell
+            event.stopPropagation();
+
+            var modal = document.getElementById('imageModalPic');
+            var fullImage = document.getElementById('fullImage');
+            fullImage.src = this.getAttribute('data-fullsize');
+            modal.style.display = 'flex'; // Use flex to center the image
+        });
+    });
+
+    // Close modal when the "X" button is clicked
+    document
+        .getElementById('closeModalPic')
+        .addEventListener('click', function () {
+            var modal = document.getElementById('imageModalPic');
+            modal.style.display = 'none';
+        });
+
+    // Close modal when clicking outside the image
+    document
+        .getElementById('imageModalPic')
+        .addEventListener('click', function (event) {
+            if (event.target === this) {
+                this.style.display = 'none';
+            }
+        });
+
+    // Only target cells that do not have the class 'non-clickable'
+    const cells = document.querySelectorAll(
+        '.table td:not(.non-clickable):not(:last-child)'
+    );
 
     cells.forEach((cell) => {
-        cell.addEventListener('click', function () {
-            const fullText =
-                this.getAttribute('data-full-text') || this.textContent; // Get full text from data attribute or content
-            document.getElementById('fullText').textContent = fullText;
-            document.getElementById('textModal').style.display = 'block';
+        cell.addEventListener('click', function (event) {
+            // Check if the click is directly on the cell, not an image
+            if (event.target.tagName !== 'IMG') {
+                const fullText =
+                    this.getAttribute('data-full-text') || this.textContent; // Get full text from data attribute or content
+                document.getElementById('fullText').textContent = fullText;
+                document.getElementById('textModal').style.display = 'block';
+            }
         });
     });
 

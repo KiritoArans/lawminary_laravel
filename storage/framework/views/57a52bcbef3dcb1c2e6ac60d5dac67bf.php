@@ -4,6 +4,7 @@
     <thead>
         <tr>
             <th>Post ID</th>
+            <th>Post Photo</th>
             <th>Concern</th>
             <th>Status</th>
             <th>Tags</th>
@@ -29,6 +30,27 @@
                         <?php echo e(Str::limit($activity->post_id, 10)); ?>
 
                     </td>
+                    <td class="non-clickable">
+                        <?php if($activity->concernPhoto): ?>
+                            <img
+                                src="<?php echo e(Storage::url($activity->concernPhoto)); ?>"
+                                alt="Photo"
+                                width="50"
+                                height="50"
+                                class="clickable-photo"
+                                data-fullsize="<?php echo e(Storage::url($activity->concernPhoto)); ?>"
+                            />
+                        <?php else: ?>
+                            <img
+                                src="<?php echo e(asset('imgs/user-img.png')); ?>"
+                                alt="No Photo Available"
+                                width="50"
+                                height="50"
+                                class="clickable-photo"
+                                data-fullsize="<?php echo e(asset('imgs/user-img.png')); ?>"
+                            />
+                        <?php endif; ?>
+                    </td>
                     <td
                         class="clickable-cell"
                         data-full-text="<?php echo e($activity->concern); ?>"
@@ -53,6 +75,7 @@
                     </td>
                     <td class="non-clickable">
                         <button
+                            id="btnEditStyle"
                             type="button"
                             class="btn btn-primary editButton"
                             data-id="<?php echo e($activity->id); ?>"
@@ -135,5 +158,16 @@
             <!-- Dynamic content will be loaded here -->
         </div>
     </div>
+</div>
+
+<!-- Modal Structure -->
+<div id="imageModalPic" class="modalPic" style="display: none">
+    <span class="close-modalPic" id="closeModalPic">&times;</span>
+    <img
+        id="fullImage"
+        src=""
+        alt="Full Image"
+        style="width: 50%; height: 50%"
+    />
 </div>
 <?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/includes_postpage/post_table_inc.blade.php ENDPATH**/ ?>

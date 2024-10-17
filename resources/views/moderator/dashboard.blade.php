@@ -49,7 +49,7 @@
         <div class="container-fluid dashboard-content-wrapper">
             @include('includes_accounts.mod_nav_inc')
 
-            <div class="content">
+            <div class="row justify-content-center">
                 <!-- Header Section -->
                 <header class="row">
                     <div class="col-12 header-top">
@@ -62,7 +62,7 @@
                     </div>
                 </header>
                 <!-- Main Content Section -->
-                <main class="row w-100">
+                <main class="col-lg-8 col-md-10 col-sm-12">
                     <!-- Dashboard Cards and Chart -->
                     <div class="col-12 dashboard-cards">
                         <div class="col-lg-3 col-md-6 col-sm-12">

@@ -44,6 +44,7 @@
             rel="stylesheet"
         />
     </head>
+
     <body>
         <div class="container-fluid">
             @include('includes_accounts.mod_nav_inc')

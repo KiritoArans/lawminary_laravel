@@ -4,6 +4,7 @@
         <thead>
             <tr>
                 <th>Forum ID</th>
+                <th>Forum Photo</th>
                 <th>Forum Name</th>
                 <th>Forum Description</th>
                 <th>Members Count</th>
@@ -94,6 +95,7 @@
                 id="editForumForm"
                 method="POST"
                 action="{{ route('moderator.updateForum', ['forum_id' => ':forum_id']) }}"
+                enctype="multipart/form-data"
             >
                 @csrf
 
@@ -126,6 +128,21 @@
                     id="editDateCreated"
                     name="dateCreated"
                     readonly
+                />
+                <label for="editForumPhoto">Forum Photo:</label>
+                <input
+                    type="file"
+                    id="editForumPhoto"
+                    name="forumPhoto"
+                    accept="image/*"
+                />
+                <!-- Preview the uploaded photo -->
+                <img
+                    id="previewForumPhoto"
+                    src=""
+                    alt="Forum Photo Preview"
+                    width="100"
+                    style="display: none; margin-top: 10px"
                 />
 
                 <!-- Submit Button -->
@@ -198,6 +215,16 @@
             </a>
         </li>
     </ul>
+</div>
+
+<!-- Modal for showing full content -->
+<div id="textModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-body">
+            <p id="fullText"></p>
+        </div>
+    </div>
 </div>
 
 <!-- Modal Structure -->

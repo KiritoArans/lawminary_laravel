@@ -50,7 +50,7 @@
                     <hr class="divider w-100" />
                 </header>
 
-                <main class="col-12 col-md-9">
+                <main class="col-lg-8 col-md-10 col-sm-12">
                     <!-- Search Form -->
                     <form
                         action="{{ route('admin.searchForums') }}"

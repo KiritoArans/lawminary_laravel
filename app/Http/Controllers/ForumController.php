@@ -21,6 +21,7 @@ class ForumController extends Controller
 
         // Start the query for forums
         $forumsQuery = DB::table('tblforums')
+
             ->leftJoin(
                 'tblforummembers',
                 'tblforums.forum_id',
@@ -69,7 +70,7 @@ class ForumController extends Controller
         $searchTerm = $request->input('query');
 
         // Update to use paginate instead of get
-        $forums = DB::table('tblforums')
+        $forums = Forum::with('user')
             ->leftJoin(
                 'tblforummembers',
                 'tblforums.forum_id',
@@ -81,6 +82,7 @@ class ForumController extends Controller
                 'tblforums.forumName',
                 'tblforums.forumDesc',
                 'tblforums.created_at',
+                'tblforums.forumPhoto',
                 DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
             )
             ->where('tblforums.forumName', 'LIKE', "%{$searchTerm}%")
@@ -90,7 +92,8 @@ class ForumController extends Controller
                 'tblforums.forum_id',
                 'tblforums.forumName',
                 'tblforums.forumDesc',
-                'tblforums.created_at'
+                'tblforums.created_at',
+                'tblforums.forumPhoto'
             )
             ->orderBy('tblforums.created_at', 'desc')
             ->paginate(10); // Paginate with 10 records per page
@@ -117,7 +120,7 @@ class ForumController extends Controller
         $dateCreated = $request->input('filterDateCreated');
 
         // Build query
-        $query = DB::table('tblforums')
+        $query = Forum::with('user')
             ->leftJoin(
                 'tblforummembers',
                 'tblforums.forum_id',
@@ -129,13 +132,15 @@ class ForumController extends Controller
                 'tblforums.forumName',
                 'tblforums.forumDesc',
                 'tblforums.created_at',
+                'tblforums.forumPhoto',
                 DB::raw('COUNT(tblforummembers.forum_id) as membersCount')
             )
             ->groupBy(
                 'tblforums.forum_id',
                 'tblforums.forumName',
                 'tblforums.forumDesc',
-                'tblforums.created_at'
+                'tblforums.created_at',
+                'tblforums.forumPhoto'
             );
 
         // Apply filters conditionally
@@ -285,12 +290,26 @@ class ForumController extends Controller
             'forumName' => 'required|string|max:50',
             'forumDesc' => 'required|string|max:150',
             'dateCreated' => 'required|date',
+            'forumPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validate the image file
         ]);
 
         $forum = Forum::where('forum_id', $forum_id)->firstOrFail();
         $forum->forumName = $validated['forumName'];
         $forum->forumDesc = $validated['forumDesc'];
         $forum->created_at = $validated['dateCreated'];
+        // Handle photo upload if a new photo is uploaded
+        if ($request->hasFile('forumPhoto')) {
+            // Delete the old photo if it exists
+            if ($forum->forumPhoto) {
+                Storage::delete($forum->forumPhoto);
+            }
+
+            // Save the new photo
+            $photoPath = $request
+                ->file('forumPhoto')
+                ->store('public/files/forums');
+            $forum->forumPhoto = $photoPath;
+        }
 
         $forum->save();
 

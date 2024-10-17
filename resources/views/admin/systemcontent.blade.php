@@ -44,23 +44,25 @@
     </head>
     <body>
         <div class="container-fluid">
-            <header>
-                <div class="header-top">
-                    @include('includes_accounts.nav_inc')
-                    <img
-                        src="{{ Storage::url($sysconData->first()->logo_path) }}"
-                        alt=""
-                    />
-                    <div class="spacer"></div>
-                </div>
-                <hr class="divider" />
-            </header>
-            <main>
-                <content class="table-container">
-                    <h1>System Content</h1>
-                    @include('includes_syscon.syscon_table_inc')
-                </content>
-            </main>
+            <div class="row justify-content-center">
+                <header>
+                    <div class="header-top">
+                        @include('includes_accounts.nav_inc')
+                        <img
+                            src="{{ Storage::url($sysconData->first()->logo_path) }}"
+                            alt=""
+                        />
+                        <div class="spacer"></div>
+                    </div>
+                    <hr class="divider" />
+                </header>
+                <main class="col-lg-8 col-md-10 col-sm-12">
+                    <content class="table-container">
+                        <h1>System Content</h1>
+                        @include('includes_syscon.syscon_table_inc')
+                    </content>
+                </main>
+            </div>
         </div>
         <script src="{{ asset('js/admin_js/systemcontent_js.js') }}"></script>
     </body>

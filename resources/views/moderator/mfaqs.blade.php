@@ -46,141 +46,146 @@
     <body>
         <div class="container-fluid">
             @include('includes_accounts.mod_nav_inc')
-
-            <header class="text-center">
-                <div
-                    class="header-top d-flex justify-content-between align-items-center"
-                >
-                    @include('includes_syscon.syscon_logo_inc')
-                </div>
-                <hr class="divider w-100" />
-            </header>
-            <main class="mx-auto col-12 col-md-10 col-lg-8">
-                <h1>Frequently Asked Questions.</h1>
-
-                <div class="search-bar">
-                    <form
-                        method="GET"
-                        action="{{ route('faqs.search') }}"
-                        class="d-flex justify-content-center"
+            <div class="row justify-content-center">
+                <header class="text-center">
+                    <div
+                        class="header-top d-flex justify-content-between align-items-center"
                     >
-                        <input
-                            type="text"
-                            name="search"
-                            placeholder="Search FAQs..."
-                            class="form-control me-2"
-                            value="{{ request('search') }}"
-                        />
-                    </form>
-                </div>
-                <p>*click cell to view data</p>
+                        @include('includes_syscon.syscon_logo_inc')
+                    </div>
+                    <hr class="divider w-100" />
+                </header>
+                <main class="col-lg-8 col-md-10 col-sm-12">
+                    <h1>Frequently Asked Questions.</h1>
 
-                <content class="text-center">
-                    <div class="table-responsive">
-                        @if ($faqs->isNotEmpty())
-                            <table
-                                class="table table-striped table-bordered mt-3"
-                            >
-                                <thead>
-                                    <tr>
-                                        <th>Question</th>
-                                        <th>View Related Question/s</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($faqs as $keyword => $questions)
+                    <div class="search-bar">
+                        <form
+                            method="GET"
+                            action="{{ route('faqs.search') }}"
+                            class="d-flex justify-content-center"
+                        >
+                            <input
+                                type="text"
+                                name="search"
+                                placeholder="Search FAQs..."
+                                class="form-control me-2"
+                                value="{{ request('search') }}"
+                            />
+                        </form>
+                    </div>
+                    <p>*click cell to view data</p>
+
+                    <content class="text-center">
+                        <div class="table-responsive">
+                            @if ($faqs->isNotEmpty())
+                                <table
+                                    class="table table-striped table-bordered mt-3"
+                                >
+                                    <thead>
                                         <tr>
-                                            <td
-                                                class="clickable-cell"
-                                                data-full-text="{{ $keyword }}"
-                                            >
-                                                {{ Str::limit($keyword, 10) }}
-                                                <!-- Limit to 10 characters -->
-                                            </td>
-                                            <td>
-                                                <button
-                                                    class="btn btn-info view-related"
-                                                    id="btnInfo"
-                                                    data-questions="{{ json_encode($questions) }}"
-                                                >
-                                                    View
-                                                </button>
-                                            </td>
+                                            <th>Question</th>
+                                            <th>View Related Question/s</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($faqs as $keyword => $questions)
+                                            <tr>
+                                                <td
+                                                    class="clickable-cell"
+                                                    data-full-text="{{ $keyword }}"
+                                                >
+                                                    {{ Str::limit($keyword, 10) }}
+                                                    <!-- Limit to 10 characters -->
+                                                </td>
+                                                <td>
+                                                    <button
+                                                        class="btn btn-info view-related"
+                                                        id="btnInfo"
+                                                        data-questions="{{ json_encode($questions) }}"
+                                                    >
+                                                        View
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
 
-                            <div id="textModal" class="modal">
-                                <div class="modal-content">
-                                    <span class="close-modal">&times;</span>
-                                    <div class="modal-body">
-                                        <p id="fullText"></p>
-                                        <!-- Full question text will be injected here -->
+                                <div id="textModal" class="modal">
+                                    <div class="modal-content">
+                                        <span class="close-modal">&times;</span>
+                                        <div class="modal-body">
+                                            <p id="fullText"></p>
+                                            <!-- Full question text will be injected here -->
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- Pagination Section -->
-                            <div
-                                class="paginationContent d-flex justify-content-center mt-3"
-                            >
-                                <ul class="pagination">
-                                    <li
-                                        class="page-item {{ $faqs->currentPage() == 1 ? 'disabled' : '' }}"
-                                    >
-                                        <a
-                                            class="page-link"
-                                            href="{{ $faqs->appends(request()->input())->previousPageUrl() }}"
-                                            rel="prev"
-                                        >
-                                            <i class="fas fa-chevron-left"></i>
-                                        </a>
-                                    </li>
-
-                                    @for ($i = 1; $i <= $faqs->lastPage(); $i++)
+                                <!-- Pagination Section -->
+                                <div
+                                    class="paginationContent d-flex justify-content-center mt-3"
+                                >
+                                    <ul class="pagination">
                                         <li
-                                            class="page-item {{ $faqs->currentPage() == $i ? 'active' : '' }}"
+                                            class="page-item {{ $faqs->currentPage() == 1 ? 'disabled' : '' }}"
                                         >
                                             <a
                                                 class="page-link"
-                                                href="{{ $faqs->appends(request()->input())->url($i) }}"
+                                                href="{{ $faqs->appends(request()->input())->previousPageUrl() }}"
+                                                rel="prev"
                                             >
-                                                {{ $i }}
+                                                <i
+                                                    class="fas fa-chevron-left"
+                                                ></i>
                                             </a>
                                         </li>
-                                    @endfor
 
-                                    <li
-                                        class="page-item {{ $faqs->hasMorePages() ? '' : 'disabled' }}"
-                                    >
-                                        <a
-                                            class="page-link"
-                                            href="{{ $faqs->appends(request()->input())->nextPageUrl() }}"
-                                            rel="next"
+                                        @for ($i = 1; $i <= $faqs->lastPage(); $i++)
+                                            <li
+                                                class="page-item {{ $faqs->currentPage() == $i ? 'active' : '' }}"
+                                            >
+                                                <a
+                                                    class="page-link"
+                                                    href="{{ $faqs->appends(request()->input())->url($i) }}"
+                                                >
+                                                    {{ $i }}
+                                                </a>
+                                            </li>
+                                        @endfor
+
+                                        <li
+                                            class="page-item {{ $faqs->hasMorePages() ? '' : 'disabled' }}"
                                         >
-                                            <i class="fas fa-chevron-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        @else
-                            <p>No FAQs found.</p>
-                        @endif
-                    </div>
+                                            <a
+                                                class="page-link"
+                                                href="{{ $faqs->appends(request()->input())->nextPageUrl() }}"
+                                                rel="next"
+                                            >
+                                                <i
+                                                    class="fas fa-chevron-right"
+                                                ></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            @else
+                                <p>No FAQs found.</p>
+                            @endif
+                        </div>
 
-                    <!-- Modal remains unchanged -->
-                    <div id="relatedFaqModal" class="modal">
-                        <div class="modal-content">
-                            <span class="close-button">&times;</span>
+                        <!-- Modal remains unchanged -->
+                        <div id="relatedFaqModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close-button">&times;</span>
 
-                            <div id="relatedQuestionsContent">
-                                <!-- Dynamic related questions will be loaded here -->
+                                <div id="relatedQuestionsContent">
+                                    <!-- Dynamic related questions will be loaded here -->
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </content>
-            </main>
+                    </content>
+                </main>
+            </div>
         </div>
 
         <script src="{{ asset('js/moderator_js/mfaqs_js.js') }}"></script>
