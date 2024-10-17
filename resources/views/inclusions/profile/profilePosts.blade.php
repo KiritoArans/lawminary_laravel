@@ -31,10 +31,7 @@
                                     {{ $post->user ? ($post->user->accountType === 'Lawyer' ? 'Atty. ' : '') . $post->user->firstName . ' ' . $post->user->lastName : 'Unknown User' }}
                                 </a>
                             </h2>
-                            <label>
-                                @
-                                <span>{{ $user->username }}</span>
-                            </label>
+                            <label> @<span>{{ $user->username }}</span></label>
                             <p for="">
                                 Posted:
                                 {{ $post->created_at->diffForHumans() }}

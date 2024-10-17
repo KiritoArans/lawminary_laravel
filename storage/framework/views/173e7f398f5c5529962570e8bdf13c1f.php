@@ -32,10 +32,7 @@
 
                                 </a>
                             </h2>
-                            <label>
-                                @
-                                <span><?php echo e($user->username); ?></span>
-                            </label>
+                            <label> @<span><?php echo e($user->username); ?></span></label>
                             <p for="">
                                 Posted:
                                 <?php echo e($post->created_at->diffForHumans()); ?>

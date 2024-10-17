@@ -59,6 +59,7 @@ header hr {
 .notification {
     margin-left: 10px;
 }
+
 .header-top {
     display: flex;
     justify-content: space-between;
@@ -67,7 +68,7 @@ header hr {
 .bell-icon {
     font-size: 24px;
     margin-right: 8px;
-    color: #333;
+    color: var(--primary-color);
     cursor: pointer;
 }
 .bell-icon:hover {

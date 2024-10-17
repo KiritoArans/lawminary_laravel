@@ -76,38 +76,32 @@ header hr {
     color: var(--primary-color);
 }
 
+.log-header{
+    display: flex;
+    align-items: center;
+    color: var(--primary-color);
+    margin-bottom: .5rem;
+}
+.log-header i{
+    font-size: 2rem;
+    margin-right: .5rem;
+}
+.log-header h1{
+    margin: 0;
+}
 .logs {
     background-color: #fff;
-    padding: 20px;
+    padding: 1rem;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-top: 20px;
+    margin-bottom: .5rem;
+    display: flex;
+    justify-content: space-between;
 }
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
+.logs p{
+    margin: 0;
 }
-
-table thead {
-    background-color: #561C24;
-    color: #fff;
-}
-
-table thead th {
-    padding: 10px;
-    text-align: left;
-}
-
-table tbody tr {
-    border-bottom: 1px solid #ddd;
-}
-
-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-table tbody td {
-    padding: 10px;
+.logs i{
+    cursor: pointer;
+    color: #C62E2E;
 }
