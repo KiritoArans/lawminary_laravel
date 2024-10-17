@@ -47,32 +47,34 @@
         <div class="container-fluid">
             @include('includes_accounts.mod_nav_inc')
 
-            <header>
-                <div class="header-top">
-                    @include('includes_syscon.syscon_logo_inc')
-                </div>
-                <hr class="divider" />
-            </header>
-            <main>
-                <div class="filter-container">
-                    @include('includes_leaderboards.search_led_inc')
-                    <div class="filter-btn">
-                        <button id="filterButton">Filter</button>
+            <div class="row justify-content-center">
+                <header>
+                    <div class="header-top">
+                        @include('includes_syscon.syscon_logo_inc')
                     </div>
-                </div>
-                <div id="filterModal" class="modal">
-                    <div class="modal-content">
-                        <span class="close-button">&times;</span>
+                    <hr class="divider" />
+                </header>
+                <main class="col-lg-8 col-md-10 col-sm-12">
+                    <div class="filter-container">
+                        @include('includes_leaderboards.search_led_inc')
+                        <div class="filter-btn">
+                            <button id="filterButton">Filter</button>
+                        </div>
+                    </div>
+                    <div id="filterModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close-button">&times;</span>
 
-                        @include('includes_leaderboards.filter_lead_inc')
+                            @include('includes_leaderboards.filter_lead_inc')
+                        </div>
                     </div>
-                </div>
-                <content>
-                    <div class="table-responsive">
-                        @include('includes_leaderboards.display_lead_inc')
-                    </div>
-                </content>
-            </main>
+                    <content>
+                        <div class="table-responsive">
+                            @include('includes_leaderboards.display_lead_inc')
+                        </div>
+                    </content>
+                </main>
+            </div>
         </div>
         <script src="../../js/home_js.js"></script>
         <script src="{{ asset('js/moderator_js/mleaderboards_js.js') }}"></script>

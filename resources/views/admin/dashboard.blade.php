@@ -59,7 +59,7 @@
                 </div>
             </header>
             <!-- Main Content Section -->
-            <main class="row w-100">
+            <main class="col-lg-8 col-md-10 col-sm-12">
                 <!-- Dashboard Cards and Chart -->
                 <div class="col-12 dashboard-cards">
                     <div class="col-lg-3 col-md-6 col-sm-12">
