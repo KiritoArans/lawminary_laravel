@@ -69,7 +69,6 @@
     </div>
 
     <script src="js/postandcomment.js"></script>
-    {{-- <script src="js/deletePost.js"></script> --}}
     <script src="js/likePost.js"></script>
     <script src="js/bookmarkPost.js"></script>
     <script src="js/commentPost.js"></script>
