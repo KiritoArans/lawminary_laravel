@@ -634,13 +634,13 @@ Route::post('/home', [PostController::class, 'createPost'])->name(
     'users.createPost'
 );
 // Delete Post
-Route::delete('/home-{post}', [PostController::class, 'deletePost'])->name(
-    'post.delete'
-);
+Route::delete('/home-{post}', [PostController::class, 'deletePost'])->name('post.delete');
+
+
 Route::delete('/forum-{post}', [
     PostController::class,
     'deleteForumPost',
-])->name('post.delete');
+])->name('forumPost.delete');
 
 // Like Post
 Route::post('/home-liked', [PostController::class, 'likePost'])->name(

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lawminary is a law finder community based in the Philippines. Join now to access forums, posts, and a community of professionals.">
     <title>Lawminary | Login</title>
     <link rel="icon" href="../imgs/lawminarylogo_v3.png" type="image/png">
     <link rel="stylesheet" href="{{ asset ('css/login_style.css') }}">

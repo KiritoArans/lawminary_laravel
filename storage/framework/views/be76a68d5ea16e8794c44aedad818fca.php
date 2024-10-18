@@ -121,7 +121,7 @@
                                     <button onclick="confirmDelete('<?php echo e($post->post_id); ?>')" class="btn-delete">
                                         Delete
                                     </button>
-                                    <form id="delete-form-<?php echo e($post->post_id); ?>" action="<?php echo e(route('post.delete', $post->post_id)); ?>" method="POST" style="display: none;">
+                                    <form id="delete-form-<?php echo e($post->post_id); ?>" action="<?php echo e(route('forumPost.delete', $post->post_id)); ?>" method="POST" style="display: none;">
                                         <?php echo csrf_field(); ?>
                                         <?php echo method_field('DELETE'); ?>
                                     </form>

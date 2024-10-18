@@ -81,23 +81,24 @@ class PostController extends Controller
     public function deletePost($postId)
     {
         $post = Posts::where('post_id', $postId)->first();
-
+    
         if (!$post) {
             return redirect()->back()->with('error', 'Post not found.');
         }
-
+    
         if ($post->postedBy != Auth::user()->user_id) {
             return redirect()->back()->with('error', 'You are not authorized to delete this post.');
         }
-
+    
         if ($post->concernPhoto) {
             Storage::delete($post->concernPhoto);
         }
-
+    
         $post->delete();
-
+    
         return redirect()->back()->with('success', 'Post deleted successfully.');
     }
+    
 
     public function deleteForumPost($postId)
     {

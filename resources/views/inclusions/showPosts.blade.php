@@ -40,6 +40,7 @@
                             <button onclick="confirmDelete('{{ $post->post_id }}')" class="btn-delete">
                                 Delete
                             </button>
+                            
                             <form id="delete-form-{{ $post->post_id }}" action="{{ route('post.delete', $post->post_id) }}" method="POST" style="display: none;">
                                 @csrf
                                 @method('DELETE')

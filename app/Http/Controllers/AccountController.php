@@ -32,7 +32,11 @@ class AccountController extends Controller
                     'firstName' => 'required',
                     'middleName' => 'nullable',
                     'lastName' => 'required',
-                    'birthDate' => 'required',
+                    'birthDate' => [
+                        'required',
+                        'date',
+                        'before:' . now()->subYears(13)->format('Y-m-d'),
+                    ],
                     'nationality' => 'required',
                     'sex' => 'required',
                     'contactNumber' => 'required',
@@ -40,8 +44,10 @@ class AccountController extends Controller
                 [
                     'password.regex' =>
                         'Password must contain at least one uppercase, lowercase, digit, and special character.',
+                    'birthDate.before' => 'You must be at least 13 years old to register.',
                 ]
             );
+            
 
             // Generate a random 6-digit OTP
             $otp = rand(100000, 999999);

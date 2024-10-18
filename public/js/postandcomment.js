@@ -88,6 +88,7 @@ function toggleReplies(commentId, linkElement) {
 
 // Delete Post Sweet Alert
 function confirmDelete(postId) {
+    console.log(postId); // Check the postId being passed here
     Swal.fire({
         title: 'Deleting Post',
         text: "Do you want to delete this post?",
@@ -99,10 +100,13 @@ function confirmDelete(postId) {
         cancelButtonText: 'Cancel',
     }).then((result) => {
         if (result.isConfirmed) {
+            // Ensure the correct form is being submitted
+            console.log('Submitting form for postId:', postId);
             document.getElementById('delete-form-' + postId).submit();
         }
-    })
+    });
 }
+
 
 
 // Rate Modal:
