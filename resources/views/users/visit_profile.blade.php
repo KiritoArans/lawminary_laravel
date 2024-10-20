@@ -27,70 +27,73 @@
                 <hr class="divider">
             </header>
 
-            <content class="profile-section">
-                <div class="profile-header">
-                    <div class="profile-details">
-                        <div class="profile-left">
-                            <img src="{{ $user->userPhoto ? Storage::url($user->userPhoto) : '../../imgs/user-img.png' }}" class="profile-photo" alt="Profile Picture">
-                            <div class="profile-info">
-                                <div class="profile-names">
-                                    <h2>
-                                        {{ $user->accountType === 'Lawyer' ? 'Atty. ' : '' }}
-                                        {{ $user->firstName }} {{ $user->lastName }}
-                                    </h2>
-                                    @if ($user->accountType === 'Lawyer')
-                                        <a href="/leaderboards">
-                                            <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank" title="{{ $rank }} Badge">
-                                        </a>
-                                    @endif
-                                </div>
-                                <h4>@<span>{{ $user->username }}</span></h4>
-                                <div class="profile-badge">
-                                    <span class="badge">
-                                        {{ $user->accountType }}{{ $user->accountType === 'Lawyer' ? ' | ' . $averageRating : '' }}
-                                    </span>                                    
+            <content>
+                
+                <div class="profile-section">
+                    <div class="profile-header">
+                        <div class="profile-details">
+                            <div class="profile-left">
+                                <img src="{{ $user->userPhoto ? Storage::url($user->userPhoto) : '../../imgs/user-img.png' }}" class="profile-photo" alt="Profile Picture">
+                                <div class="profile-info">
+                                    <div class="profile-names">
+                                        <h2>
+                                            {{ $user->accountType === 'Lawyer' ? 'Atty. ' : '' }}
+                                            {{ $user->firstName }} {{ $user->lastName }}
+                                        </h2>
+                                        @if ($user->accountType === 'Lawyer')
+                                            <a href="/leaderboards">
+                                                <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank" title="{{ $rank }} Badge">
+                                            </a>
+                                        @endif
+                                    </div>
+                                    <h4>@<span>{{ $user->username }}</span></h4>
+                                    <div class="profile-badge">
+                                        <span class="badge">
+                                            {{ $user->accountType }}{{ $user->accountType === 'Lawyer' ? ' | ' . $averageRating : '' }}
+                                        </span>                                    
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="profile-right">
-                            <div class="profile-stats">
-                                <div class="following-count">
-                                    <span>Following:</span>
-                                    <span>{{ $followingCount }}</span>
-                                </div>                                    
-                                <div class="follower-count">
-                                    <span>Followers:</span>
-                                    <span>{{ $followerCount }}</span>
+                            <div class="profile-right">
+                                <div class="profile-stats">
+                                    <div class="following-count">
+                                        <span>Following:</span>
+                                        <span>{{ $followingCount }}</span>
+                                    </div>                                    
+                                    <div class="follower-count">
+                                        <span>Followers:</span>
+                                        <span>{{ $followerCount }}</span>
+                                    </div>
+                                    @php
+                                        $haveFollowed = \App\Models\Follow::where('follower', Auth::user()->user_id)
+                                            ->where('following', $user->user_id)
+                                            ->exists();
+                                    @endphp
+
+                                    <form class="follow-form" action="{{ route('followUser') }}" method="POST" style="display: inline">
+                                        @csrf
+                                        <input type="hidden" name="following" value="{{ $user->user_id }}">
+                                        
+                                        <button type="submit" class="edit-profile-button" class="follow-btn {{ $haveFollowed ? 'following' : '' }}">
+                                            {{ $haveFollowed ? 'Unfollow' : 'Follow' }}
+                                        </button>
+                                    </form>
+
                                 </div>
-                                @php
-                                    $haveFollowed = \App\Models\Follow::where('follower', Auth::user()->user_id)
-                                        ->where('following', $user->user_id)
-                                        ->exists();
-                                @endphp
-
-                                <form class="follow-form" action="{{ route('followUser') }}" method="POST" style="display: inline">
-                                    @csrf
-                                    <input type="hidden" name="following" value="{{ $user->user_id }}">
-                                    
-                                    <button type="submit" class="edit-profile-button" class="follow-btn {{ $haveFollowed ? 'following' : '' }}">
-                                        {{ $haveFollowed ? 'Unfollow' : 'Follow' }}
-                                    </button>
-                                </form>
-
                             </div>
                         </div>
                     </div>
+                    <hr class="hr1">
+                    <div class="profile-nav">
+                        <ul>
+                            <li id="posts-link"><a >Posts</a></li>
+                            <li id="comments-link"><a >Comments</a></li>
+                            <li id="liked-link"><a>Likes</a></li>
+                            <li id="bookmarked-link"><a>Bookmarks</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <hr class="hr1">
-                <div class="profile-nav">
-                    <ul>
-                        <li id="posts-link"><a >Posts</a></li>
-                        <li id="comments-link"><a >Comments and Replies</a></li>
-                        <li id="liked-link"><a>Likes</a></li>
-                        <li id="bookmarked-link"><a>Bookmarks</a></li>
-                    </ul>
-                </div>
-                <hr class="hr2">
+
                 <div class="profile-content">
 
                     @include('inclusions/profile/profileFollowModal')
@@ -107,6 +110,8 @@
     
                     @include('inclusions/profile/profileBookmarks')
 
+                    @include('inclusions/reportPostModal')
+
                 </div>
             </content>
         </main>
@@ -121,6 +126,8 @@
     <script src="js/rateComment.js"></script>
     
     <script src="js/followUser.js"></script>
+
+    <script src="js/reportPost.js"></script>
 
     <script src="/js/settings.js"></script>
     <script src="/js/profile.js"></script>

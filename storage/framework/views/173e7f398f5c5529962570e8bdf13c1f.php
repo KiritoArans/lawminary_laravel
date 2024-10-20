@@ -1,7 +1,19 @@
 <div class="profile-posts">
     <?php if(Auth::user()->user_id == $user->user_id): ?>
-        <div class="pending-btn">
-            <button class="view-pendings">View Pending Posts</button>
+        <div class="posts-btn">
+            <div class="filter-btn">
+                <form action="<?php echo e(route('profile')); ?>" method="GET">
+                    <select name="sort" id="sortFilter" onchange="this.form.submit()">
+                        <option value="desc" <?php echo e(request('sort') == 'desc' ? 'selected' : ''); ?>>Newest</option>
+                        <option value="asc" <?php echo e(request('sort') == 'asc' ? 'selected' : ''); ?>>Oldest</option>
+                    </select>
+                </form>
+            </div>
+            
+            
+            <div class="pending-btn">
+                <button class="view-pendings">View Pending Posts</button>
+            </div>
         </div>
     <?php endif; ?>
 
@@ -44,10 +56,7 @@
                     <div class="post-options">
                         <div class="options">
                             <?php if(Auth::check() && Auth::user()->user_id == $post->user->user_id): ?>
-                                <button
-                                    onclick="confirmDelete('<?php echo e($post->post_id); ?>')"
-                                    class="btn-delete"
-                                >
+                                <button onclick="confirmDelete('<?php echo e($post->post_id); ?>')" class="btn-delete">
                                     Delete
                                 </button>
                                 <form
@@ -60,16 +69,14 @@
                                     <?php echo method_field('DELETE'); ?>
                                 </form>
                             <?php else: ?>
-                                <a
-                                    id="reportLink"
-                                    data-post-id="<?php echo e($post->post_id); ?>"
-                                >
+                                <a id="reportLink" data-post-id="<?php echo e($post->post_id); ?>">
                                     Report
                                 </a>
                             <?php endif; ?>
                         </div>
                         <i class="fas fa-ellipsis-v"></i>
                     </div>
+
                 </div>
                 <hr />
                 <div class="post-text">

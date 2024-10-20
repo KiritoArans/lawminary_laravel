@@ -1,7 +1,19 @@
 <div class="profile-posts">
     @if (Auth::user()->user_id == $user->user_id)
-        <div class="pending-btn">
-            <button class="view-pendings">View Pending Posts</button>
+        <div class="posts-btn">
+            <div class="filter-btn">
+                <form action="{{ route('profile') }}" method="GET">
+                    <select name="sort" id="sortFilter" onchange="this.form.submit()">
+                        <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>Newest</option>
+                        <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>Oldest</option>
+                    </select>
+                </form>
+            </div>
+            
+            
+            <div class="pending-btn">
+                <button class="view-pendings">View Pending Posts</button>
+            </div>
         </div>
     @endif
 
@@ -42,10 +54,7 @@
                     <div class="post-options">
                         <div class="options">
                             @if (Auth::check() && Auth::user()->user_id == $post->user->user_id)
-                                <button
-                                    onclick="confirmDelete('{{ $post->post_id }}')"
-                                    class="btn-delete"
-                                >
+                                <button onclick="confirmDelete('{{ $post->post_id }}')" class="btn-delete">
                                     Delete
                                 </button>
                                 <form
@@ -58,16 +67,14 @@
                                     @method('DELETE')
                                 </form>
                             @else
-                                <a
-                                    id="reportLink"
-                                    data-post-id="{{ $post->post_id }}"
-                                >
+                                <a id="reportLink" data-post-id="{{ $post->post_id }}">
                                     Report
                                 </a>
                             @endif
                         </div>
                         <i class="fas fa-ellipsis-v"></i>
                     </div>
+
                 </div>
                 <hr />
                 <div class="post-text">

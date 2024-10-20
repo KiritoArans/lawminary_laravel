@@ -32,61 +32,63 @@
                     <hr class="divider" />
                 </header>
 
-                <content class="profile-section">
-                    <div class="profile-header">
-                        <div class="profile-details">
-                            <div class="profile-left">
-                                <img
-                                    src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}"
-                                    class="profile-photo"
-                                    alt="Profile Picture"/>
-                                <div class="profile-info">
-                                    <div class="profile-names">
-                                        <h2>
-                                            {{ $user->accountType === 'Lawyer' ? 'Atty. ' : '' }}
-                                            {{ $user->firstName }} {{ $user->lastName }}
-                                        </h2>
-                                        @if ($user->accountType === 'Lawyer')
-                                            <a href="/leaderboards">
-                                                <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank" title="{{ $rank }} Badge">
-                                            </a>
-                                        @endif
-                                    </div>
-                                    <h4>@<span>{{ $user->username }}</span></h4>
-                                    <div class="profile-badge">
-                                        <span class="badge">
-                                            {{ $user->accountType }}{{ $user->accountType === 'Lawyer' ? ' | ' . $averageRating : '' }}
-                                        </span>                                    
+                <content >
+                    <div class="profile-section">
+                        <div class="profile-header">
+                            <div class="profile-details">
+                                <div class="profile-left">
+                                    <img
+                                        src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}"
+                                        class="profile-photo"
+                                        alt="Profile Picture"/>
+                                    <div class="profile-info">
+                                        <div class="profile-names">
+                                            <h2>
+                                                {{ $user->accountType === 'Lawyer' ? 'Atty. ' : '' }}
+                                                {{ $user->firstName }} {{ $user->lastName }}
+                                            </h2>
+                                            @if ($user->accountType === 'Lawyer')
+                                                <a href="/leaderboards">
+                                                    <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank" title="{{ $rank }} Badge">
+                                                </a>
+                                            @endif
+                                        </div>
+                                        <h4>@<span>{{ $user->username }}</span></h4>
+                                        <div class="profile-badge">
+                                            <span class="badge">
+                                                {{ $user->accountType }}{{ $user->accountType === 'Lawyer' ? ' | ' . $averageRating : '' }}
+                                            </span>                                    
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="profile-right">
-                                <div class="profile-stats">
-                                    <div class="following-count">
-                                        <span>Following:</span>
-                                        <span>{{ $followingCount }}</span>
+                                <div class="profile-right">
+                                    <div class="profile-stats">
+                                        <div class="following-count">
+                                            <span>Following:</span>
+                                            <span>{{ $followingCount }}</span>
+                                        </div>
+                                        <div class="follower-count">
+                                            <span>Followers:</span>
+                                            <span>{{ $followerCount }}</span>
+                                        </div>
+                                        <a href="account-settings" class="edit-profile-button">
+                                            Edit Profile
+                                        </a>
                                     </div>
-                                    <div class="follower-count">
-                                        <span>Followers:</span>
-                                        <span>{{ $followerCount }}</span>
-                                    </div>
-                                    <a href="account-settings" class="edit-profile-button">
-                                        Edit Profile
-                                    </a>
                                 </div>
                             </div>
                         </div>
+                        <hr class="hr1">
+                        <div class="profile-nav">
+                            <ul>
+                                <li id="posts-link"><a >Posts</a></li>
+                                <li id="comments-link"><a >Comments</a></li>
+                                <li id="liked-link"><a>Likes</a></li>
+                                <li id="bookmarked-link"><a>Bookmarks</a></li>
+                            </ul>
+                        </div>
+                    
                     </div>
-                    <hr class="hr1">
-                    <div class="profile-nav">
-                        <ul>
-                            <li id="posts-link"><a >Posts</a></li>
-                            <li id="comments-link"><a >Comments and Replies</a></li>
-                            <li id="liked-link"><a>Likes</a></li>
-                            <li id="bookmarked-link"><a>Bookmarks</a></li>
-                        </ul>
-                    </div>
-                    <hr class="hr2">
 
                     <div class="profile-content">
 
@@ -103,6 +105,8 @@
                         @include('inclusions/profile/profileLikes')
 
                         @include('inclusions/profile/profileBookmarks')
+
+                        @include('inclusions/reportPostModal')
 
                     </div>
 
@@ -123,11 +127,43 @@
         <script src="js/rateComment.js"></script>
 
         <script src="js/followUser.js"></script>
+
+        <script src="js/reportPost.js"></script>
         
         <script src="js/pendingPost.js"></script>
 
         <script src="js/settings.js"></script>
         <script src="js/profile.js"></script>
         <script src="js/logout.js"></script>
+
+        <script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const sortFilter = document.getElementById('sortFilter');
+    const postsContainer = document.getElementById('posts-container');
+
+    sortFilter.addEventListener('change', function () {
+        const selectedValue = this.value;
+        let postsArray = Array.from(postsContainer.children); // Convert NodeList to an array
+
+        // Sort the posts based on the selected value (newest or oldest)
+        postsArray.sort(function (a, b) {
+            const timeA = new Date(a.getAttribute('data-post-time'));
+            const timeB = new Date(b.getAttribute('data-post-time'));
+
+            if (selectedValue === 'newest') {
+                return timeB - timeA; // Sort descending (newest first)
+            } else if (selectedValue === 'oldest') {
+                return timeA - timeB; // Sort ascending (oldest first)
+            }
+        });
+
+        // Re-append sorted posts to the container
+        postsArray.forEach(function (post) {
+            postsContainer.appendChild(post);
+        });
+    });
+});
+
+        </script>
     </body>
 </html>

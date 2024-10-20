@@ -375,7 +375,7 @@ class PageController extends Controller
         return view('users.resources');
     }
 
-    public function profilePageFunctions($user)
+    public function profilePageFunctions(Request $request, $user)
     {
         $following = Follow::where('follower', $user->user_id)
             ->with('followedUser')
@@ -403,11 +403,12 @@ class PageController extends Controller
         // Default rank if the user is not found in the leaderboard
         $rank = $leaderboard ? $leaderboard->rank : 'No Rank';
 
+        $sortOrder = $request->input('sort', 'desc'); // Default to 'desc' (Newest)
 
         $posts = Posts::where('postedBy', $user->user_id)
             ->withCount('likes', 'comments', 'bookmarks')
             ->where('status', 'Approved')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', $sortOrder)
             ->get();
 
         $allPosts = Posts::with(
@@ -472,6 +473,7 @@ class PageController extends Controller
     
 
         return compact(
+            'sortOrder',
             'posts',
             'allPosts',
             'comments',
@@ -487,11 +489,11 @@ class PageController extends Controller
             'disregardPosts'
         );
     }
-    public function showProfilePage()
+    public function showProfilePage(Request $request)
     {
         $user = Auth::user();
 
-        $profileFunctions = $this->profilePageFunctions($user);
+        $profileFunctions = $this->profilePageFunctions($request, $user);
 
         return view(
             'users.profile',
@@ -499,11 +501,11 @@ class PageController extends Controller
         );
     }
 
-    public function showVisitProfilePage($user_id)
+    public function showVisitProfilePage(Request $request, $user_id)
     {
         $user = UserAccount::where('user_id', $user_id)->firstOrFail();
 
-        $profileFunctions = $this->profilePageFunctions($user);
+        $profileFunctions = $this->profilePageFunctions($request, $user);
 
         $isFollowing = \App\Models\Follow::where('follower', $user->user_id)
             ->where('following', $user->user_id)
