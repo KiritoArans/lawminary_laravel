@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\BookTwoLaws;
 use App\Models\UserAccount;
 use App\Models\Posts;
 use App\Models\ForumPosts;
@@ -369,6 +370,59 @@ class PageController extends Controller
     {
         return view('users.search');
     }
+
+
+    public function showTestSearchPage(Request $request)
+    {
+        $userConcern = $request->input('user_concern');
+        $possibleCharges = [];
+    
+        if ($userConcern) {
+            // Normalize input to lowercase and remove filler words for better search results
+            $normalizedConcern = strtolower(trim($userConcern));
+            
+            // Remove common stop words that do not add value to the search
+            $stopWords = ['the', 'and', 'a', 'of', 'in', 'on', 'at', 'for', 'to', 'is', 'with'];
+            $keywords = array_diff(explode(' ', $normalizedConcern), $stopWords);
+            
+            // Perform the search on synonyms, description, and article_name columns
+            $possibleCharges = BookTwoLaws::where(function ($query) use ($normalizedConcern, $keywords) {
+                // 1. Exact phrase match (highest relevance)
+                $query->where(function ($subQuery) use ($normalizedConcern) {
+                    $subQuery->whereRaw("LOWER(description) LIKE ?", ["%$normalizedConcern%"])
+                             ->orWhereRaw("LOWER(synonyms) LIKE ?", ["%$normalizedConcern%"])
+                             ->orWhereRaw("LOWER(article_name) LIKE ?", ["%$normalizedConcern%"]);
+                });
+    
+                // 2. Search using remaining individual keywords from user input (lower relevance)
+                foreach ($keywords as $keyword) {
+                    $query->orWhere(function ($subQuery) use ($keyword) {
+                        $subQuery->whereRaw("LOWER(description) LIKE ?", ["%$keyword%"])
+                                 ->orWhereRaw("LOWER(synonyms) LIKE ?", ["%$keyword%"])
+                                 ->orWhereRaw("LOWER(article_name) LIKE ?", ["%$keyword%"]);
+                    });
+                }
+            })
+            ->select('title_name', 'description', 'article_name')
+            ->orderByRaw("
+                (CASE 
+                    WHEN LOWER(article_name) LIKE '%$normalizedConcern%' THEN 5
+                    WHEN LOWER(description) LIKE '%$normalizedConcern%' THEN 4
+                    WHEN LOWER(synonyms) LIKE '%$normalizedConcern%' THEN 3
+                    ELSE 2
+                END) DESC
+            ")
+            ->limit(10)  // Limit to top 10 results for efficiency
+            ->get();
+        }
+    
+        return view('users.test-search', ['possibleCharges' => $possibleCharges]);
+    }
+    
+    
+    
+
+
 
     public function showResourcesPage()
     {

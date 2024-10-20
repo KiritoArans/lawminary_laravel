@@ -224,11 +224,12 @@ header hr {
 
 .charges .possible-charges {
     padding: 0 16px;
+    margin-bottom: 1rem;
     color: #666;
 }
 
 .charges .possible-charges h1 {
-    margin: 16px 0 0;
+    margin: 16px 0 0 0;
 }
 
 .charges .possible-charges p {

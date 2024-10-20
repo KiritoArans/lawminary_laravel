@@ -111,6 +111,16 @@ Route::get('/search', [PageController::class, 'showSearchPage'])->middleware(
     'auth'
 );
 
+Route::get('/test-search', function() {
+    return view('users.test-search');
+})->name('searchLaw')->middleware('auth');
+
+Route::post('/test-search', [PageController::class, 'showTestSearchPage'])
+    ->name('searchLaw')
+    ->middleware('auth');
+
+
+
 Route::get('/resources', [
     PageController::class,
     'showResourcesPage',
