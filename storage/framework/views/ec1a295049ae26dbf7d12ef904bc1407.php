@@ -46,30 +46,32 @@
     </head>
     <body>
         <div class="container-fluid dashboard-content-wrapper">
-            <!-- Header Section -->
-            <header class="row">
-                <div class="col-12 header-top">
-                    <?php echo $__env->make('includes_syscon.syscon_logo_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                    <?php echo $__env->make('includes_accounts.nav_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-                </div>
-                <hr class="divider w-100" />
-                <div class="col-12 header-line">
-                    <h1 class="text-center">Dashboard</h1>
-                    <!-- Centered heading below the logo -->
-                </div>
-            </header>
-            <!-- Main Content Section -->
-            <main class="col-lg-8 col-md-10 col-sm-12">
-                <!-- Dashboard Cards and Chart -->
-                <div class="col-12 dashboard-cards">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        <?php echo $__env->make('includes_dashboard.pending_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php echo $__env->make('includes_accounts.nav_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <div class="row justify-content-center">
+                <!-- Header Section -->
+                <header class="row">
+                    <div class="col-12 header-top">
+                        <?php echo $__env->make('includes_syscon.syscon_logo_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                     </div>
-                </div>
+                    <hr class="divider w-100" />
+                    <div class="col-12 header-line">
+                        <h1 class="text-center">Dashboard</h1>
+                        <!-- Centered heading below the logo -->
+                    </div>
+                </header>
+                <!-- Main Content Section -->
+                <main class="col-lg-8 col-md-10 col-sm-12">
+                    <!-- Dashboard Cards and Chart -->
+                    <div class="col-12 dashboard-cards">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <?php echo $__env->make('includes_dashboard.pending_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                        </div>
+                    </div>
 
-                <!-- Chart Section -->
-                <?php echo $__env->make('includes_dashboard.recent_act_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-            </main>
+                    <!-- Chart Section -->
+                    <?php echo $__env->make('includes_dashboard.recent_act_inc', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                </main>
+            </div>
         </div>
 
         <!-- Close main -->

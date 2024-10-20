@@ -37,14 +37,12 @@
         @include('inclusions/libraryLinks')
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid dashboard-content-wrapper">
             @include('includes_accounts.mod_nav_inc')
 
             <div class="row justify-content-center">
-                <header>
-                    <div
-                        class="header-top d-flex justify-content-between align-items-center"
-                    >
+                <header class="row">
+                    <div class="col-12 header-top">
                         @include('includes_syscon.syscon_logo_inc')
                         <div class="spacer"></div>
                     </div>

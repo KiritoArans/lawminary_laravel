@@ -43,11 +43,12 @@
         />
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid dashboard-content-wrapper">
+            @include('includes_accounts.nav_inc')
+
             <div class="row justify-content-center">
                 <header>
                     <div class="header-top">
-                        @include('includes_accounts.nav_inc')
                         <img
                             src="{{ Storage::url($sysconData->first()->logo_path) }}"
                             alt=""

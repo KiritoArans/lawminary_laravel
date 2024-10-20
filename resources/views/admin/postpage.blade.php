@@ -45,7 +45,7 @@
         />
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid dashboard-content-wrapper">
             @include('includes_accounts.nav_inc')
 
             <div class="row justify-content-center">

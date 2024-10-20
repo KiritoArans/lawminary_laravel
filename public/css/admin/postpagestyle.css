@@ -11,6 +11,15 @@ main {
     padding: 20px;
     margin: 0px 48px 0px 32px;
 }
+
+/* Center content vertically and horizontally */
+.dashboard-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
 header {
     text-align: center;
 }

@@ -46,30 +46,32 @@
     </head>
     <body>
         <div class="container-fluid dashboard-content-wrapper">
-            <!-- Header Section -->
-            <header class="row">
-                <div class="col-12 header-top">
-                    @include('includes_syscon.syscon_logo_inc')
-                    @include('includes_accounts.nav_inc')
-                </div>
-                <hr class="divider w-100" />
-                <div class="col-12 header-line">
-                    <h1 class="text-center">Dashboard</h1>
-                    <!-- Centered heading below the logo -->
-                </div>
-            </header>
-            <!-- Main Content Section -->
-            <main class="col-lg-8 col-md-10 col-sm-12">
-                <!-- Dashboard Cards and Chart -->
-                <div class="col-12 dashboard-cards">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                        @include('includes_dashboard.pending_inc')
+            @include('includes_accounts.nav_inc')
+            <div class="row justify-content-center">
+                <!-- Header Section -->
+                <header class="row">
+                    <div class="col-12 header-top">
+                        @include('includes_syscon.syscon_logo_inc')
                     </div>
-                </div>
+                    <hr class="divider w-100" />
+                    <div class="col-12 header-line">
+                        <h1 class="text-center">Dashboard</h1>
+                        <!-- Centered heading below the logo -->
+                    </div>
+                </header>
+                <!-- Main Content Section -->
+                <main class="col-lg-8 col-md-10 col-sm-12">
+                    <!-- Dashboard Cards and Chart -->
+                    <div class="col-12 dashboard-cards">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            @include('includes_dashboard.pending_inc')
+                        </div>
+                    </div>
 
-                <!-- Chart Section -->
-                @include('includes_dashboard.recent_act_inc')
-            </main>
+                    <!-- Chart Section -->
+                    @include('includes_dashboard.recent_act_inc')
+                </main>
+            </div>
         </div>
 
         <!-- Close main -->
