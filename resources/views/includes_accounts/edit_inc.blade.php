@@ -138,7 +138,7 @@
     <button
         type="button"
         class="delete-button"
-        data-account-id="{{ $account->id }}"
+        onclick="confirmDelete({{ $account->id }})"
     >
         Delete
     </button>

@@ -44,10 +44,10 @@ class AccountController extends Controller
                 [
                     'password.regex' =>
                         'Password must contain at least one uppercase, lowercase, digit, and special character.',
-                    'birthDate.before' => 'You must be at least 13 years old to register.',
+                    'birthDate.before' =>
+                        'You must be at least 13 years old to register.',
                 ]
             );
-            
 
             // Generate a random 6-digit OTP
             $otp = rand(100000, 999999);
@@ -287,22 +287,45 @@ class AccountController extends Controller
 
     public function addAccount(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'nullable',
-            'username' => 'required|unique:tblaccounts,username',
-            'email' => 'required|unique:tblaccounts,email',
-            'password' => 'required|min:8|confirmed',
-            'firstName' => 'required',
-            'middleName' => 'nullable',
-            'lastName' => 'required',
-            'birthDate' => 'required',
-            'nationality' => 'required',
-            'sex' => 'nullable',
-            'contactNumber' => 'required',
-            'accountType' => 'nullable',
-            'restrict' => 'nullable',
-            'restrictDays' => 'nullable',
-        ]);
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'user_id' => 'nullable',
+                'userPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|min:1',
+                'username' => 'required|unique:tblaccounts,username',
+                'email' => [
+                    'required',
+                    'unique:tblaccounts,email',
+                    'regex:/^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com)$/',
+                ],
+                'password' => [
+                    'required',
+                    'min:8',
+                    'confirmed',
+                    'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/',
+                ],
+                'firstName' => 'required',
+                'middleName' => 'nullable',
+                'lastName' => 'required',
+                'birthDate' => [
+                    'required',
+                    'date',
+                    'before:' . now()->subYears(13)->format('Y-m-d'),
+                ],
+                'nationality' => 'required',
+                'sex' => 'nullable',
+                'contactNumber' => 'required',
+                'accountType' => 'nullable',
+                'restrict' => 'nullable',
+                'restrictDays' => 'nullable',
+            ],
+            [
+                'password.regex' =>
+                    'Password must contain at least one uppercase, lowercase, digit, and special character.',
+                'birthDate.before' =>
+                    'You must be at least 13 years old to register.', // Custom error message
+            ]
+        );
 
         if ($validator->fails()) {
             // Check if the current route is for admin or moderator
@@ -321,6 +344,7 @@ class AccountController extends Controller
 
         // Collect all data from the request except for password
         $data = $request->only([
+            'userPhoto',
             'user_id',
             'username',
             'email',
@@ -335,6 +359,17 @@ class AccountController extends Controller
             'restrict',
             'restrictDays',
         ]);
+
+        if ($request->hasFile('userPhoto')) {
+            $file = $request->file('userPhoto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs(
+                'uploads/profile_pictures', // Path
+                $filename, // Filename
+                'public' // Disk
+            );
+            $data['userPhoto'] = $filePath; // Save the file path to the $data array
+        }
 
         if (!empty($data['accountType'])) {
             $data['accountType'] = ucfirst(strtolower($data['accountType']));

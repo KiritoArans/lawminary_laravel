@@ -60,12 +60,18 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 /add/;
-
 document.addEventListener('DOMContentLoaded', function () {
     const addButton = document.getElementById('addButton');
     const addModal = document.getElementById('addModal');
     const closeAddModal = document.getElementById('closeAddModal');
+    const birthDateInput = document.getElementById('birthDate');
+    const passwordInput = document.getElementById('password');
+    const passwordConfirmInput = document.getElementById(
+        'password_confirmation'
+    );
+    const emailInput = document.getElementById('email');
 
+    // Show/Hide Modal
     addButton.addEventListener('click', function () {
         addModal.style.display = 'block';
     });
@@ -77,6 +83,56 @@ document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('click', function (event) {
         if (event.target == addModal) {
             addModal.style.display = 'none';
+        }
+    });
+
+    // Real-time Birth Date Validation (13 years or older)
+    birthDateInput.addEventListener('input', function () {
+        const birthDate = new Date(this.value);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const month = today.getMonth() - birthDate.getMonth();
+        const birthDateError = document.getElementById('birthDateError');
+
+        if (
+            month < 0 ||
+            (month === 0 && today.getDate() < birthDate.getDate())
+        ) {
+            age--;
+        }
+
+        if (age < 13) {
+            birthDateError.textContent = 'You must be 13 years old or older.';
+            birthDateError.style.color = 'red';
+        } else {
+            birthDateError.textContent = ''; // Clear the error if valid
+        }
+    });
+
+    // Real-time Password Confirmation Validation
+    passwordConfirmInput.addEventListener('input', function () {
+        const passwordError = document.getElementById('passwordError');
+        if (passwordInput.value !== passwordConfirmInput.value) {
+            passwordError.textContent = 'Passwords do not match.';
+            passwordError.style.color = 'red';
+        } else {
+            passwordError.textContent = ''; // Clear error if passwords match
+        }
+    });
+
+    // Real-time Email Validation (Allow only specific domains)
+    emailInput.addEventListener('input', function () {
+        const emailError = document.getElementById('emailError');
+        const emailValue = this.value;
+        const regex =
+            /^[a-zA-Z0-9._%+-]+@(gmail\.com|yahoo\.com|outlook\.com|hotmail\.com)$/;
+
+        if (!regex.test(emailValue)) {
+            emailError.textContent =
+                'Only Gmail, Yahoo, Outlook, or Hotmail emails are allowed.';
+            emailError.style.color = 'red';
+        } else {
+            emailError.textContent = ''; // Clear error if email is valid
         }
     });
 });

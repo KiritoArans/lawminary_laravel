@@ -2,9 +2,13 @@
     id="addForm"
     method="POST"
     action="{{ request()->is('moderator*') ? route('moderator.addAccount') : route('admin.addAccount') }}"
+    enctype="multipart/form-data"
 >
     @csrf
     @include('inclusions.response')
+
+    <label for="userPhoto">Upload Profile Picture</label>
+    <input type="file" name="userPhoto" id="userPhoto" />
 
     <label for="firstName">First Name:</label>
     <input
@@ -40,6 +44,8 @@
         value="{{ old('birthDate') }}"
         required
     />
+    <div id="birthDateError" style="color: red"></div>
+    <!-- Error message placeholder -->
 
     <label for="nationality">Nationality:</label>
     <select id="nationality" name="nationality" required>
@@ -83,6 +89,8 @@
         value="{{ old('email') }}"
         required
     />
+    <div id="emailError" style="color: red"></div>
+    <!-- Error message placeholder -->
 
     <label for="username">Username:</label>
     <input
@@ -131,6 +139,8 @@
         name="password_confirmation"
         required
     />
+    <div id="passwordError" style="color: red"></div>
+    <!-- Error message placeholder -->
 
     <button type="submit" class="custom-button">Add Account</button>
 </form>

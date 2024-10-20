@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>">
+    <meta name="description" content="Lawminary is a law finder community based in the Philippines. Join now to access forums, posts, and a community of professionals.">
     <title>Lawminary | Sign Up</title>
     <link rel="icon" href="../imgs/lawminarylogo_v3.png" type="image/png">
     <link rel="stylesheet" href="<?php echo e(asset ('css/signup_style.css')); ?>">
@@ -45,6 +46,7 @@
                             <div class="form-group">
                                 <label for="email-address">Email Address</label>
                                 <input type="email" id="email-address" name="email" value="<?php echo e(old('email')); ?>">
+                                <div id="emailError" style="color: red"></div>
                             </div>
                         </div>
                         <div class="middle-column">
@@ -55,6 +57,7 @@
                             <div class="form-group">
                                 <label for="birth-date">Birth Date</label>
                                 <input type="date" id="birth-date" name="birthDate" value="<?php echo e(old('birthDate')); ?>">
+                                <div id="birthDateError" style="color: red"></div>
                             </div>
                             <div class="form-group">
                                 <label for="sex">Sex</label>
@@ -100,6 +103,7 @@
                                 <div class="password-container">
                                     <input type="password" id="password_confirmation" name="password_confirmation" required>
                                     <i class="fas fa-eye toggle-password" id="togglePasswordConfirmation"></i>
+                                        <div id="passwordError" style="color: red"></div>
                                 </div>
                                 <div class="buttons">
                                     <a href="login" class="back-home">

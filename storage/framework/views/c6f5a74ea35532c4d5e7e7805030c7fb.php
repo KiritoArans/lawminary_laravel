@@ -143,7 +143,7 @@
     <button
         type="button"
         class="delete-button"
-        data-account-id="<?php echo e($account->id); ?>"
+        onclick="confirmDelete(<?php echo e($account->id); ?>)"
     >
         Delete
     </button>
