@@ -195,6 +195,125 @@ section {
 
 
 
+
+@media (min-width: 576px) and (max-width: 1024px) {
+    body {
+        background: linear-gradient(to top, #561c24, #7b2d37);
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    section {
+        background-image: none; /* Hide the background image for better readability on tablets */
+    }
+
+    .wrapper {
+        display: flex;
+        justify-content: center; /* Center the form horizontally */
+        align-items: center;
+        height: 100vh;
+        padding: 10px; /* Add padding for spacing */
+    }
+
+    .container {
+        max-width: 85%;  /* Adjust the container to take up more space */
+        padding: 30px; /* Adjust padding to suit tablets */
+        box-sizing: border-box; /* Include padding in the width and height */
+    }
+
+    .container h1 {
+        font-size: 30px; /* Adjust font size for better visibility */
+        margin-bottom: 25px; /* Adjust margin to tighten spacing */
+    }
+
+    .signup-form {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* Two columns grid */
+        grid-template-areas: 
+            "left-column left-column"
+            "middle-column right-column"; /* Define the layout */
+        grid-gap: 20px; /* Add space between the items */
+    }
+
+    /* Top section: left column should take full width */
+    .left-column {
+        grid-area: left-column;
+        width: 100%;
+    }
+
+    /* Bottom section: middle and right columns side by side */
+    .middle-column {
+        grid-area: middle-column;
+        width: 100%;
+    }
+
+    .right-column {
+        grid-area: right-column;
+        width: 100%;
+    }
+
+    .form-group input{
+        width: 97%; /* Make form fields full width */
+        padding: 10px; /* Adjust padding for better spacing */
+    }
+    .form-group select {
+        width: 100%; /* Make form fields full width */
+        padding: 10px; /* Adjust padding for better spacing */
+    }
+    .middle-column input, 
+    .right-column input{
+        width: 94%; /* Make form fields full width */
+        padding: 10px; /* Adjust padding for better spacing */
+    }
+    .contact-number-wrapper{
+        width: 138%;
+    }
+    
+
+    .form-group {
+        margin-bottom: 15px; /* Adjust space between form groups */
+    }
+
+    .country-code {
+        margin-right: 10px; /* Add space between country code and input */
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 1rem; /* Adjust positioning of the eye icon */
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 16px;
+        color: var(--black-light-color);
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between; /* Keep buttons horizontally aligned */
+        margin-top: 30px; /* Add some spacing at the top */
+    }
+
+    .buttons button {
+        width: 48%; /* Make buttons take up more space but keep them side by side */
+        margin-left: 0; /* Remove extra margin */
+    }
+
+    .back-home {
+        display: inline-block; /* Ensure 'Back to Login' stays inline with buttons */
+        text-align: center; /* Center the link */
+        margin-top: 10px; /* Add some margin */
+    }
+    .line {
+        display: none; /* Hide the dividing line on smaller screens */
+    }
+}
+
+
+
+
+
+
 @media (max-width: 576px) {
     body {
         background: linear-gradient(to top, #561c24, #7b2d37);
