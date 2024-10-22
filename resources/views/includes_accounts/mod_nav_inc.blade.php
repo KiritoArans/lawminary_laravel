@@ -151,8 +151,8 @@
             </li>
             <li>
                 <a href="{{ route('moderator.about-law') }}">
-                    <i class="fa-solid fa-hammer"></i>
-                    <span>About Law</span>
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span>Laws</span>
                 </a>
             </li>
         </ul>

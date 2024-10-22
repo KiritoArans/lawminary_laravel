@@ -20,6 +20,26 @@
                         </div>
                     </div>
                     <div class="post-options">
+                        <div class="options">
+                            <?php if(Auth::check() && Auth::user()->user_id == $post->user->user_id): ?>
+                                <button onclick="confirmDelete('<?php echo e($post->post_id); ?>')" class="btn-delete">
+                                    Delete
+                                </button>
+                                <form
+                                    id="delete-form-<?php echo e($post->post_id); ?>"
+                                    action="<?php echo e(route('post.delete', $post->post_id)); ?>"
+                                    method="POST"
+                                    style="display: none"
+                                >
+                                    <?php echo csrf_field(); ?>
+                                    <?php echo method_field('DELETE'); ?>
+                                </form>
+                            <?php else: ?>
+                                <a id="reportLink" data-post-id="<?php echo e($post->post_id); ?>">
+                                    Report
+                                </a>
+                            <?php endif; ?>
+                        </div>
                         <i class="fas fa-ellipsis-v"></i>
                     </div>
                 </div>
