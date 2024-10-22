@@ -20,8 +20,9 @@
                     <div class="header-top">
                         @include('includes_syscon.syscon_logo_inc')
                         <div class="notification">
-                            <a href="../notifications">
-                                <i class="fas fa-bell bell-icon"></i>
+                            <a href="../notifications" class="notification-link">
+                                <i class="fas fa-bell bell-icon current"></i>
+                                <span id="notification-count" class="notification-badge"></span>
                             </a>
                         </div>
                     </div>
@@ -75,6 +76,7 @@
                 </content>
             </main>
         </div>
+        <script src="../js/showNotification.js"></script>
         <script src="../js/settings.js"></script>
         <script src="../js/logout.js"></script>
     </body>

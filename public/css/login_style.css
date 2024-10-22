@@ -256,6 +256,9 @@ section {
 
 /* Styles for mobile phones */
 @media (max-width: 576px) {
+    body{
+        min-height: none;
+    }
     .wrapper {
         justify-content: center;
         align-items: center;
@@ -267,7 +270,7 @@ section {
         display: none;
     }
     .login-content {
-        width: 20rem;
+        width: 16rem;
     }
     .username, .password{
         margin-right: .5rem;

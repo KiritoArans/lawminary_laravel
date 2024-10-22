@@ -24,8 +24,9 @@
                     <div class="header-top">
                         @include('includes_syscon.syscon_logo_inc')
                         <div class="notification">
-                            <a href="notifications">
-                                <i class="fas fa-bell bell-icon"></i>
+                            <a href="notifications" class="notification-link">
+                                <i class="fas fa-bell bell-icon current"></i>
+                                <span id="notification-count" class="notification-badge"></span>
                             </a>
                         </div>
                     </div>
@@ -132,6 +133,8 @@
         
         <script src="js/pendingPost.js"></script>
 
+        <script src="js/showNotification.js"></script>
+        
         <script src="js/settings.js"></script>
         <script src="js/profile.js"></script>
         <script src="js/logout.js"></script>

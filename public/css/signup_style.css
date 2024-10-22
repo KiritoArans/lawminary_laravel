@@ -127,7 +127,7 @@ section {
     border-radius: 4px;
     cursor: pointer;
     position: relative;
-    left: 16px;
+    /* left: 16px; */
 }
 
 .otp-section {
@@ -191,4 +191,123 @@ section {
 .country-code {
     margin-right: 10px; /* Space between +63 and input field */
     font-weight: bold;
+}
+
+
+
+@media (max-width: 576px) {
+    body {
+        background: linear-gradient(to top, #561c24, #7b2d37);
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    section {
+        background-image: none; /* Optionally hide the background image for better readability */
+    }
+
+    .wrapper {
+        display: block;  /* Allow the wrapper to expand vertically instead of centering */
+        padding: 20px 10px;   /* Add padding for spacing */
+        height: auto;    /* Allow height to adjust dynamically */
+        margin: 0 auto;  /* Center the form horizontally */
+    }
+
+    .container {
+        max-width: 100%;  /* Ensure the form takes full width */
+        padding: 20px 15px; /* Adjust padding to prevent content from being cut off */
+        box-sizing: border-box; /* Include padding in the width and height */
+        margin: 4rem;
+    }
+
+    .container h1 {
+        font-size: 28px; /* Reduce the font size slightly */
+        margin-bottom: 20px; /* Adjust margin to tighten spacing */
+    }
+
+    .signup-form {
+        flex-direction: column; /* Stack form fields vertically */
+        align-items: center; /* Center the form fields */
+    }
+
+    .left-column,
+    .middle-column,
+    .right-column {
+        width: 100%; /* Make each column take the full width of the screen */
+        margin-bottom: 10px; /* Reduce spacing between fields */
+    }
+
+    .line {
+        display: none; /* Hide the dividing line on smaller screens */
+    }
+
+    .form-group input{
+        width: 93%; /* Full width input/select fields */
+        margin-right: 0; /* Remove extra margin */
+        padding: 8px 12px; /* Adjust padding for better spacing */
+    }
+    .form-group select {
+        width: 100%; /* Full width input/select fields */
+        margin-right: 0; /* Remove extra margin */
+        padding: 8px 12px; /* Adjust padding for better spacing */
+    }
+
+    .form-group {
+        margin-bottom: 12px; /* Reduce space between form groups */
+    }
+
+    .contact-number-wrapper {
+        width: 100%; /* Make the contact number field full width */
+    }
+
+    .country-code {
+        margin-right: 5px; /* Reduce space between country code and input */
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: .5rem;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 16;
+        color: var(--black-light-color);
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: column-reverse; /* Stack buttons vertically */
+        align-items: stretch;
+        justify-content: center;
+        margin-top: 20px; /* Add some spacing at the top */
+    }
+
+    .buttons button {
+        width: 100%; /* Full width for buttons */
+        margin-left: 0; /* Remove left margin */
+        margin-top: 10px; /* Add spacing between buttons */
+    }
+
+    .back-home {
+        display: block; /* Ensure 'Back to Login' takes up its own line */
+        text-align: center; /* Center the link */
+        margin-top: 10px; /* Add some margin to separate from the button */
+    }
+
+    .otp-section {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .otp-section h2 {
+        text-align: center;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+
+    .otp-input div {
+        display: flex;
+        justify-content: center;
+        gap: .75rem;
+    }
 }

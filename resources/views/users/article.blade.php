@@ -17,7 +17,10 @@
                 <div class="header-top">
                     <img src="../imgs/Lawminary_Logo_2-Gold.png" alt="">
                     <div class="notification">
-                        <a href="notifications"><i class="fas fa-bell bell-icon"></i></a>
+                        <a href="notifications" class="notification-link">
+                            <i class="fas fa-bell bell-icon current"></i>
+                            <span id="notification-count" class="notification-badge"></span>
+                        </a>
                     </div>
                 </div>
                 <hr class="divider">
@@ -70,6 +73,7 @@
             @endif
         </content>
         </main>
+    <script src="js/showNotification.js"></script>
     <script src="js/homelocator.js"></script>
     <script src="js/settings.js"></script>    
     <script src="js/logout.js"></script>

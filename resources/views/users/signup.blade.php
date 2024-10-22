@@ -9,16 +9,19 @@
     <link rel="icon" href="../imgs/lawminarylogo_v3.png" type="image/png">
     <link rel="stylesheet" href="{{ asset ('css/signup_style.css') }}">
     <link rel="stylesheet" href="{{ asset ('css/nav_style.css') }}">
-    @include('inclusions/libraryLinks')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script src="{{ asset('js/library_js/sweetalertV2.js') }}"></script>
 </head>
 <body>
     <section>
         <div class="wrapper">
             <div class="container">
-                <h1>Sign Up</h1>
+                <h1 style="display: none" >Sign Up</h1>
                 
                 <div class="signup-content">
-                    <form class="signup-form">
+                    <form class="signup-form" style="display: none">
 
                         <div class="left-column">
                             <div class="form-group">
@@ -114,7 +117,7 @@
                         </form>
                     </div>
 
-                    <div class="otp-section" style="display: none">
+                    <div class="otp-section" style="display: block">
                         <h2>Enter Your OTP</h2>
                         <div class="otp-input">
                             <label for="otpInput">6-Digit OTP</label>
