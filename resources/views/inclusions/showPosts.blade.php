@@ -94,5 +94,11 @@
                 
             </div>
         </div>
+
+        <script>
+            window.postId = '{{ $post->post_id }}';
+        </script>
+
+        
     @endforeach
 </div>

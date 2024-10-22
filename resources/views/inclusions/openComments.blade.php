@@ -148,7 +148,8 @@
                 @endforeach
                 </div>
                 <hr>
-                <div class="comment-field" id="comment-field comment-field-{{ $post->post_id }}">
+                {{-- <div class="comment-field" id="comment-field comment-field-{{ $post->post_id }}"> --}}
+                <div class="comment-field" id="comment-field-{{ $post->post_id }}">
                     @php
                         $attorneyComments = $post->comments->filter(function ($comment) {
                             return $comment->user->accountType === 'Lawyer';
@@ -166,7 +167,8 @@
                     @if ($attorneyComments->isNotEmpty() && $isLawyer && !$isSameLawyer && !$isPostOwner)
                         <label class="comment-warning">An attorney has already commented on this post.</label>
                     @else
-                        <form id="commentForm commentForm-{{ $post->post_id }}" method="POST" action="{{ route('users.createComment') }}">
+                        {{-- <form id="commentForm commentForm-{{ $post->post_id }}" method="POST" action="{{ route('users.createComment') }}"> --}}
+                        <form id="commentForm-{{ $post->post_id }}" method="POST" action="{{ route('users.createComment') }}">
                             @csrf
                             <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture">
                             <input type="hidden" name="post_id" value="{{ $post->post_id }}">
@@ -178,4 +180,8 @@
             </div>
         </div>
     </div>
+    <script>
+        window.postId = "{{ $post->post_id }}"; // Dynamic post ID for each post
+    </script>
+    
 @endforeach

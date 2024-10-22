@@ -346,8 +346,16 @@ class PageController extends Controller
 
     public function showNotificationPage()
     {
+        // Get all notifications (both read and unread)
         $notifications = auth()->user()->notifications()->get();
-    
+        
+        // Count unread notifications
+        $unreadNotificationsCount = auth()->user()->unreadNotifications()->count();
+        
+        // Mark all unread notifications as read when the page is loaded
+        auth()->user()->unreadNotifications->markAsRead();
+        
+        // Prepare notifications with associated user information
         $notificationsWithUsers = $notifications->map(function ($notification) {
             $data = $notification->data;
             
@@ -361,9 +369,15 @@ class PageController extends Controller
                 'follower' => isset($data['follower_id']) ? UserAccount::find($data['follower_id']) : null,
             ];
         });
-    
-        return view('users.notification', ['notificationsWithUsers' => $notificationsWithUsers]);
+
+        // Pass both notifications and unread count to the view
+        return view('users.notification', [
+            'notificationsWithUsers' => $notificationsWithUsers,
+            'unreadNotificationsCount' => $unreadNotificationsCount
+        ]);
     }
+
+    
     
 
     public function showSearchPage()

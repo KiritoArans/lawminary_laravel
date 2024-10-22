@@ -18,32 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json()) // Ensure we parse JSON response
             .then(data => {
                 if (data.success) {
-                    // Append the new comment's HTML to the comment section
-                    const newCommentHTML = `
-                        <div class="user-comment">
-                            <div>
-                                <img src="${data.new_comment.user_photo_url}" alt="User Profile Picture" class="user-profile-photo" />
-                            </div>
-                            <div class="user-comment-content">
-                                <span>
-                                    <a href="/profile/${data.new_comment.user_id}">
-                                        ${data.new_comment.user_name}
-                                    </a>
-                                </span>
-                                <p>${data.new_comment.comment}</p>
-                                <div class="date-reply">
-                                    <p class="comment-time">Just now</p>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-
-                    // Find the correct comment-area for the post
-                    const commentArea = document.getElementById(`comment-area-${postId}`);
-                    
-                    // Append the new comment to the comment-area
-                    commentArea.innerHTML += newCommentHTML;
-
                     // Clear the comment textarea
                     form.querySelector('textarea').value = '';
 
@@ -54,6 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         text: 'Your comment has been posted.',
                     });
 
+                    // No need to manually append the comment, Laravel Echo will handle that
                 } else {
                     Swal.fire({
                         icon: 'error',

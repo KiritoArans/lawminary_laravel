@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/responsive/navres.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/otherstyles/posts_style.css') }}" />
     @include('inclusions/libraryLinks')
+    @include('inclusions/broadcastJS')
 </head>
 <body>
     <div class="container">
@@ -20,8 +21,9 @@
                 <div class="header-top">
                     @include('includes_syscon.syscon_logo_inc')
                     <div class="notification">
-                        <a href="notifications">
-                            <i class="fas fa-bell bell-icon"></i>
+                        <a href="notifications" class="notification-link">
+                            <i class="fas fa-bell bell-icon current"></i>
+                            <span id="notification-count" class="notification-badge"></span>
                         </a>
                     </div>
                 </div>
@@ -78,9 +80,12 @@
     <script src="js/reportPost.js"></script>
 
     <script src="js/followUser.js"></script>
+    
+    <script src="js/showNotification.js"></script>
 
     <script src="js/homelocator.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/logout.js"></script>
+    
 </body>
 </html>

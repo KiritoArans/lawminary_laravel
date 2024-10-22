@@ -17,9 +17,15 @@
             <header>
                 <div class="header-top">
                     <img src="../imgs/Lawminary_Logo_2-Gold.png" alt="">
-                    <div class="notification">
+                    {{-- <div class="notification">
                         <a href="notifications"><i class="fas fa-bell bell-icon current"></i></a>
-                    </div>
+                    </div> --}}
+                    <div class="notification">
+                        <a href="notifications" class="notification-link">
+                            <i class="fas fa-bell bell-icon current"></i>
+                            <span id="notification-count" class="notification-badge"></span>
+                        </a>
+                    </div>                    
                 </div>
                 <hr class="divider">
             </header>

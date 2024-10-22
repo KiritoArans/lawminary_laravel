@@ -15,6 +15,10 @@ use App\Notifications\PostCommented;
 use App\Notifications\PostReplied;
 use App\Notifications\CommentRated;
 
+use App\Events\DataUpdated;
+use App\Events\CommentCreated;
+use App\Events\ReplyCreated;
+
 class CommentController extends Controller
 {
     public function createComment(Request $request)
@@ -33,9 +37,11 @@ class CommentController extends Controller
     
         $comment->save();
     
-        // Fetch the post and its user
-        $post = Posts::where('post_id', $request->post_id)->with('user')->first();
+        // Broadcast the comment
+        event(new CommentCreated($comment));
     
+        // Notify the post's owner (optional)
+        $post = Posts::where('post_id', $request->post_id)->with('user')->first();
         if ($post && $post->user) {
             if ($post->user->user_id !== $user->user_id) {
                 $post->user->notify(new PostCommented($user, $post, $comment));
@@ -62,9 +68,9 @@ class CommentController extends Controller
             'post_id' => 'required|string|max:100',
             'comment_id' => 'required|string|max:100',
         ]);
-    
-        $user = Auth::user(); // The user who is replying
-    
+
+        $user = Auth::user();
+
         // Create the reply
         $reply = new Reply();
         $reply->reply_id = uniqid('rply_');
@@ -73,16 +79,10 @@ class CommentController extends Controller
         $reply->user_id = $user->user_id;
         $reply->reply = $request->input('reply');
         $reply->save();
-    
-        // Fetch the comment and its user (the original commenter)
-        $comment = Comment::where('comment_id', $request->comment_id)->with('user')->first();
-    
-        if ($comment && $comment->user) {
-            if ($comment->user->user_id !== $user->user_id) {
-                $comment->user->notify(new PostReplied($user, $comment, $reply));
-            }
-        }
-    
+
+        // Broadcast the reply to others
+        event(new ReplyCreated($reply));
+
         return response()->json([
             'success' => true,
             'message' => 'Your reply has been posted!',
@@ -95,6 +95,7 @@ class CommentController extends Controller
             ],
         ]);
     }
+
     
 
     public function checkIfRated($comment_id)

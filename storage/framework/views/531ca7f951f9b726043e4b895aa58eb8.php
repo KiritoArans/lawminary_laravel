@@ -151,7 +151,8 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </div>
                 <hr>
-                <div class="comment-field" id="comment-field comment-field-<?php echo e($post->post_id); ?>">
+                
+                <div class="comment-field" id="comment-field-<?php echo e($post->post_id); ?>">
                     <?php
                         $attorneyComments = $post->comments->filter(function ($comment) {
                             return $comment->user->accountType === 'Lawyer';
@@ -169,7 +170,8 @@
                     <?php if($attorneyComments->isNotEmpty() && $isLawyer && !$isSameLawyer && !$isPostOwner): ?>
                         <label class="comment-warning">An attorney has already commented on this post.</label>
                     <?php else: ?>
-                        <form id="commentForm commentForm-<?php echo e($post->post_id); ?>" method="POST" action="<?php echo e(route('users.createComment')); ?>">
+                        
+                        <form id="commentForm-<?php echo e($post->post_id); ?>" method="POST" action="<?php echo e(route('users.createComment')); ?>">
                             <?php echo csrf_field(); ?>
                             <img src="<?php echo e(Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png')); ?>" class="user-profile-photo" alt="Profile Picture">
                             <input type="hidden" name="post_id" value="<?php echo e($post->post_id); ?>">
@@ -181,4 +183,8 @@
             </div>
         </div>
     </div>
+    <script>
+        window.postId = "<?php echo e($post->post_id); ?>"; // Dynamic post ID for each post
+    </script>
+    
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/inclusions/openComments.blade.php ENDPATH**/ ?>

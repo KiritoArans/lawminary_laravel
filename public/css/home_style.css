@@ -115,11 +115,29 @@ header hr {
 .notification {
     margin-left: 10px;
 }
-.header-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.notification-link {
+    position: relative;
+    display: inline-block;
 }
+
+.notification-badge {
+    position: absolute;
+    top: -8px; /* Adjust the top position */
+    right: -4px; /* Adjust the right position */
+    padding: 4px 8px; /* Adjust padding to control size */
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+    font-size: 10px; /* Adjust font size */
+    font-weight: bold; /* Make the text bold */
+    display: none; /* Hidden by default */
+}
+
+.notification-badge.has-notifications {
+    display: inline-block; /* Display badge when there are notifications */
+}
+
+
 .bell-icon {
     font-size: 24px;
     margin-right: 8px;
@@ -128,6 +146,12 @@ header hr {
 }
 .bell-icon:hover {
     color: var(--primary-color);
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 

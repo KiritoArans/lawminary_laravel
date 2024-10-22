@@ -159,14 +159,6 @@
                                 </a>
                             @endforeach
 
-                            <div class="forum-pagination">
-                                <button id="prev">Previous</button>
-                                <span id="page-num">1</span>
-                                <button id="next">Next</button>
-                            </div>
-                            <div class="forum-list">
-                                <a href="">See Other Forums</a>
-                            </div>
                         </section>
                     </div>
                 </div>

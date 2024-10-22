@@ -95,5 +95,11 @@
                 
             </div>
         </div>
+
+        <script>
+            window.postId = '<?php echo e($post->post_id); ?>';
+        </script>
+
+        
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div><?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/inclusions/showPosts.blade.php ENDPATH**/ ?>

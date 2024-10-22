@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset ('css/nav_style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/otherstyles/posts_style.css') }}" />
     @include('inclusions/libraryLinks')
+    @include('inclusions/broadcastJS')
 </head>
 <body>
     <div class="container">
