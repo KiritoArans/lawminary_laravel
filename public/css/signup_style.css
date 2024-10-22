@@ -235,6 +235,7 @@ section {
     .right-column {
         width: 100%; /* Make each column take the full width of the screen */
         margin-bottom: 10px; /* Reduce spacing between fields */
+        margin: 0;
     }
 
     .line {
