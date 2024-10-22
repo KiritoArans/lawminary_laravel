@@ -18,7 +18,7 @@ class AboutLawController extends Controller
     }
 
     // Function to search articles based on a query
-    public function searchArticlePage(Request $request)
+    public function searchArticlePageMod(Request $request)
     {
         $query = BookTwoLaws::query();
 
