@@ -23,6 +23,7 @@
 body {
     background: linear-gradient(to top, #561c24, #7b2d37);
     min-height: 100vh;
+    transition: var(--tran-03);
 }
 section {
     background-image: url(/imgs/lawminarylogo.png);
@@ -50,6 +51,7 @@ section {
     text-align: center;
     margin-bottom: 32px;
     font-size: 32px;
+    color: var(--primary-color);
 }
 .signup-form {
     display: flex;
@@ -291,12 +293,13 @@ section {
     .buttons {
         display: flex;
         justify-content: space-between; /* Keep buttons horizontally aligned */
-        margin-top: 30px; /* Add some spacing at the top */
+        margin-top: 1rem; /* Add some spacing at the top */
     }
 
     .buttons button {
         width: 48%; /* Make buttons take up more space but keep them side by side */
         margin-left: 0; /* Remove extra margin */
+        font-size: 1rem;
     }
 
     .back-home {
@@ -406,6 +409,7 @@ section {
         width: 100%; /* Full width for buttons */
         margin-left: 0; /* Remove left margin */
         margin-top: 10px; /* Add spacing between buttons */
+        font-size: 1rem;
     }
 
     .back-home {
