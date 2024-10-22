@@ -567,8 +567,8 @@ Route::prefix('moderator')
         ])->name('moderator.about-law');
         Route::get('/article-searched', [
             AboutLawController::class,
-            'searchArticlePage',
-        ])->name('search.articles');
+            'searchArticlePageMod',
+        ])->name('search.articlesMod');
         Route::post('/add-law', [AboutLawController::class, 'addLaw'])->name(
             'add.law'
         );
@@ -644,8 +644,9 @@ Route::post('/home', [PostController::class, 'createPost'])->name(
     'users.createPost'
 );
 // Delete Post
-Route::delete('/home-{post}', [PostController::class, 'deletePost'])->name('post.delete');
-
+Route::delete('/home-{post}', [PostController::class, 'deletePost'])->name(
+    'post.delete'
+);
 
 Route::delete('/forum-{post}', [
     PostController::class,
@@ -722,17 +723,15 @@ Route::get('/home-search', [SearchController::class, 'searchPostUser'])->name(
 );
 
 // Delete Notification
-Route::delete('/notification-{id}', function($id) {
+Route::delete('/notification-{id}', function ($id) {
     $notification = auth()->user()->notifications()->find($id);
-    
+
     if ($notification) {
         $notification->delete();
     }
 
     return back()->with('success', 'Notification deleted successfully.');
 })->name('notification.delete');
-
-
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 

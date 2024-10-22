@@ -1,4 +1,4 @@
-<form action="{{ route('search.articles') }}" method="GET">
+<form action="{{ route('search.articlesMod') }}" method="GET">
     <div class="search-bar-content">
         <div class="search-bar">
             <input

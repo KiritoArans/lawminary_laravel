@@ -394,3 +394,35 @@ function updateLineGraph(data, range) {
 document.addEventListener('DOMContentLoaded', function () {
     fetchChartData('weekly'); // Fetch 'weekly' data on page load
 });
+
+document.querySelectorAll('.minimize-chart').forEach(function (button, index) {
+    button.addEventListener('click', function () {
+        const chartContainer = button.closest('.chart-container');
+        const chart = chartContainer.querySelector('canvas');
+
+        // Set a label based on the chart being minimized
+        let chartLabel;
+        if (chart.id === 'myChart') {
+            chartLabel = 'Bar Graph';
+        } else if (chart.id === 'myPieChart') {
+            chartLabel = 'Pie Chart';
+        } else if (chart.id === 'myLineChart') {
+            chartLabel = 'Line Graph';
+        }
+
+        const placeholder = document.createElement('div');
+        placeholder.classList.add('minimized-placeholder');
+        placeholder.innerHTML = `<span>${chartLabel}</span>`;
+
+        placeholder.addEventListener('click', function () {
+            chartContainer.classList.remove('hidden');
+            chartContainer.style.display = 'block';
+            placeholder.remove(); // Remove the placeholder after showing the chart
+        });
+
+        chartContainer.classList.add('hidden');
+        chartContainer.style.display = 'none';
+
+        chartContainer.parentNode.insertBefore(placeholder, chartContainer);
+    });
+});

@@ -10,6 +10,16 @@ main {
     flex-direction: column;
     margin: 0px 48px 0px 32px;
 }
+
+/* Center content vertically and horizontally */
+.dashboard-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+    text-align: center;
+}
 header {
     text-align: center;
 }

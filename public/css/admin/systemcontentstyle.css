@@ -18,6 +18,16 @@ main {
     padding: 20px;
     margin: 0px 48px 0px 32px;
 }
+
+/* Center content vertically and horizontally */
+.dashboard-content-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+
 header {
     text-align: center;
 }
@@ -28,7 +38,7 @@ header h1 {
 }
 .header-top {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 .header-top img {
