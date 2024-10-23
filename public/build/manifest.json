@@ -1,4 +1,8 @@
 {
+  "_pusher-BLwKsXut.js": {
+    "file": "assets/pusher-BLwKsXut.js",
+    "name": "pusher"
+  },
   "resources/css/app.css": {
     "file": "assets/app-l0sNRNKZ.js",
     "name": "app",
@@ -10,5 +14,23 @@
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true
+  },
+  "resources/js/commentBroadcast.js": {
+    "file": "assets/commentBroadcast-CKhzXdI8.js",
+    "name": "commentBroadcast",
+    "src": "resources/js/commentBroadcast.js",
+    "isEntry": true,
+    "imports": [
+      "_pusher-BLwKsXut.js"
+    ]
+  },
+  "resources/js/replyBroadcast.js": {
+    "file": "assets/replyBroadcast-Cbu5qA8A.js",
+    "name": "replyBroadcast",
+    "src": "resources/js/replyBroadcast.js",
+    "isEntry": true,
+    "imports": [
+      "_pusher-BLwKsXut.js"
+    ]
   }
 }
