@@ -43,7 +43,7 @@ header {
 }
 header h1 {
     margin: 0;
-    font-size: 2em;
+    font-size: 2rem;
     color: var(--primary-color);
 }
 .header-top img{
@@ -109,7 +109,7 @@ content h1{
 }
 .notifs-info h2 {
     margin: 0;
-    font-size: 16px;
+    font-size: 1rem;
 }
 .notifs-info h2 a{
     text-decoration: none;
@@ -143,3 +143,4 @@ content h1{
     font-size: 1.25rem;
     cursor: pointer;
 }
+

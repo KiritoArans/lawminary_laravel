@@ -83,6 +83,9 @@ main .header-top {
 .header-buttons button:hover {
     background-color: var(--primary-color);
 }
+.header-buttons button i{
+    display: none;
+}
 .header-buttons .current-tab{
     font-weight: bold;
     scale: 1.15;
@@ -163,7 +166,7 @@ main .header-top {
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    height: 600px; 
+    height: auto; 
     overflow-y: auto;
     position: relative;
     top: -40px;
@@ -375,4 +378,44 @@ main .header-top {
         color: white;
         font-weight: 600;
         background-color: var(--primary-color);
+}
+
+
+
+@media (min-width: 576px) and (max-width: 1024px) {
+    .forum-invitations-wrapper{
+        display: none;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .content-wrapper {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 20px;
+    }
+    .forum-invitations-wrapper{
+        display: none;
+        /* width: 100%; */
+    }
+    .forum-invitations {
+        width: 84%;
+        overflow-y: hidden;
+        position: absolute;
+        top: 80px;
+        margin: auto;
+    }
+    .forum-invitations .search-bar input {
+        width: 100%;
+    }
+    .forum-overview{
+        margin: .5rem 0 0 0;
+    }
+    .forum-left .search-forum{
+        margin: 0;
+    }
+    .forum-left .create-post{
+        margin: .5rem 0;
+    }
 }

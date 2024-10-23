@@ -75,6 +75,9 @@ header hr {
 .header-buttons button:hover {
     background-color: var(--primary-color);
 }
+.header-buttons button i{
+    display: none;
+}
 .header-buttons .current-tab{
     font-weight: bold;
     scale: 1.15;
@@ -141,4 +144,16 @@ header hr {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
+}
+
+
+
+@media (min-width: 576px) and (max-width: 1024px) {
+}
+
+
+@media (max-width: 576px) {
+    .article-content {
+        margin: 0 0 1rem 0;
+    }
 }

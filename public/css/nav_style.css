@@ -52,6 +52,7 @@ aside:not(:hover) nav ul li a span,
 aside:not(:hover) .bottom-nav span,
 aside:not(:hover) .dropdown-content a {
     display: none;
+    transition: var(--tran-03);
 }
 
 /* Profile */
@@ -230,7 +231,9 @@ aside:not(:hover) ~ main {
     display: inline-block; /* Display badge when there are notifications */
 }
 
-
+.header-top .fa-bars{
+    display: none;
+}
 
 
 

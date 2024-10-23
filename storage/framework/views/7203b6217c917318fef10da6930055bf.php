@@ -7,6 +7,7 @@
         <link rel="icon" href="/imgs/lawminarylogo_v3.png" type="image/png" />
         <link rel="stylesheet" href="<?php echo e(asset('css/forums_style.css')); ?>" />
         <link rel="stylesheet" href="<?php echo e(asset('css/nav_style.css')); ?>" />
+        <link rel="stylesheet" href="<?php echo e(asset('css/responsive/navres.css')); ?>" />
         <link
             rel="stylesheet"
             href="<?php echo e(asset('css/otherstyles/posts_style.css')); ?>"
@@ -19,6 +20,7 @@
             <main>
                 <header>
                     <div class="header-top">
+                        <i class="fa-solid fa-bars"></i>
                         <img src="../imgs/Lawminary_Logo_2-Gold.png" alt="" />
                         <div class="notification">
                             <a href="notifications" class="notification-link">
@@ -32,10 +34,22 @@
 
                 <div class="header-buttons-search">
                     <div class="header-buttons">
-                        <button id="postsTab" class="posts-tab">Posts</button>
-                        <button id="forumsTab" class="forums-tab current-tab">Forums</button>
-                        <button id="articlesTab" class="articles-tab">Article</button>
-                        <button id="leaderboardsTab" class="leaderboards-tab">Leaderboards</button>
+                        <button id="postsTab" class="posts-tab">
+                            <span>Posts</span>
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                        </button>
+                        <button id="forumsTab" class="forums-tab current-tab">
+                            <span>Forums</span>
+                            <i class="fa-solid fa-users"></i>
+                        </button>
+                        <button id="articlesTab" class="articles-tab">
+                            <span>Article</span>
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </button>
+                        <button id="leaderboardsTab" class="leaderboards-tab">
+                            <span>Leaderboards</span>
+                            <i class="fa-solid fa-chart-simple"></i>
+                        </button>
                     </div>
                     <button id="showForumLists">See Forum Lists</button>
                 </div>
@@ -169,6 +183,7 @@
                 </div>
             </main>
         </div>
+        <script src="js/showUserNav.js"></script>
 
         <script src="js/showNotification.js"></script>
         <script src="js/user_js/forums.js"></script>

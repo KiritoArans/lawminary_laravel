@@ -75,6 +75,9 @@ header hr {
 .header-buttons button:hover {
     background-color: var(--primary-color);
 }
+.header-buttons button i{
+    display: none;
+}
 .header-buttons .current-tab{
     font-weight: bold;
     scale: 1.15;
@@ -185,4 +188,16 @@ header hr {
 .lawyer-user a{
     text-decoration: none;
     color: var(--text-color1);
+}
+
+
+
+@media (min-width: 576px) and (max-width: 1024px) {
+}
+
+
+@media (max-width: 576px) {
+    .leaderboards-header {
+        margin: 0 0 .5rem 0;
+    }
 }

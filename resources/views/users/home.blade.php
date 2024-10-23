@@ -19,6 +19,7 @@
         <main>
             <header>
                 <div class="header-top">
+                    <i class="fa-solid fa-bars"></i>
                     @include('includes_syscon.syscon_logo_inc')
                     <div class="notification">
                         <a href="notifications" class="notification-link">
@@ -31,10 +32,22 @@
             </header>
             <div class="header-buttons-search">
                 <div class="header-buttons">
-                    <button id="postsTab" class="posts-tab current-tab">Posts</button>
-                    <button id="forumsTab" class="forums-tab">Forums</button>
-                    <button id="articlesTab" class="articles-tab">Article</button>
-                    <button id="leaderboardsTab" class="leaderboards-tab">Leaderboards</button>
+                    <button id="postsTab" class="posts-tab current-tab">
+                        <span>Posts</span>
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                    </button>
+                    <button id="forumsTab" class="forums-tab">
+                        <span>Forums</span>
+                        <i class="fa-solid fa-users"></i>
+                    </button>
+                    <button id="articlesTab" class="articles-tab">
+                        <span>Article</span>
+                        <i class="fa-solid fa-scale-balanced"></i>
+                    </button>
+                    <button id="leaderboardsTab" class="leaderboards-tab">
+                        <span>Leaderboards</span>
+                        <i class="fa-solid fa-chart-simple"></i>
+                    </button>
                 </div>
 
                 <div class="search-bar">
@@ -83,6 +96,8 @@
     
     <script src="js/showNotification.js"></script>
 
+    <script src="js/showUserNav.js"></script>
+    
     <script src="js/homelocator.js"></script>
     <script src="js/settings.js"></script>
     <script src="js/logout.js"></script>

@@ -339,7 +339,7 @@ section {
         max-width: 100%;  /* Ensure the form takes full width */
         padding: 20px 15px; /* Adjust padding to prevent content from being cut off */
         box-sizing: border-box; /* Include padding in the width and height */
-        margin: 4rem;
+        margin: 1rem;
     }
 
     .container h1 {

@@ -74,6 +74,9 @@ header hr {
     border-radius: 5px;
     cursor: pointer;
 }
+.header-buttons button i{
+    display: none;
+}
 .header-buttons button:hover {
     background-color: var(--primary-color);
 }
@@ -246,4 +249,20 @@ header hr {
 }
 .user-searched .followed-btn{
     background-color: var(--primary-color);
+}
+
+
+
+@media (min-width: 576px) and (max-width: 1024px) {
+    .home-search-nav, .user-searched, .search-results h2, .search-results h3{
+        margin: 0 12rem 0.75rem 12rem;
+        /* margin: 0; */
+    }
+}
+
+
+@media (max-width: 576px) {
+    .home-search-nav, .user-searched, .search-results h2, .search-results h3{
+        margin: 0 0 .5rem 0;
+    }
 }
