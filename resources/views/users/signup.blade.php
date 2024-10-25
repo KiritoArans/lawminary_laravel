@@ -22,7 +22,8 @@
                 
                 <div class="signup-content">
                     <form class="signup-form">
-
+                        <input type="text" id="accountType" name="accountType" value="User" hidden>
+                        <input type="text" id="status" name="status" value="Approved" hidden>
                         <div class="left-column">
                             <div class="form-group">
                                 <label for="first-name">First Name</label>

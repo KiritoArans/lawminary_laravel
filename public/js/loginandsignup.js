@@ -1,3 +1,27 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const signupBtn = document.getElementById('signup-btn');
+    const modal = document.getElementById('signupModal');
+    const closeBtn = document.querySelector('.close');
+
+    // Open modal on button click
+    signupBtn.addEventListener('click', function () {
+        modal.style.display = 'flex';
+    });
+
+    // Close modal when the close button is clicked
+    closeBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside of the modal content
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+});
+
+
 document
     .getElementById('togglePassword')
     .addEventListener('click', function () {
@@ -152,11 +176,15 @@ document.addEventListener('DOMContentLoaded', function () {
                     Swal.fire({
                         icon: 'success',
                         title: 'Success',
-                        text: data.message
-                    }).then(() => {
-                        window.location.href = '/login';
+                        text: data.message,
+                        confirmButtonText: 'OK' // Custom text for the button
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = '/login'; // Redirect after clicking "OK"
+                        }
                     });
-                } else {
+                }
+                 else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error',
@@ -302,3 +330,6 @@ document
         // Replace any non-digit characters
         this.value = this.value.replace(/\D/g, '');
     });
+
+
+    

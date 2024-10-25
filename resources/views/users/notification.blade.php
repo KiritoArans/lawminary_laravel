@@ -239,6 +239,7 @@
         </main>
     </div>
     <script src="js/showNotification.js"></script>
+    <script src="js/showUserNav.js"></script>
     <script src="../js/settings.js"></script>    
     <script src="js/logout.js"></script>
 </body>

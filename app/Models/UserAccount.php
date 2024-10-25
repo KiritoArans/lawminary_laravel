@@ -29,6 +29,8 @@ class UserAccount extends Authenticatable
         'accountType',
         'restrict',
         'restrictDays',
+        'lawyerID',
+        'fieldExpertise',
         'status',
     ];
 

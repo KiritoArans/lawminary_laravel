@@ -582,6 +582,7 @@
     padding: .25rem;
     border-radius: 4px;
     margin-right: .25rem;
+    resize: vertical;
 }
 .reply-field button{
     color: white;
@@ -617,6 +618,7 @@
     padding: .5rem .5rem;
     margin-right: .5rem;
     border-radius: 5px;
+    resize: vertical;
 }
 .comment-field form button{
     cursor: pointer;
@@ -808,5 +810,17 @@
     .posts .post-content {
         margin: 0 0 .75rem 0; /* Remove the margins */
         /* width: 100%; */
+    }
+    .clicked-post-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+        animation: modalFadeIn 0.3s ease-in-out;
+        max-height: 90vh; /* Make sure modal content fits within the viewport */
+        overflow-y: auto; /* Scrollable content if too tall */
     }
 }

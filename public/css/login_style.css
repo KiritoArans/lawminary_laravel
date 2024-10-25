@@ -239,6 +239,80 @@ section {
     }
 
 
+/* Modal Styling */
+.modal {
+    display: none; 
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.4); /* Background with transparency */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    position: relative; /* Allows absolute positioning of the close button */
+    background-color: #fefefe;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    max-width: 500px;
+    border-radius: 8px;
+    text-align: center; /* Center text inside modal-content */
+}
+
+.modal-content h2{
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.modal-links {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.modal-links a {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: .25rem 0; /* Add spacing between the buttons */
+    color: #fff;
+    background-color: var(--text-color3); 
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.modal-links a:hover {
+    background-color: #7b2d37; /* Darker color on hover */
+}
+
+/* Close button styling */
+.close {
+    position: absolute;
+    top: 0px;
+    right: 10px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+
+
+
+
+
 
 /* Styles for tablets and medium devices */
 @media (min-width: 576px) and (max-width: 1024px) {

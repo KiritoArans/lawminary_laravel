@@ -24,17 +24,9 @@ return new class extends Migration {
             $table->string('nationality', 100);
             $table->enum('sex', ['Male', 'Female', 'Other']);
             $table->string('contactNumber', 11);
+            $table->string('lawyerID', 50)->nullable();
+            $table->string('fieldExpertise', 100)->nullable();
             $table->string('status', 15)->nullable();
-            $table->boolean('restrict')->default(false);
-            $table->integer('restrictDays')->nullable();
-            $table->enum('badge', [
-                'Wood',
-                'Steel',
-                'Bronze',
-                'Silver',
-                'Gold',
-                'Diamond',
-            ]);
             $table->enum('accountType', [
                 'User',
                 'Moderator',

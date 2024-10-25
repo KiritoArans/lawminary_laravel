@@ -4,19 +4,29 @@
     }
     main{
         margin: 0;
-        /* margin-right: 1.25rem; */
+    }
+    aside:hover{
+        width: 25%;
     }
     aside:not(:hover) ~ main {
         margin-left: 0;
     }
     aside:not(:hover) {
-        width: auto;
+        width: 20%;
     }
     aside:not(:hover) .profile label,
     aside:not(:hover) nav ul li a span,
     aside:not(:hover) .bottom-nav span,
     aside:not(:hover) .dropdown-content a {
-        display: flex;
+        display: inline-flex;
+    }
+    aside:hover ~ main {
+        margin-left: 0%;
+    }
+    
+    /* Sidebar collapsed */
+    aside:not(:hover) ~ main {
+        margin-left: 0px;
     }
     .header-top .fa-bars{
         display: block;
@@ -44,24 +54,27 @@
         margin: 0;
     }
     aside:hover{
-        width: 35%;
+        width: 40%;
     }
-    /* aside:hover .user-indicator label,
-    aside:hover nav ul li a span,
-    aside:hover .bottom-nav span{
-        display: none;
-    } */
     aside:not(:hover) ~ main {
         margin-left: 0;
     }
     aside:not(:hover) {
-        width: 40%;
+        width: 35%;
     }
     aside:not(:hover) .profile label,
     aside:not(:hover) nav ul li a span,
     aside:not(:hover) .bottom-nav span,
     aside:not(:hover) .dropdown-content a {
         display: inline-flex;
+    }
+    aside:hover ~ main {
+        margin-left: 0%;
+    }
+    
+    /* Sidebar collapsed */
+    aside:not(:hover) ~ main {
+        margin-left: 0px;
     }
     .header-top .fa-bars{
         display: block;
