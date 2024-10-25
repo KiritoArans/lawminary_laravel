@@ -21,12 +21,14 @@ class PostController extends Controller
         $data = $request->validate([
             'concern' => 'required|string|max:255',
             'concernPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif', 
+            'concernCategory' => 'required',
         ]);
 
         $post = new Posts;
 
         $post->post_id = uniqid('post_');
         $post->concern = $data['concern'];
+        $post->concernCategory = $data['concernCategory'];
         $post->postedBy = Auth::user()->user_id; 
         
         $post->status = "Pending";

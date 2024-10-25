@@ -57,6 +57,9 @@
             <hr />
             <div class="post-text">
                 <p><?php echo e($post->concern); ?></p>
+                <div>
+                    <a href="home-search?query=<?php echo e($post->concernCategory); ?>"><?php echo e($post->concernCategory); ?></a>
+                </div>
                 <?php if($post->concernPhoto): ?>
                 <img src="<?php echo e(Storage::url($post->concernPhoto)); ?>" alt="Post Image" style="max-width: 100%; height: auto;" />
                 <?php endif; ?>

@@ -45,6 +45,9 @@
                 <hr>
                 <div class="post-text">
                     <p>{{ $post->concern }}</p>
+                    <div class="tag">
+                        <a href="home-search?query={{$post->concernCategory}}">{{ $post->concernCategory }}</a>
+                    </div>
                     @if ($post->concernPhoto)
                         <img
                             src="{{ Storage::url($post->concernPhoto) }}"

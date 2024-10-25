@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('post_id', 24);
             $table->string('concern', 255);
+            $table->string('concernCategory', 100);
             $table->string('concernPhoto', 255)->nullable();
             $table->string('postedBy', 50);
             $table->string('status', 15);
