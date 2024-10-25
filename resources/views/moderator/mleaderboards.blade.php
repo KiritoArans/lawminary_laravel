@@ -49,12 +49,14 @@
 
             <div class="row justify-content-center">
                 <header>
-                    <div class="header-top">
+                    <div
+                        class="header-top d-flex justify-content-between align-items-center"
+                    >
                         @include('includes_syscon.syscon_logo_inc')
                     </div>
-                    <hr class="divider" />
+                    <hr class="divider w-100" />
                 </header>
-                <main class="col-lg-8 col-md-10 col-sm-12">
+                <main class="col-lg-20 col-md-20 col-sm-12">
                     <div class="filter-container">
                         @include('includes_leaderboards.search_led_inc')
                         <div class="filter-btn">
