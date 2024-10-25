@@ -55,7 +55,7 @@
                     </div>
                     <hr class="divider w-100" />
                 </header>
-                <main class="col-lg-8 col-md-10 col-sm-12">
+                <main class="col-lg-20 col-md-20 col-sm-12">
                     <h1>Frequently Asked Questions.</h1>
 
                     <div class="search-bar">

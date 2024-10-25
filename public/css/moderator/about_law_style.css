@@ -12,6 +12,10 @@ main {
     margin: 0px 48px 0px 32px;
 }
 
+.add-class {
+    margin-left: auto;
+}
+
 /* Center content vertically and horizontally */
 .dashboard-content-wrapper {
     display: flex;

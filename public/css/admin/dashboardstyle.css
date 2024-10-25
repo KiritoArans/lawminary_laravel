@@ -147,7 +147,7 @@ header hr {
 
 .box {
     margin: 10px;
-    padding: 20px;
+    padding: 50px;
     background-color: #561c24; /* Box background */
     text-align: center;
     border-radius: 8px;
@@ -155,8 +155,14 @@ header hr {
         0 8px 16px rgba(0, 0, 0, 0.2),
         0 6px 20px rgba(0, 0, 0, 0.35);
     color: #fff;
-    width: 100%; /* Ensure full width for smaller screens */
+    width: 50%; /* Ensure full width for smaller screens */
     font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .box {
+        padding: 20px;
+    }
 }
 
 .box1 {

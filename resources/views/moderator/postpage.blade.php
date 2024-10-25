@@ -97,9 +97,7 @@
                     </div>
 
                     <!-- Table Section -->
-                    <div class="table-responsive">
-                        @include('includes_postpage.post_table_inc')
-                    </div>
+                    @include('includes_postpage.post_table_inc')
                 </main>
             </div>
         </div>

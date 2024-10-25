@@ -6,6 +6,10 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Events\\CommentCreated' => $baseDir . '/app/Events/CommentCreated.php',
+    'App\\Events\\DataUpdated' => $baseDir . '/app/Events/DataUpdated.php',
+    'App\\Events\\NotificationEvent' => $baseDir . '/app/Events/NotificationEvent.php',
+    'App\\Events\\ReplyCreated' => $baseDir . '/app/Events/ReplyCreated.php',
     'App\\Http\\Controllers\\AboutLawController' => $baseDir . '/app/Http/Controllers/AboutLawController.php',
     'App\\Http\\Controllers\\AccountController' => $baseDir . '/app/Http/Controllers/AccountController.php',
     'App\\Http\\Controllers\\AdminController' => $baseDir . '/app/Http/Controllers/AdminController.php',

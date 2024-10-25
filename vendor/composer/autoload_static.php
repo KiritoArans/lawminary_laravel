@@ -660,6 +660,10 @@ class ComposerStaticInit7e8c3c14ff33b199b4a0838993eb8423
     );
 
     public static $classMap = array (
+        'App\\Events\\CommentCreated' => __DIR__ . '/../..' . '/app/Events/CommentCreated.php',
+        'App\\Events\\DataUpdated' => __DIR__ . '/../..' . '/app/Events/DataUpdated.php',
+        'App\\Events\\NotificationEvent' => __DIR__ . '/../..' . '/app/Events/NotificationEvent.php',
+        'App\\Events\\ReplyCreated' => __DIR__ . '/../..' . '/app/Events/ReplyCreated.php',
         'App\\Http\\Controllers\\AboutLawController' => __DIR__ . '/../..' . '/app/Http/Controllers/AboutLawController.php',
         'App\\Http\\Controllers\\AccountController' => __DIR__ . '/../..' . '/app/Http/Controllers/AccountController.php',
         'App\\Http\\Controllers\\AdminController' => __DIR__ . '/../..' . '/app/Http/Controllers/AdminController.php',

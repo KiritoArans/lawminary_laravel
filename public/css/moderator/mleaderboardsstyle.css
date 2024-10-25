@@ -23,9 +23,12 @@ main {
 
 header {
     text-align: center;
-    padding-bottom: 10px;
 }
-
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    color: var(--primary-color);
+}
 .header-top {
     width: 100%;
     text-align: center;
@@ -33,27 +36,18 @@ header {
 }
 
 .header-top img {
+    margin: 0 auto;
+    display: block;
+}
+
+.header-top img {
     height: 32px;
     position: relative;
     left: -8px;
 }
-
 header hr {
     margin-top: 10px;
     border: 1px solid #b1b1b1;
-}
-
-.header-line {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    margin-top: 10px;
-}
-
-.header-ttl {
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
 .filter-container {
