@@ -41,7 +41,8 @@
                                     <img
                                         src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}"
                                         class="profile-photo"
-                                        alt="Profile Picture"/>
+                                        alt="Profile Picture"
+                                        onclick="openModal()"/>
                                     <div class="profile-info">
                                         <div class="profile-names">
                                             <h2>
@@ -95,6 +96,8 @@
                     
                     </div>
 
+
+
                     <div class="profile-content">
 
                         @include('inclusions/profile/profileFollowModal')
@@ -118,6 +121,16 @@
                     @include('inclusions/profile/penPostModal')
                     
                     @include('inclusions/createPostModal')
+
+                    <div id="profileModal" class="profileModal">
+                        <div class="profileModal-content">
+                            <span class="profileModal-close" onclick="closeModal()"><i class="fa-regular fa-circle-xmark"></i></span>
+                            <img
+                                src="{{ $user->userPhoto ? Storage::url($user->userPhoto) : asset('imgs/user-img.png') }}"
+                                alt="Profile Picture"
+                                style="width: 100%; height: auto;" />
+                        </div>
+                    </div>
 
                 </content>
             </main>
@@ -143,33 +156,5 @@
         <script src="js/profile.js"></script>
         <script src="js/logout.js"></script>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const sortFilter = document.getElementById('sortFilter');
-                const postsContainer = document.getElementById('posts-container');
-
-                sortFilter.addEventListener('change', function () {
-                    const selectedValue = this.value;
-                    let postsArray = Array.from(postsContainer.children); // Convert NodeList to an array
-
-                    // Sort the posts based on the selected value (newest or oldest)
-                    postsArray.sort(function (a, b) {
-                        const timeA = new Date(a.getAttribute('data-post-time'));
-                        const timeB = new Date(b.getAttribute('data-post-time'));
-
-                        if (selectedValue === 'newest') {
-                            return timeB - timeA; // Sort descending (newest first)
-                        } else if (selectedValue === 'oldest') {
-                            return timeA - timeB; // Sort ascending (oldest first)
-                        }
-                    });
-
-                    // Re-append sorted posts to the container
-                    postsArray.forEach(function (post) {
-                        postsContainer.appendChild(post);
-                    });
-                });
-            });
-        </script>
     </body>
 </html>

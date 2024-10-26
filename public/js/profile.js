@@ -59,3 +59,47 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (profileBookmarked) profileBookmarked.style.display = 'block';
     });
 });
+
+function openModal() {
+    document.getElementById("profileModal").style.display = "block";
+}
+
+function closeModal() {
+    document.getElementById("profileModal").style.display = "none";
+}
+
+// Close the modal when the user clicks outside of the modal content
+window.onclick = function(event) {
+    const modal = document.getElementById("profileModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const sortFilter = document.getElementById('sortFilter');
+    const postsContainer = document.getElementById('posts-container');
+
+    sortFilter.addEventListener('change', function () {
+        const selectedValue = this.value;
+        let postsArray = Array.from(postsContainer.children); // Convert NodeList to an array
+
+        // Sort the posts based on the selected value (newest or oldest)
+        postsArray.sort(function (a, b) {
+            const timeA = new Date(a.getAttribute('data-post-time'));
+            const timeB = new Date(b.getAttribute('data-post-time'));
+
+            if (selectedValue === 'newest') {
+                return timeB - timeA; // Sort descending (newest first)
+            } else if (selectedValue === 'oldest') {
+                return timeA - timeB; // Sort ascending (oldest first)
+            }
+        });
+
+        // Re-append sorted posts to the container
+        postsArray.forEach(function (post) {
+            postsContainer.appendChild(post);
+        });
+    });
+});

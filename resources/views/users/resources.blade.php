@@ -31,11 +31,9 @@
                     <hr class="divider" />
                 </header>
 
-                <div class="container">
-                    <div class="header-buttons-search">
-                        <div class="header-buttons">
-                            <!-- Search Form -->
-                            <form
+                <section>
+                    <div class="search-form">
+                        <form
                                 method="GET"
                                 action="{{ route('user.resources') }}"
                                 class="search-bar"
@@ -48,10 +46,7 @@
                                 />
                                 <button type="submit">Search</button>
                             </form>
-                        </div>
                     </div>
-
-                    <!-- Resources Table -->
                     <table class="resources-table">
                         <thead>
                             <tr>
@@ -67,11 +62,10 @@
                                         <td>{{ $resource->title }}</td>
                                         <td>{{ $resource->description }}</td>
                                         <td>
-                                            <a
+                                            <a 
                                                 href="{{ route('moderator.downloadResource', $resource->id) }}"
-                                                class="btn-download"
-                                            >
-                                                Download
+                                                class="btn-download">
+                                                Click to Download
                                             </a>
                                         </td>
                                     </tr>
@@ -86,48 +80,30 @@
                         </tbody>
                     </table>
 
-                    <!-- Pagination -->
-                    <div class="paginationContent">
-                        <ul class="pagination">
-                            <!-- Previous Page Button -->
-                            <li
-                                class="page-item {{ $resources->currentPage() == 1 ? 'disabled' : '' }}"
-                            >
-                                <a
-                                    href="{{ $resources->appends(request()->input())->previousPageUrl() }}"
-                                    rel="prev"
-                                >
-                                    &lt;
-                                </a>
-                            </li>
-
-                            <!-- Page Numbers -->
-                            @for ($i = 1; $i <= $resources->lastPage(); $i++)
-                                <li
-                                    class="page-item {{ $resources->currentPage() == $i ? 'active' : '' }}"
-                                >
-                                    <a
-                                        href="{{ $resources->appends(request()->input())->url($i) }}"
-                                    >
-                                        {{ $i }}
-                                    </a>
+                    @if ($resources->total() > 10)
+                        <div class="paginationContent">
+                            <ul class="pagination">
+                                <!-- Previous Page Button -->
+                                <li class="page-item {{ $resources->currentPage() == 1 ? 'disabled' : '' }}">
+                                    <a href="{{ $resources->appends(request()->input())->previousPageUrl() }}" rel="prev">&lt;</a>
                                 </li>
-                            @endfor
 
-                            <!-- Next Page Button -->
-                            <li
-                                class="page-item {{ $resources->hasMorePages() ? '' : 'disabled' }}"
-                            >
-                                <a
-                                    href="{{ $resources->appends(request()->input())->nextPageUrl() }}"
-                                    rel="next"
-                                >
-                                    &gt;
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+                                <!-- Page Numbers -->
+                                @for ($i = 1; $i <= $resources->lastPage(); $i++)
+                                    <li class="page-item {{ $resources->currentPage() == $i ? 'active' : '' }}">
+                                        <a href="{{ $resources->appends(request()->input())->url($i) }}">{{ $i }}</a>
+                                    </li>
+                                @endfor
+
+                                <!-- Next Page Button -->
+                                <li class="page-item {{ $resources->hasMorePages() ? '' : 'disabled' }}">
+                                    <a href="{{ $resources->appends(request()->input())->nextPageUrl() }}" rel="next">&gt;</a>
+                                </li>
+                            </ul>
+                        </div>
+                    @endif
+
+                </section>
             </main>
         </div>
         <script src="js/showNotification.js"></script>
