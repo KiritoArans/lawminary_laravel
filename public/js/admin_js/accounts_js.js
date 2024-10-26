@@ -150,12 +150,9 @@ document.addEventListener('DOMContentLoaded', function () {
             var middleName = this.getAttribute('data-middleName');
             var lastName = this.getAttribute('data-lastName');
             var birthDate = this.getAttribute('data-birthDate');
-            var nationality = this.getAttribute('data-nationality');
             var sex = this.getAttribute('data-sex');
-            var contactNumber = this.getAttribute('data-contactNumber');
-            var restrict = this.getAttribute('data-restrict');
-            var restrictDays = this.getAttribute('data-restrictDays');
             var accountType = this.getAttribute('data-accountType');
+            var restrictDays = this.getAttribute('data-restrictDays');
 
             document.getElementById('editId').value = id;
             document.getElementById('editUsername').value = username;
@@ -164,12 +161,10 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('editMiddleName').value = middleName;
             document.getElementById('editLastName').value = lastName;
             document.getElementById('editBirthDate').value = birthDate;
-            document.getElementById('editNationality').value = nationality;
             document.getElementById('editSex').value = sex;
-            document.getElementById('editContactNumber').value = contactNumber;
-            document.getElementById('editRestrict').value = restrict;
-            document.getElementById('editRestrictDays').value = restrictDays;
             document.getElementById('editAccountType').value = accountType;
+            document.getElementById('editRestrictDays').value =
+                restrictDays || '';
 
             var formAction = `/admin/account/${id}`;
             document.getElementById('editAccountForm').action = formAction;
@@ -189,32 +184,22 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
-//enable / disable logic for restrict days
-document.getElementById('editRestrict').addEventListener('change', function () {
-    var restrictDaysInput = document.getElementById('editRestrictDays');
 
-    if (this.value === 'Yes') {
-        restrictDaysInput.disabled = false;
-        restrictDaysInput.required = true; // Makes it required when 'Yes' is selected
-        restrictDaysInput.value = '1'; // Default to 1 if 'Yes' is selected
-    } else {
-        restrictDaysInput.disabled = true;
-        restrictDaysInput.required = false; // Removes the required attribute
-        restrictDaysInput.value = ''; // Clears the value when 'No' is selected
-    }
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.edit-button').forEach((button) => {
+        button.addEventListener('click', function () {
+            var userId = this.getAttribute('data-user_id');
+
+            // Update action URL for remove restriction
+            document.getElementById('removeRestrictionForm').action =
+                `/moderator/removeRestriction/${userId}`;
+
+            // Other form population code (like setting input fields)
+            // ...
+        });
+    });
 });
 
-// Ensure the correct initial state when the page loads
-window.addEventListener('DOMContentLoaded', function () {
-    var restrictDaysInput = document.getElementById('editRestrictDays');
-    var restrictSelect = document.getElementById('editRestrict');
-
-    if (restrictSelect.value === 'Yes') {
-        restrictDaysInput.disabled = false;
-    } else {
-        restrictDaysInput.disabled = true;
-    }
-});
 //search function
 document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('search');
@@ -302,30 +287,6 @@ document.addEventListener('DOMContentLoaded', function () {
     if (window.location.search.includes('modal=true')) {
         openModal();
     }
-});
-
-document
-    .getElementById('contactNumber')
-    .addEventListener('input', function (e) {
-        // Replace any non-digit characters
-        this.value = this.value.replace(/\D/g, '');
-    });
-
-// public/js/populateNationalities.js
-document.addEventListener('DOMContentLoaded', function () {
-    // Fetch the nationalities from the JSON file
-    fetch('/nationalities.json') // Adjust the path if necessary
-        .then((response) => response.json())
-        .then((data) => {
-            const nationalitySelect = document.getElementById('nationality');
-            data.forEach((nationality) => {
-                const option = document.createElement('option');
-                option.value = nationality.name;
-                option.text = nationality.name;
-                nationalitySelect.appendChild(option);
-            });
-        })
-        .catch((error) => console.error('Error loading nationalities:', error));
 });
 
 // Open modal when the image is clicked

@@ -10,7 +10,7 @@
             <th>Account Type</th>
             <th>Sex</th>
             <th>status</th>
-            <th>Restrict | Restrict Days</th>
+            <th>Restriction Days</th>
             <th>Date Created</th>
             <th>Action</th>
         </tr>
@@ -93,11 +93,12 @@
                 >
                     {{ Str::limit($account->status, 10) }}
                 </td>
-                <td
-                    class="clickable-cell"
-                    data-full-text="@if ($account->restrict === 'Yes') Yes - {{ $account->restrictDays }} day/s @else No - 0 day/s @endif"
-                >
-                    {{ Str::limit($account->restrict === 'Yes' ? 'Yes - ' . $account->restrictDays . ' day/s' : 'No - 0 day/s', 15) }}
+                <td>
+                    @if ($account->restrictedUser)
+                        {{ Str::limit($account->restrictedUser->restrict_days . ' day/s', 15) }}
+                    @else
+                            No - 0 day/s
+                    @endif
                 </td>
                 <td
                     class="clickable-cell"
@@ -120,11 +121,8 @@
                         data-middleName="{{ $account->middleName }}"
                         data-lastName="{{ $account->lastName }}"
                         data-birthDate="{{ $account->birthDate }}"
-                        data-nationality="{{ $account->nationality }}"
                         data-sex="{{ $account->sex }}"
-                        data-contactNumber="{{ $account->contactNumber }}"
-                        data-restrict="{{ $account->restrict }}"
-                        data-restrictDays="{{ $account->restrictDays }}"
+                        data-restrictdays="{{ $account->restrictedUser->restrict_days ?? '' }}"
                         data-accountType="{{ $account->accountType }}"
                     >
                         Edit

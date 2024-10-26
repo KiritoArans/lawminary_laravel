@@ -23,12 +23,8 @@ class UserAccount extends Authenticatable
         'middleName',
         'lastName',
         'birthDate',
-        'nationality',
         'sex',
-        'contactNumber',
         'accountType',
-        'restrict',
-        'restrictDays',
         'status',
     ];
 
@@ -99,5 +95,9 @@ class UserAccount extends Authenticatable
     public function leaduser()
     {
         return $this->hasMany(UserAccount::class, 'lawyerUser_id', 'user_id');
+    }
+    public function restrictedUser()
+    {
+        return $this->hasOne(Restrict::class, 'user_id', 'user_id');
     }
 }

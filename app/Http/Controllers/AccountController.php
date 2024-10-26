@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserAccount;
+use App\Models\Restrict;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -37,9 +38,8 @@ class AccountController extends Controller
                         'date',
                         'before:' . now()->subYears(13)->format('Y-m-d'),
                     ],
-                    'nationality' => 'required',
+
                     'sex' => 'required',
-                    'contactNumber' => 'required',
                 ],
                 [
                     'password.regex' =>
@@ -253,8 +253,7 @@ class AccountController extends Controller
             // 'bio' => 'nullable|string|max:100',
             'birthDate' => 'required|date',
             'sex' => 'required|string',
-            'nationality' => 'required|string|max:100',
-            'contactNumber' => 'nullable|string|max:11',
+
             'email' => 'nullable|string|max:100',
         ]);
 
@@ -263,8 +262,7 @@ class AccountController extends Controller
         // $user->bio = $request->bio;
         $user->birthDate = $request->birthDate;
         $user->sex = $request->sex;
-        $user->nationality = $request->nationality;
-        $user->contactNumber = $request->contactNumber;
+
         $user->email = $request->email;
 
         $user->save();
@@ -281,7 +279,7 @@ class AccountController extends Controller
 
     public function showaccounts()
     {
-        $accounts = UserAccount::all();
+        $accounts = UserAccount::with('restrictedUser')->get();
         return view('moderator.account', ['accounts' => $accounts]);
     }
 
@@ -312,12 +310,12 @@ class AccountController extends Controller
                     'date',
                     'before:' . now()->subYears(13)->format('Y-m-d'),
                 ],
-                'nationality' => 'required',
+
                 'sex' => 'nullable',
-                'contactNumber' => 'required',
+
                 'accountType' => 'nullable',
-                'restrict' => 'nullable',
-                'restrictDays' => 'nullable',
+
+                'restrict_days' => 'nullable',
             ],
             [
                 'password.regex' =>
@@ -352,12 +350,12 @@ class AccountController extends Controller
             'middleName',
             'lastName',
             'birthDate',
-            'nationality',
+
             'sex',
-            'contactNumber',
+
             'accountType',
-            'restrict',
-            'restrictDays',
+
+            'restrict_days',
         ]);
 
         if ($request->hasFile('userPhoto')) {
@@ -407,11 +405,10 @@ class AccountController extends Controller
             'middleName' => 'nullable|string|max:255',
             'lastName' => 'required|string|max:255',
             'birthDate' => 'required|date',
-            'nationality' => 'required|string|max:255',
+
             'sex' => 'nullable|string',
-            'contactNumber' => 'required|string|max:20',
-            'restrict' => 'nullable|string',
-            'restrictDays' => 'nullable|integer|min:1',
+
+            'restrict_Days' => 'nullable|integer|min:1',
             'accountType' => 'nullable|string',
         ]);
 
@@ -435,20 +432,44 @@ class AccountController extends Controller
         $account->middleName = $request->input('middleName');
         $account->lastName = $request->input('lastName');
         $account->birthDate = $request->input('birthDate');
-        $account->nationality = $request->input('nationality');
+
         $account->sex = $request->input('sex');
-        $account->contactNumber = $request->input('contactNumber');
-        $account->restrict = $request->input('restrict');
-        $account->restrictDays = $request->input('restrictDays');
         $account->accountType = $request->input('accountType');
 
         // Save the updated account
         $account->save();
 
+        // Insert or update restrict_days in tblrestrict
+        if ($request->filled('restrictDays')) {
+            Restrict::updateOrCreate(
+                ['user_id' => $account->user_id],
+                ['restrict_days' => $request->input('restrictDays')]
+            );
+        }
+
         // Redirect back to the accounts list WITHOUT the ID in the URL
         return redirect()
             ->back()
             ->with('success', 'Account updated successfully!');
+    }
+    public function removeRestriction($user_id)
+    {
+        \Log::info('Attempting to delete restriction for user_id: ' . $user_id);
+
+        // Delete restriction for the specified user_id
+        $deleted = Restrict::where('user_id', $user_id)->delete();
+
+        if ($deleted) {
+            \Log::info('Restriction removed for user_id: ' . $user_id);
+            return redirect()
+                ->back()
+                ->with('success', 'Restriction removed successfully!');
+        } else {
+            \Log::warning('No restriction found for user_id: ' . $user_id);
+            return redirect()
+                ->back()
+                ->with('error', 'No restriction found to delete.');
+        }
     }
 
     //delete account

@@ -21,12 +21,8 @@ return new class extends Migration {
             $table->string('middleName', 100)->nullable();
             $table->string('lastName', 100);
             $table->date('birthDate');
-            $table->string('nationality', 100);
             $table->enum('sex', ['Male', 'Female', 'Other']);
-            $table->string('contactNumber', 11);
             $table->string('status', 15)->nullable();
-            $table->boolean('restrict')->default(false);
-            $table->integer('restrictDays')->nullable();
             $table->enum('badge', [
                 'Wood',
                 'Steel',

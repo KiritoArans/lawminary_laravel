@@ -111,15 +111,15 @@ Route::get('/search', [PageController::class, 'showSearchPage'])->middleware(
     'auth'
 );
 
-Route::get('/test-search', function() {
+Route::get('/test-search', function () {
     return view('users.test-search');
-})->name('searchLaw')->middleware('auth');
+})
+    ->name('searchLaw')
+    ->middleware('auth');
 
 Route::post('/test-search', [PageController::class, 'showTestSearchPage'])
     ->name('searchLaw')
     ->middleware('auth');
-
-
 
 Route::get('/resources', [
     PageController::class,
@@ -215,6 +215,10 @@ Route::prefix('admin')
             AccountController::class,
             'approveAccount',
         ])->name('admin.approveAccount');
+        Route::delete('/account/{id}/remove-restriction', [
+            AccountController::class,
+            'removeRestriction',
+        ])->name('admin.removeRestriction');
     });
 
 // dashboard controller
@@ -504,6 +508,10 @@ Route::prefix('moderator')
             AccountController::class,
             'approveAccount',
         ])->name('moderator.approveAccount');
+        Route::delete('/removeRestriction/{user_id}', [
+            AccountController::class,
+            'removeRestriction',
+        ])->name('moderator.removeRestriction');
     });
 
 // Moderator Forums

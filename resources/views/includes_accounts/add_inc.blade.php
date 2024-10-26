@@ -47,12 +47,6 @@
     <div id="birthDateError" style="color: red"></div>
     <!-- Error message placeholder -->
 
-    <label for="nationality">Nationality:</label>
-    <select id="nationality" name="nationality" required>
-        <option value="">Select Nationality</option>
-        <!-- Nationalities will be populated here by JavaScript sssssss-->
-    </select>
-
     <label for="sex">Sex:</label>
     <select id="sex" name="sex" required>
         <option value="Male" {{ old('sex') == 'Male' ? 'selected' : '' }}>
@@ -65,21 +59,6 @@
             Other
         </option>
     </select>
-
-    <label for="contactNumber">Contact Number:</label>
-    <div>
-        <span>+63</span>
-        <input
-            type="tel"
-            id="contactNumber"
-            name="contactNumber"
-            maxlength="10"
-            value="{{ old('contactNumber') }}"
-            placeholder="Enter phone number"
-            pattern="[0-9]{10}"
-            required
-        />
-    </div>
 
     <label for="email">Email:</label>
     <input

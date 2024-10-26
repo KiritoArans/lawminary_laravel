@@ -16,7 +16,6 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
     flex-direction: column;
     text-align: center;
 }
@@ -93,6 +92,10 @@ header h1 {
     gap: 10px;
 }
 
+#restrictBtn {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
 #addButton {
     margin-left: auto;
 }
@@ -100,7 +103,8 @@ header h1 {
 .custom-button,
 .btn,
 .btn-primary,
-#searchAccountBtn {
+#searchAccountBtn,
+#restrictBtn {
     background-color: #561c24;
     border: 1px solid #561c24;
     color: rgb(255, 255, 255);
@@ -117,7 +121,8 @@ header h1 {
 .custom-button:hover,
 .btn:hover,
 .btn-primary:hover,
-.delete-button:hover {
+.delete-button:hover,
+#restrictBtn:hover {
     background-color: #ffaf45;
 }
 .delete-button {

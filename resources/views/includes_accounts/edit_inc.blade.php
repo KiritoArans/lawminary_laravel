@@ -36,18 +36,12 @@
     <label for="editBirthDate">Birth Date</label>
     <input type="date" id="editBirthDate" name="birthDate" required value="" />
 
-    <label for="editNationality">Nationality</label>
-    <input
-        type="text"
-        id="editNationality"
-        name="nationality"
-        required
-        value=""
-    />
-
     <label for="editSex">Sex</label>
     <select id="editSex" name="sex" value="">
-        <option value="Male" {{ $account->sex == 'Male' ? 'selected' : '' }}>
+        <option
+            value="Male"
+            {{ $account->sex == 'Male' ? 'selected' : '' }}
+        >
             Male
         </option>
         <option
@@ -56,44 +50,13 @@
         >
             Female
         </option>
-        <option value="Other" {{ $account->sex == 'Other' ? 'selected' : '' }}>
+        <option
+            value="Other"
+            {{ $account->sex == 'Other' ? 'selected' : '' }}
+        >
             Other
         </option>
     </select>
-
-    <label for="editContactNumber">Contact Number</label>
-    <input
-        type="text"
-        id="editContactNumber"
-        name="contactNumber"
-        required
-        value=""
-    />
-
-    <label for="editRestrict">Restrict</label>
-    <select id="editRestrict" name="restrict" value="">
-        <option
-            value="Yes"
-            {{ $account->editRestrict == 'Yes' ? 'selected' : '' }}
-        >
-            Yes
-        </option>
-        <option
-            value="No"
-            {{ $account->editRestrict == 'No' ? 'selected' : '' }}
-        >
-            No
-        </option>
-    </select>
-
-    <label for="editRestrictDays">Restrict Days</label>
-    <input
-        type="number"
-        id="editRestrictDays"
-        name="restrictDays"
-        value="{{ $account->restrictDays }}"
-        {{ ! $account->restrict ? 'disabled' : '' }}
-    />
 
     <label for="editAccountType">Account Type</label>
     <select id="editAccountType" name="accountType" value="">
@@ -123,7 +86,25 @@
         </option>
     </select>
 
+    <label for="editRestrictDays">Restrict Days</label>
+    <input
+        type="number"
+        id="editRestrictDays"
+        name="restrictDays"
+        value="{{ $account->restrictedUser->restrict_days ?? '' }}"
+        max="2147483647"
+    />
+
     <button type="submit" class="custom-button">Save Changes</button>
+</form>
+
+<!-- Remove Restriction Form -->
+<form id="removeRestrictionForm" method="POST">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="remove-restriction-button" id="restrictBtn">
+        Remove Restriction
+    </button>
 </form>
 
 <form

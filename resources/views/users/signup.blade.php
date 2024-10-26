@@ -52,40 +52,12 @@
                                 <label for="birth-date">Birth Date</label>
                                 <input type="date" id="birth-date" name="birthDate" value="{{ old('birthDate') }}">
                             </div>
-                            <div class="form-group">
-                                <label for="nationality" class="form-group">
-                                    Nationality:
-                                </label>
-                                <select
-                                    id="nationality"
-                                    name="nationality"
-                                    required
-                                >
-                                    <option value="">
-                                        Select Nationality
-                                    </option>
-                                </select>
-                            </div>
+                            
                             <div class="form-group">
                                 <label for="email-address">Email Address</label>
                                 <input type="email" id="email-address" name="email" value="{{ old('email') }}">
                             </div>
-                            <div class="form-group">
-                                <label for="contact-number">Contact Number</label>
-                                <div class="contact-number-wrapper">
-                                    <span class="country-code">+63</span>
-                                    <input
-                                        type="tel"
-                                        id="contactNumber"
-                                        name="contactNumber"
-                                        maxlength="10"
-                                        value="{{ old('contactNumber') }}"
-                                        placeholder="Enter phone number"
-                                        pattern="[0-9]{10}"
-                                        required
-                                    />
-                                </div>
-                            </div>
+                           
                         </div>
 
                         <div class="line"></div>
