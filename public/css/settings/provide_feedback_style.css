@@ -77,16 +77,23 @@ header hr {
 }
 
 .feedback-section {
+    display: flex;
+    justify-content: center;   /* Center horizontally */
+    align-items: center;       /* Center vertically */
+    gap: 4rem;
+    width: 100%;
+    height: 60vh;             /* Optional: Use only if you want to center vertically in the viewport */
+    margin: 0 auto;            /* Center container itself */
+    /* text-align: center; */
+}
+
+
+.feedback-form {
     background-color: #fff;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-top: 20px;
-}
-
-.feedback-form {
-    max-width: 600px;
-    margin: 0 auto;
+    width: 32rem;
 }
 
 .feedback-form form {
@@ -106,9 +113,13 @@ header hr {
     border: 1px solid #ddd;
     border-radius: 5px;
     font-family: "Montserrat", sans-serif;
-    font-size: 16px;
+    font-size: 1rem;
+    resize: none;
+    height: auto;
 }
-
+.feedback-form textarea{
+    height: 175px;
+}
 .feedback-form button {
     padding: 10px 20px;
     background-color: #561C24;
@@ -122,4 +133,20 @@ header hr {
 
 .feedback-form button:hover {
     background-color: #FFAF45;
+}
+
+.feedback-text{
+    
+}
+.feedback-text h1{
+    margin: 0;
+    color: var(--primary-color);
+}
+.feedback-text h2{
+    margin: 0 0 0 .25rem;
+    color: goldenrod;
+}
+.feedback-text img{
+    margin-top: .5rem;
+    width: 20rem;
 }

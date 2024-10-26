@@ -29,12 +29,17 @@
                     <hr class="divider" />
                 </header>
                 <content class="feedback-section">
+                    <div class="feedback-text">
+                        <h1>We'd love to hear</h1>
+                        <h2>something from you!</h2>
+                        <img src="../imgs/feedback.png" alt="">
+                    </div>
                     <div class="feedback-form">
 
                         <form method="POST" action="{{ route('users.createFeedback') }}">
                             @csrf 
                             @include('inclusions/response')
-                            <label for="email">Email:</label>
+                            <label for="email">Email</label>
                             <input
                                 type="email"
                                 id="email"
@@ -44,11 +49,12 @@
                                 readonly
                             />
 
-                            <label for="feedback">Feedback:</label>
+                            <label for="feedback">Feedback</label>
                             <textarea
                                 id="feedback"
                                 name="feedback"
                                 rows="4"
+                                placeholder="Type any comments or suggestions..."
                                 required
                             ></textarea>
 
