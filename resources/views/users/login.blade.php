@@ -42,7 +42,7 @@
                     </div>
                                       
                     <div class="buttons">
-                        <a class="bn3637 bn36" id="signup-btn" href="signup">Sign Up</a>
+                        <a class="bn3637 bn36" id="signup-btn">Sign Up</a>
                         <button class="bn3637 bn37" id="login-btn" type="submit">Login</button>
                     </div>
                     <div class="forgot">
@@ -51,6 +51,18 @@
                 </form>                           
             </div>
         </div>
+        
+        <div id="signupModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Select Account Type</h2>
+                <div class="modal-links">
+                    <a href="/signup" class="modal-link">User</a>
+                    <a href="/lawyer-signup" class="modal-link">Lawyer</a>
+                    <span class="close">&times;</span>
+                </div>
+            </div>
+        </div>
+
     </section>
     <script src="js/loginandsignup.js"></script>
 </body>

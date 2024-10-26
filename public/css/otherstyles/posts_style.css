@@ -91,12 +91,28 @@
 
 .posts .post-text{
     margin: .75rem 0 1rem 0;
-    /* display: flex;
-    justify-content: space-between; */
+    display: flex;
+    flex-direction: column;
 }
 .posts .post-text p{
-    margin: 0;
+    margin: 0 0 .5rem 0;
     color: var(--text-color1);
+}
+.posts .post-text a{
+    padding: .25rem .5rem;
+    border: 1px solid #ddd;
+    border-radius: .75rem;
+    color: var(--text-color3);
+    background-color: #ddd;
+    text-decoration: none;
+    font-size: .75rem;
+    transition: var(--tran-03);
+}
+.posts .post-text a:hover{
+    font-size: .8rem;
+    border-color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: #ddd;
 }
 .posts .post-text img{
     object-fit: cover;
@@ -211,7 +227,7 @@
 
 .post-modal-text textarea {
     width: 100%;
-    height: 200px;
+    height: 160px;
     max-height: auto;
     margin-top: 8px;
     border: 1px solid #ddd;
@@ -220,6 +236,20 @@
     outline: none;
     padding: 8px 8px 8px 8px;
 }
+
+.post-modal-expertise{  
+    display: flex;
+    justify-content: space-between;
+    color: var(--text-color3);
+    margin-bottom: .5rem;
+}
+.post-modal-expertise select{
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    padding: .5rem;
+}
+
 .post-modal-photo{
     display: flex;
     width: fit-content;
@@ -230,12 +260,17 @@
     height: auto;
     object-fit: contain;
     border-radius: 4px;
-    border: 1px solid;
+    border: 1px solid #ddd;
 }
 .post-modal-photo button{
     position: absolute;
-    left: 20px;
+    left: 100px;
     font-weight: bold;
+    font-size: 1rem;
+    color: red; 
+    background: none; 
+    border: none; 
+    cursor: pointer;
 }
 .post-modal-photo button:hover{
     scale: 1.5;
@@ -582,6 +617,7 @@
     padding: .25rem;
     border-radius: 4px;
     margin-right: .25rem;
+    resize: vertical;
 }
 .reply-field button{
     color: white;
@@ -597,7 +633,7 @@
     text-align: center;
     font-weight: bold;
     color: var(--primary-color);
-    margin-top: 1rem;
+    margin: .25rem 0;
 }
 .comment-field{
     display: block;
@@ -617,6 +653,7 @@
     padding: .5rem .5rem;
     margin-right: .5rem;
     border-radius: 5px;
+    resize: vertical;
 }
 .comment-field form button{
     cursor: pointer;
@@ -808,5 +845,17 @@
     .posts .post-content {
         margin: 0 0 .75rem 0; /* Remove the margins */
         /* width: 100%; */
+    }
+    .clicked-post-content {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 600px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        position: relative;
+        animation: modalFadeIn 0.3s ease-in-out;
+        max-height: 90vh; /* Make sure modal content fits within the viewport */
+        overflow-y: auto; /* Scrollable content if too tall */
     }
 }

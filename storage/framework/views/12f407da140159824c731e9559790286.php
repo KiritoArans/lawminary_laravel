@@ -17,9 +17,14 @@
             <div class="post-modal-text">
                 <textarea name="concern" placeholder="Ask concerns..." required></textarea>
             </div>
+            <div class="post-modal-expertise">
+                <select id="fieldExpertise" name="concernCategory" required>
+                    <option value="">Select Concern Category</option>
+                </select>                                
+            </div>
             <div id="image-preview-section" class="post-modal-photo" style="display: none;">
                 <img id="image-preview" src="" alt="Image Preview">
-                <button type="button" id="remove-image" style="color: red; background: none; border: none; cursor: pointer;">X</button>
+                <button type="button" id="remove-image"><i class="fa-regular fa-circle-xmark"></i></button>
             </div>
             <div class="post-modal-footer">
                 <label for="file-upload" class="custom-file-upload">
@@ -31,4 +36,6 @@
             </div>
         </form>
     </div>
-</div><?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/inclusions/createPostModal.blade.php ENDPATH**/ ?>
+</div>
+
+<script src="js/showExpertise.js"></script><?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/inclusions/createPostModal.blade.php ENDPATH**/ ?>

@@ -32,6 +32,10 @@ class PageController extends Controller
     {
         return view('users.signup');
     }
+    public function showLawyerSignupPage()
+    {
+        return view('users.lawyerSignup');
+    }
 
     public function showForgotPassPage()
     {
@@ -346,7 +350,6 @@ class PageController extends Controller
 
     public function showNotificationPage()
     {
-        // Get all notifications (both read and unread)
         $notifications = auth()->user()->notifications()->get();
         
         // Count unread notifications
@@ -370,10 +373,21 @@ class PageController extends Controller
             ];
         });
 
+        $allPosts = Posts::with(
+            'user',
+            'comments',
+            'comments.user',
+            'comments.reply.user'
+            )
+                ->withCount('likes', 'comments', 'bookmarks')
+                ->orderBy('created_at', 'desc')
+                ->get();
+        
         // Pass both notifications and unread count to the view
         return view('users.notification', [
             'notificationsWithUsers' => $notificationsWithUsers,
-            'unreadNotificationsCount' => $unreadNotificationsCount
+            'unreadNotificationsCount' => $unreadNotificationsCount,
+            'allPosts' => $allPosts
         ]);
     }
 

@@ -14,7 +14,8 @@ class Posts extends Model
     protected $fillable = [
         'post_id',
         'concern',
-        // 'concernPhoto',
+        'concernCategory',
+        'concernPhoto',
         'postedBy',
         'approvedBy',
         'reasonDisregard',

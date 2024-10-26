@@ -25,6 +25,8 @@ class UserAccount extends Authenticatable
         'birthDate',
         'sex',
         'accountType',
+        'lawyerID',
+        'fieldExpertise',
         'status',
     ];
 

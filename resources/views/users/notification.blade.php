@@ -62,7 +62,7 @@
                                         <p>@<span>{{ $liker->username }}</span></p>
                                     </div>
                                 </div>
-                                {{-- <div class="notifs-divider"></div> --}}
+                                
                                 <div class="notifs-action">
                                     <span>{{ $liker->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
@@ -93,7 +93,7 @@
                                         <p>@<span>{{ $bookmarker->username }}</span></p>
                                     </div>
                                 </div>
-                                {{-- <div class="notifs-divider"></div> --}}
+                                
                                 <div class="notifs-action">
                                     <span>{{ $bookmarker->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
@@ -124,7 +124,7 @@
                                         <p>@<span>{{ $commenter->username }}</span></p>
                                     </div>
                                 </div>
-                                {{-- <div class="notifs-divider"></div> --}}
+                                
                                 <div class="notifs-action">
                                     <span>{{ $commenter->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
@@ -155,7 +155,7 @@
                                         <p>@<span>{{ $replier->username }}</span></p>
                                     </div>
                                 </div>
-                                {{-- <div class="notifs-divider"></div> --}}
+                                
                                 <div class="notifs-action">
                                     <span>{{ $replier->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
@@ -186,7 +186,7 @@
                                         <p>@<span>{{ $rater->username }}</span></p>
                                     </div>
                                 </div>
-                                {{-- <div class="notifs-divider"></div> --}}
+                                
                                 <div class="notifs-action">
                                     <span>{{ $rater->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
@@ -217,7 +217,7 @@
                                         <p>@<span>{{ $follower->username }}</span></p>
                                     </div>
                                 </div>
-                                {{-- <div class="notifs-divider"></div> --}}
+                                
                                 <div class="notifs-action">
                                     <span>{{ $follower->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
@@ -239,6 +239,8 @@
         </main>
     </div>
     <script src="js/showNotification.js"></script>
+    {{-- <script src="js/postandcomment.js"></script> --}}
+    <script src="js/showUserNav.js"></script>
     <script src="../js/settings.js"></script>    
     <script src="js/logout.js"></script>
 </body>

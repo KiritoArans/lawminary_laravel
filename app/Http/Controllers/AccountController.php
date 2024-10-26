@@ -19,7 +19,6 @@ class AccountController extends Controller
     public function createAccount(Request $request)
     {
         try {
-            // Validate the form data with custom error message for password regex
             $data = $request->validate(
                 [
                     'username' => 'required|unique:tblaccounts,username',
@@ -30,6 +29,8 @@ class AccountController extends Controller
                         'confirmed',
                         'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/',
                     ],
+                    'accountType' => 'required',
+                    'status' => 'required',
                     'firstName' => 'required',
                     'middleName' => 'nullable',
                     'lastName' => 'required',
@@ -49,7 +50,6 @@ class AccountController extends Controller
                 ]
             );
 
-            // Generate a random 6-digit OTP
             $otp = rand(100000, 999999);
 
             // Store the OTP in the session
@@ -58,7 +58,6 @@ class AccountController extends Controller
             // Send OTP to user's email
             \Mail::to($data['email'])->send(new \App\Mail\SendOtpMail($otp));
 
-            // Temporarily save the form data to the session until OTP is verified
             session(['user_data' => $data]);
 
             return response()->json([
@@ -66,7 +65,6 @@ class AccountController extends Controller
                 'message' => 'OTP sent to your email.',
             ]);
         } catch (\Illuminate\Validation\ValidationException $e) {
-            // Catch validation errors and return them as a JSON response
             return response()->json(
                 [
                     'success' => false,
@@ -75,7 +73,72 @@ class AccountController extends Controller
                 422
             ); // 422 Unprocessable Entity
         } catch (\Exception $e) {
-            // Handle other errors (e.g., mail sending failure)
+            return response()->json(
+                [
+                    'success' => false,
+                    'errors' => ['Error sending OTP. Please try again.'],
+                ],
+                500
+            );
+        }
+    }
+
+    public function createLawyerAccount(Request $request)
+    {
+        try {
+            $data = $request->validate(
+                [
+                    'username' => 'required|unique:tblaccounts,username',
+                    'email' => 'required|email',
+                    'password' => [
+                        'required',
+                        'min:8',
+                        'confirmed',
+                        'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/',
+                    ],
+                    'accountType' => 'required',
+                    'status' => 'required',
+                    'firstName' => 'required',
+                    'middleName' => 'nullable',
+                    'lastName' => 'required',
+                    'birthDate' => [
+                        'required',
+                        'date',
+                        'before:' . now()->subYears(13)->format('Y-m-d'),
+                    ],
+                    'sex' => 'required',
+                    'lawyerID' => 'required',
+                    'fieldExpertise' => 'required',
+                ],
+                [
+                    'password.regex' =>
+                        'Password must contain at least one uppercase, lowercase, digit, and special character.',
+                    'birthDate.before' =>
+                        'You must be at least 13 years old to register.',
+                ]
+            );
+
+            $otp = rand(100000, 999999);
+
+            session(['otp' => $otp]);
+
+            \Mail::to($data['email'])->send(new \App\Mail\SendOtpMail($otp));
+
+            session(['user_data' => $data]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP sent to your email.',
+            ]);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json(
+                [
+                    'success' => false,
+                    'errors' => $e->validator->errors()->all(), // Return all validation errors
+                ],
+                422
+            ); // 422 Unprocessable Entity
+        } catch (\Exception $e) {
             return response()->json(
                 [
                     'success' => false,
@@ -103,7 +166,7 @@ class AccountController extends Controller
             // OTP is correct, create the account using the stored form data
             $data = session('user_data');
             $data['password'] = Hash::make($data['password']);
-            $data['accountType'] = 'User'; // Assign default account type
+            // $data['accountType'] = 'User';
 
             // Create the user account
             $newAccount = UserAccount::create($data);
@@ -120,9 +183,14 @@ class AccountController extends Controller
             // Clear the session data
             session()->forget(['otp', 'user_data']);
 
+            $message =
+                $data['accountType'] === 'Lawyer'
+                    ? 'Please wait for the approval of your account.'
+                    : 'Account created successfully.';
+
             return response()->json([
                 'success' => true,
-                'message' => 'Account created successfully.',
+                'message' => $message,
             ]);
         } catch (\Exception $e) {
             return response()->json(
@@ -183,7 +251,7 @@ class AccountController extends Controller
     public function updateAccountNames(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:100',
+            'username' => 'required|unique:tblaccounts,username',
             'userPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'firstName' => 'required|string|max:100',
             'middleName' => 'nullable|string|max:100',
@@ -253,7 +321,8 @@ class AccountController extends Controller
             // 'bio' => 'nullable|string|max:100',
             'birthDate' => 'required|date',
             'sex' => 'required|string',
-
+            'nationality' => 'required|string|max:100',
+            'contactNumber' => 'nullable|string|max:11',
             'email' => 'nullable|string|max:100',
         ]);
 

@@ -76,6 +76,9 @@ Route::get('/login', [PageController::class, 'showLoginPage']);
 Route::get('/signup', [PageController::class, 'showSignupPage'])->name(
     'signup'
 );
+Route::get('/lawyer-signup', [PageController::class, 'showLawyerSignupPage'])->name(
+    'lawyerSignup'
+);
 Route::get('/forgot-password', [PageController::class, 'showForgotPassPage']);
 
 Route::get('/forgot-password-otp', [PageController::class, 'showOtpPage']);
@@ -598,6 +601,9 @@ Route::prefix('moderator')
 // Logins
 Route::post('/signup', [AccountController::class, 'createAccount'])->name(
     'users.createAccount'
+);
+Route::post('/lawyer-signup', [AccountController::class, 'createLawyerAccount'])->name(
+    'lawyers.createAccount'
 );
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
