@@ -102,8 +102,9 @@ header hr {
 }
 
 .feedback-form label {
-    margin-bottom: 8px;
-    font-weight: bold;
+    margin-bottom: .5rem;
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
 .feedback-form input,
