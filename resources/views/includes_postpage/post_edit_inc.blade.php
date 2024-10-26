@@ -29,11 +29,11 @@
             </div>
 
             <div class="form-group">
-                <label for="editTags">Tags:</label>
+                <label for="editTags">Category:</label>
                 <input
                     type="text"
                     id="editTags"
-                    name="tags"
+                    name="concernCategory"
                     class="form-control"
                 />
             </div>

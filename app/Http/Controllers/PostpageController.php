@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Posts;
 use App\Models\UserAccount;
 use App\Models\Report;
+use App\Notifications\PostApproved;
 
 class PostpageController extends Controller
 {
@@ -20,30 +21,73 @@ class PostpageController extends Controller
             $username = auth()->user()->username;
 
             $post = DB::table('tblposts')->where('post_id', $postId)->first();
+            
+
+            // BOYYY, IF WALANG PROBLEM ANG PAG AAPPROVE SAYO PWEDE NA IDELETE TONG MGA TO
+
+            // if (!$post) {
+            //     return redirect()->back()->with('error', 'Post not found.');
+            // }
+
+            // if ($request->has('approve')) {
+            //     // Approve the post
+            //     $updated = DB::table('tblposts')
+            //         ->where('post_id', $postId)
+            //         ->update([
+            //             'status' => 'Approved',
+            //             'approvedBy' => $username,
+            //         ]);
+
+            //     // Check if the update was successful
+            //     if ($updated) {
+            //         return redirect()
+            //             ->back()
+            //             ->with('success', 'Post approved successfully.');
+            //     } else {
+            //         return redirect()
+            //             ->back()
+            //             ->with('error', 'Failed to approve post.');
+            //     }
+            // }
+
+            // UNTIL HERE LANG, PAG NAG DELETE KA NG SOBRA, IKAW IDEDELETE KO SA MOANTHO
+
+            
             if (!$post) {
                 return redirect()->back()->with('error', 'Post not found.');
+            } elseif (!$post->concernCategory) {
+                return redirect()->back()->with('error', 'Post is missing a category.');
             }
-
+            
             if ($request->has('approve')) {
-                // Approve the post
+                // Proceed with approval if all checks pass
                 $updated = DB::table('tblposts')
                     ->where('post_id', $postId)
                     ->update([
                         'status' => 'Approved',
                         'approvedBy' => $username,
                     ]);
-
-                // Check if the update was successful
+        
                 if ($updated) {
-                    return redirect()
-                        ->back()
-                        ->with('success', 'Post approved successfully.');
+                    // Find lawyers with matching field expertise and notify them
+                    $lawyers = UserAccount::where('accountType', 'Lawyer')
+                        ->where('fieldExpertise', $post->concernCategory)
+                        ->get();
+        
+                    foreach ($lawyers as $lawyer) {
+                        $lawyer->notify(new PostApproved($post, auth()->user()));
+                    }
+        
+                    return redirect()->back()->with('success', 'Post approved and relevant lawyers notified.');
                 } else {
-                    return redirect()
-                        ->back()
-                        ->with('error', 'Failed to approve post.');
+                    return redirect()->back()->with('error', 'Failed to approve post.');
                 }
-            } elseif ($request->has('reject')) {
+            }
+            
+
+            // DIVIDER LANG, PARA ALAM KO BOUNDARY KO DI GAYA NG BOYBESPREN NG JOWA MO :P >_<
+
+            elseif ($request->has('reject')) {
                 // Validate reason for disregard
                 $request->validate([
                     'reasonDisregard' => 'required|string|max:500',

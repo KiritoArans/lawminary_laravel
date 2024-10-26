@@ -370,6 +370,7 @@ class PageController extends Controller
                 'replier' => isset($data['replier_id']) ? UserAccount::find($data['replier_id']) : null,
                 'rater' => isset($data['rater_id']) ? UserAccount::find($data['rater_id']) : null,
                 'follower' => isset($data['follower_id']) ? UserAccount::find($data['follower_id']) : null,
+                'approver' => isset($data['approver_id']) ? UserAccount::find($data['approver_id']) : null,
             ];
         });
 
