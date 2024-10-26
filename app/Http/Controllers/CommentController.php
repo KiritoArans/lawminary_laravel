@@ -83,6 +83,13 @@ class CommentController extends Controller
         // Broadcast the reply to others
         event(new ReplyCreated($reply));
 
+        $comment = Comment::with('user')->where('comment_id', $request->input('comment_id'))->first();
+        if ($comment && $comment->user) {
+            if ($comment->user->user_id !== $user->user_id) {
+                $comment->user->notify(new PostReplied($user, $comment, $reply));
+            }
+        }
+
         return response()->json([
             'success' => true,
             'message' => 'Your reply has been posted!',

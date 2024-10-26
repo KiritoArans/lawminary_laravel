@@ -373,11 +373,21 @@ class PageController extends Controller
             ];
         });
 
+        $allPosts = Posts::with(
+            'user',
+            'comments',
+            'comments.user',
+            'comments.reply.user'
+            )
+                ->withCount('likes', 'comments', 'bookmarks')
+                ->orderBy('created_at', 'desc')
+                ->get();
         
         // Pass both notifications and unread count to the view
         return view('users.notification', [
             'notificationsWithUsers' => $notificationsWithUsers,
-            'unreadNotificationsCount' => $unreadNotificationsCount
+            'unreadNotificationsCount' => $unreadNotificationsCount,
+            'allPosts' => $allPosts
         ]);
     }
 

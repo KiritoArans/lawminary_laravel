@@ -73,12 +73,14 @@
                                 <a href="{{ Auth::check() && Auth::user()->user_id == $comment->user->user_id ? route('profile') : route('visit-profile', ['user_id' => $comment->user->user_id]) }}">
                                     {{ $comment->user ? ($comment->user->accountType === 'Lawyer' ? 'Atty. ' : '') . $comment->user->firstName . ' ' . $comment->user->lastName : 'Unknown User' }}
                                 </a>
-                                @if($comment->user->accountType === 'Lawyer')
-                                    <i class="fa-regular fa-star rate-btn" 
-                                        data-rating-comment-comment_id="{{ $comment->comment_id }}" 
-                                        data-rating-comment-user_id="{{ $comment->user->user_id }}">
-                                    </i>
-                                @endif
+                                
+                            @if($comment->user->accountType === 'Lawyer' && $comment->user->user_id !== Auth::user()->user_id)
+                                <i class="fa-regular fa-star rate-btn" 
+                                    data-rating-comment-comment_id="{{ $comment->comment_id }}" 
+                                    data-rating-comment-user_id="{{ $comment->user->user_id }}">
+                                </i>
+                            @endif
+                            
                             </span>                                     
                             <p>{{ $comment->comment }}</p>
                             <div class="date-reply">
@@ -90,29 +92,38 @@
                                     $attorneyComments = $post->comments->filter(function ($comment) {
                                         return $comment->user->accountType === 'Lawyer';
                                     });
-                            
+                                
+                                    $firstAttorneyComment = $attorneyComments->first(); // Get the first attorney who commented
+                                
                                     $isSameLawyer = $attorneyComments->contains(function ($comment) {
                                         return $comment->user->user_id === Auth::user()->user_id;
                                     });
-                            
-                                    $isLawyer = Auth::user()->accountType === 'Lawyer';
-                            
-                                    $isPostOwner = $post->user->user_id === Auth::user()->user_id;
-                                @endphp
-                            
-                                @if ($attorneyComments->isNotEmpty() && $isLawyer && !$isSameLawyer && !$isPostOwner)
-                                    <label class="comment-warning">Comments and Replies are not accomodated by this post anymore.</label>
-                                @else
-                                <form id="reply-form-{{ $comment->comment_id }}" action="{{ route('users.createReply') }}" method="POST">
-
-                                    @csrf
-                                    <textarea name="reply" id="reply-textarea-{{ $comment->comment_id }}" placeholder="Replying to {{ $comment->user ? $comment->user->firstName : 'Unknown User' }}"></textarea>
-                                    <input type="hidden" name="post_id" value="{{ $post->post_id }}">
-                                    <input type="hidden" name="comment_id" value="{{ $comment->comment_id }}">
-                                    <button type="submit">Send</button>
-                                </form>
                                 
+                                    $isLawyer = Auth::user()->accountType === 'Lawyer';
+                                
+                                    $isPostOwner = $post->user->user_id === Auth::user()->user_id;
+                                
+                                    // Check if the current user can reply: either the post owner or the first attorney who commented
+                                    $canReply = $isPostOwner || ($firstAttorneyComment && $firstAttorneyComment->user->user_id === Auth::user()->user_id);
+                                @endphp
+                                
+                                @if ($attorneyComments->isNotEmpty() && $isLawyer && !$isSameLawyer && !$isPostOwner)
+                                    <label class="comment-warning">Further replies are not accommodated anymore.</label>
+                                @else
+                                    {{-- Allow replying only if the current user is the post owner or the first attorney --}}
+                                    @if ($canReply)
+                                        <form id="reply-form-{{ $comment->comment_id }}" action="{{ route('users.createReply') }}" method="POST">
+                                            @csrf
+                                            <textarea name="reply" id="reply-textarea-{{ $comment->comment_id }}" placeholder="Replying to {{ $comment->user ? $comment->user->firstName : 'Unknown User' }}"></textarea>
+                                            <input type="hidden" name="post_id" value="{{ $post->post_id }}">
+                                            <input type="hidden" name="comment_id" value="{{ $comment->comment_id }}">
+                                            <button type="submit">Send</button>
+                                        </form>
+                                    @else
+                                        <label class="comment-warning">You are not allowed to reply to this post.</label>
+                                    @endif
                                 @endif
+                            
                             </div>      
                         </div>
                     </div>
@@ -148,26 +159,33 @@
                 @endforeach
                 </div>
                 <hr>
-                {{-- <div class="comment-field" id="comment-field comment-field-{{ $post->post_id }}"> --}}
                 <div class="comment-field" id="comment-field-{{ $post->post_id }}">
                     @php
                         $attorneyComments = $post->comments->filter(function ($comment) {
                             return $comment->user->accountType === 'Lawyer';
                         });
-                
+                    
+                        $firstAttorneyComment = $attorneyComments->first(); // Get the first attorney who commented
+                    
                         $isSameLawyer = $attorneyComments->contains(function ($comment) {
                             return $comment->user->user_id === Auth::user()->user_id;
                         });
-                
+                    
                         $isLawyer = Auth::user()->accountType === 'Lawyer';
-                
+                    
                         $isPostOwner = $post->user->user_id === Auth::user()->user_id;
+                    
+                        // Check if the current user is the post owner or the first attorney who commented
+                        $canComment = $isPostOwner || (!$attorneyComments->isNotEmpty() && $isLawyer) || ($firstAttorneyComment && $firstAttorneyComment->user->user_id === Auth::user()->user_id);
                     @endphp
-                
+                    
+                    {{-- If an attorney has already commented, and the current user is a different attorney, show a warning --}}
                     @if ($attorneyComments->isNotEmpty() && $isLawyer && !$isSameLawyer && !$isPostOwner)
                         <label class="comment-warning">An attorney has already commented on this post.</label>
-                    @else
-                        {{-- <form id="commentForm commentForm-{{ $post->post_id }}" method="POST" action="{{ route('users.createComment') }}"> --}}
+                    @endif
+                    
+                    {{-- Allow commenting only if the current user is the post owner, there are no attorney comments, or the current user is the first attorney --}}
+                    @if ($canComment)
                         <form id="commentForm-{{ $post->post_id }}" method="POST" action="{{ route('users.createComment') }}">
                             @csrf
                             <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture">

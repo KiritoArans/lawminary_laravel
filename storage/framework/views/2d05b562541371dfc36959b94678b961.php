@@ -46,7 +46,7 @@
                 <hr>
                 <div class="post-text">
                     <p><?php echo e($post->concern); ?></p>
-                    <div>
+                    <div class="tag">
                         <a href="home-search?query=<?php echo e($post->concernCategory); ?>"><?php echo e($post->concernCategory); ?></a>
                     </div>
                     <?php if($post->concernPhoto): ?>
