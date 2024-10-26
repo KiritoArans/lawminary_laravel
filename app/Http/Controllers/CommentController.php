@@ -96,6 +96,7 @@ class CommentController extends Controller
             'new_reply' => [
                 'reply' => $reply->reply,
                 'comment_id' => $reply->comment_id,
+                'post_id' => $reply->post_id,
                 'user_id' => $reply->user->user_id,
                 'user_name' => $reply->user->firstName . ' ' . $reply->user->lastName,
                 'user_photo_url' => $reply->user->userPhoto ? Storage::url($reply->user->userPhoto) : asset('imgs/user-img.png')
@@ -115,49 +116,48 @@ class CommentController extends Controller
     }
     
     public function rateComment(Request $request)
-{
-    $request->validate([
-        'lawyerUser_id' => 'required|exists:tblcomments,user_id', 
-        'comment_id' => 'required|exists:tblcomments,comment_id', 
-        'rating' => 'required|integer|min:1|max:5',
-    ]);
+    {
+        $request->validate([
+            'lawyerUser_id' => 'required|exists:tblcomments,user_id', 
+            'comment_id' => 'required|exists:tblcomments,comment_id', 
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
 
-    $user = Auth::user(); // The user who is rating the comment
+        $user = Auth::user(); // The user who is rating the comment
 
-    // Create a new rating
-    $rate = new Rate();
-    $rate->user_id = $user->user_id; 
-    $rate->comment_id = $request->input('comment_id'); 
-    $rate->lawyerUser_id = $request->input('lawyerUser_id');
-    $rate->rate = $request->input('rating'); 
-    $rate->save();
+        // Create a new rating
+        $rate = new Rate();
+        $rate->user_id = $user->user_id; 
+        $rate->comment_id = $request->input('comment_id'); 
+        $rate->lawyerUser_id = $request->input('lawyerUser_id');
+        $rate->rate = $request->input('rating'); 
+        $rate->save();
 
-    // Calculate points based on rating
-    $points = $request->input('rating') * 10;
+        // Calculate points based on rating
+        $points = $request->input('rating') * 10;
 
-    // Add points to the lawyer's account
-    $addPoints = new Points();
-    $addPoints->lawyerUser_id = $request->input('lawyerUser_id');
-    $addPoints->points = $points; 
-    $addPoints->pointsFrom = "Rate";
-    $addPoints->save();
+        // Add points to the lawyer's account
+        $addPoints = new Points();
+        $addPoints->lawyerUser_id = $request->input('lawyerUser_id');
+        $addPoints->points = $points; 
+        $addPoints->pointsFrom = "Rate";
+        $addPoints->save();
 
-    // Fetch the comment and its user (the comment's author)
-    $comment = Comment::where('comment_id', $request->input('comment_id'))->with('user')->first();
+        // Fetch the comment and its user (the comment's author)
+        $comment = Comment::where('comment_id', $request->input('comment_id'))->with('user')->first();
 
-    if ($comment && $comment->user) {
-        if ($comment->user->user_id !== $user->user_id) {
-            $comment->user->notify(new CommentRated($user, $comment, $request->input('rating')));
+        if ($comment && $comment->user) {
+            if ($comment->user->user_id !== $user->user_id) {
+                $comment->user->notify(new CommentRated($user, $comment, $request->input('rating')));
+            }
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Your rating has been submitted.',
+            'rating' => $rate->rate,
+            'points_awarded' => $points,
+            'comment_id' => $request->input('comment_id'),
+        ]);
     }
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Your rating has been submitted.',
-        'rating' => $rate->rate,
-        'points_awarded' => $points,
-        'comment_id' => $request->input('comment_id'),
-    ]);
-}
-
 }

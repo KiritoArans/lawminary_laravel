@@ -46,6 +46,29 @@ class PageController extends Controller
         return view('emails.otp');
     }
 
+
+    // View Post
+    public function showViewPostPage(Request $request, $post_id)
+{
+    $user = Auth::user();
+
+    // Fetch the specific post by post_id
+    $post = Posts::with('user', 'comments', 'comments.user', 'comments.reply.user')
+        ->withCount('likes', 'comments', 'bookmarks')
+        ->where('post_id', $post_id)
+        ->first();
+
+    if (!$post) {
+        // Handle the case where the post does not exist (optional)
+        return redirect()->route('home')->with('error', 'Post not found.');
+    }
+
+    // Render the view for a single post
+    return view('users.viewPost', compact('post'));
+}
+
+
+
     // User Page
     public function showHomePage(Request $request)
     {

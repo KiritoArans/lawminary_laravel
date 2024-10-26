@@ -32,7 +32,7 @@ class PostApproved extends Notification
         return [
             'post_id' => $this->post->post_id,
             'approver_id' => $this->approver->id,
-            'message' => "A post related to your expertise waiting to be advised.",
+            'message' => "Post matched your expertise waiting to be advised.",
         ];
     }
 }

@@ -83,6 +83,11 @@ Route::get('/forgot-password', [PageController::class, 'showForgotPassPage']);
 
 Route::get('/forgot-password-otp', [PageController::class, 'showOtpPage']);
 
+
+Route::get('/view-{post_id}', [PageController::class, 'showViewPostPage'])
+    ->middleware('auth');
+
+
 Route::get('/home', [PageController::class, 'showHomePage'])
     ->name('home')
     ->middleware('auth');

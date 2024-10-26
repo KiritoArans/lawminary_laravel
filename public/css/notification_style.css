@@ -93,8 +93,6 @@ content h1{
 .notifs-content{
     display: flex;
     justify-content: space-between;
-    cursor: pointer;
-    
     align-items: center;
 }
 .user-info{
@@ -106,6 +104,11 @@ content h1{
     height: 50px;
     margin-right: 10px;
     object-fit: cover;
+}
+.system-acc{
+    align-items: center;
+    gap: .5rem;
+    color: var(--primary-color);
 }
 .notifs-info h2 {
     margin: 0;
@@ -131,6 +134,11 @@ content h1{
     flex-direction: column;
     text-align: center;
     align-items: center;
+    cursor: pointer;
+    transition: var(--tran-03);
+}
+.notifs-action:hover{
+    scale: 1.05;
 }
 .notifs-date{
     font-size: .75rem;

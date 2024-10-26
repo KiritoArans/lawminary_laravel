@@ -50,7 +50,11 @@
                                             </h2>
                                             @if ($user->accountType === 'Lawyer')
                                                 <a href="/leaderboards">
-                                                    <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank" title="{{ $rank }} Badge">
+                                                    @if (strtolower($rank) === 'Wood')
+                                                        <img src="{{ asset('imgs/badges/wood.png') }}" alt="Wood Badge" width="10" class="badge-rank" title="Wood Badge">
+                                                    @else
+                                                        <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank" title="{{ $rank }} Badge">
+                                                    @endif
                                                 </a>
                                             @endif
                                         </div>
@@ -140,33 +144,32 @@
         <script src="js/logout.js"></script>
 
         <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    const sortFilter = document.getElementById('sortFilter');
-    const postsContainer = document.getElementById('posts-container');
+            document.addEventListener('DOMContentLoaded', function () {
+                const sortFilter = document.getElementById('sortFilter');
+                const postsContainer = document.getElementById('posts-container');
 
-    sortFilter.addEventListener('change', function () {
-        const selectedValue = this.value;
-        let postsArray = Array.from(postsContainer.children); // Convert NodeList to an array
+                sortFilter.addEventListener('change', function () {
+                    const selectedValue = this.value;
+                    let postsArray = Array.from(postsContainer.children); // Convert NodeList to an array
 
-        // Sort the posts based on the selected value (newest or oldest)
-        postsArray.sort(function (a, b) {
-            const timeA = new Date(a.getAttribute('data-post-time'));
-            const timeB = new Date(b.getAttribute('data-post-time'));
+                    // Sort the posts based on the selected value (newest or oldest)
+                    postsArray.sort(function (a, b) {
+                        const timeA = new Date(a.getAttribute('data-post-time'));
+                        const timeB = new Date(b.getAttribute('data-post-time'));
 
-            if (selectedValue === 'newest') {
-                return timeB - timeA; // Sort descending (newest first)
-            } else if (selectedValue === 'oldest') {
-                return timeA - timeB; // Sort ascending (oldest first)
-            }
-        });
+                        if (selectedValue === 'newest') {
+                            return timeB - timeA; // Sort descending (newest first)
+                        } else if (selectedValue === 'oldest') {
+                            return timeA - timeB; // Sort ascending (oldest first)
+                        }
+                    });
 
-        // Re-append sorted posts to the container
-        postsArray.forEach(function (post) {
-            postsContainer.appendChild(post);
-        });
-    });
-});
-
+                    // Re-append sorted posts to the container
+                    postsArray.forEach(function (post) {
+                        postsContainer.appendChild(post);
+                    });
+                });
+            });
         </script>
     </body>
 </html>

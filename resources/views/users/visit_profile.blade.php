@@ -45,7 +45,11 @@
                                         </h2>
                                         @if ($user->accountType === 'Lawyer')
                                             <a href="/leaderboards">
-                                                <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank" title="{{ $rank }} Badge">
+                                                @if (strtolower($rank) === 'Wood')
+                                                    <img src="{{ asset('imgs/badges/wood.png') }}" alt="Wood Badge" width="10" class="badge-rank" title="Wood Badge">
+                                                @else
+                                                    <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank" title="{{ $rank }} Badge">
+                                                @endif
                                             </a>
                                         @endif
                                     </div>

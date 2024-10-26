@@ -30,6 +30,7 @@ class PostReplied extends Notification
     {
         return [
             'replier_id' => $this->replier->id, // Storing replier user ID for later retrieval
+            'post_id' => $this->reply->post_id,
             'comment_id' => $this->comment->comment_id,
             'reply_id' => $this->reply->reply_id,
             'message' => "replied to your comment.",
