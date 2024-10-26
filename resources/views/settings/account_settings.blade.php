@@ -186,10 +186,6 @@
                                     @csrf
                                     @include('inclusions/response')
 
-                                    <label for="bio">Bio</label>
-                                    <textarea id="bio" name="bio">Some Text</textarea
-                                    >
-
                                     <label for="birthDate">Birthday</label>
                                     <input
                                         type="date"
@@ -206,24 +202,7 @@
                                         value="{{ Auth::user()->sex }}"
                                         readonly
                                     />
-
-                                    <label for="nationality">Nationality</label>
-                                    <input
-                                        type="text"
-                                        id="nationality"
-                                        name="nationality"
-                                        value="{{ Auth::user()->nationality }}"
-                                    />
-
-                                    <label for="contactNumber">
-                                        Contact Number
-                                    </label>
-                                    <input
-                                        type="text"
-                                        id="contactNumber"
-                                        name="contactNumber"
-                                        value="{{ Auth::user()->contactNumber }}"
-                                    />
+                                    
 
                                     <label for="email">E-mail</label>
                                     <input
@@ -231,6 +210,7 @@
                                         id="email"
                                         name="email"
                                         value="{{ Auth::user()->email }}"
+                                        readonly
                                     />
 
                                     <div class="action-button">

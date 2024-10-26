@@ -37,55 +37,24 @@
                                 <label for="last-name">Last Name</label>
                                 <input type="text" id="last-name" name="lastName" value="{{ old('lastName') }}">
                             </div>
+                        </div>
+
+                        <div class="middle-column">
                             <div class="form-group">
                                 <label for="sex">Sex</label>
                                 <select name="sex" id="" value="{{ old('sex') }}">
                                     <option value="" disabled {{ old('sex') === null ? 'selected' : '' }}>Option</option>
                                     <option value="Male" {{ old('sex') === 'Male' ? 'selected' : '' }}>Male</option>
                                     <option value="Female" {{ old('sex') === 'Female' ? 'selected' : '' }}>Female</option>
-                                    <option value="Other" {{ old('sex') === 'Other' ? 'selected' : '' }}>Other</option>
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="middle-column">
                             <div class="form-group">
                                 <label for="birth-date">Birth Date</label>
                                 <input type="date" id="birth-date" name="birthDate" value="{{ old('birthDate') }}">
                             </div>
                             <div class="form-group">
-                                <label for="nationality" class="form-group">
-                                    Nationality:
-                                </label>
-                                <select
-                                    id="nationality"
-                                    name="nationality"
-                                    required
-                                >
-                                    <option value="">
-                                        Select Nationality
-                                    </option>
-                                </select>
-                            </div>
-                            <div class="form-group">
                                 <label for="email-address">Email Address</label>
                                 <input type="email" id="email-address" name="email" value="{{ old('email') }}">
-                            </div>
-                            <div class="form-group">
-                                <label for="contact-number">Contact Number</label>
-                                <div class="contact-number-wrapper">
-                                    <span class="country-code">+63</span>
-                                    <input
-                                        type="tel"
-                                        id="contactNumber"
-                                        name="contactNumber"
-                                        maxlength="10"
-                                        value="{{ old('contactNumber') }}"
-                                        placeholder="Enter phone number"
-                                        pattern="[0-9]{10}"
-                                        required
-                                    />
-                                </div>
                             </div>
                         </div>
 
