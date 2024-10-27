@@ -45,7 +45,35 @@
                         $replier = $item['replier'];
                         $rater = $item['rater'];
                         $follower = $item['follower'];
+                        $approver = $item['approver'];
                     @endphp
+
+                    @if ($approver)
+                        <div class="notifs btn-comment" data-post-id="{{ $notification->data['post_id'] }}">
+                            <div class="notifs-content">
+                                <div class="user-info system-acc">
+                                    <img src="{{ asset('imgs/lawminarylogo_v3.png') }}" alt="System Picture" class="user-profile-photo" />
+                                    
+                                    <div class="notifs-info">
+                                        <h2>System Message</h2>
+                                    </div>
+                                </div>
+                                
+                                <div class="notifs-action" onclick="redirectToPost('{{ $notification->data['post_id'] }}')">
+                                    <span>{{ $notification->data['message'] }}</span>
+                                    <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                                </div>
+                                <form action="{{ route('notification.delete', $notification->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="border:none; background:none;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>                           
+                        </div>
+                    @endif
+
             
                     @if ($liker)
                         <div class="notifs btn-comment" data-post-id="{{ $notification->data['post_id'] }}">
@@ -63,7 +91,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="notifs-action">
+                                <div class="notifs-action" onclick="redirectToPost('{{ $notification->data['post_id'] }}')">
                                     <span>{{ $liker->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
@@ -94,7 +122,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="notifs-action">
+                                <div class="notifs-action" onclick="redirectToPost('{{ $notification->data['post_id'] }}')">
                                     <span>{{ $bookmarker->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
@@ -125,7 +153,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="notifs-action">
+                                <div class="notifs-action" onclick="redirectToPost('{{ $notification->data['post_id'] }}')">
                                     <span>{{ $commenter->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
@@ -156,7 +184,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="notifs-action">
+                                <div class="notifs-action" onclick="redirectToPost('{{ $notification->data['post_id'] }}')">
                                     <span>{{ $replier->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
@@ -187,7 +215,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="notifs-action">
+                                <div class="notifs-action" onclick="window.location.href='{{ route('profile') }}'">
                                     <span>{{ $rater->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
@@ -203,7 +231,7 @@
                     @endif
 
                     @if ($follower)
-                        <div class="notifs btn-comment">
+                        <div class="notifs">
                             <div class="notifs-content">
                                 <div class="user-info">
                                     <img src="{{ $follower->userPhoto ? Storage::url($follower->userPhoto) : asset('imgs/user-img.png') }}" alt="Profile Picture" class="user-profile-photo" />
@@ -218,7 +246,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="notifs-action">
+                                <div class="notifs-action" onclick="window.location.href='{{ route('profile') }}'">
                                     <span>{{ $follower->firstName }} {{ $notification->data['message'] }}</span>
                                     <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
                                 </div>
@@ -238,8 +266,13 @@
             </content>
         </main>
     </div>
+    <script>
+        function redirectToPost(postId) {
+            window.location.href = '/view-' + postId;
+        }
+    </script>
+    
     <script src="js/showNotification.js"></script>
-    {{-- <script src="js/postandcomment.js"></script> --}}
     <script src="js/showUserNav.js"></script>
     <script src="../js/settings.js"></script>    
     <script src="js/logout.js"></script>

@@ -8,7 +8,7 @@
                 <th>Post Photo</th>
                 <th>Concern</th>
                 <th>Status</th>
-                <th>Tags</th>
+                <th>Category</th>
                 <th>Posted By</th>
                 <th>Updated By</th>
                 <th>Reason for Rejection</th>
@@ -58,7 +58,7 @@
                             {{ Str::limit($activity->concern, 15) }}
                         </td>
                         <td>{{ $activity->status }}</td>
-                        <td>{{ $activity->tags }}</td>
+                        <td>{{ $activity->concernCategory }}</td>
                         <td>{{ $activity->user->username }}</td>
                         <td>{{ $activity->approvedBy }}</td>
                         <td

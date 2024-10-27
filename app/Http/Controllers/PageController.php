@@ -46,6 +46,58 @@ class PageController extends Controller
         return view('emails.otp');
     }
 
+
+    // View Post Page
+    public function showViewPostPage(Request $request, $post_id)
+    {
+        $user = Auth::user();
+
+        // Try to find the post in Posts
+        $post = Posts::with('user', 'comments', 'comments.user', 'comments.reply.user')
+            ->withCount('likes', 'comments', 'bookmarks')
+            ->where('post_id', $post_id)
+            ->first();
+
+        // If post is not found in Posts, check ForumPosts
+        if (!$post) {
+            $forumPost = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
+                ->withCount('likes', 'comments', 'bookmarks')
+                ->where('post_id', $post_id)
+                ->first();
+
+            if ($forumPost) {
+                // Redirect to the forum view page if it's a forum post
+                return redirect()->route('forum-view', ['post_id' => $post_id]);
+            }
+
+            // If neither post is found, redirect back with an error
+            return redirect()->back()->with('error', 'Post not found.');
+        }
+
+        // If found in Posts, show the standard post view
+        return view('users.viewPost', compact('post'));
+    }
+
+    
+    public function showForumViewPostPage(Request $request, $post_id)
+    {
+        $user = Auth::user();
+
+        $post = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
+            ->withCount('likes', 'comments', 'bookmarks')
+            ->where('post_id', $post_id)
+            ->first();
+
+        if (!$post) {
+            return redirect()->back()->with('error', 'Post not found.');
+
+        }
+
+        return view('users.viewForumPost', compact('post'));
+    }
+    
+
+
     // User Page
     public function showHomePage(Request $request)
     {
@@ -370,6 +422,7 @@ class PageController extends Controller
                 'replier' => isset($data['replier_id']) ? UserAccount::find($data['replier_id']) : null,
                 'rater' => isset($data['rater_id']) ? UserAccount::find($data['rater_id']) : null,
                 'follower' => isset($data['follower_id']) ? UserAccount::find($data['follower_id']) : null,
+                'approver' => isset($data['approver_id']) ? UserAccount::find($data['approver_id']) : null,
             ];
         });
 
@@ -378,10 +431,12 @@ class PageController extends Controller
             'comments',
             'comments.user',
             'comments.reply.user'
-            )
-                ->withCount('likes', 'comments', 'bookmarks')
-                ->orderBy('created_at', 'desc')
-                ->get();
+        )
+            ->withCount('likes', 'comments', 'bookmarks')
+            ->whereNotNull('post_id') // This ensures that you're only getting posts that exist
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
         
         // Pass both notifications and unread count to the view
         return view('users.notification', [

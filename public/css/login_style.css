@@ -42,8 +42,8 @@ section {
     align-items: center;
 }
 .logo-content img {
-    height: 500px;
-    /* height: 80px; */
+    /* height: 500px; */
+    height: 80px;
 }
 .line {
     border: 1px solid;
@@ -311,20 +311,20 @@ section {
 
 
 
-
-
-
-/* Styles for tablets and medium devices */
-@media (min-width: 576px) and (max-width: 1024px) {
+@media (min-width: 578px) and (max-width: 1265px) {
+    .logo-content img {
+        height: 50px;
+    }
+    .line {
+        display: none;
+    }
     .wrapper {
+        display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
-        gap: 80px;
-        margin-right: 2rem;
-        scale: .95;
-    }
-    .logo-content img {
-        height: 400px;
+        gap: 1rem;
+        /* margin-bottom: 40px; */
     }
 }
 

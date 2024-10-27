@@ -30,6 +30,7 @@ class AccountController extends Controller
                         'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/',
                     ],
                     'accountType' => 'required',
+                    'userPhoto' => 'required',
                     'status' => 'required',
                     'firstName' => 'required',
                     'middleName' => 'nullable',
@@ -97,6 +98,7 @@ class AccountController extends Controller
                         'regex:/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).+$/',
                     ],
                     'accountType' => 'required',
+                    'userPhoto' => 'required',
                     'status' => 'required',
                     'firstName' => 'required',
                     'middleName' => 'nullable',
@@ -250,15 +252,17 @@ class AccountController extends Controller
 
     public function updateAccountNames(Request $request)
     {
+        $user = Auth::user();
+
         $request->validate([
-            'username' => 'required|unique:tblaccounts,username',
+            'username' => 'required|unique:tblaccounts,username,' . $user->user_id . ',user_id',
             'userPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'firstName' => 'required|string|max:100',
             'middleName' => 'nullable|string|max:100',
             'lastName' => 'required|string|max:100',
         ]);
 
-        $user = Auth::user();
+        // $user = Auth::user();
 
         if ($request->hasFile('userPhoto')) {
             $userPhotoPath = $request

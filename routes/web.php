@@ -83,6 +83,15 @@ Route::get('/forgot-password', [PageController::class, 'showForgotPassPage']);
 
 Route::get('/forgot-password-otp', [PageController::class, 'showOtpPage']);
 
+
+Route::get('/view-{post_id}', [PageController::class, 'showViewPostPage'])
+    ->middleware('auth');
+    
+Route::get('/forum-view-{post_id}', [PageController::class, 'showForumViewPostPage'])
+    ->middleware('auth')
+    ->name('forum-view'); // Add this to name the route
+
+
 Route::get('/home', [PageController::class, 'showHomePage'])
     ->name('home')
     ->middleware('auth');

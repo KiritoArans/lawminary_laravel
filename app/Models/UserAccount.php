@@ -94,6 +94,10 @@ class UserAccount extends Authenticatable
     {
         return $this->hasMany(Notification::class, 'notifiable_id', 'id');
     }
+    public function approver()
+    {
+        return $this->hasMany(Notification::class, 'notifiable_id', 'id');
+    }
     public function leaduser()
     {
         return $this->hasMany(UserAccount::class, 'lawyerUser_id', 'user_id');

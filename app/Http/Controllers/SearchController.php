@@ -14,6 +14,7 @@ class SearchController extends Controller
         $query = $request->input('query');
     
         $users = UserAccount::where('accountType', 'User') 
+            ->where('status', 'Approved')
             ->withCount([
                 'posts' => function ($query) {
                     $query->where('status', 'Approved'); 
@@ -31,6 +32,7 @@ class SearchController extends Controller
             });
 
         $lawyers = UserAccount::where('accountType', 'Lawyer') 
+            ->where('status', 'Approved')
             ->withCount([
                 'posts' => function ($query) {
                     $query->where('status', 'Approved'); 

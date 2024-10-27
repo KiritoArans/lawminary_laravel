@@ -17,7 +17,9 @@
     <section>
         <div class="wrapper">
             <div class="logo-content">
-                <img src="../imgs/lawminarylogo.png" alt="Lawminary Logo">
+                
+                
+                <img src="../imgs/Lawminary_Logo_2-Gold.png" alt="Lawminary Logo">
             </div>
             <div class="line"></div>
             <div class="login-content">

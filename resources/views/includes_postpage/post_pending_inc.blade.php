@@ -12,7 +12,7 @@
                 <tr>
                     <th>Post ID</th>
                     <th>Content</th>
-                    <th>Tags</th>
+                    <th>Category</th>
                     <th>Posted By</th>
                     <th>Date</th>
                     <th>Actions</th>
@@ -24,7 +24,7 @@
                     <tr>
                         <td>{{ $post->post_id }}</td>
                         <td>{{ $post->concern }}</td>
-                        <td>{{ $post->tags }}</td>
+                        <td>{{ $post->concernCategory }}</td>
                         <td>{{ $post->postedBy }}</td>
                         <td>
                             {{ \Carbon\Carbon::parse($post->updated_at)->format('Y-m-d') }}

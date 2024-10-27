@@ -37,7 +37,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     let newComment = `
                         <div class="user-comment">
                             <div>
-                                <img src="${e.user_photo_url}" alt="User Profile Picture" class="user-profile-photo" />
+                                <img src="${e.user_photo_url}" 
+                                    alt="User Profile Picture" 
+                                    class="user-profile-photo" 
+                                    onerror="this.onerror=null; this.src='{{ asset('imgs/user-img.png') }}';" />
                             </div>
                             <div class="user-comment-content">
                                 <span>

@@ -36,16 +36,21 @@
                     <div class="profile-header">
                         <div class="profile-details">
                             <div class="profile-left">
-                                <img src="{{ $user->userPhoto ? Storage::url($user->userPhoto) : '../../imgs/user-img.png' }}" class="profile-photo" alt="Profile Picture">
+                                <img src="{{ $user->userPhoto ? Storage::url($user->userPhoto) : '../../imgs/user-img.png' }}" 
+                                        class="profile-photo" alt="Profile Picture"
+                                        onclick="openModal()" >
                                 <div class="profile-info">
                                     <div class="profile-names">
                                         <h2>
                                             {{ $user->accountType === 'Lawyer' ? 'Atty. ' : '' }}
                                             {{ $user->firstName }} {{ $user->lastName }}
                                         </h2>
-                                        @if ($user->accountType === 'Lawyer')
+                                        @if ($user->accountType === 'Lawyer' && $rank != 'No Rank') 
                                             <a href="/leaderboards">
-                                                <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank" title="{{ $rank }} Badge">
+                                                <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" 
+                                                    alt="{{ ucfirst($rank) }} Badge" 
+                                                    width="10" class="badge-rank" 
+                                                    title="{{ ucfirst($rank) }} Badge">
                                             </a>
                                         @endif
                                     </div>
@@ -114,6 +119,16 @@
                     @include('inclusions/profile/profileBookmarks')
 
                     @include('inclusions/reportPostModal')
+
+                    <div id="profileModal" class="profileModal">
+                        <div class="profileModal-content">
+                            <span class="profileModal-close" onclick="closeModal()"><i class="fa-regular fa-circle-xmark"></i></span>
+                            <img
+                                src="{{ $user->userPhoto ? Storage::url($user->userPhoto) : asset('imgs/user-img.png') }}"
+                                alt="Profile Picture"
+                                style="width: 100%; height: auto;" />
+                        </div>
+                    </div>
 
                 </div>
             </content>
