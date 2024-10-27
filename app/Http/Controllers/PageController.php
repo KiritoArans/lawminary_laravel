@@ -51,28 +51,49 @@ class PageController extends Controller
     public function showViewPostPage(Request $request, $post_id)
     {
         $user = Auth::user();
-    
-        // Attempt to find the post in the Posts model
+
+        // Try to find the post in Posts
         $post = Posts::with('user', 'comments', 'comments.user', 'comments.reply.user')
             ->withCount('likes', 'comments', 'bookmarks')
             ->where('post_id', $post_id)
             ->first();
-    
-        // If not found, attempt to find the post in the ForumPosts model
+
+        // If post is not found in Posts, check ForumPosts
         if (!$post) {
-            $post = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
+            $forumPost = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
                 ->withCount('likes', 'comments', 'bookmarks')
                 ->where('post_id', $post_id)
                 ->first();
+
+            if ($forumPost) {
+                // Redirect to the forum view page if it's a forum post
+                return redirect()->route('forum-view', ['post_id' => $post_id]);
+            }
+
+            // If neither post is found, redirect back with an error
+            return redirect()->back()->with('error', 'Post not found.');
         }
-    
-        // If still not found, redirect with an error message
-        if (!$post) {
-            return redirect()->route('home')->with('error', 'Post not found.');
-        }
-    
-        // Return the view with the found post
+
+        // If found in Posts, show the standard post view
         return view('users.viewPost', compact('post'));
+    }
+
+    
+    public function showForumViewPostPage(Request $request, $post_id)
+    {
+        $user = Auth::user();
+
+        $post = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
+            ->withCount('likes', 'comments', 'bookmarks')
+            ->where('post_id', $post_id)
+            ->first();
+
+        if (!$post) {
+            return redirect()->back()->with('error', 'Post not found.');
+
+        }
+
+        return view('users.viewForumPost', compact('post'));
     }
     
 

@@ -268,7 +268,7 @@
     </div>
     <script>
         function redirectToPost(postId) {
-            window.location.href = '/view-' + postId; // Adjust this URL as necessary
+            window.location.href = '/view-' + postId;
         }
     </script>
     

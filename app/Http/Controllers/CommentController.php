@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserAccount;
 use App\Models\Posts;
+use App\Models\ForumPosts;
 use App\Models\Comment;
 use App\Models\Reply;
 use App\Models\Rate;
@@ -42,10 +43,15 @@ class CommentController extends Controller
     
         // Notify the post's owner (optional)
         $post = Posts::where('post_id', $request->post_id)->with('user')->first();
-        if ($post && $post->user) {
-            if ($post->user->user_id !== $user->user_id) {
-                $post->user->notify(new PostCommented($user, $post, $comment));
-            }
+    
+        // If the post is not found in Posts, check in ForumPosts
+        if (!$post) {
+            $post = ForumPosts::where('post_id', $request->post_id)->with('user')->first();
+        }
+    
+        // Notify the post owner if the post exists and it's not the commenting user
+        if ($post && $post->user && $post->user->user_id !== $user->user_id) {
+            $post->user->notify(new PostCommented($user, $post, $comment));
         }
     
         return response()->json([
