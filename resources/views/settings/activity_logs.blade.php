@@ -10,6 +10,7 @@
             href="{{ asset('css/settings/activity_logs_style.css') }}"
         />
         <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/responsive/navres.css') }}" />
         @include('inclusions/libraryLinks')
     </head>
     <body>
@@ -18,6 +19,7 @@
             <main>
                 <header>
                     <div class="header-top">
+                        <i class="fa-solid fa-bars"></i>
                         @include('includes_syscon.syscon_logo_inc')
                         <div class="notification">
                             <a href="../notifications" class="notification-link">
@@ -76,6 +78,7 @@
                 </content>
             </main>
         </div>
+        <script src="../js/showUserNav.js"></script>
         <script src="../js/showNotification.js"></script>
         <script src="../js/settings.js"></script>
         <script src="../js/logout.js"></script>

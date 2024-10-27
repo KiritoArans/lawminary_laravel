@@ -105,3 +105,14 @@ header hr {
     cursor: pointer;
     color: #C62E2E;
 }
+
+
+@media (max-width: 576px) {
+    .log-header i {
+        font-size: 1.5rem;
+        margin-right: .25rem;
+    }
+    .log-header h1 {
+        font-size: 1.5rem;
+    }
+}

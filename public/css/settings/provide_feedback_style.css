@@ -151,3 +151,30 @@ header hr {
     margin-top: .5rem;
     width: 20rem;
 }
+
+
+@media (min-width: 577px) and (max-width: 1024px) {
+    .feedback-section {
+        gap: 1rem;
+    }
+    .feedback-form {
+        width: 24rem;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .feedback-section {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+        width: 100%;
+        height: auto;
+        margin: 0 auto;
+    }
+    .feedback-form {
+        width: 90%;
+    }
+}

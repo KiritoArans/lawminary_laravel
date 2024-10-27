@@ -656,7 +656,7 @@ header hr {
 
 .profileModal-content {
     margin: 15% auto; 
-    width: 25%;
+    width: 24rem;
     border-radius: .25rem;
 }
 .profileModal-content img {
@@ -678,4 +678,52 @@ header hr {
 .profileModal-close:focus {
     cursor: pointer;
     scale: 1.1;
+}
+
+@media (min-width: 577px) and (max-width: 1024px) {
+    .profile-section, .posts-btn, .comments .comment-content {
+        margin: 0 12rem 0.75rem 12rem;
+    }
+    .profileModal-content {
+        width: 20rem;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .profile-section, .posts-btn, .comments .comment-content {
+        margin: 0 0 0.75rem 0;
+    }
+    .profileModal-content {
+        width: 20rem;
+    }
+    .pending-post-content, .disregard-post-content {
+        display: flex;
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+    .status-text {
+        margin: 0;
+    }
+    .pending-post-details:nth-child(1) {
+        max-width: 100%;
+    }
+    .profile-right {
+        margin-right: 0;
+    }
+    .profile-info .badge-rank {
+        margin: 0 ;
+    }
+    .profile-names {
+        display: flex;
+        flex-direction: column;
+    }
+    .following-count, .follower-count {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+    .edit-profile-button {
+        margin-top: .25rem;
+    }
 }

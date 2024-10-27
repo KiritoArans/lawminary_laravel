@@ -118,8 +118,8 @@ header hr {
 
 .settings-menu ul li a:hover,
 .settings-menu ul li a.active {
-    background-color: #f0f0f0;
-    color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: var(--text-color4);
 }
 
 .settings-content {
@@ -140,6 +140,7 @@ header hr {
 }
 
 .tab-content h2 {
+    color: var(--primary-color);
     margin-bottom: 20px;
 }
 
@@ -233,4 +234,44 @@ form button[type="button"] {
     cursor: pointer;
     font-size: 18px;
     color: var(--black-light-color);
+}
+
+
+@media (min-width: 577px) and (max-width: 1024px) {
+    .settings-menu {
+        width: 8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .settings-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .settings-menu {
+        width: auto;
+        padding: 0;
+        box-shadow: none;
+        background-color: transparent;
+        margin-bottom: 1rem;
+    }
+    .settings-menu ul {
+        display: flex;
+        gap: .5rem;
+    }
+    .settings-menu ul li {
+        margin-bottom: 0;
+    }
+    .settings-content {
+        flex-grow: 1;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        margin-left: 0;
+    }
+    .tab-content h2 {
+        margin: 0 0 .5rem 0;
+    }
 }

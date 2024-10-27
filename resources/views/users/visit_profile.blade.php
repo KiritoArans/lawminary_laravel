@@ -8,6 +8,7 @@
     <link rel="icon" href="../imgs/lawminarylogo_v3.png" type="image/png">
     <link rel="stylesheet" href="{{ asset ('css/profile_style.css') }}">
     <link rel="stylesheet" href="{{ asset ('css/nav_style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsive/navres.css') }}" />
     <link rel="stylesheet" href="{{ asset ('css/otherstyles/posts_style.css') }}">
     @include('inclusions/libraryLinks')
     @include('inclusions/broadcastJS')
@@ -19,6 +20,7 @@
         <main>
             <header>
                 <div class="header-top">
+                    <i class="fa-solid fa-bars"></i>
                     <img src="../imgs/Lawminary_Logo_2-Gold.png" alt="Lawminary Logo">
                     <div class="notification">
                         <a href="notifications" class="notification-link">
@@ -149,6 +151,7 @@
 
     <script src="js/showNotification.js"></script>
 
+    <script src="js/showUserNav.js"></script>
     <script src="/js/settings.js"></script>
     <script src="/js/profile.js"></script>
     <script src="/js/logout.js"></script>
