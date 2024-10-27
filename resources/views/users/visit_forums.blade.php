@@ -394,7 +394,7 @@
                 </div>              
                 <div class="search-bar">
                     <i class="fas fa-search search-icon"></i>
-                   <input type="text" placeholder="Search Forums">
+                    <input type="text" placeholder="Search Forums">
                 </div>
           
                 @foreach($joinedForum as $forum)
@@ -419,7 +419,6 @@
         
             </section>
             </div>
-          
         </div>
 
         @include('inclusions/rateCommentModal')
@@ -428,7 +427,7 @@
 
       </main>
     </div>
-
+    
     <script src="js/user_js/forums.js"></script>
     
     <script src="js/reportPost.js"></script>
