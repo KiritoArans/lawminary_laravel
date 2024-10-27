@@ -1,194 +1,155 @@
 <aside>
-    <!-- Burger Menu for Mobile and Tablet -->
-    <div class="burger-menu" id="burgerToggle">
-        <i class="fa-solid fa-bars"></i>
+    <div class="top-nav">
+        <div class="profile">
+            <div class="user-indicator">
+                @if (Auth::user()->userPhoto)
+                    <img
+                        src="{{ Storage::url(Auth::user()->userPhoto) }}"
+                        alt="Profile Picture"
+                    />
+                @else
+                    <img src="../../imgs/user-img.png" alt="Profile Picture" />
+                @endif
+                <label>
+                    @
+                    <span>{{ Auth::user()->username }}</span>
+                </label>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a
+                        href="{{ route('moderator.dashboard') }}"
+                        class="{{ Request::is('moderator/dashboard') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="{{ route('moderator.postpage') }}"
+                        class="{{ Request::is('moderator/postpage') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                        <span>Posts</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="{{ route('moderator.leaderboards') }}"
+                        class="{{ Request::is('moderator/leaderboards') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-chart-simple"></i>
+                        <span>Leaderboards</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="{{ route('moderator.resources') }}"
+                        class="{{ Request::is('moderator/resources') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-folder"></i>
+                        <span>Resources</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="{{ route('moderator.account') }}"
+                        class="{{ Request::is('moderator/account') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-user-gear"></i>
+                        <span>Accounts</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="{{ route('moderator.forums') }}"
+                        class="{{ Request::is('moderator/forums') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-users"></i>
+                        <span>Forums</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="{{ route('moderator.faqs') }}"
+                        class="{{ Request::is('moderator/faqs') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-circle-question"></i>
+                        <span>FAQs</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="{{ route('moderator.about-law') }}"
+                        class="{{ Request::is('moderator/about-law') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        <span>Laws</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
-
-    <!-- Mobile and Tablet Navigation -->
-    <nav id="navList">
-        <div class="profile">
-            <div class="user-indicator">
-                @if (Auth::user()->userPhoto)
-                    <img
-                        src="{{ Storage::url(Auth::user()->userPhoto) }}"
-                        alt="Profile Picture"
-                    />
-                @else
-                    <img src="../../imgs/user-img.png" alt="Profile Picture" />
-                @endif
-                <label>
-                    @
-                    <span>{{ Auth::user()->username }}</span>
-                </label>
-            </div>
-        </div>
-        <ul>
-            <li>
-                <a href="{{ route('moderator.dashboard') }}">
-                    <i class="fa-solid fa-chart-pie"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.postpage') }}">
-                    <i class="fa-solid fa-envelope-open-text"></i>
-                    <span>Posts</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.leaderboards') }}">
-                    <i class="fa-solid fa-chart-simple"></i>
-                    <span>Leaderboards</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.resources') }}">
-                    <i class="fa-solid fa-folder"></i>
-                    <span>Resources</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.account') }}" class="current">
-                    <i class="fa-solid fa-user-gear"></i>
-                    <span>Accounts</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.forums') }}">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Forums</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.faqs') }}">
-                    <i class="fa-solid fa-circle-question"></i>
-                    <span>FAQs</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.about-law') }}">
-                    <i class="fa-solid fa-hammer"></i>
-                    <span>About Law</span>
-                </a>
-            </li>
-        </ul>
-        <div class="bottom-nav-burger">
-            <a href="javascript:void(0);" id="logout-link" class="logout">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Log out</span>
-            </a>
-            <form
-                id="logout-form"
-                action="{{ route('logoutAdMod') }}"
-                method="POST"
-                style="display: none"
-            >
-                @csrf
-            </form>
-        </div>
-    </nav>
-
-    <!-- Desktop Sidebar Navigation -->
-    <div class="mod-nav">
-        <div class="profile">
-            <div class="user-indicator">
-                @if (Auth::user()->userPhoto)
-                    <img
-                        src="{{ Storage::url(Auth::user()->userPhoto) }}"
-                        alt="Profile Picture"
-                    />
-                @else
-                    <img src="../../imgs/user-img.png" alt="Profile Picture" />
-                @endif
-                <label>
-                    @
-                    <span>{{ Auth::user()->username }}</span>
-                </label>
-            </div>
-        </div>
-        <ul>
-            <li>
-                <a href="{{ route('moderator.dashboard') }}">
-                    <i class="fa-solid fa-chart-pie"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.postpage') }}">
-                    <i class="fa-solid fa-envelope-open-text"></i>
-                    <span>Posts</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.leaderboards') }}">
-                    <i class="fa-solid fa-chart-simple"></i>
-                    <span>Leaderboards</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.resources') }}">
-                    <i class="fa-solid fa-folder"></i>
-                    <span>Resources</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.account') }}" class="current">
-                    <i class="fa-solid fa-user-gear"></i>
-                    <span>Accounts</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.forums') }}">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Forums</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.faqs') }}">
-                    <i class="fa-solid fa-circle-question"></i>
-                    <span>FAQs</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('moderator.about-law') }}">
-                    <i class="fa-solid fa-scale-balanced"></i>
-                    <span>Laws</span>
-                </a>
-            </li>
-        </ul>
-        <div class="bottom-nav">
-            <a href="javascript:void(0);" id="logout-link-nav" class="logout">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Log out</span>
-            </a>
-            <form
-                id="logout-form"
-                action="{{ route('logoutAdMod') }}"
-                method="POST"
-                style="display: none"
-            >
-                @csrf
-            </form>
-        </div>
+    <div class="bottom-nav">
+        <a href="javascript:void(0);" id="logout-link" class="logout">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Log out</span>
+        </a>
+        <form
+            id="logout-form"
+            action="{{ route('logoutAdMod') }}"
+            method="POST"
+            style="display: none"
+        >
+            @csrf
+        </form>
     </div>
 </aside>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const burgerToggle = document.getElementById('burgerToggle');
-        const navList = document.getElementById('navList');
+        const menuIcon = document.querySelector('.header-top .fa-bars');
+        const asideMenu = document.querySelector('aside');
 
-        burgerToggle.addEventListener('click', function () {
-            navList.classList.toggle('show');
-        });
+        function handleMenu() {
+            if (window.innerWidth <= 1024) {
+                // Toggle the expanded state with transition on click
+                menuIcon.addEventListener('click', function (event) {
+                    event.stopPropagation(); // Prevents event from bubbling to the document
+                    asideMenu.classList.toggle('expanded'); // Toggle expanded class for smooth transition
+                    asideMenu.style.display = 'block'; // Ensure it's visible
+                });
 
-        // Close nav if clicked outside
-        document.addEventListener('click', function (event) {
-            if (
-                !navList.contains(event.target) &&
-                !burgerToggle.contains(event.target)
-            ) {
-                navList.classList.remove('show');
+                // Hide aside menu when clicking outside
+                document.addEventListener('click', function (event) {
+                    if (
+                        window.innerWidth <= 1024 &&
+                        !asideMenu.contains(event.target) &&
+                        !menuIcon.contains(event.target)
+                    ) {
+                        asideMenu.style.display = 'none'; // Hide the sidebar if clicked outside
+                        asideMenu.classList.remove('expanded'); // Reset to collapsed state
+                    }
+                });
+            } else {
+                asideMenu.style.display = 'block';
+                asideMenu.classList.add('expanded');
+            }
+        }
+
+        handleMenu();
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 1024) {
+                asideMenu.style.display = 'block';
+                asideMenu.classList.add('expanded');
+            } else {
+                asideMenu.style.display = 'none';
+                asideMenu.classList.remove('expanded');
+                handleMenu();
             }
         });
     });

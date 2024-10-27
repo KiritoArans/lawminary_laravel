@@ -46,9 +46,9 @@
     </head>
 
     <body>
-        <div class="container-fluid dashboard-content-wrapper">
+        <div class="container-post">
             @include('includes_accounts.mod_nav_inc')
-            <div class="row justify-content-center">
+            <main>
                 <header>
                     <div
                         class="header-top d-flex justify-content-between align-items-center"
@@ -57,14 +57,12 @@
                     </div>
                     <hr class="divider w-100" />
                 </header>
-                <main class="col-lg-8 col-md-10 col-sm-12">
-                    @include('includes_about_law.search_abt_law')
+                @include('includes_about_law.search_abt_law')
 
-                    @include('includes_about_law.add_abt_law')
+                @include('includes_about_law.add_abt_law')
 
-                    @include('includes_about_law.view_abt_law')
-                </main>
-            </div>
+                @include('includes_about_law.view_abt_law')
+            </main>
         </div>
 
         <script src="js/logout.js"></script>

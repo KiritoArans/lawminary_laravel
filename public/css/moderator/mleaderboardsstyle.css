@@ -30,9 +30,9 @@ header h1 {
     color: var(--primary-color);
 }
 .header-top {
-    width: 100%;
-    text-align: center;
-    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .header-top img {
