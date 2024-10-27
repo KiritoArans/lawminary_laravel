@@ -6,6 +6,20 @@ body {
     padding: 0;
     background-color: #f4f4f4;
 }
+
+.container-post {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+main {
+    flex-grow: 1;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box; /* Ensures padding doesn’t overflow */
+}
+
 :root {
     --primary-color: #561c24;
     --secondary-color: #ffaf45;

@@ -4,21 +4,31 @@ body {
     background-color: #f4f4f4;
     height: auto;
 }
-main {
-    flex-grow: 1;
+
+.container-post {
     display: flex;
-    flex-direction: column;
-    margin: 0px 48px 0px 32px;
+    height: 100vh;
+    width: 100%;
 }
 
-/* Center content vertically and horizontally */
-.dashboard-content-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
+main {
+    flex-grow: 1;
+    width: 100%;
+    padding: 20px;
+    max-width: 100%;
 }
+
+@media (max-width: 767px) {
+    main {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        max-width: 600px; /* Set a max width to control the content width */
+        margin: 0 auto; /* Center align the main content */
+    }
+}
+
 header {
     text-align: center;
 }
@@ -28,6 +38,7 @@ header h1 {
     color: var(--primary-color);
 }
 .header-top {
+    display: flex;
     width: 100%;
     text-align: center;
     background-color: #fff;

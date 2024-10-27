@@ -1,0 +1,112 @@
+@media (min-width: 576px) and (max-width: 1024px) {
+    aside {
+        display: none;
+    }
+    main {
+        margin: 0;
+    }
+    aside:hover {
+        width: 25%;
+    }
+    aside:not(:hover) ~ main {
+        margin-left: 0;
+    }
+    aside:not(:hover) {
+        width: 20%;
+    }
+    aside:not(:hover) .profile label,
+    aside:not(:hover) nav ul li a span,
+    aside:not(:hover) .bottom-nav span,
+    aside:not(:hover) .dropdown-content a {
+        display: inline-flex;
+    }
+    aside:hover ~ main {
+        margin-left: 0%;
+    }
+
+    /* Sidebar collapsed */
+    aside:not(:hover) ~ main {
+        margin-left: 0px;
+    }
+    .header-top .fa-bars {
+        display: block;
+        font-size: 1.75rem;
+        margin-right: 0.75rem;
+    }
+    .search-bar #searchForm input {
+        width: 16rem;
+        padding: 10px 10px 10px 32px;
+    }
+    .search-bar form input {
+        width: 16rem;
+    }
+    .search-bar form button {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    aside {
+        display: none;
+    }
+    main {
+        margin: 0;
+    }
+    aside:hover {
+        width: 40%;
+    }
+    aside:not(:hover) ~ main {
+        margin-left: 0;
+    }
+    aside:not(:hover) {
+        width: 35%;
+    }
+    aside:not(:hover) .profile label,
+    aside:not(:hover) nav ul li a span,
+    aside:not(:hover) .bottom-nav span,
+    aside:not(:hover) .dropdown-content a {
+        display: inline-flex;
+    }
+    aside:hover ~ main {
+        margin-left: 0%;
+    }
+
+    /* Sidebar collapsed */
+    aside:not(:hover) ~ main {
+        margin-left: 0px;
+    }
+    .header-top .fa-bars {
+        display: block;
+        font-size: 1.75rem;
+        margin-right: 0.75rem;
+    }
+    .header-buttons-search {
+        margin-bottom: 0.75rem;
+    }
+    .header-buttons {
+        gap: 4px;
+    }
+    .header-buttons button {
+        padding: 0.5rem 1rem;
+    }
+    .header-buttons button span {
+        display: none;
+    }
+    .header-buttons button i {
+        display: block;
+        font-size: 1rem;
+    }
+    .header-buttons button {
+        padding: 0.5rem 1rem;
+    }
+    .search-bar form input {
+        width: 12rem;
+    }
+    .search-bar form button {
+        display: none;
+    }
+    .filter-post .filter-form {
+        margin-bottom: 0.5rem;
+        position: relative;
+    }
+}

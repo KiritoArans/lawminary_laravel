@@ -37,52 +37,49 @@
         @include('inclusions/libraryLinks')
     </head>
     <body>
-        <div class="container-fluid dashboard-content-wrapper">
+        <div class="container-forums">
             @include('includes_accounts.mod_nav_inc')
-
-            <div class="row justify-content-center">
+            <main>
                 <header class="row">
-                    <div class="col-12 header-top">
+                    <div class="header-top">
+                        <i class="fa-solid fa-bars"></i>
                         @include('includes_syscon.syscon_logo_inc')
                         <div class="spacer"></div>
                     </div>
                     <hr class="divider w-100" />
                 </header>
-
-                <main class="col-lg-8 col-md-10 col-sm-12">
-                    <!-- Search Form -->
-                    <form
-                        action="{{ route('moderator.searchForums') }}"
-                        method="GET"
-                    >
-                        <div class="form-group">
-                            <div class="input-group">
-                                <input
-                                    type="text"
-                                    name="query"
-                                    class="form-control"
-                                    placeholder="Search for Forums or Key Words..."
-                                />
-                            </div>
+                <!-- Search Form -->
+                <form
+                    action="{{ route('moderator.searchForums') }}"
+                    method="GET"
+                >
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input
+                                type="text"
+                                name="query"
+                                class="form-control"
+                                placeholder="Search for Forums or Key Words..."
+                            />
                         </div>
-                    </form>
-
-                    <section class="filter-container my-4">
-                        <div class="d-flex justify-content-center">
-                            <!-- Filter Button and Modal -->
-                            @include('includes_forums.forums_filter_inc')
-
-                            <!-- Add Forum Button and Modal -->
-                            @include('includes_forums.forums_add_inc')
-                        </div>
-                    </section>
-
-                    <!-- Forums View Section -->
-                    <div class="table-responsive">
-                        @include('includes_forums.forums_view_inc')
                     </div>
-                </main>
-            </div>
+                </form>
+
+                <section class="filter-container my-4">
+                    <div class="d-flex justify-content-center">
+                        <!-- Filter Button and Modal -->
+                        @include('includes_forums.forums_filter_inc')
+
+                        <!-- Add Forum Button and Modal -->
+                        @include('includes_forums.forums_add_inc')
+                    </div>
+                </section>
+
+                <!-- Forums View Section -->
+                <div class="table-responsive">
+                    @include('includes_forums.forums_view_inc')
+                </div>
+            </main>
         </div>
 
         <script src="{{ asset('js/moderator_js/mforums_js.js') }}"></script>
