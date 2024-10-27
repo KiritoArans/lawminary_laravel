@@ -113,7 +113,8 @@ Route::get('/leaderboards', [
     'showLeaderboardsPage',
 ])->middleware('auth');
 
-Route::get('/forums', [PageController::class, 'showForumsPage']);
+Route::get('/forums', [PageController::class, 'showForumsPage'])
+    ->middleware('auth');
 Route::get('/notifications', [
     PageController::class,
     'showNotificationPage',
@@ -732,6 +733,7 @@ route::get('/forum-{forum_id}', [
     PageController::class,
     'showVisitForum',
 ])->name('visit.forum');
+
 Route::post('/forum', [PostController::class, 'createForumPost'])->name(
     'createForumPost'
 );

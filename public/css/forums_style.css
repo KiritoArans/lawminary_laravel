@@ -166,7 +166,7 @@ main .header-top {
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    height: auto; 
+    max-height: 44rem; 
     overflow-y: auto;
     position: relative;
     top: -40px;
@@ -299,7 +299,7 @@ main .header-top {
     background-color: var(--panel-color);
     border: 1px solid #ddd;
     padding: 20px;
-    margin: 0px 360px 16px 300px;
+    margin: 0px 360px .5rem 300px;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
@@ -380,11 +380,57 @@ main .header-top {
         background-color: var(--primary-color);
 }
 
+.posts-btn{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 360px .5rem 300px;
+}
+
+.filter-btn select{
+    padding: 8px 24px;
+    border-radius: 5px;
+    color: var(--text-color1);
+    border: 2px solid #ddd;
+    background-color: transparent;
+    font-weight: 600;
+}
+
+.search-btn input{
+    width: 20rem;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.search-btn button{
+    padding: .6rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: 600;
+    background-color: var(--primary-color);
+}
 
 
-@media (min-width: 576px) and (max-width: 1024px) {
+@media (min-width: 1025px) and (max-width: 1500px) {
+    .search-btn input{
+        width: 12rem;
+    }
+}
+
+
+@media (min-width: 577px) and (max-width: 1024px) {
     .forum-invitations-wrapper{
         display: none;
+    }
+    .forum-left .create-post{
+        margin: .5rem 12rem;
+    }
+    .posts-btn{
+        margin: 0 12rem .5rem 12rem;
+    }
+    .search-btn input{
+        width: 12rem;
     }
 }
 
@@ -417,5 +463,14 @@ main .header-top {
     }
     .forum-left .create-post{
         margin: .5rem 0;
+    }
+    .posts-btn{
+        margin: 0 0 .5rem 0;
+    }
+    .search-btn form input{
+        width: 16rem;
+    }
+    .search-btn form button{
+        display: none;
     }
 }

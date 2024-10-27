@@ -52,13 +52,11 @@ class PageController extends Controller
     {
         $user = Auth::user();
 
-        // Try to find the post in Posts
         $post = Posts::with('user', 'comments', 'comments.user', 'comments.reply.user')
             ->withCount('likes', 'comments', 'bookmarks')
             ->where('post_id', $post_id)
             ->first();
 
-        // If post is not found in Posts, check ForumPosts
         if (!$post) {
             $forumPost = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
                 ->withCount('likes', 'comments', 'bookmarks')
@@ -66,15 +64,12 @@ class PageController extends Controller
                 ->first();
 
             if ($forumPost) {
-                // Redirect to the forum view page if it's a forum post
                 return redirect()->route('forum-view', ['post_id' => $post_id]);
             }
 
-            // If neither post is found, redirect back with an error
             return redirect()->back()->with('error', 'Post not found.');
         }
 
-        // If found in Posts, show the standard post view
         return view('users.viewPost', compact('post'));
     }
 
@@ -333,7 +328,7 @@ class PageController extends Controller
         );
     }
 
-    public function showVisitForum($forum_id)
+    public function showVisitForum(Request $request, $forum_id)
     {
         $user = Auth::user();
 
@@ -366,10 +361,21 @@ class PageController extends Controller
             )
             ->first();
 
+        $sortOrder = $request->input('sort', 'desc'); // Default to 'desc' (Newest)
+
+        $searchQuery = $request->input('search');
+
         $posts = ForumPosts::with('user')
             ->where('forum_id', $forum_id)
+            ->when($searchQuery, function($query) use ($searchQuery) {
+                return $query->where('concern', 'like', '%' . $searchQuery . '%')
+                            ->orWhereHas('user', function($q) use ($searchQuery) {
+                                $q->where('firstName', 'like', '%' . $searchQuery . '%')
+                                ->orWhere('lastName', 'like', '%' . $searchQuery . '%'); // Added lastName condition
+                            });
+            })
             ->withCount('likes', 'comments', 'bookmarks')
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', $sortOrder) 
             ->get();
 
         $allPosts = ForumPosts::with(
@@ -377,10 +383,10 @@ class PageController extends Controller
             'comments',
             'comments.user',
             'comments.reply.user'
-            )
-            ->withCount('likes', 'comments', 'bookmarks')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        )
+        ->withCount('likes', 'comments', 'bookmarks')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         $joinedVF = JoinForum::where('user_id', $user->user_id)
             ->where('forum_id', $forum_id)
@@ -396,7 +402,7 @@ class PageController extends Controller
                 ],
                 $forumFunctions
             ),
-            compact('joinedVF')
+            compact('joinedVF', 'sortOrder', 'searchQuery') 
         );
     }
 
@@ -438,16 +444,12 @@ class PageController extends Controller
             ->get();
         
         
-        // Pass both notifications and unread count to the view
         return view('users.notification', [
             'notificationsWithUsers' => $notificationsWithUsers,
             'unreadNotificationsCount' => $unreadNotificationsCount,
             'allPosts' => $allPosts
         ]);
     }
-
-    
-    
 
     public function showSearchPage()
     {
@@ -502,10 +504,6 @@ class PageController extends Controller
         return view('users.test-search', ['possibleCharges' => $possibleCharges]);
     }
     
-    
-    
-
-
 
     public function showResourcesPage()
     {

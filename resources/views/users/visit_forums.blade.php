@@ -96,6 +96,23 @@
               </div>
             @endif
 
+            <div class="posts-btn">
+                <div class="filter-btn">
+                    <form action="{{ route('visit.forum', ['forum_id' => $activeForum->forum_id]) }}" method="GET">
+                        <select name="sort" id="sortFilter" onchange="this.form.submit()">
+                            <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>Newest</option>
+                            <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>Oldest</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="search-btn">
+                    <form action="{{ route('visit.forum', ['forum_id' => $activeForum->forum_id]) }}" method="GET">
+                        <input type="text" name="search" id="searchInput" placeholder="Search post..." value="{{ request('search') }}">
+                        <button type="submit">Search</button>
+                    </form>
+                </div>                
+            </div>            
+
             <div class="posts">
               @if($posts->isEmpty())
                   <p class="empty2">No posts available for this forum.</p>
