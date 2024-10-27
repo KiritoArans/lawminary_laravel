@@ -18,6 +18,17 @@ main {
     margin: 0px 48px 0px 32px;
 }
 
+@media (max-width: 767px) {
+    main {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        max-width: 600px; /* Set a max width to control the content width */
+        margin: 0 auto; /* Center align the main content */
+    }
+}
+
 /* Center content vertically and horizontally */
 .dashboard-content-wrapper {
     display: flex;
@@ -36,9 +47,9 @@ header h1 {
     color: var(--primary-color);
 }
 .header-top {
-    width: 100%;
-    text-align: center;
-    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .header-top img {

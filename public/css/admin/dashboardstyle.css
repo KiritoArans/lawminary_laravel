@@ -56,8 +56,10 @@ header h1 {
 }
 .header-top {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    width: 100%;
+    justify-content: space-around;
+    text-align: center;
+    background-color: #fff;
 }
 
 .header-top img {

@@ -2,31 +2,36 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+    height: auto;
 }
+
+.container-forums {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
 main {
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
     padding: 20px;
-    margin: 0px 48px 0px 32px;
+    box-sizing: border-box; /* Ensures padding doesn’t overflow */
 }
 
-/* Center content vertically and horizontally */
-.dashboard-content-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    text-align: center;
-}
-
-header {
-    text-align: center;
+header h1 {
+    margin: 0;
+    font-size: 2em;
+    color: var(--primary-color);
 }
 .header-top {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+}
+
+.header-top img {
+    margin: 0 auto;
+    display: block;
 }
 
 .header-top img {

@@ -48,93 +48,87 @@
     </head>
     <body>
         <div class="container-fluid">
-            <div class="row justify-content-center">
+            @include('includes_accounts.mod_nav_inc')
+
+            <main>
                 <header>
                     <div
                         class="header-top d-flex justify-content-between align-items-center"
                     >
-                        @include('includes_accounts.mod_nav_inc')
+                        <i class="fa-solid fa-bars"></i>
+
                         @include('includes_syscon.syscon_logo_inc')
                     </div>
                     <hr class="divider w-100" />
                 </header>
+                <div class="filter-container">
+                    @include('includes_resources.search_res_inc')
+                </div>
 
-                <main class="col-lg-8 col-md-10 col-sm-12">
-                    <div class="filter-container">
-                        @include('includes_resources.search_res_inc')
+                <!-- Add and Filter Buttons -->
+                <div class="row justify-content-between align-items-center">
+                    <!-- Filter Button -->
+                    <div class="col-6 col-md-3 text-start">
+                        <button id="filterButton" class="btn btn-primary">
+                            Filter
+                        </button>
                     </div>
 
-                    <!-- Add and Filter Buttons -->
-                    <div class="row justify-content-between align-items-center">
-                        <!-- Filter Button -->
-                        <div class="col-6 col-md-3 text-start">
-                            <button
-                                id="filterButton"
-                                class="btn btn-primary w-100"
-                            >
-                                Filter
-                            </button>
-                        </div>
+                    <!-- Add Button -->
+                    <div class="col-6 col-md-3 text-end">
+                        <button class="btn btn-success" id="addButton">
+                            Add
+                        </button>
+                    </div>
+                </div>
+                <div id="filterModal" class="modal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <span class="close-button">&times;</span>
 
-                        <!-- Add Button -->
-                        <div class="col-6 col-md-3 text-end">
-                            <button
-                                class="btn btn-success w-100"
-                                id="addButton"
-                            >
-                                Add
-                            </button>
+                            @include('includes_resources.filter_res_inc')
                         </div>
                     </div>
-                    <div id="filterModal" class="modal">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <span class="close-button">&times;</span>
+                </div>
+                <div id="addModal" class="modal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <span class="close-button">&times;</span>
 
-                                @include('includes_resources.filter_res_inc')
+                            <div class="error">
+                                @if ($errors->any())
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             </div>
+                            @include('includes_resources.add_res_inc')
                         </div>
                     </div>
-                    <div id="addModal" class="modal">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <span class="close-button">&times;</span>
+                </div>
 
-                                <div class="error">
-                                    @if ($errors->any())
-                                        <ul>
-                                            @foreach ($errors->all() as $error)
-                                                <li>{{ $error }}</li>
-                                            @endforeach
-                                        </ul>
-                                    @endif
-                                </div>
-                                @include('includes_resources.add_res_inc')
-                            </div>
-                        </div>
+                <!-- Resource Display Section -->
+                <div class="row">
+                    <div class="col-12">
+                        @include('includes_resources.display_res_inc')
                     </div>
+                </div>
 
-                    <!-- Resource Display Section -->
-                    <div class="row">
-                        <div class="col-12">
-                            @include('includes_resources.display_res_inc')
+                <!-- View Modal -->
+                <div id="viewModal" class="modal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <span class="close-button" id="closeButton">
+                                &times;
+                            </span>
+                            <h2>View Resource</h2>
+                            <div class="error"></div>
                         </div>
                     </div>
-
-                    <!-- View Modal -->
-                    <div id="viewModal" class="modal">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <span class="close-button" id="closeButton">
-                                    &times;
-                                </span>
-                                <h2>View Resource</h2>
-                                <div class="error"></div>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </div>
+                </div>
+            </main>
         </div>
 
         <script src="{{ asset('js/moderator_js/mresources_js.js') }}"></script>

@@ -50,9 +50,9 @@
             @include('includes_accounts.mod_nav_inc')
             <main>
                 <header>
-                    <div
-                        class="header-top d-flex justify-content-between align-items-center"
-                    >
+                    <div class="header-top">
+                        <i class="fa-solid fa-bars"></i>
+
                         @include('includes_syscon.syscon_logo_inc')
                     </div>
                     <hr class="divider w-100" />
