@@ -45,13 +45,12 @@
                                             {{ $user->accountType === 'Lawyer' ? 'Atty. ' : '' }}
                                             {{ $user->firstName }} {{ $user->lastName }}
                                         </h2>
-                                        @if ($user->accountType === 'Lawyer')
+                                        @if ($user->accountType === 'Lawyer' && $rank != 'No Rank') 
                                             <a href="/leaderboards">
-                                                @if (strtolower($rank) === 'Wood')
-                                                    <img src="{{ asset('imgs/badges/wood.png') }}" alt="Wood Badge" width="10" class="badge-rank" title="Wood Badge">
-                                                @else
-                                                    <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" alt="{{ $rank }} Badge" width="10" class="badge-rank" title="{{ $rank }} Badge">
-                                                @endif
+                                                <img src="{{ asset('imgs/badges/' . strtolower($rank) . '.png') }}" 
+                                                    alt="{{ ucfirst($rank) }} Badge" 
+                                                    width="10" class="badge-rank" 
+                                                    title="{{ ucfirst($rank) }} Badge">
                                             </a>
                                         @endif
                                     </div>

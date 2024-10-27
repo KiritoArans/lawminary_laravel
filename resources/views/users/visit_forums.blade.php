@@ -86,7 +86,7 @@
                   @include('inclusions/response')
                   <input type="hidden" name="forum_id" value="{{ $activeForum->forum_id }}">
                   <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture"/>
-                  <textarea name="concern" id="" cols="30" rows="10" placeholder="What's on your mind?"></textarea>
+                  <textarea name="concern" id="" cols="30" rows="10" placeholder="Concern in your mind?"></textarea>
                   <label for="file-upload" class="custom-file-upload">
                       <i class="fa-solid fa-file-arrow-up" title="Attach Photo"></i>
                   </label>

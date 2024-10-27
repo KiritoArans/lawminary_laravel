@@ -23,6 +23,7 @@
                 <div class="signup-content">
                     <form class="signup-form">
                         <input type="text" id="accountType" name="accountType" value="User" hidden>
+                        <input type="text" id="userPhoto" name="userPhoto" value="public/files/profile_pics/user-img.png" hidden>
                         <input type="text" id="status" name="status" value="Approved" hidden>
                         <div class="left-column">
                             <div class="form-group">
