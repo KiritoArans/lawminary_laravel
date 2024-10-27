@@ -51,18 +51,30 @@ class PageController extends Controller
     public function showViewPostPage(Request $request, $post_id)
     {
         $user = Auth::user();
-
+    
+        // Attempt to find the post in the Posts model
         $post = Posts::with('user', 'comments', 'comments.user', 'comments.reply.user')
             ->withCount('likes', 'comments', 'bookmarks')
             ->where('post_id', $post_id)
             ->first();
-
+    
+        // If not found, attempt to find the post in the ForumPosts model
+        if (!$post) {
+            $post = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
+                ->withCount('likes', 'comments', 'bookmarks')
+                ->where('post_id', $post_id)
+                ->first();
+        }
+    
+        // If still not found, redirect with an error message
         if (!$post) {
             return redirect()->route('home')->with('error', 'Post not found.');
         }
-
+    
+        // Return the view with the found post
         return view('users.viewPost', compact('post'));
     }
+    
 
 
     // User Page
@@ -398,10 +410,12 @@ class PageController extends Controller
             'comments',
             'comments.user',
             'comments.reply.user'
-            )
-                ->withCount('likes', 'comments', 'bookmarks')
-                ->orderBy('created_at', 'desc')
-                ->get();
+        )
+            ->withCount('likes', 'comments', 'bookmarks')
+            ->whereNotNull('post_id') // This ensures that you're only getting posts that exist
+            ->orderBy('created_at', 'desc')
+            ->get();
+        
         
         // Pass both notifications and unread count to the view
         return view('users.notification', [

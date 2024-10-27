@@ -47,7 +47,7 @@ class AuthController extends Controller
                 
                 return redirect()
                     ->back()
-                    ->withErrors(['loginError' => "You are restricted for $remainingHours hours."])
+                    ->withErrors(['loginError' => "You are restricted for $remainingHours hour(s)."])
                     ->withInput();
             }
         }
