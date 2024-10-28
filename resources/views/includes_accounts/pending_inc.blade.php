@@ -47,11 +47,7 @@
                                         name="approve"
                                         class="btn-view-approve"
                                     >
-                                        <img
-                                            src="{{ asset('imgs/buttons/approve.png') }}"
-                                            alt="Approve Button"
-                                            width="35"
-                                        />
+                                        <i class="fa-solid fa-check"></i>
                                     </button>
                                 </form>
 
@@ -70,11 +66,7 @@
                                         class="btn-view-reject"
                                         data-account-id="{{ $pending->id }}"
                                     >
-                                        <img
-                                            src="{{ asset('imgs/buttons/reject.png') }}"
-                                            alt="Approve Button"
-                                            width="35"
-                                        />
+                                        <i class="fa-solid fa-x"></i>
                                     </button>
                                 </form>
                             </div>

@@ -93,13 +93,17 @@
                 >
                     {{ Str::limit($account->status, 10) }}
                 </td>
-                <td>
+                <td
+                    class="clickable-cell"
+                    data-full-text="{{ optional($account->restrictedUser)->restrict_days ? optional($account->restrictedUser)->restrict_days . ' day/s' : 'No - 0 day/s' }}"
+                >
                     @if ($account->restrictedUser)
                         {{ Str::limit($account->restrictedUser->restrict_days . ' day/s', 15) }}
                     @else
                             No - 0 day/s
                     @endif
                 </td>
+
                 <td
                     class="clickable-cell"
                     data-full-text="{{ $account->created_at }}"

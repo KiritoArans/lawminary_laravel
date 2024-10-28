@@ -4,11 +4,7 @@
     data-target="#disregardModal-{{ $post->post_id }}"
     name="reject"
 >
-    <img
-        src="{{ asset('imgs/buttons/reject.png') }}"
-        alt="Approve Button"
-        width="35"
-    />
+    <i class="fa-solid fa-x"></i>
 </button>
 
 <!-- Disregard Modal -->

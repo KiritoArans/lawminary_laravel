@@ -188,21 +188,46 @@ header h1 {
     text-decoration: none;
 }
 
-.btn-view-approve,
-.btn-view-reject {
-    border: none; /* Removes the border */
-    background: none; /* Removes any background color */
-    padding: 0; /* Removes padding if there's any */
-    transition: background-color 0.4s ease;
-    border-radius: 60%;
+.btn-view-approve {
+    font-size: 24px; /* Increase icon size */
+    display: block; /* Display button as a block to align in column */
+    margin: 10px 0; /* Add some space between buttons */
+    color: green; /* Set color for approve button */
+    background-color: transparent; /* Make background transparent */
+    border: none; /* Remove default button border */
+    cursor: pointer; /* Add pointer cursor on hover */
+    margin-left: 10px;
+    border-radius: 20px;
+    transition:
+        box-shadow 0.5s ease,
+        transform 0.5s ease; /* Smooth transition */
+    box-shadow: 0px 6px 10px rgba(0, 128, 0, 0.519); /* Slightly stronger shadow */
 }
 
+.btn-view-reject {
+    font-size: 24px; /* Increase icon size */
+    display: block; /* Display button as a block to align in column */
+    margin: 10px 0; /* Add some space between buttons */
+    color: red; /* Set color for approve button */
+    background-color: transparent; /* Make background transparent */
+    border: none; /* Remove default button border */
+    cursor: pointer; /* Add pointer cursor on hover */
+    margin-left: 10px;
+    border-radius: 20px;
+    transition:
+        box-shadow 0.5s ease,
+        transform 0.5s ease; /* Smooth transition */
+    box-shadow: 0px 6px 10px rgba(255, 0, 0, 0.516); /* Slightly stronger shadow */
+}
+
+/* Hover effect to enhance shadow */
 .btn-view-approve:hover,
 .btn-view-reject:hover {
-    background-color: rgba(
-        92,
-        85,
-        75,
-        0.7
-    ); /* Example: transparent color using RGBA */
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3); /* Slightly stronger shadow */
+    transition: 0.2ms;
+}
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center align the buttons horizontally */
 }

@@ -48,11 +48,7 @@
                                         name="approve"
                                         class="btn-view-approve"
                                     >
-                                        <img
-                                            src="{{ asset('imgs/buttons/approve.png') }}"
-                                            alt="Approve Button"
-                                            width="35"
-                                        />
+                                        <i class="fa-solid fa-check"></i>
                                     </button>
                                 </form>
 
