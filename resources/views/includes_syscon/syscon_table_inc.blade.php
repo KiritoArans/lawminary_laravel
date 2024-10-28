@@ -91,9 +91,10 @@
 
             <button
                 class="btn btn-primary editButton ms-3"
-                data-id="{{ $sysconData->first()->id }}"
+                data-id="{{ optional($sysconData->first())->id }}"
                 data-type="about_lawminary"
-                data-content="{{ $sysconData->first()->about_lawminary }}"
+                data-content="{{ optional($sysconData->first())->about_lawminary }}"
+                @if ($sysconData->isEmpty()) disabled @endif
             >
                 Edit About Lawminary
             </button>
@@ -117,9 +118,9 @@
 
             <button
                 class="btn btn-primary editButton ms-3"
-                data-id="{{ $sysconData->first()->id }}"
+                data-id="{{ optional($sysconData->first())->id }}"
                 data-type="about_pao"
-                data-content="{{ $sysconData->first()->about_pao }}"
+                data-content="{{ optional($sysconData->first())->about_pao }}"
             >
                 Edit About PAO
             </button>
@@ -143,9 +144,9 @@
 
             <button
                 class="btn btn-primary editButton ms-3"
-                data-id="{{ $sysconData->first()->id }}"
+                data-id="{{ optional($sysconData->first())->id }}"
                 data-type="terms_of_service"
-                data-content="{{ $sysconData->first()->terms_of_service }}"
+                data-content="{{ optional($sysconData->first())->terms_of_service }}"
             >
                 Edit Terms of Service
             </button>

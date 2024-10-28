@@ -46,24 +46,20 @@
         <div class="container-fluid dashboard-content-wrapper">
             @include('includes_accounts.nav_inc')
 
-            <div class="row justify-content-center">
+            <main>
                 <header>
                     <div class="header-top">
-                        <img
-                            src="{{ Storage::url($sysconData->first()->logo_path) }}"
-                            alt=""
-                        />
+                        <i class="fa-solid fa-bars"></i>
+                        @include('includes_syscon.syscon_logo_inc')
                         <div class="spacer"></div>
                     </div>
                     <hr class="divider" />
                 </header>
-                <main class="col-lg-8 col-md-10 col-sm-12">
-                    <content class="table-container">
-                        <h1>System Content</h1>
-                        @include('includes_syscon.syscon_table_inc')
-                    </content>
-                </main>
-            </div>
+                <content class="table-container">
+                    <h1>System Content</h1>
+                    @include('includes_syscon.syscon_table_inc')
+                </content>
+            </main>
         </div>
         <script src="{{ asset('js/admin_js/systemcontent_js.js') }}"></script>
     </body>

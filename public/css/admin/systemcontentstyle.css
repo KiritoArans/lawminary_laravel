@@ -38,9 +38,15 @@ header h1 {
 }
 .header-top {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
+
+.header-top img {
+    margin: 0 auto;
+    display: block;
+}
+
 .header-top img {
     height: 32px;
     position: relative;

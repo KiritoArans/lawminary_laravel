@@ -15,7 +15,7 @@
         <form
             id="editForm"
             method="POST"
-            action="{{ route('admin.systemcontent.update', ['id' => $sysconData->first()->id]) }}"
+            action="{{ route('admin.systemcontent.update', ['id' => $sysconData->isNotEmpty() ? $sysconData->first()->id : 0]) }}"
             enctype="multipart/form-data"
         >
             @csrf

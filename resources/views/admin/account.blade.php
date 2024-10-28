@@ -45,77 +45,71 @@
         />
     </head>
     <body>
-        <div class="container-fluid dashboard-content-wrapper">
+        <div class="container-accounts">
             @include('includes_accounts.nav_inc')
-
-            <div class="row justify-content-center">
+            <!-- Main Content Area -->
+            <main>
                 <header>
-                    <div
-                        class="header-top d-flex justify-content-between align-items-center"
-                    >
+                    <div class="header-top">
+                        <i class="fa-solid fa-bars"></i>
+
                         @include('includes_syscon.syscon_logo_inc')
                     </div>
                     <hr class="divider w-100" />
                 </header>
-                <!-- Main Content Area -->
-                <main class="col-lg-8 col-md-10 col-sm-12">
-                    <!-- Header Section -->
+                <!-- Header Section -->
 
-                    <!-- Filter Section -->
-                    <section class="filter-container">
-                        <!-- Search and Filter Section -->
-                        @include('includes_accounts.search_inc')
+                <!-- Filter Section -->
+                <section class="filter-container">
+                    <!-- Search and Filter Section -->
+                    @include('includes_accounts.search_inc')
 
-                        <div
-                            class="action-buttons d-flex flex-wrap justify-content-between"
-                        >
-                            <!-- Filter Button -->
-                            <button class="custom-button" id="filterButton">
-                                Filter
-                            </button>
+                    <div
+                        class="action-buttons d-flex flex-wrap justify-content-between"
+                    >
+                        <!-- Filter Button -->
+                        <button class="custom-button" id="filterButton">
+                            Filter
+                        </button>
 
-                            <!-- Filter Modal -->
-                            <div id="filterModal" class="modal">
-                                <div class="modal-content">
-                                    <span
-                                        class="close-button"
-                                        id="closeFilterModal"
-                                    >
-                                        &times;
-                                    </span>
+                        <!-- Filter Modal -->
+                        <div id="filterModal" class="modal">
+                            <div class="modal-content">
+                                <span
+                                    class="close-button"
+                                    id="closeFilterModal"
+                                >
+                                    &times;
+                                </span>
 
-                                    @include('includes_accounts.filter_inc')
-                                </div>
-                            </div>
-
-                            <!-- Add Account Button -->
-                            @include('includes_accounts.pending_inc')
-                            <button class="custom-button" id="addButton">
-                                Add
-                            </button>
-
-                            <!-- Add Account Modal -->
-                            <div id="addModal" class="modal">
-                                <div class="modal-content">
-                                    <span
-                                        class="close-button"
-                                        id="closeAddModal"
-                                    >
-                                        &times;
-                                    </span>
-
-                                    @include('includes_accounts.add_inc')
-                                </div>
+                                @include('includes_accounts.filter_inc')
                             </div>
                         </div>
-                    </section>
 
-                    <!-- Display Content Section (Table) -->
-                    <section class="table-responsive">
-                        @include('includes_accounts.display_inc')
-                    </section>
-                </main>
-            </div>
+                        <!-- Add Account Button -->
+                        @include('includes_accounts.pending_inc')
+                        <button class="custom-button" id="addButton">
+                            Add
+                        </button>
+
+                        <!-- Add Account Modal -->
+                        <div id="addModal" class="modal">
+                            <div class="modal-content">
+                                <span class="close-button" id="closeAddModal">
+                                    &times;
+                                </span>
+
+                                @include('includes_accounts.add_inc')
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Display Content Section (Table) -->
+                <section class="table-responsive">
+                    @include('includes_accounts.display_inc')
+                </section>
+            </main>
         </div>
 
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

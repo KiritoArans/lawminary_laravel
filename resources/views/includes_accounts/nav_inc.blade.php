@@ -1,160 +1,129 @@
 <aside>
-    <!-- Burger Menu for Mobile and Tablet -->
-    <div class="burger-menu" id="burgerToggle">
-        <i class="fa-solid fa-bars"></i>
+    <div class="top-nav">
+        <div class="profile">
+            <div class="user-indicator">
+                @if (Auth::user()->userPhoto)
+                    <img
+                        src="{{ Storage::url(Auth::user()->userPhoto) }}"
+                        alt="Profile Picture"
+                    />
+                @else
+                    <img src="../../imgs/user-img.png" alt="Profile Picture" />
+                @endif
+                <label>
+                    @
+                    <span>{{ Auth::user()->username }}</span>
+                </label>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li>
+                    <a
+                        href="{{ route('admin.dashboard') }}"
+                        class="{{ Request::is('admin/dashboard') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="{{ route('admin.postpage') }}"
+                        class="{{ Request::is('admin/postpage') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-envelope-open-text"></i>
+                        <span>Posts</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a
+                        href="{{ route('admin.account') }}"
+                        class="{{ Request::is('admin/account') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-user-gear"></i>
+                        <span>Accounts</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="{{ route('admin.forums') }}"
+                        class="{{ Request::is('admin/forums') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-users"></i>
+                        <span>Forums</span>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="{{ route('admin.systemcontent') }}"
+                        class="{{ Request::is('admin/faqs') ? 'active' : '' }}"
+                    >
+                        <i class="fa-solid fa-circle-question"></i>
+                        <span>System Content</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
-
-    <!-- Mobile and Tablet Navigation -->
-    <nav id="navList">
-        <div class="profile">
-            <div class="user-indicator">
-                @if (Auth::user()->userPhoto)
-                    <img
-                        src="{{ Storage::url(Auth::user()->userPhoto) }}"
-                        alt="Profile Picture"
-                    />
-                @else
-                    <img src="../../imgs/user-img.png" alt="Profile Picture" />
-                @endif
-                <label>
-                    @
-                    <span>{{ Auth::user()->username }}</span>
-                </label>
-            </div>
-        </div>
-        <ul>
-            <li>
-                <a href="{{ route('admin.dashboard') }}">
-                    <i class="fa-solid fa-chart-pie"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.postpage') }}">
-                    <i class="fa-solid fa-envelope-open-text"></i>
-                    <span>Posts</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ route('admin.account') }}" class="current">
-                    <i class="fa-solid fa-user-gear"></i>
-                    <span>Accounts</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.forums') }}">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Forums</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.systemcontent') }}">
-                    <i class="fa-solid fa-circle-question"></i>
-                    <span>System Content</span>
-                </a>
-            </li>
-        </ul>
-        <div class="bottom-nav-burger">
-            <a href="javascript:void(0);" id="logout-link" class="logout">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Log out</span>
-            </a>
-            <form
-                id="logout-form"
-                action="{{ route('logoutAdMod') }}"
-                method="POST"
-                style="display: none"
-            >
-                @csrf
-            </form>
-        </div>
-    </nav>
-
-    <!-- Desktop Sidebar Navigation -->
-    <div class="mod-nav">
-        <div class="profile">
-            <div class="user-indicator">
-                @if (Auth::user()->userPhoto)
-                    <img
-                        src="{{ Storage::url(Auth::user()->userPhoto) }}"
-                        alt="Profile Picture"
-                    />
-                @else
-                    <img src="../../imgs/user-img.png" alt="Profile Picture" />
-                @endif
-                <label>
-                    @
-                    <span>{{ Auth::user()->username }}</span>
-                </label>
-            </div>
-        </div>
-        <ul>
-            <li>
-                <a href="{{ route('admin.dashboard') }}">
-                    <i class="fa-solid fa-chart-pie"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.postpage') }}">
-                    <i class="fa-solid fa-envelope-open-text"></i>
-                    <span>Posts</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="{{ route('admin.account') }}" class="current">
-                    <i class="fa-solid fa-user-gear"></i>
-                    <span>Accounts</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.forums') }}">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Forums</span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('admin.systemcontent') }}">
-                    <i class="fa-solid fa-circle-question"></i>
-                    <span>System Content</span>
-                </a>
-            </li>
-        </ul>
-        <div class="bottom-nav">
-            <a href="javascript:void(0);" id="logout-link-nav" class="logout">
-                <i class="fa-solid fa-right-from-bracket"></i>
-                <span>Log out</span>
-            </a>
-            <form
-                id="logout-form"
-                action="{{ route('logoutAdMod') }}"
-                method="POST"
-                style="display: none"
-            >
-                @csrf
-            </form>
-        </div>
+    <div class="bottom-nav">
+        <a href="javascript:void(0);" id="logout-link" class="logout">
+            <i class="fa-solid fa-circle-question"></i>
+            <span>Log out</span>
+        </a>
+        <form
+            id="logout-form"
+            action="{{ route('logoutAdMod') }}"
+            method="POST"
+            style="display: none"
+        >
+            @csrf
+        </form>
     </div>
 </aside>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const burgerToggle = document.getElementById('burgerToggle');
-        const navList = document.getElementById('navList');
+        const menuIcon = document.querySelector('.header-top .fa-bars');
+        const asideMenu = document.querySelector('aside');
 
-        burgerToggle.addEventListener('click', function () {
-            navList.classList.toggle('show');
-        });
+        function handleMenu() {
+            if (window.innerWidth <= 1024) {
+                // Toggle the expanded state with transition on click
+                menuIcon.addEventListener('click', function (event) {
+                    event.stopPropagation(); // Prevents event from bubbling to the document
+                    asideMenu.classList.toggle('expanded'); // Toggle expanded class for smooth transition
+                    asideMenu.style.display = 'block'; // Ensure it's visible
+                });
 
-        // Close nav if clicked outside
-        document.addEventListener('click', function (event) {
-            if (
-                !navList.contains(event.target) &&
-                !burgerToggle.contains(event.target)
-            ) {
-                navList.classList.remove('show');
+                // Hide aside menu when clicking outside
+                document.addEventListener('click', function (event) {
+                    if (
+                        window.innerWidth <= 1024 &&
+                        !asideMenu.contains(event.target) &&
+                        !menuIcon.contains(event.target)
+                    ) {
+                        asideMenu.style.display = 'none'; // Hide the sidebar if clicked outside
+                        asideMenu.classList.remove('expanded'); // Reset to collapsed state
+                    }
+                });
+            } else {
+                asideMenu.style.display = 'block';
+                asideMenu.classList.add('expanded');
+            }
+        }
+
+        handleMenu();
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 1024) {
+                asideMenu.style.display = 'block';
+                asideMenu.classList.add('expanded');
+            } else {
+                asideMenu.style.display = 'none';
+                asideMenu.classList.remove('expanded');
+                handleMenu();
             }
         });
     });

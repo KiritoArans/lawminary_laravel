@@ -46,7 +46,7 @@
     </head>
 
     <body>
-        <div class="container-post">
+        <div class="container-accounts">
             @include('includes_accounts.mod_nav_inc')
             <main>
                 <header>
