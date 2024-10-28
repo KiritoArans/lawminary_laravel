@@ -58,7 +58,7 @@
                 <li>
                     <a
                         href="{{ route('admin.systemcontent') }}"
-                        class="{{ Request::is('admin/faqs') ? 'active' : '' }}"
+                        class="{{ Request::is('admin/systemcontent') ? 'active' : '' }}"
                     >
                         <i class="fa-solid fa-circle-question"></i>
                         <span>System Content</span>

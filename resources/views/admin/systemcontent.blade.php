@@ -43,7 +43,7 @@
         />
     </head>
     <body>
-        <div class="container-fluid dashboard-content-wrapper">
+        <div class="container-syscon">
             @include('includes_accounts.nav_inc')
 
             <main>
