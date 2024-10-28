@@ -687,6 +687,9 @@ header hr {
     .profileModal-content {
         width: 20rem;
     }
+    .profile-right {
+        margin-right: 0;
+    }
 }
 
 
