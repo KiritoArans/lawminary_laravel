@@ -28,7 +28,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         text: 'Your reply has been posted.',
                     });
 
-                    // No need to manually append the reply, Laravel Echo will handle that
+                    // Display the replies section when a new reply is added
+                    const replySection = document.getElementById('replies-' + commentId);
+                    if (replySection) {
+                        replySection.style.display = 'block'; // Show the replies section
+                    }
                 } else {
                     Swal.fire({
                         icon: 'error',
