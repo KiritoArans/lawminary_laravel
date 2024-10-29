@@ -49,12 +49,16 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('editForumDescription').value = forumDesc;
             document.getElementById('editDateCreated').value = dateCreated;
 
+            var basePath = window.location.pathname.includes('/admin')
+                ? '/admin'
+                : '/moderator';
+
             // Set the form action dynamically for the edit form
             var editForm = document.getElementById('editForumForm');
-            editForm.action = `/moderator/forums/${forumId}/edit`;
+            editForm.action = `${basePath}/forums/${forumId}/edit`;
 
             // Set the form action dynamically for the delete form
-            deleteForm.action = `/moderator/forums/${forumId}/delete`;
+            deleteForm.action = `${basePath}/forums/${forumId}/delete`;
 
             // Show the modal
             editModal.style.display = 'block';

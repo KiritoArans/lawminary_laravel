@@ -189,13 +189,12 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.edit-button').forEach((button) => {
         button.addEventListener('click', function () {
             var userId = this.getAttribute('data-user_id');
+            var isAdmin = window.location.pathname.includes('/admin');
 
-            // Update action URL for remove restriction
-            document.getElementById('removeRestrictionForm').action =
-                `/moderator/removeRestriction/${userId}`;
-
-            // Other form population code (like setting input fields)
-            // ...
+            // Set the action URL for the form based on the current context
+            document.getElementById('removeRestrictionForm').action = isAdmin
+                ? `/admin/removeRestriction/${userId}`
+                : `/moderator/removeRestriction/${userId}`;
         });
     });
 });

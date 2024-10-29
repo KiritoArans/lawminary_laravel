@@ -222,9 +222,17 @@ class ForumController extends Controller
 
         $forum->save();
 
-        return redirect()
-            ->back()
-            ->with('success', 'Forum created successfully!');
+        \Log::info('Request Method:', ['method' => $request->method()]);
+
+        if ($request->is('admin/*')) {
+            return redirect()
+                ->route('admin.forums')
+                ->with('success', 'Forum created successfully!');
+        } elseif ($request->is('moderator/*')) {
+            return redirect()
+                ->route('moderator.mforums')
+                ->with('success', 'Forum created successfully!');
+        }
     }
 
     // public function createPost(Request $request)
@@ -313,9 +321,15 @@ class ForumController extends Controller
 
         $forum->save();
 
-        return redirect()
-            ->back()
-            ->with('success', 'Forum updated successfully!');
+        if ($request->is('admin/*')) {
+            return redirect()
+                ->route('admin.forums')
+                ->with('success', 'Forum updated successfully!');
+        } elseif ($request->is('moderator/*')) {
+            return redirect()
+                ->route('moderator.mforums')
+                ->with('success', 'Forum updated successfully!');
+        }
     }
 
     public function deleteForum($forum_id)

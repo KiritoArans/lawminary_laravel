@@ -7,8 +7,8 @@
 
         <form
             id="addForumForm"
+            action="{{ request()->is('admin*') ? route('admin.createForum') : route('moderator.createForum') }}"
             method="POST"
-            action="{{ route('createForum') }}"
             enctype="multipart/form-data"
         >
             @csrf

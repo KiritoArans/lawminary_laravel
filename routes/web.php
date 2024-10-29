@@ -21,6 +21,9 @@ use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\AboutLawController;
+use App\Http\Middleware\AdminMiddleware;
+use App\Http\Middleware\ModeratorMiddleware;
+use App\Http\Middleware\UserMiddleware;
 
 use App\Http\Controllers\data_general_controller\general_controller;
 
@@ -76,21 +79,25 @@ Route::get('/login', [PageController::class, 'showLoginPage']);
 Route::get('/signup', [PageController::class, 'showSignupPage'])->name(
     'signup'
 );
-Route::get('/lawyer-signup', [PageController::class, 'showLawyerSignupPage'])->name(
-    'lawyerSignup'
-);
+Route::get('/lawyer-signup', [
+    PageController::class,
+    'showLawyerSignupPage',
+])->name('lawyerSignup');
 Route::get('/forgot-password', [PageController::class, 'showForgotPassPage']);
 
 Route::get('/forgot-password-otp', [PageController::class, 'showOtpPage']);
 
+Route::get('/view-{post_id}', [
+    PageController::class,
+    'showViewPostPage',
+])->middleware('auth');
 
-Route::get('/view-{post_id}', [PageController::class, 'showViewPostPage'])
-    ->middleware('auth');
-    
-Route::get('/forum-view-{post_id}', [PageController::class, 'showForumViewPostPage'])
+Route::get('/forum-view-{post_id}', [
+    PageController::class,
+    'showForumViewPostPage',
+])
     ->middleware('auth')
     ->name('forum-view'); // Add this to name the route
-
 
 Route::get('/home', [PageController::class, 'showHomePage'])
     ->name('home')
@@ -113,8 +120,9 @@ Route::get('/leaderboards', [
     'showLeaderboardsPage',
 ])->middleware('auth');
 
-Route::get('/forums', [PageController::class, 'showForumsPage'])
-    ->middleware('auth');
+Route::get('/forums', [PageController::class, 'showForumsPage'])->middleware(
+    'auth'
+);
 Route::get('/notifications', [
     PageController::class,
     'showNotificationPage',
@@ -193,7 +201,7 @@ Route::get('/terms-of-service', [
 
 // Admin Accounts Page
 Route::prefix('admin')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', AdminMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         Route::get('account', [AccountController::class, 'index'])->name(
             'admin.account'
@@ -228,7 +236,7 @@ Route::prefix('admin')
             AccountController::class,
             'approveAccount',
         ])->name('admin.approveAccount');
-        Route::delete('/account/{id}/remove-restriction', [
+        Route::delete('/removeRestriction/{user_id}', [
             AccountController::class,
             'removeRestriction',
         ])->name('admin.removeRestriction');
@@ -236,7 +244,7 @@ Route::prefix('admin')
 
 // dashboard controller
 Route::prefix('admin')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', AdminMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         Route::get('dashboard', [
             DashboardController::class,
@@ -262,7 +270,7 @@ Route::get('/api/chart-data', [DashboardController::class, 'getDataForChart']);
 
 // Admin Post page
 Route::prefix('admin')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', AdminMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         // Admin Post Page
         Route::get('postpage', [PostpageController::class, 'postpage'])->name(
@@ -318,7 +326,7 @@ Route::prefix('admin')
 
 //admin system content route
 Route::prefix('admin')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', AdminMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         Route::get('systemcontent', [
             SystemContentController::class,
@@ -332,19 +340,17 @@ Route::prefix('admin')
     });
 
 //admin forums route
-
-// Moderator Forums
 Route::prefix('admin')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', AdminMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         Route::get('forums', [ForumController::class, 'showMforums'])->name(
             'admin.forums'
         );
 
-        Route::post('createForum', [
+        Route::post('/createForum', [
             ForumController::class,
             'createForum',
-        ])->name('createForum');
+        ])->name('admin.createForum');
 
         Route::get('forums/search', [
             ForumController::class,
@@ -371,7 +377,7 @@ Route::prefix('admin')
 
 //moderator Dashboard Page
 Route::prefix('moderator')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', ModeratorMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         Route::get('dashboard', [
             DashboardController::class,
@@ -396,7 +402,7 @@ Route::prefix('moderator')
 //moderator post page
 
 Route::prefix('moderator')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', ModeratorMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         Route::get('postpage', [PostpageController::class, 'postpage'])->name(
             'moderator.postpage'
@@ -425,7 +431,7 @@ Route::prefix('moderator')
 
 //leaderboards page
 Route::prefix('moderator')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', ModeratorMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         Route::get('leaderboards', [
             LeaderboardController::class,
@@ -446,7 +452,7 @@ Route::prefix('moderator')
 // Moderator Resource Page
 
 Route::prefix('moderator')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', ModeratorMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         Route::post('resources/upload', [
             ResourcepageController::class,
@@ -484,7 +490,7 @@ Route::prefix('moderator')
 
 // Moderator Accounts Page
 Route::prefix('moderator')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', ModeratorMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         Route::get('account', [AccountController::class, 'index'])->name(
             'moderator.account'
@@ -529,16 +535,16 @@ Route::prefix('moderator')
 
 // Moderator Forums
 Route::prefix('moderator')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', ModeratorMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         Route::get('forums', [ForumController::class, 'showMforums'])->name(
             'moderator.forums'
         );
 
-        Route::post('createForum', [
+        Route::post('/createForum', [
             ForumController::class,
             'createForum',
-        ])->name('createForum');
+        ])->name('moderator.createForum');
 
         Route::get('forums/search', [
             ForumController::class,
@@ -564,7 +570,7 @@ Route::prefix('moderator')
 // Moderator FAQs
 
 Route::prefix('moderator')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', ModeratorMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         // Route for displaying FAQs
         Route::get('/faqs', [FaqsController::class, 'getFAQs'])->name(
@@ -580,7 +586,7 @@ Route::prefix('moderator')
 //about law page
 
 Route::prefix('moderator')
-    ->middleware(['auth']) // Use the default auth middleware
+    ->middleware(['auth', ModeratorMiddleware::class]) // Use the default auth middleware
     ->group(function () {
         Route::get('/about-law', [
             AboutLawController::class,
@@ -612,9 +618,10 @@ Route::prefix('moderator')
 Route::post('/signup', [AccountController::class, 'createAccount'])->name(
     'users.createAccount'
 );
-Route::post('/lawyer-signup', [AccountController::class, 'createLawyerAccount'])->name(
-    'lawyers.createAccount'
-);
+Route::post('/lawyer-signup', [
+    AccountController::class,
+    'createLawyerAccount',
+])->name('lawyers.createAccount');
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -94,10 +94,10 @@
             <form
                 id="editForumForm"
                 method="POST"
-                action="{{ route('moderator.updateForum', ['forum_id' => ':forum_id']) }}"
                 enctype="multipart/form-data"
             >
                 @csrf
+                <!-- Specify the method as PATCH for updates -->
 
                 <!-- Forum ID (readonly) -->
                 <label for="editForumId">Forum ID:</label>
