@@ -255,7 +255,10 @@ class AccountController extends Controller
         $user = Auth::user();
 
         $request->validate([
-            'username' => 'required|unique:tblaccounts,username,' . $user->user_id . ',user_id',
+            'username' =>
+                'required|unique:tblaccounts,username,' .
+                $user->user_id .
+                ',user_id',
             'userPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'firstName' => 'required|string|max:100',
             'middleName' => 'nullable|string|max:100',
@@ -521,10 +524,17 @@ class AccountController extends Controller
         }
 
         // Redirect back to the accounts list WITHOUT the ID in the URL
-        return redirect()
-            ->back()
-            ->with('success', 'Account updated successfully!');
+        if ($request->is('admin/*')) {
+            return redirect()
+                ->route('admin.account')
+                ->with('success', 'Account updated successfully!');
+        } elseif ($request->is('moderator/*')) {
+            return redirect()
+                ->route('moderator.account')
+                ->with('success', 'Account updated successfully!');
+        }
     }
+
     public function removeRestriction($user_id)
     {
         \Log::info('Attempting to delete restriction for user_id: ' . $user_id);

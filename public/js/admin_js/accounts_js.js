@@ -166,7 +166,11 @@ document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('editRestrictDays').value =
                 restrictDays || '';
 
-            var formAction = `/admin/account/${id}`;
+            var basePath = window.location.pathname.includes('/admin')
+                ? '/admin'
+                : '/moderator';
+
+            var formAction = `${basePath}/account/${id}`;
             document.getElementById('editAccountForm').action = formAction;
             console.log('Sex:', sex); // Debugging to see the value passed
 

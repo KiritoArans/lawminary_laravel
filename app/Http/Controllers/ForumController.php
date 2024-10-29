@@ -230,7 +230,7 @@ class ForumController extends Controller
                 ->with('success', 'Forum created successfully!');
         } elseif ($request->is('moderator/*')) {
             return redirect()
-                ->route('moderator.mforums')
+                ->route('moderator.forums')
                 ->with('success', 'Forum created successfully!');
         }
     }
@@ -327,7 +327,7 @@ class ForumController extends Controller
                 ->with('success', 'Forum updated successfully!');
         } elseif ($request->is('moderator/*')) {
             return redirect()
-                ->route('moderator.mforums')
+                ->route('moderator.forums')
                 ->with('success', 'Forum updated successfully!');
         }
     }
