@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Lawminary | Moderator Forums</title>
+        <title>Lawminary | Admin Forums</title>
         <link
             rel="icon"
             href="{{ asset('imgs/lawminarylogo.png') }}"

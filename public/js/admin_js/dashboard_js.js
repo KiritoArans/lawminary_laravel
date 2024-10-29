@@ -112,9 +112,12 @@
 // This function is called when a time range is selected (daily, weekly, monthly, yearly)
 function filterData(range) {
     console.log(`Button clicked for range: ${range}`);
+    const basePath = window.location.pathname.includes('/admin')
+        ? '/admin'
+        : '/moderator';
 
     // Fetch the data for bar chart and pie chart using /admin/dashboard/data
-    fetch(`/admin/dashboard/data?range=${range}`)
+    fetch(`${basePath}/dashboard/data?range=${range}`)
         .then((response) => response.json())
         .then((data) => {
             console.log('Fetched Data for Bar and Pie:', data);
