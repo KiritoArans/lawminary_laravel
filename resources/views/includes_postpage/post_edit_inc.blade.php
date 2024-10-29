@@ -2,7 +2,11 @@
     <div class="modal-content">
         <span class="close-buttonEdit">&times;</span>
 
-        <form id="editForm" method="POST" action="{{ route('update') }}">
+        <form
+            id="editForm"
+            method="POST"
+            action="{{ request()->is('admin*') ? route('admin.update') : route('moderator.update') }}"
+        >
             @csrf
             <input type="hidden" name="post_id" id="editPostId" />
             <div class="form-group">

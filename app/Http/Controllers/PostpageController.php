@@ -21,7 +21,6 @@ class PostpageController extends Controller
             $username = auth()->user()->username;
 
             $post = DB::table('tblposts')->where('post_id', $postId)->first();
-            
 
             // BOYYY, IF WALANG PROBLEM ANG PAG AAPPROVE SAYO PWEDE NA IDELETE TONG MGA TO
 
@@ -52,13 +51,14 @@ class PostpageController extends Controller
 
             // UNTIL HERE LANG, PAG NAG DELETE KA NG SOBRA, IKAW IDEDELETE KO SA MOANTHO
 
-            
             if (!$post) {
                 return redirect()->back()->with('error', 'Post not found.');
             } elseif (!$post->concernCategory) {
-                return redirect()->back()->with('error', 'Post is missing a category.');
+                return redirect()
+                    ->back()
+                    ->with('error', 'Post is missing a category.');
             }
-            
+
             if ($request->has('approve')) {
                 // Proceed with approval if all checks pass
                 $updated = DB::table('tblposts')
@@ -67,26 +67,33 @@ class PostpageController extends Controller
                         'status' => 'Approved',
                         'approvedBy' => $username,
                     ]);
-        
+
                 if ($updated) {
                     // Find lawyers with matching field expertise and notify them
                     $lawyers = UserAccount::where('accountType', 'Lawyer')
                         ->where('fieldExpertise', $post->concernCategory)
                         ->get();
-        
+
                     foreach ($lawyers as $lawyer) {
-                        $lawyer->notify(new PostApproved($post, auth()->user()));
+                        $lawyer->notify(
+                            new PostApproved($post, auth()->user())
+                        );
                     }
-        
-                    return redirect()->back()->with('success', 'Post approved and relevant lawyers notified.');
+
+                    return redirect()
+                        ->back()
+                        ->with(
+                            'success',
+                            'Post approved and relevant lawyers notified.'
+                        );
                 } else {
-                    return redirect()->back()->with('error', 'Failed to approve post.');
+                    return redirect()
+                        ->back()
+                        ->with('error', 'Failed to approve post.');
                 }
             }
-            
 
             // DIVIDER LANG, PARA ALAM KO BOUNDARY KO DI GAYA NG BOYBESPREN NG JOWA MO :P >_<
-
             elseif ($request->has('reject')) {
                 // Validate reason for disregard
                 $request->validate([
@@ -296,7 +303,15 @@ class PostpageController extends Controller
         $post->approvedBy = $username;
         $post->save();
 
-        return redirect()->back()->with('success', 'Post updated successfully');
+        if ($request->is('admin/*')) {
+            return redirect()
+                ->route('admin.posts')
+                ->with('success', 'Post updated successfully');
+        } elseif ($request->is('moderator/*')) {
+            return redirect()
+                ->route('moderator.postpage')
+                ->with('success', 'Post updated successfully');
+        }
     }
 
     // delete function

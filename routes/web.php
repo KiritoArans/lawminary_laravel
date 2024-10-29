@@ -291,14 +291,16 @@ Route::prefix('admin')
             'searchPosts',
         ])->name('admin.searchPosts');
 
-        // Edit and Update Post
         Route::get('includes_postpage/post_edit_inc/{id}', [
             PostpageController::class,
             'post_edit_inc',
         ])->name('post_edit_inc');
-        Route::post('update', [PostpageController::class, 'update'])->name(
-            'update'
+
+        // Edit and Update Post
+        Route::post('/update', [PostpageController::class, 'update'])->name(
+            'admin.update'
         );
+
         // View reported posts
         Route::get('/reported-posts', [
             PostpageController::class,
@@ -407,7 +409,6 @@ Route::prefix('moderator')
         Route::get('postpage', [PostpageController::class, 'postpage'])->name(
             'moderator.postpage'
         );
-
         Route::post('postspage/{id}/disregard', [
             PostpageController::class,
             'postDisregard', // This should point to the correct method
@@ -427,6 +428,30 @@ Route::prefix('moderator')
             PostpageController::class,
             'searchPosts',
         ])->name('moderator.searchPosts');
+
+        Route::post('/update', [PostpageController::class, 'update'])->name(
+            'moderator.update'
+        );
+        // View reported posts
+        Route::get('/reported-posts', [
+            PostpageController::class,
+            'viewReportedPosts',
+        ])->name('moderator.viewReportedPosts');
+
+        // View reports attached to a post
+        Route::get('/post-reports/{postId}', [
+            PostpageController::class,
+            'viewPostReports',
+        ])->name('moderator.viewPostReports');
+        // Update post status to 'Disregarded'
+        Route::post('/disregard-post/{postId}', [
+            PostpageController::class,
+            'disregardPost',
+        ])->name('moderator.disregardPost');
+        Route::delete('/posts/{Id}', [
+            PostpageController::class,
+            'destroy',
+        ])->name('moderator.destroy');
     });
 
 //leaderboards page

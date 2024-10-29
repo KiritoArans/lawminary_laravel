@@ -108,6 +108,9 @@ document.addEventListener('DOMContentLoaded', function () {
     deleteButtons.forEach((button) => {
         button.addEventListener('click', function () {
             const postId = button.getAttribute('data-id'); // Get the post ID from the button attribute
+            const basePath = window.location.pathname.includes('/admin')
+                ? '/admin'
+                : '/moderator';
 
             // SweetAlert confirmation dialog
             Swal.fire({
@@ -121,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }).then((result) => {
                 if (result.isConfirmed) {
                     // If user confirms deletion, send the DELETE request
-                    fetch(`/admin/posts/${postId}`, {
+                    fetch(`${basePath}/posts/${postId}`, {
                         method: 'DELETE',
                         headers: {
                             'X-CSRF-TOKEN': document
@@ -263,7 +266,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Open modal to view reported posts
     viewReportedPostsButton.addEventListener('click', function () {
-        fetch('/admin/reported-posts')
+        const basePath = window.location.pathname.includes('/admin')
+            ? '/admin'
+            : '/moderator';
+
+        fetch(`${basePath}/reported-posts`)
             .then((response) => response.json())
             .then((data) => {
                 reportedPostsContainer.innerHTML = ''; // Clear existing content
@@ -304,7 +311,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Fetch and display reports for a specific post
     function viewReportsForPost(postId) {
-        fetch(`/admin/post-reports/${postId}`)
+        const basePath = window.location.pathname.includes('/admin')
+            ? '/admin'
+            : '/moderator';
+
+        fetch(`${basePath}/post-reports/${postId}`)
             .then((response) => response.json())
             .then((data) => {
                 postReportsContainer.innerHTML = ''; // Clear container
@@ -321,6 +332,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Disregard post when button is clicked
     disregardPostButton.addEventListener('click', function () {
         const postId = this.getAttribute('data-post-id');
+        const basePath = window.location.pathname.includes('/admin')
+            ? '/admin'
+            : '/moderator';
 
         // Show SweetAlert confirmation before proceeding
         Swal.fire({
@@ -333,7 +347,7 @@ document.addEventListener('DOMContentLoaded', function () {
             confirmButtonText: 'Yes, disregard it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`/admin/disregard-post/${postId}`, {
+                fetch(`${basePath}/disregard-post/${postId}`, {
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': document
