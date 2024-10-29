@@ -57,8 +57,13 @@
         <content>
             <div id="leaderboards" data-logged-in-user-id="{{ Auth::check() ? Auth::user()->user_id : 'null' }}">
                 <div class="leaderboards-header">
-                    <i class="fa-solid fa-chart-simple"></i>
-                    <h1>Leaderboards</h1>
+                    <div class="leaderboards-ttl">
+                        <i class="fa-solid fa-chart-simple"></i>
+                        <h1>Leaderboards</h1>
+                    </div>
+                    <div class="leaderboards-chart">
+                        <button onclick="openBadgeChart()">Badge Chart</button>
+                    </div>
                 </div>
 
                 @foreach ($leaderboards as $leaderboard)
@@ -79,11 +84,73 @@
 
                 @endforeach
             </div>
+
+            <div id="badgeModal" class="badgeModal">
+                <div class="badgeModal-content">
+                    <span class="badgeModal-close" onclick="closeBadgeChart()"><i class="fa-regular fa-circle-xmark"></i></span>
+                    <div class="badgeList">
+                        <table>
+                            <tr>
+                                <th>Rank</th>
+                                <th>Points</th>
+                                <th>Badge</th>
+                            </tr>
+                            <tr>
+                                <td>Diamond</td>
+                                <td>5000 Above</td>
+                                <td><img src="../imgs/badges/diamond.png" alt="Diamond Badge"></td>
+                            </tr>
+                            <tr>
+                                <td>Gold</td>
+                                <td>3500 Above</td>
+                                <td><img src="../imgs/badges/gold.png" alt="Gold Badge"></td>
+                            </tr>
+                            <tr>
+                                <td>Silver</td>
+                                <td>2000 Above</td>
+                                <td><img src="../imgs/badges/silver.png" alt="Silver Badge"></td>
+                            </tr>
+                            <tr>
+                                <td>Bronze</td>
+                                <td>1000 Above</td>
+                                <td><img src="../imgs/badges/bronze.png" alt="Bronze Badge"></td>
+                            </tr>
+                            <tr>
+                                <td>Steel</td>
+                                <td>500 Above</td>
+                                <td><img src="../imgs/badges/steel.png" alt="Steel Badge"></td>
+                            </tr>
+                            <tr>
+                                <td>Wood</td>
+                                <td>500 Below</td>
+                                <td><img src="../imgs/badges/wood.png" alt="Wood Badge"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </content>
         </main>
-        
+        <script>
+            function openBadgeChart() {
+                document.getElementById("badgeModal").style.display = "block";
+            }
+
+            function closeBadgeChart() {
+                document.getElementById("badgeModal").style.display = "none";
+            }
+
+            // Close the modal when the user clicks outside of the modal content
+            window.onclick = function(event) {
+                let badgeModal = document.getElementById("badgeModal");
+                if (event.target == badgeModal) {
+                    badgeModal.style.display = "none";
+                }
+            }
+        </script>
     <script src="js/showUserNav.js"></script>
-        <script src="js/showNotification.js"></script>
+    <script src="js/showNotification.js"></script>
     <script src="js/visitProfileLb.js"></script>
     <script src="js/homelocator.js"></script>
     <script src="js/settings.js"></script>    

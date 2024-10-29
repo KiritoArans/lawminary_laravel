@@ -134,6 +134,7 @@ header hr {
 
 .leaderboards-header{
     display: flex;
+    justify-content: space-between;
     color: var(--primary-color);
     margin: 1rem 0 .5rem 0;
 }
@@ -143,6 +144,22 @@ header hr {
 }
 .leaderboards-header h1{
     margin: 0;
+}
+
+.leaderboards-ttl{
+    display: flex;
+}
+.leaderboards-chart button{
+    padding: .6rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background-color: var(--text-color3);
+    transition: var(--tran-03);
+}
+.leaderboards-chart button:hover{
+    background-color: var(--primary-color);
 }
 
 .leaderboards-content{
@@ -190,6 +207,61 @@ header hr {
     color: var(--text-color1);
 }
 
+.badgeModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    /* overflow: auto; */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+
+.badgeModal-content {
+    margin: 15% auto; 
+    width: 24rem;
+    border-radius: .25rem;
+    background-color: #ffffff;
+    padding: 1rem 1rem 0 3rem;
+}
+
+.badgeModal-close {
+    position: relative;
+    right: -.5rem;
+    top: -.5rem;
+    color: red;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: var(--tran-03);
+}
+
+.badgeList table{
+    width: 100%;
+    text-align: left;
+    position: relative;
+    top: -1rem;
+}
+.badgeList table th{
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}
+.badgeList table td:first-child{
+    font-weight: 500;
+}
+.badgeList img{
+    width: 3rem;
+}
+
+.badgeModal-close:hover,
+.badgeModal-close:focus {
+    cursor: pointer;
+    scale: 1.1;
+}
 
 
 @media (min-width: 576px) and (max-width: 1024px) {
