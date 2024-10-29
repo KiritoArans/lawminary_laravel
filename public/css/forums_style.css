@@ -337,6 +337,26 @@ main .header-top {
         font-weight: 600;
         background-color: var(--primary-color);
 }
+#image-preview-section{
+    margin-top: .5rem;
+}
+.removeConcernPhotoSec{
+    display: flex;
+    align-items: start;
+}
+.removeConcernPhoto{
+    margin-left: -1.5rem;
+    transition: var(--tran-03);
+    font-weight: bold;
+    font-size: 1rem;
+    color: red;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.removeConcernPhoto:hover{
+    scale: 1.5;
+}
 
 .search-forum{
     display: flex;
@@ -473,17 +493,4 @@ main .header-top {
     .search-btn form button{
         display: none;
     }
-}
-
-
-
-
-
-@media (min-width: 577px) and (max-width: 1024px) {
-    
-}
-
-
-@media (max-width: 576px) {
-    
 }

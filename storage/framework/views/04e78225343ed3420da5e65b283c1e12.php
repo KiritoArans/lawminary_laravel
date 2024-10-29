@@ -53,6 +53,7 @@
                         <img
                             src="<?php echo e(Storage::url($post->concernPhoto)); ?>"
                             alt="Concern Photo"
+                            onclick="openConPhoto('<?php echo e($post->post_id); ?>')"
                         />
                     <?php endif; ?>
                 </div>
@@ -97,5 +98,8 @@
                 </div>
             </div>
         </div>
+
+        
+
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div><?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/inclusions/profile/profileLikes.blade.php ENDPATH**/ ?>

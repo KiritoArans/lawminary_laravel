@@ -32,8 +32,18 @@
                 </header>
                 <content>
                     <div class="log-header">
-                        <i class="fa-solid fa-clock-rotate-left"></i>
-                        <h1>Activity Logs</h1>
+                        <div class="log-ttl">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <h1>Activity Logs</h1>
+                        </div>
+                        <div class="filter-btn">
+                            <form action="{{ route('actlogs') }}" method="GET">
+                                <select name="sort" id="sortFilter" onchange="this.form.submit()">
+                                    <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>Newest</option>
+                                    <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>Oldest</option>
+                                </select>
+                            </form>
+                        </div>
                     </div>
 
                     @if($activities->isEmpty())

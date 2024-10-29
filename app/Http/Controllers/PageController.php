@@ -669,10 +669,11 @@ class PageController extends Controller
         return view('settings.account_settings');
     }
 
-    public function showActLogsPage()
+    public function showActLogsPage(Request $request)
     {
         $user_id = Auth::user()->user_id; // This fetches the user's 'user_id' from the database
-    
+        
+        $sortOrder = $request->input('sort', 'desc'); // Default to 'desc' (Newest)
         // 1. Get activities from different tables
     
         // Posts
@@ -743,8 +744,10 @@ class PageController extends Controller
             ->merge($forumMemberships);
     
 
-        $sortedActivities = $activities->sortByDesc('created_at')->values();
-    
+        $sortedActivities = $sortOrder === 'asc'
+            ? $activities->sortBy('created_at')->values()
+            : $activities->sortByDesc('created_at')->values();
+
         // 3. Pass the sorted activities to the view
         return view('settings.activity_logs', ['activities' => $sortedActivities]);
     }

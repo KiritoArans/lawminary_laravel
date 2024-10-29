@@ -164,20 +164,23 @@ Route::get('/about-lawminary', [
     PageController::class,
     'showAboutLawminaryPage',
 ])->middleware('auth');
+
 Route::get('/about-pao', [
     PageController::class,
     'showAboutPAOPage',
 ])->middleware('auth');
+
 Route::get('/account-settings', [
     PageController::class,
     'showAccountPage',
 ])->middleware('auth');
+
 Route::get('/activitylogs', [
     PageController::class,
     'showActLogsPage',
-])->middleware('auth');
-//feed back route
-// feedback routes
+])->middleware('auth')
+    ->name('actlogs');
+
 
 // Show feedback form
 Route::get('/provide-feedback', [PageController::class, 'showFeedbackPage'])

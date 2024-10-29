@@ -243,3 +243,23 @@ removeImage.addEventListener('click', function() {
     imagePreviewSection.style.display = 'none'; // Hide the image preview section
     fileUpload.value = ''; // Reset the file input field
 });
+
+
+
+function openConPhoto(postId) {
+    const modal = document.getElementById(`conPhotoModal-${postId}`);
+    if (modal) {
+        modal.style.display = "block";
+    } else {
+        console.error("Modal not found for post ID:", postId);
+    }
+}
+
+function closeConPhoto(postId) {
+    const modal = document.getElementById(`conPhotoModal-${postId}`);
+    if (modal) {
+        modal.style.display = "none";
+    } else {
+        console.error("Modal not found for post ID:", postId);
+    }
+}

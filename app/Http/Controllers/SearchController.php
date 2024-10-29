@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Posts;
 use App\Models\UserAccount;
+use Illuminate\Support\Collection;
 
 class SearchController extends Controller
 {
@@ -52,6 +53,7 @@ class SearchController extends Controller
         $posts = Posts::where('status', 'Approved')
             ->with('user')
             ->withCount('likes', 'comments', 'bookmarks')
+            ->orderBy('created_at', 'desc')
             ->get()
             ->filter(function ($post) use ($query) {
                 $concernDistance = levenshtein(strtolower($query), strtolower($post->concern));

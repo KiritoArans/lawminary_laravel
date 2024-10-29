@@ -60,7 +60,10 @@
                     <a href="home-search?query={{$post->concernCategory}}">{{ $post->concernCategory }}</a>
                 </div>
                 @if ($post->concernPhoto)
-                <img src="{{ Storage::url($post->concernPhoto) }}" alt="Post Image" style="max-width: 100%; height: auto;" />
+                    <img src="{{ Storage::url($post->concernPhoto) }}" 
+                        alt="Concern Photo" 
+                        onclick="openConPhoto('{{ $post->post_id }}')"
+                        style="max-width: 100%; height: auto;" />
                 @endif
             </div>
             <hr />
@@ -102,6 +105,7 @@
             window.postId = '{{ $post->post_id }}';
         </script>
 
-        
+        @include('inclusions/showConcernPhoto')
+
     @endforeach
 </div>

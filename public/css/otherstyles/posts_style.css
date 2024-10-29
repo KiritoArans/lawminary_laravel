@@ -116,7 +116,7 @@
 }
 .posts .post-text img{
     object-fit: cover;
-    max-width: 50%;
+    max-width: 100%;
     height: auto;
     /* max-height: 20rem; */
     border-radius: 5px;
@@ -271,6 +271,7 @@
     background: none; 
     border: none; 
     cursor: pointer;
+    transition: var(--tran-03);
 }
 .post-modal-photo button:hover{
     scale: 1.5;
@@ -832,11 +833,56 @@
 }
 
 
+.conPhotoModal {
+    display: none; 
+    position: fixed; 
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; 
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    overflow: auto;
+}
+
+.conPhotoModal-content {
+    margin: 1rem auto; 
+    width: 80%;
+    border-radius: .25rem;
+}
+.conPhotoModal-content img {
+    border-radius: .25rem;
+}
+
+.conPhotoModal-close {
+    position: relative;
+    right: 0.5rem;
+    top: 2.5rem;
+    color: red;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: var(--tran-03);
+}
+
+.conPhotoModal-close:hover,
+.conPhotoModal-close:focus {
+    cursor: pointer;
+    scale: 1.1;
+}
+
+
 
 @media (min-width: 576px) and (max-width: 1024px) {
     .posts .post-content {
         /* margin: 0 0 .75rem 0; */
         margin: 0 12rem 0.75rem 12rem;
+    }
+    .conPhotoModal-content {
+        margin: 1rem auto; 
+        width: 90%;
+        border-radius: .25rem;
     }
 }
 
@@ -857,5 +903,10 @@
         animation: modalFadeIn 0.3s ease-in-out;
         max-height: 90vh; /* Make sure modal content fits within the viewport */
         overflow-y: auto; /* Scrollable content if too tall */
+    }
+    .conPhotoModal-content {
+        margin: 1rem auto; 
+        width: 90%;
+        border-radius: .25rem;
     }
 }

@@ -80,20 +80,30 @@
             </div>
 
             @if($joinedVF)
-              <div class="create-post">
-                <form action="{{ route('createForumPost')}}" method="POST" enctype="multipart/form-data">
-                  @csrf
-                  @include('inclusions/response')
-                  <input type="hidden" name="forum_id" value="{{ $activeForum->forum_id }}">
-                  <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture"/>
-                  <textarea name="concern" id="" cols="30" rows="10" placeholder="Concern in your mind?"></textarea>
-                  <label for="file-upload" class="custom-file-upload">
-                      <i class="fa-solid fa-file-arrow-up" title="Attach Photo"></i>
-                  </label>
-                  <input id="file-upload" type="file" name="concernPhoto" style="display: none;">
-                  <button>Post</button>
-                </form>
-              </div>
+                <div class="create-post">
+                    <form action="{{ route('createForumPost') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @include('inclusions/response')
+                        <input type="hidden" name="forum_id" value="{{ $activeForum->forum_id }}">
+                        
+                        <img src="{{ Auth::user()->userPhoto ? Storage::url(Auth::user()->userPhoto) : asset('imgs/user-img.png') }}" class="user-profile-photo" alt="Profile Picture"/>
+                        
+                        <textarea name="concern" cols="30" rows="10" placeholder="Concern in your mind?"></textarea>
+ 
+                        <label for="file-upload" class="custom-file-upload">
+                            <i class="fa-solid fa-file-arrow-up" title="Attach Photo"></i>
+                        </label>
+                        <input id="file-upload" type="file" name="concernPhoto" style="display: none;">
+                        
+                        <button>Post</button>
+                    </form>
+                    <div id="image-preview-section" class="post-modal-photo" style="display: none;">
+                        <div class="removeConcernPhotoSec">
+                            <img id="image-preview" src="" alt="Image Preview">
+                            <i class="fa-regular fa-circle-xmark removeConcernPhoto" type="button" id="remove-image"></i>
+                        </div>
+                    </div>
+                </div>
             @endif
 
             <div class="posts-btn">
@@ -171,7 +181,10 @@
                     <div class="post-text">
                         <p>{{ $post->concern }}</p>
                         @if ($post->concernPhoto)
-                        <img src="{{ Storage::url($post->concernPhoto) }}" alt="Post Image" style="max-width: 100%; height: auto;" />
+                        <img src="{{ Storage::url($post->concernPhoto) }}" 
+                            alt="Post Image" 
+                            onclick="openConPhoto('{{ $post->post_id }}')"
+                            style="max-width: 100%; height: auto;" />
                         @endif
                     </div>
                     <hr />
@@ -208,6 +221,8 @@
                         
                     </div>
                 </div>
+
+                    @include('inclusions/showConcernPhoto')
 
                     @foreach($allPosts as $post)
                         <div class="comment-modal" id="commentModal-{{ $post->post_id }}" style="display:none;">

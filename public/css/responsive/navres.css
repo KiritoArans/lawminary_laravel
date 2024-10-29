@@ -43,6 +43,9 @@
     .search-bar form button{
         display: none;
     }
+    .header-top .fa-bars{
+        margin-right: 2rem;
+    }
 }
 
 
@@ -110,5 +113,7 @@
         margin-bottom: .5rem;
         position: relative;
     }
-
+    .header-top .fa-bars{
+        margin-right: 2rem;
+    }
 }

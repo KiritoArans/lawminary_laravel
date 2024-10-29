@@ -32,6 +32,35 @@ document.addEventListener('DOMContentLoaded', function() {
 // });
 
 document.addEventListener('DOMContentLoaded', function () {
+  const fileUpload = document.getElementById('file-upload');
+  const imagePreviewSection = document.getElementById('image-preview-section');
+  const imagePreview = document.getElementById('image-preview');
+  const removeImage = document.getElementById('remove-image');
+
+  // Show image preview when a file is selected
+  fileUpload.addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+          const reader = new FileReader();
+          reader.onload = function(e) {
+              imagePreview.src = e.target.result;
+              imagePreviewSection.style.display = 'block'; // Show the image preview section
+          };
+          reader.readAsDataURL(file);
+      }
+  });
+
+  // Remove image preview when 'Remove' button is clicked
+  removeImage.addEventListener('click', function() {
+      imagePreview.src = ''; // Clear the image preview source
+      imagePreviewSection.style.display = 'none'; // Hide the image preview section
+      fileUpload.value = ''; // Reset the file input field
+  });
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
   const searchInput = document.querySelector('.search-bar input'); // The search input
   const forumLinks = document.querySelectorAll('.forum-link'); // All forum links
 

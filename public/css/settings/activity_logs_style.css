@@ -78,9 +78,14 @@ header hr {
 
 .log-header{
     display: flex;
+    justify-content: space-between;
     align-items: center;
     color: var(--primary-color);
     margin-bottom: .5rem;
+}
+.log-ttl{
+    display: flex;
+    align-items: center;
 }
 .log-header i{
     font-size: 2rem;
@@ -105,7 +110,14 @@ header hr {
     cursor: pointer;
     color: #C62E2E;
 }
-
+.filter-btn select {
+    padding: 8px 24px;
+    border-radius: 5px;
+    color: var(--text-color1);
+    border: 2px solid #ddd;
+    background-color: transparent;
+    font-weight: 600;
+}
 
 @media (max-width: 576px) {
     .log-header i {

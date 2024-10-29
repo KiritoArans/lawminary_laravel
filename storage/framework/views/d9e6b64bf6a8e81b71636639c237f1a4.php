@@ -61,7 +61,10 @@
                     <a href="home-search?query=<?php echo e($post->concernCategory); ?>"><?php echo e($post->concernCategory); ?></a>
                 </div>
                 <?php if($post->concernPhoto): ?>
-                <img src="<?php echo e(Storage::url($post->concernPhoto)); ?>" alt="Post Image" style="max-width: 100%; height: auto;" />
+                    <img src="<?php echo e(Storage::url($post->concernPhoto)); ?>" 
+                        alt="Concern Photo" 
+                        onclick="openConPhoto('<?php echo e($post->post_id); ?>')"
+                        style="max-width: 100%; height: auto;" />
                 <?php endif; ?>
             </div>
             <hr />
@@ -103,6 +106,7 @@
             window.postId = '<?php echo e($post->post_id); ?>';
         </script>
 
-        
+        <?php echo $__env->make('inclusions/showConcernPhoto', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div><?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/inclusions/showPosts.blade.php ENDPATH**/ ?>

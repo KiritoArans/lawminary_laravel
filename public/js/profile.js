@@ -60,6 +60,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 });
 
+
 function openModal() {
     document.getElementById("profileModal").style.display = "block";
 }

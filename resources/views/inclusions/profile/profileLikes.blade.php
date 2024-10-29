@@ -52,6 +52,7 @@
                         <img
                             src="{{ Storage::url($post->concernPhoto) }}"
                             alt="Concern Photo"
+                            onclick="openConPhoto('{{ $post->post_id }}')"
                         />
                     @endif
                 </div>
@@ -96,5 +97,8 @@
                 </div>
             </div>
         </div>
+
+        {{-- @include('inclusions/showConcernPhoto') --}}
+
     @endforeach
 </div>
