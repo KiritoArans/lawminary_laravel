@@ -646,6 +646,8 @@ Route::prefix('moderator')
 Route::post('/signup', [AccountController::class, 'createAccount'])->name(
     'users.createAccount'
 );
+Route::post('/delete-account', [AccountController::class, 'deleteAccount'])->name('deleteAccount');
+
 Route::post('/lawyer-signup', [
     AccountController::class,
     'createLawyerAccount',

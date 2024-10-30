@@ -236,6 +236,11 @@ form button[type="button"] {
     color: var(--black-light-color);
 }
 
+.note{
+    font-weight: 600;
+    color: var(--text-color3);
+}
+
 
 @media (min-width: 577px) and (max-width: 1024px) {
     .settings-menu {

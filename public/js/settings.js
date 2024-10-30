@@ -53,6 +53,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const toggleRepeatPassword = document.getElementById('toggleRepeatPassword');
     const repeatPasswordField = document.getElementById('repeat-password');
 
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordField = document.getElementById('password');
+
     // Toggle visibility for current password
     toggleCurrentPassword.addEventListener('click', function () {
         const type = currentPasswordField.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -76,4 +79,29 @@ document.addEventListener('DOMContentLoaded', function () {
         this.classList.toggle('fa-eye');
         this.classList.toggle('fa-eye-slash');
     });
+
+    togglePassword.addEventListener('click', function () {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
 });
+
+
+function confirmDelete() {
+    Swal.fire({
+        title: 'Your Account will be Deleted!',
+        text: "This action cannot be undone.",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.querySelector("form").submit();
+        }
+    });
+}

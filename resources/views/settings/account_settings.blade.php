@@ -45,6 +45,8 @@
                                     </a>
                                 </li>
                                 <li><a data-tab="info">Info</a></li>
+                                
+                                <li><a data-tab="delete-account">Delete Account</a></li>
                             </ul>
                         </div>
                         <div class="settings-content">
@@ -228,7 +230,46 @@
                                     </div>
                                 </form>
                             </div>
+
+                            <div id="delete-account" class="tab-content">
+                                <h2>Delete Account</h2>
+                                <form method="POST" action="{{ route('deleteAccount') }}">
+                                    @csrf
+                                    @include('inclusions/response')
+                                
+                                    <input type="text" 
+                                        id="username" 
+                                        name="username" 
+                                        placeholder="Type your old username" 
+                                        required
+                                    />
+                                
+                                    <label for="password">Current Password</label>
+                                    <div class="password-container">
+                                        <input
+                                            type="password"
+                                            id="password"
+                                            name="password"
+                                            placeholder="Type your old password"
+                                            required
+                                        />
+                                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                                    </div>
+
+                                    <div class="note">
+                                        <Span>Note: You cannot retrive your account once it's deleted.</Span>
+                                    </div>
+                                
+                                    <div class="action-button">
+                                        <button type="button" onclick="window.location.href='{{ url()->previous() }}'">Cancel</button>
+                                        <button type="submit">Delete</button>
+                                    </div>
+                                </form>
+                                
+                            </div>
+                            
                         </div>
+
                     </div>
                 </content>
             </main>

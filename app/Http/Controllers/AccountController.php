@@ -348,6 +348,33 @@ class AccountController extends Controller
             ->with('success', 'Your profile has been updated.');
     }
 
+    public function deleteAccount(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+    
+        $user = Auth::user();
+    
+        // Verify the username and password
+        if ($user->username === $request->username && Hash::check($request->password, $user->password)) {
+            // Delete the user account
+            $user->delete();
+    
+            // Log the user out after deleting the account
+            Auth::logout();
+    
+            // Redirect to a confirmation page or login page
+            return redirect()->back()->with('status', 'Your account has been deleted successfully.');
+        }
+    
+        // If credentials don't match, return an error
+        return back()->withErrors(['username' => 'Username or password is incorrect.']);
+    }
+
+
+
     public function showAdModLogin()
     {
         return view('moderator.admod_login');
