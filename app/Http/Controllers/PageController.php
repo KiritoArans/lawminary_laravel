@@ -107,6 +107,7 @@ class PageController extends Controller
             'comments.reply.user'
             )
                 ->withCount('likes', 'comments', 'bookmarks')
+                ->whereHas('user')
                 ->orderBy('created_at', 'desc')
                 ->get();
 
@@ -120,12 +121,14 @@ class PageController extends Controller
                     ->withCount('likes', 'comments', 'bookmarks')
                     ->where('status', 'Approved')
                     ->whereIn('postedBy', $followingUserIds)
+                    ->whereHas('user')
                     ->orderBy('created_at', 'desc')
                     ->get();
             } else {
                 $posts = Posts::with('user')
                     ->withCount('likes', 'comments', 'bookmarks')
                     ->where('status', 'Approved')
+                    ->whereHas('user')
                     ->orderBy('created_at', 'desc')
                     ->get();
         }
