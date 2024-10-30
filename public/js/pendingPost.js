@@ -1,4 +1,3 @@
-// Get the modal
 var penPostModal = document.getElementById("pendingModal");
 
 // Get the button that opens the modal
@@ -62,7 +61,7 @@ function updateStatusColors() {
         // Apply the color based on the status
         if (status === 'Pending') {
             element.style.color = 'green';  // Green for pending
-        } else if (status === 'Disregard') {
+        } else if (status === 'Disregarded') {
             element.style.color = 'red';    // Red for disregarded
         }
     });

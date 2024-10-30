@@ -27,7 +27,7 @@
                         <input type="text" id="status" name="status" value="Approved" hidden>
                         <div class="left-column">
                             <div class="form-group">
-                                <label for="first-name">First Name</label>
+                                <label for="first-name">First Name <span id="reqField">*</span></label>
                                 <input type="text" id="first-name" name="firstName" value="{{ old('firstName') }}">
                             </div>
                             <div class="form-group">
@@ -35,14 +35,14 @@
                                 <input type="text" id="middle-name" name="middleName" value="{{ old('middleName') }}">
                             </div>
                             <div class="form-group">
-                                <label for="last-name">Last Name</label>
+                                <label for="last-name">Last Name <span id="reqField">*</span></label>
                                 <input type="text" id="last-name" name="lastName" value="{{ old('lastName') }}">
                             </div>
                         </div>
 
                         <div class="middle-column">
                             <div class="form-group">
-                                <label for="sex">Sex</label>
+                                <label for="sex">Sex <span id="reqField">*</span></label>
                                 <select name="sex" id="" value="{{ old('sex') }}">
                                     <option value="" disabled {{ old('sex') === null ? 'selected' : '' }}>Option</option>
                                     <option value="Male" {{ old('sex') === 'Male' ? 'selected' : '' }}>Male</option>
@@ -50,11 +50,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="birth-date">Birth Date</label>
+                                <label for="birth-date">Birth Date <span id="reqField">*</span></label>
                                 <input type="date" id="birth-date" name="birthDate" value="{{ old('birthDate') }}">
                             </div>
                             <div class="form-group">
-                                <label for="email-address">Email Address</label>
+                                <label for="email-address">Email Address <span id="reqField">*</span></label>
                                 <input type="email" id="email-address" name="email" value="{{ old('email') }}">
                             </div>
                         </div>
@@ -63,18 +63,18 @@
 
                         <div class="right-column">
                             <div class="form-group">
-                                <label for="username">Username</label>
-                                <input type="text" id="username" name="username" value="{{ old('username') }}">
+                                <label for="username">Username <span id="reqField">*</span></label>
+                                <input type="text" id="username" name="username" value="{{ old('username') }}" maxlength="15">
                             </div>
                             <div class="form-group">
-                                <label for="password">Password</label>
+                                <label for="password">Password <span id="reqField">*</span></label>
                                 <div class="password-container">
                                     <input type="password" id="password" name="password" required>
                                     <i class="fas fa-eye toggle-password" id="togglePassword"></i>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="password_confirmation">Confirm Password</label>
+                                <label for="password_confirmation">Confirm Password <span id="reqField">*</span></label>
                                 <div class="password-container">
                                     <input type="password" id="password_confirmation" name="password_confirmation" required>
                                     <i class="fas fa-eye toggle-password" id="togglePasswordConfirmation"></i>

@@ -21,7 +21,7 @@ class AccountController extends Controller
         try {
             $data = $request->validate(
                 [
-                    'username' => 'required|unique:tblaccounts,username',
+                    'username' => 'required|unique:tblaccounts,username|min:3|max:15',
                     'email' => 'required|email',
                     'password' => [
                         'required',
@@ -89,7 +89,7 @@ class AccountController extends Controller
         try {
             $data = $request->validate(
                 [
-                    'username' => 'required|unique:tblaccounts,username',
+                    'username' => 'required|unique:tblaccounts,username|min:3|max:15',
                     'email' => 'required|email',
                     'password' => [
                         'required',
@@ -109,7 +109,7 @@ class AccountController extends Controller
                         'before:' . now()->subYears(13)->format('Y-m-d'),
                     ],
                     'sex' => 'required',
-                    'lawyerID' => 'required',
+                    'lawyerID' => 'nullable|numeric|digits_between:1,10',
                     'fieldExpertise' => 'required',
                 ],
                 [

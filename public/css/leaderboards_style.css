@@ -239,12 +239,16 @@ header hr {
     font-weight: bold;
     transition: var(--tran-03);
 }
-
+.badgeList label{
+    font-weight: 600;
+    color: var(--secondary-color);
+}
 .badgeList table{
     width: 100%;
     text-align: left;
     position: relative;
     top: -1rem;
+    margin-bottom: 0;
 }
 .badgeList table th{
     color: var(--primary-color);
@@ -256,6 +260,15 @@ header hr {
 .badgeList img{
     width: 3rem;
 }
+
+.badgeList label{
+    font-size: 1.25rem;
+}
+.badgeList table:last-child, .badgeList label{
+    top: -.5rem;
+}
+
+
 
 .badgeModal-close:hover,
 .badgeModal-close:focus {

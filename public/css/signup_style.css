@@ -185,16 +185,9 @@ section {
     cursor: pointer;
 }
 
-.contact-number-wrapper {
-    display: flex;
-    align-items: center; /* Align the +63 and input field vertically */
-    width: 144%;
+#reqField{
+    color: red;
 }
-.country-code {
-    margin-right: 10px; /* Space between +63 and input field */
-    font-weight: bold;
-}
-
 
 
 
@@ -206,15 +199,15 @@ section {
     }
 
     section {
-        background-image: none; /* Hide the background image for better readability on tablets */
+        background-image: none; 
     }
 
     .wrapper {
         display: flex;
-        justify-content: center; /* Center the form horizontally */
+        justify-content: center; 
         align-items: center;
         height: 100vh;
-        padding: 10px; /* Add padding for spacing */
+        padding: 10px; 
     }
 
     .container {
@@ -376,20 +369,20 @@ section {
     }
 
     .form-group {
-        margin-bottom: 12px; /* Reduce space between form groups */
+        margin-bottom: 12px;
     }
 
     .contact-number-wrapper {
-        width: 100%; /* Make the contact number field full width */
+        width: 100%; 
     }
 
     .country-code {
-        margin-right: 5px; /* Reduce space between country code and input */
+        margin-right: 5px; 
     }
 
     .toggle-password {
         position: absolute;
-        right: .5rem;
+        right: .75rem;
         top: 50%;
         transform: translateY(-50%);
         cursor: pointer;
@@ -399,23 +392,23 @@ section {
 
     .buttons {
         display: flex;
-        flex-direction: column-reverse; /* Stack buttons vertically */
+        flex-direction: column-reverse; 
         align-items: stretch;
         justify-content: center;
-        margin-top: 20px; /* Add some spacing at the top */
+        margin-top: 20px; 
     }
 
     .buttons button {
-        width: 100%; /* Full width for buttons */
-        margin-left: 0; /* Remove left margin */
-        margin-top: 10px; /* Add spacing between buttons */
+        width: 100%;
+        margin-left: 0;
+        margin-top: 10px;
         font-size: 1rem;
     }
 
     .back-home {
-        display: block; /* Ensure 'Back to Login' takes up its own line */
-        text-align: center; /* Center the link */
-        margin-top: 10px; /* Add some margin to separate from the button */
+        display: block; 
+        text-align: center; 
+        margin-top: 10px; 
     }
 
     .otp-section {

@@ -215,9 +215,25 @@ class PageController extends Controller
             ->orderBy('tblleaderboards.rankPoints', 'desc')
             ->take(10) // Limit to 10 records
             ->get();
+
+
+        $currentUser = auth()->user();
+        $userRank = null;
+        $userRankPoints = null;
+        
+            if ($currentUser && $currentUser->accountType === 'Lawyer') {
+                $userData = DB::table('tblleaderboards')
+                    ->where('lawyerUser_id', $currentUser->user_id)
+                    ->first(['rank', 'rankPoints']);
+        
+                if ($userData) {
+                    $userRank = $userData->rank;
+                    $userRankPoints = $userData->rankPoints;
+                }
+            }
         
 
-        return view('users.leaderboards', compact('leaderboards'));
+        return view('users.leaderboards', compact('leaderboards', 'userRank', 'userRankPoints'));
     } 
 
     public function forumFunctions($user)
@@ -565,7 +581,7 @@ class PageController extends Controller
         ->get();
 
         $disregardPosts = Posts::where('postedBy', $user->user_id)
-        ->where('status', 'Disregard')
+        ->where('status', 'Disregarded')
         ->withCount('likes', 'comments', 'bookmarks')
         ->orderBy('created_at', 'desc')
         ->get();

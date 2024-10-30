@@ -126,6 +126,22 @@
                                 <td><img src="../imgs/badges/wood.png" alt="Wood Badge"></td>
                             </tr>
                         </table>
+
+                        @if($userRank && $userRankPoints)
+                        
+                            <label for="">My Record</label>
+                            <table>
+                                <tr>
+                                    <td>Diamond</td>
+                                    <td class="userRankPoints">{{ $userRankPoints }}pts</td>
+                                    <td class="userRankImg">
+                                        <img src="{{ asset('imgs/badges/' . strtolower($userRank) . '.png') }}" alt="{{ $userRank }} Badge" width="40" class="badge-rank" title="{{ $userRank }} Badge">
+
+                                    </td>
+                                </tr>
+                            </table>
+                        @endif
+
                     </div>
                 </div>
             </div>
