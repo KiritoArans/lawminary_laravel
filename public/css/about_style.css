@@ -113,15 +113,62 @@ header hr {
 .settings-list a:hover {
     background-color: #ffaf45;
 }
+
+
+
 .about-content {
-    text-align: center;
-    padding: 20px;
+    margin: 0 25%;
+}
+.lawminary-desc, .pao-desc {
+    text-align: start;
+    color: var(--text-color3);
+}
+.lawminary-desc h1{
+    margin: 1rem 0 0 0;
+    color: var(--primary-color);
+    letter-spacing: .5rem;
+    text-align: start;
+}
+.pao-desc h1{
+    margin: 1rem 0 0 0;
+    color: var(--primary-color);
+    text-align: start;
 }
 
-.about-content h2 {
-    margin-bottom: 20px;
+.lawminary-desc p, .pao-desc p{
+    text-indent: 1.5rem;
+    line-height: 2rem;
+}
+.code404{
+    text-align: start;
+    margin-top: 2.5rem;
+    color: var(--text-color3);
+}
+.code404 p{
+    margin-top: 0;
+}
+.code404 h2{
+    letter-spacing: 1rem;
+    color: var(--text-color1);
 }
 
-.about-content p {
-    margin-bottom: 15px;
+
+
+@media (min-width: 1025px) and (max-width: 1300px) {
+    .about-content {
+        margin: 0 15%;
+    }
+}
+
+@media (min-width: 577px) and (max-width: 1024px) {
+    .about-content {
+        margin: 0 10%;
+    }
+}
+
+
+@media (max-width: 576px) {
+    .about-content {
+        margin: 0;
+    }
 }

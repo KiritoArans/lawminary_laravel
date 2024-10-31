@@ -482,23 +482,18 @@ class PageController extends Controller
     $possibleCharges = [];
 
     if ($userConcern) {
-        // Normalize input to lowercase and remove filler words for better search results
         $normalizedConcern = strtolower(trim($userConcern));
 
-        // Remove common stop words that do not add value to the search
-        $stopWords = ['the', 'and', 'a', 'of', 'in', 'on', 'at', 'for', 'to', 'is', 'with', 'i', 'you', 'my', 'person', 'me'];
+        $stopWords = ['the', 'and', 'a', 'of', 'in', 'on', 'at', 'for', 'to', 'is', 'with', 'i', 'you', 'my', 'person', 'man', 'me'];
         $keywords = array_diff(explode(' ', $normalizedConcern), $stopWords);
 
-        // Perform the search on synonyms, chapter_name, and article_name columns
         $possibleCharges = BookTwoLaws::where(function ($query) use ($normalizedConcern, $keywords) {
-            // 1. Exact phrase match (highest relevance)
             $query->where(function ($subQuery) use ($normalizedConcern) {
                 $subQuery->whereRaw("LOWER(article_name) LIKE ?", ["%$normalizedConcern%"])
                          ->orWhereRaw("LOWER(chapter_name) LIKE ?", ["%$normalizedConcern%"])
                          ->orWhereRaw("LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE ?", ["%$normalizedConcern%"]);
             });
 
-            // 2. Search using individual keywords from user input (lower relevance)
             foreach ($keywords as $keyword) {
                 $query->orWhere(function ($subQuery) use ($keyword) {
                     $subQuery->whereRaw("LOWER(article_name) LIKE ?", ["%$keyword%"])
@@ -507,7 +502,6 @@ class PageController extends Controller
                 });
             }
 
-            // 3. Flexible matching for synonyms in the search
             foreach ($keywords as $keyword) {
                 $query->orWhereRaw("LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE ?", ["%$keyword%"]);
             }
