@@ -19,7 +19,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="search" class="{{ Request::is('search') ? 'active' : '' }}">
+                    <a href="search-law" class="{{ Request::is('search-law') ? 'active' : '' }}">
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <span>Search Law</span>
                     </a>

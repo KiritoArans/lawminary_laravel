@@ -128,17 +128,17 @@ Route::get('/notifications', [
     'showNotificationPage',
 ])->middleware('auth');
 
-Route::get('/search', [PageController::class, 'showSearchPage'])->middleware(
+Route::get('/old-search', [PageController::class, 'showSearchPage'])->middleware(
     'auth'
 );
 
-Route::get('/test-search', function () {
-    return view('users.test-search');
+Route::get('/search-law', function () {
+    return view('users.search-law');
 })
     ->name('searchLaw')
     ->middleware('auth');
 
-Route::post('/test-search', [PageController::class, 'showTestSearchPage'])
+Route::post('/search-law', [PageController::class, 'showSearchLawPage'])
     ->name('searchLaw')
     ->middleware('auth');
 

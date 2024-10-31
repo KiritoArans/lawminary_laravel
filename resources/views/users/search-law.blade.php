@@ -7,15 +7,16 @@
         <link rel="icon" href="../imgs/lawminarylogo_v3.png" type="image/png" />
         <link rel="stylesheet" href="{{ asset('css/search_style.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/responsive/navres.css') }}" />
         @include('inclusions/libraryLinks')
     </head>
     <body>
         <div class="container">
             @include('inclusions/userNav')
             <main>
-                <!-- Header section -->
                 <header>
                     <div class="header-top">
+                        <i class="fa-solid fa-bars"></i>
                         @include('includes_syscon.syscon_logo_inc')
                         <div class="notification">
                             <a href="notifications" class="notification-link">
@@ -27,42 +28,32 @@
                     <hr class="divider" />
                 </header>
 
-                <!-- Main content area -->
-                <section class="content-area">
-                    <div class="concern-title">
-                        <h1>Raise Your Concern</h1>
-                        <h3>Get an immediate response to your query.</h3>
-                    </div>
+                <content>
                     <div class="concern-area">
-                        <!-- Form for submitting concern -->
-                        <form action="{{ route('searchLaw') }}" method="POST">
-                            @csrf
-                            <div class="concern-input">
-                                <label for="user_concern" class="input-label">
-                                    Your Concern:
-                                </label>
+                        <div class="concern-title">
+                            <h1>Raise Your Concern,</h1>
+                            <h3>Get an immediate response to your query.</h3>
+                            <p>
+                                <strong>Disclaimer:</strong>
+                                <br />
+                                The possible charges listed are based on the information
+                                you provided and are for reference purposes only. They
+                                do not constitute legal advice or a final determination
+                                of your case. For accurate legal consultation and
+                                representation, please consult with a qualified
+                                attorney. The charges shown may not cover all aspects of
+                                the law and may not apply in every scenario.
+                            </p>
+                        </div>
+                        <div class="concern-field">
+                            <form action="{{ route('searchLaw') }}" method="POST">
+                                @csrf
                                 <textarea name="user_concern" placeholder="Type your concern here..."></textarea>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="custom-button">
-                                    Submit
-                                </button>
-                            </div>
-                        </form>
+                                <button type="submit" class="custom-button">Submit</button>
+                            </form>
+                        </div>
                     </div>
-
-                    <p>
-                        <strong>Disclaimer:</strong>
-                        <br />
-                        The possible charges listed are based on the information
-                        you provided and are for reference purposes only. They
-                        do not constitute legal advice or a final determination
-                        of your case. For accurate legal consultation and
-                        representation, please consult with a qualified
-                        attorney. The charges shown may not cover all aspects of
-                        the law and may not apply in every scenario.
-                    </p>
-
+                    
                     @if(isset($possibleCharges) && count($possibleCharges) > 0)
                         <div class="charges">
                             <div class="charges-content">
@@ -74,17 +65,16 @@
                                 <hr>
                                 
                                 @foreach($possibleCharges as $charge)
-                                <div class="charges-info">
+                                    <div class="charges-info">
                                         <div class="possible-charges">
                                             <h1>{{ $charge->article_name }}</h1>
                                             <p>{{ $charge->description }}</p>
                                         </div>
-                                </div>
-                                
+                                    </div>
                                 @endforeach
                             </div>
                         </div>
-                    @else
+                      @elseif(request()->isMethod('post') && isset($possibleCharges))
                         <div class="charges">
                             <div class="charges-content">
                                 <div class="charges-header">
@@ -94,9 +84,8 @@
                                 </div>
                                 <hr>
                                 <div class="charges-info">
-                                    
                                     <div class="possible-charges">
-                                    <h3>No possible charges found for your concern.</h3>
+                                        <h1>No possible charges found for your concern.</h1>
                                     </div>
                                 </div>
                             </div>
@@ -104,9 +93,10 @@
                     @endif
 
 
-                </section>
+                </content>
             </main>
         </div>
+        <script src="js/showUserNav.js"></script>
         <script src="js/showNotification.js"></script>
         <script src="js/settings.js"></script>
         <script src="js/logout.js"></script>
