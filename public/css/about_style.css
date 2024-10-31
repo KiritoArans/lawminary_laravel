@@ -118,6 +118,7 @@ header hr {
 
 .about-content {
     margin: 0 25%;
+    transition: var(--tran-05);
 }
 .lawminary-desc, .pao-desc {
     text-align: start;
