@@ -167,7 +167,7 @@ header hr {
     display: flex;
     height: 8rem;
     padding: .75rem;
-    outline: none;
+    border: 1px solid #ddd;
     border-radius: 4px;
     resize: vertical;
 }
