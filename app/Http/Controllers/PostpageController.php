@@ -171,6 +171,14 @@ class PostpageController extends Controller
             );
         }
 
+        if ($request->filled('filterConcernCategory')) {
+            $query->where(
+                'concernCategory',
+                'like',
+                '%' . $request->input('filterConcernCategory') . '%'
+            );
+        }
+
         if ($request->filled('filterStatus')) {
             $query->where(
                 'status',
@@ -246,7 +254,8 @@ class PostpageController extends Controller
                 ->where('concern', 'like', '%' . $searchTerm . '%')
                 ->orWhere('postedBy', 'like', '%' . $searchTerm . '%')
                 ->orWhere('tags', 'like', '%' . $searchTerm . '%')
-                ->orWhere('status', 'like', '%' . $searchTerm . '%');
+                ->orWhere('status', 'like', '%' . $searchTerm . '%')
+                ->orWhere('concernCategory', 'like', '%' . $searchTerm . '%');
         }
 
         // Execute the query and get the results

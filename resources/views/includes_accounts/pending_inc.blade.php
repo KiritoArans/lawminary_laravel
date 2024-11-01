@@ -37,7 +37,7 @@
                             <div class="action-cell">
                                 <!-- Approve Form -->
                                 <form
-                                    action="{{ route('moderator.approveAccount', $pending->id) }}"
+                                    action="{{ request()->is('admin*') ? route('admin.approveAccount', $pending->id) : route('moderator.approveAccount', $pending->id) }}"
                                     method="POST"
                                     style="display: inline-block"
                                 >

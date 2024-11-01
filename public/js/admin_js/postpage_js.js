@@ -448,3 +448,27 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 });
+
+//filter json file for concern category
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Fetch expertise.json data and populate Concern Category dropdown
+    fetch('/expertise.json')
+        .then((response) => response.json())
+        .then((data) => {
+            const categorySelect = document.getElementById(
+                'filterConcernCategory'
+            );
+
+            // Populate the dropdown with options from the JSON data
+            data.forEach((category) => {
+                const option = document.createElement('option');
+                option.value = category.name;
+                option.textContent = category.name;
+                categorySelect.appendChild(option);
+            });
+        })
+        .catch((error) =>
+            console.error('Error loading expertise.json:', error)
+        );
+});

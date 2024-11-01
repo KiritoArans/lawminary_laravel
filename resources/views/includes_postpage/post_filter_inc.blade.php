@@ -14,6 +14,11 @@
             <label for="filterContent">Concern:</label>
             <input type="text" id="filterContent" name="filterContent" />
 
+            <label for="filterConcernCategory">Concern Category:</label>
+            <select id="filterConcernCategory" name="filterConcernCategory">
+                <option value="">Select Category</option>
+            </select>
+
             <label for="filterStatus">Status:</label>
             <select id="filterStatus" name="filterStatus">
                 <option value="">Select Status</option>
