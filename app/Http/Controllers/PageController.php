@@ -15,6 +15,7 @@ use App\Models\JoinForum;
 use App\Models\Follow;
 use App\Models\Leaderboard;
 use App\Models\Point;
+use App\Models\SystemContent;
 use App\Http\Controllers\LeaderboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -700,12 +701,20 @@ class PageController extends Controller
     // Settings
     public function showAboutLawminaryPage()
     {
-        return view('settings.about_lawminary');
+        $sysconData = SystemContent::all();
+    
+        return view('settings.about_lawminary', [
+            'sysconData' => $sysconData,
+        ]);
     }
 
     public function showAboutPAOPage()
     {
-        return view('settings.about_pao');
+        $sysconData = SystemContent::all();
+    
+        return view('settings.about_pao', [
+            'sysconData' => $sysconData,
+        ]);
     }
 
     public function showAccountPage()
