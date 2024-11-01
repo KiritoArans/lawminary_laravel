@@ -89,19 +89,20 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function confirmDelete() {
+document.getElementById('deleteAccountForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
     Swal.fire({
-        title: 'Your Account will be Deleted!',
-        text: "This action cannot be undone.",
+        title: 'Are you sure?',
+        text: "Your account will be deleted permanently.",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Yes',
-        cancelButtonText: 'No'
+        confirmButtonText: 'Yes'
     }).then((result) => {
         if (result.isConfirmed) {
-            document.querySelector("form").submit();
+            this.submit();
         }
     });
-}
+});

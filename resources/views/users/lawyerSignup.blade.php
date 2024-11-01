@@ -89,6 +89,14 @@
                                     <input type="password" id="password_confirmation" name="password_confirmation" required>
                                     <i class="fas fa-eye toggle-password" id="togglePasswordConfirmation"></i>
                                 </div>
+                                <div class="user-agreement">
+                                    <div class="terms">
+                                        <label for="agreeTerms" id="terms-label">
+                                            I agree to the <a id="openAgreementModal">User Agreement</a>
+                                        </label>
+                                        <input type="checkbox" id="agreeTerms" name="agreeTerms">
+                                    </div>
+                                </div>
                                 <div class="buttons">
                                     <a href="login" class="back-home">
                                         Back to Login
@@ -132,6 +140,9 @@
                     </div>
                 </div>
             </div>
+            
+            @include('inclusions/agreementModal')
+
         </section>
         <script src="js/lawyerLoginSignup.js"></script>
     </body>

@@ -41,6 +41,17 @@ document.addEventListener('DOMContentLoaded', function () {
     createAccountButton.addEventListener('click', function (event) {
         event.preventDefault();
 
+        const agreeTermsCheckbox = document.getElementById('agreeTerms');
+        if (!agreeTermsCheckbox.checked) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Agreement Required',
+                text: 'You must agree to the user agreement before proceeding.',
+                confirmButtonText: 'OK'
+            });
+            return; 
+        }
+
         const formData = new FormData(signUpForm);
 
         Swal.fire({
@@ -273,3 +284,23 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch((error) => console.error('Error loading expertise:', error));
 });
+
+
+
+
+var agreementModal = document.getElementById("agreementModal");
+var span = document.getElementById("closeAgreementModal");
+
+document.getElementById("openAgreementModal").onclick = function(event) {
+    event.preventDefault(); // Prevent default anchor behavior
+    agreementModal.style.display = "flex"; // Show the modal
+}
+
+span.onclick = function() {
+    agreementModal.style.display = "none"; // Hide the modal
+}
+window.onclick = function(event) {
+    if (event.target == agreementModal) {
+        agreementModal.style.display = "none"; // Hide the modal
+    }
+}
