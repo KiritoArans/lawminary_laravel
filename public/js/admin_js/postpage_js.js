@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const postIdInput = document.getElementById('editPostId');
     const concernInput = document.getElementById('editConcern');
     const statusInput = document.getElementById('editStatus');
-    const tagsInput = document.getElementById('editTags');
+    const tagsInput = document.getElementById('editConcernCategory');
     const postedByInput = document.getElementById('editPostedBy');
     const approvedByInput = document.getElementById('editApprovedBy');
 
@@ -458,6 +458,30 @@ document.addEventListener('DOMContentLoaded', function () {
         .then((data) => {
             const categorySelect = document.getElementById(
                 'filterConcernCategory'
+            );
+
+            // Populate the dropdown with options from the JSON data
+            data.forEach((category) => {
+                const option = document.createElement('option');
+                option.value = category.name;
+                option.textContent = category.name;
+                categorySelect.appendChild(option);
+            });
+        })
+        .catch((error) =>
+            console.error('Error loading expertise.json:', error)
+        );
+});
+
+//edit / update json file for concern category
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Fetch expertise.json data and populate Concern Category dropdown
+    fetch('/expertise.json')
+        .then((response) => response.json())
+        .then((data) => {
+            const categorySelect = document.getElementById(
+                'editConcernCategory'
             );
 
             // Populate the dropdown with options from the JSON data

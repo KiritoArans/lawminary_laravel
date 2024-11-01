@@ -18,6 +18,12 @@
                     class="form-control"
                 />
             </div>
+
+            <label for="editConcernCategory">Concern Category:</label>
+            <select id="editConcernCategory" name="concernCategory">
+                <option value="">Select Category</option>
+            </select>
+
             <div class="form-group">
                 <label for="editStatus">Status:</label>
                 <select
@@ -32,15 +38,6 @@
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="editTags">Category:</label>
-                <input
-                    type="text"
-                    id="editTags"
-                    name="concernCategory"
-                    class="form-control"
-                />
-            </div>
             <div class="form-group">
                 <label for="editPostedBy">Posted By:</label>
                 <input

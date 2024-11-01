@@ -298,6 +298,7 @@ class PostpageController extends Controller
         // Validate the input data
         $request->validate([
             'concern' => 'required|string|max:255',
+            'concernCategory' => 'required|string|max:255',
             'status' => 'required|in:Pending,Approved,Disregarded',
             'tags' => 'nullable|string|max:255',
             'postedBy' => 'required|string|max:255',
@@ -306,6 +307,7 @@ class PostpageController extends Controller
 
         // Update the post
         $post->concern = $request->concern;
+        $post->concernCategory = $request->concernCategory;
         $post->status = $request->status;
         $post->tags = $request->tags;
         $post->postedBy = $request->postedBy;
@@ -314,7 +316,7 @@ class PostpageController extends Controller
 
         if ($request->is('admin/*')) {
             return redirect()
-                ->route('admin.posts')
+                ->route('admin.postpage')
                 ->with('success', 'Post updated successfully');
         } elseif ($request->is('moderator/*')) {
             return redirect()
