@@ -134,6 +134,7 @@
             @include('inclusions/agreementModal')
 
         </section>
+        <script src="js/openAgreementModal.js"></script>
         <script src="js/loginandsignup.js"></script>
     </body>
 </html>
