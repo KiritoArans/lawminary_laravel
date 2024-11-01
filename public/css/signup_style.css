@@ -291,13 +291,6 @@ section {
 }
 
 
-
-
-
-
-
-
-
 @media (min-width: 576px) and (max-width: 1024px) {
     body {
         background: linear-gradient(to top, #561c24, #7b2d37);
@@ -411,10 +404,6 @@ section {
         display: none; /* Hide the dividing line on smaller screens */
     }
 }
-
-
-
-
 
 
 @media (max-width: 576px) {
