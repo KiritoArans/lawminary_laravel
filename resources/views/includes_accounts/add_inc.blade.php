@@ -108,16 +108,31 @@
         </option>
     </select>
 
+    <!-- Password Field -->
     <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required />
+    <div class="password-container">
+        <input type="password" id="password" name="password" required />
+        <span class="toggle-password" onclick="togglePassword('password')">
+            <i class="fa fa-eye" id="password-eye"></i>
+        </span>
+    </div>
 
-    <label for="password_confirmation">Confirm Password</label>
-    <input
-        type="password"
-        id="password_confirmation"
-        name="password_confirmation"
-        required
-    />
+    <!-- Confirm Password Field -->
+    <label for="password_confirmation">Confirm Password:</label>
+    <div class="password-container">
+        <input
+            type="password"
+            id="password_confirmation"
+            name="password_confirmation"
+            required
+        />
+        <span
+            class="toggle-password"
+            onclick="togglePassword('password_confirmation')"
+        >
+            <i class="fa fa-eye" id="password_confirmation-eye"></i>
+        </span>
+    </div>
     <div id="passwordError" style="color: red"></div>
     <!-- Error message placeholder -->
 
