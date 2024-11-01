@@ -231,3 +231,84 @@ header h1 {
     flex-direction: column;
     align-items: center; /* Center align the buttons horizontally */
 }
+
+/* Target the modal by its specific ID and apply styles */
+#pendingAccountsModal {
+    display: none; /* Hide modal initially */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modal content styling */
+#pendingAccountsModal .modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 90vh;
+    border-radius: 8px;
+}
+/* Close button styling */
+#pendingAccountsModal .close-button {
+    color: #333;
+    float: right;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#pendingAccountsModal .close-button:hover {
+    color: #ff0000; /* Change color on hover */
+}
+
+/* Customize table within the modal */
+#pendingAccountsModal .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#pendingAccountsModal .table th,
+#pendingAccountsModal .table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Customize buttons in action-cell */
+#pendingAccountsModal .btn-view-approve {
+    background-color: green;
+    color: white;
+
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#pendingAccountsModal .btn-view-reject {
+    background-color: red;
+    color: white;
+
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/* Add custom styling to the action icons */
+#pendingAccountsModal .fa-check {
+    color: white;
+}
+
+#pendingAccountsModal .fa-x {
+    color: white;
+}

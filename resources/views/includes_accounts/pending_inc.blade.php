@@ -12,7 +12,6 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Account ID</th>
                     <th>Username</th>
                     <th>LN, FN, MI</th>
                     <th>Email</th>
@@ -25,7 +24,6 @@
                 @foreach ($pendingAcc as $pending)
                     @include('inclusions.response')
                     <tr>
-                        <td>{{ $pending->id }}</td>
                         <td>{{ $pending->username }}</td>
                         <td>
                             {{ $pending->lastName . ', ' . $pending->firstName . ', ' . $pending->middleName }}

@@ -1,6 +1,4 @@
 /filter/;
-console.log('JS Loaded');
-
 document.addEventListener('DOMContentLoaded', function () {
     const filterButton = document.getElementById('filterButton');
     const filterModal = document.getElementById('filterModal');
@@ -46,16 +44,18 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
     // Define the resetFilter function
     window.resetFilter = function () {
         // Reset form fields
         filterForm.reset();
 
-        // Show all rows again after reset
-        const rows = document.querySelectorAll('#accountTableBody tr');
-        rows.forEach((row) => {
-            row.style.display = ''; // Reset the display of all rows
-        });
+        // Redirect to /admin/account or /moderator/account
+        if (window.location.pathname.includes('/admin')) {
+            window.location.href = '/admin/account';
+        } else if (window.location.pathname.includes('/moderator')) {
+            window.location.href = '/moderator/account';
+        }
     };
 });
 
