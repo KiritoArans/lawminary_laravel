@@ -56,14 +56,21 @@
                         required
                     />
 
-                    <label for="" class="label-ttl">Password</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        placeholder="Type your password"
-                        required
-                    />
+                    <label for="password" class="label-ttl">Password</label>
+                    <div class="password-container">
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            placeholder="Type your password"
+                            required
+                        />
+                        <i
+                            class="fa fa-eye"
+                            id="password-eye"
+                            onclick="togglePassword('password')"
+                        ></i>
+                    </div>
 
                     <div class="toggle-container">
                         <div class="toggle-boxes">
@@ -87,5 +94,21 @@
                 </form>
             </div>
         </content>
+        <script>
+            function togglePassword(fieldId) {
+                const passwordField = document.getElementById(fieldId);
+                const eyeIcon = document.getElementById(`${fieldId}-eye`);
+
+                if (passwordField.type === 'password') {
+                    passwordField.type = 'text';
+                    eyeIcon.classList.remove('fa-eye');
+                    eyeIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordField.type = 'password';
+                    eyeIcon.classList.remove('fa-eye-slash');
+                    eyeIcon.classList.add('fa-eye');
+                }
+            }
+        </script>
     </body>
 </html>
