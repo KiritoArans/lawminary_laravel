@@ -102,26 +102,9 @@
                 </content>
             </main>
         </div>
-        <script>
-            var agreementModal = document.getElementById("agreementModal");
-            var span = document.getElementById("closeAgreementModal");
-
-            document.getElementById("openAgreementModal").onclick = function(event) {
-                event.preventDefault(); // Prevent default anchor behavior
-                agreementModal.style.display = "flex"; // Show the modal
-            }
-
-            span.onclick = function() {
-                agreementModal.style.display = "none"; // Hide the modal
-            }
-            window.onclick = function(event) {
-                if (event.target == agreementModal) {
-                    agreementModal.style.display = "none"; // Hide the modal
-                }
-            }
-        </script>
         <script src="../js/showUserNav.js"></script>
         <script src="../js/showNotification.js"></script>
+        <script src="../js/openAgreementModal.js"></script>
         <script src="../js/settings.js"></script>
         <script src="../js/logout.js"></script>
     </body>

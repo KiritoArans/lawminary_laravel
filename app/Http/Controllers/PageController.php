@@ -499,13 +499,15 @@ class PageController extends Controller
             // ]);
 
             $normalizedConcern = strtolower(trim($userConcern));
-            $stopWords = ['the', 'and', 'a', 'of', 'in', 'on', 'at', 'for', 'to', 'is', 'with', 'i', 'you', 'my', 'person', 'man', 'me'];
+            $stopWords = ['the', 'and', 'a', 'of', 'in', 'on', 'at', 'for', 'to', 'is', 'with', 'i', 'you', 'my', 'person', 'man', 'me', 'them'];
             $keywords = array_diff(explode(' ', $normalizedConcern), $stopWords);
 
             $possibleCharges = BookTwoLaws::where(function ($query) use ($normalizedConcern, $keywords) {
                 $query->where(function ($subQuery) use ($normalizedConcern) {
                     $subQuery->whereRaw("LOWER(article_name) LIKE ?", ["%$normalizedConcern%"])
                             ->orWhereRaw("LOWER(chapter_name) LIKE ?", ["%$normalizedConcern%"])
+                            ->orWhereRaw("LOWER(section_name) LIKE ?", ["%$normalizedConcern%"])
+                            ->orWhereRaw("LOWER(description) LIKE ?", ["%$normalizedConcern%"])
                             ->orWhereRaw("LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE ?", ["%$normalizedConcern%"]);
                 });
 
@@ -513,6 +515,8 @@ class PageController extends Controller
                     $query->orWhere(function ($subQuery) use ($keyword) {
                         $subQuery->whereRaw("LOWER(article_name) LIKE ?", ["%$keyword%"])
                                 ->orWhereRaw("LOWER(chapter_name) LIKE ?", ["%$keyword%"])
+                                ->orWhereRaw("LOWER(section_name) LIKE ?", ["%$keyword%"])
+                                ->orWhereRaw("LOWER(description) LIKE ?", ["%$keyword%"])
                                 ->orWhereRaw("FIND_IN_SET(LOWER(TRIM(?)), TRIM(TRAILING ',' FROM synonyms)) > 0", [trim($keyword)]);
                     });
                 }
@@ -521,25 +525,29 @@ class PageController extends Controller
                     $query->orWhereRaw("LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE ?", ["%$keyword%"]);
                 }
             })
-            ->select('title_name', 'chapter_name', 'article_name', 'description')
+            ->select('title_name', 'chapter_name', 'article_name', 'section_name', 'description')
             ->orderByRaw("
                 (CASE 
                     WHEN LOWER(article_name) LIKE '%$normalizedConcern%' THEN 5
-                    WHEN LOWER(chapter_name) LIKE '%$normalizedConcern%' THEN 4
-                    WHEN LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE '%$normalizedConcern%' THEN 3
-                    ELSE 2
+                    WHEN LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE '%$normalizedConcern%' THEN 4
+                    WHEN LOWER(chapter_name) LIKE '%$normalizedConcern%' THEN 3
+                    WHEN LOWER(section_name) LIKE '%$normalizedConcern%' THEN 2
+                    WHEN LOWER(description) LIKE '%$normalizedConcern%' THEN 1
+                    ELSE 0
                 END) DESC,
                 (CASE 
                     WHEN FIND_IN_SET(LOWER(TRIM(?)), TRIM(TRAILING ',' FROM synonyms)) > 0 THEN 1
                     ELSE 0
                 END) DESC
             ", [$normalizedConcern])
-            ->limit(10)
+            ->limit(16)
             ->get();
         }
 
         return view('users.search-law', ['possibleCharges' => $possibleCharges]);
     }
+
+
 
     public function showResourcesPage()
     {

@@ -144,6 +144,7 @@
             @include('inclusions/agreementModal')
 
         </section>
+        <script src="js/openAgreementModal.js"></script>
         <script src="js/lawyerLoginSignup.js"></script>
     </body>
 </html>
