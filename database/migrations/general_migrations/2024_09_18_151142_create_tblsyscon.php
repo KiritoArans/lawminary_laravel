@@ -13,11 +13,12 @@ return new class extends Migration {
         Schema::create('tblsyscon', function (Blueprint $table) {
             $table->id();
             $table->string('logo_path', 100)->nullable();
-            $table->string('system_name', 50);
-            $table->text('about_lawminary');
-            $table->text('about_pao');
-            $table->text('terms_of_service');
-            $table->text('updated_by');
+            $table->string('system_name', 100);
+            $table->string('system_desc', 1000);
+            $table->string('system_desc2', 1000);
+            $table->string('partner_name', 100);
+            $table->string('partner_desc', 1000);
+            $table->string('partner_desc2', 1000);
             $table->timestamps();
         });
     }
