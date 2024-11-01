@@ -273,7 +273,7 @@ section {
     text-indent: 1rem;
 }
 .agreementModal-content a {
-    margin-left: .5rem;
+    margin: 0;
 }
 
 .close {
