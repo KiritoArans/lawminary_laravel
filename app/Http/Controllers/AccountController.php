@@ -325,11 +325,8 @@ class AccountController extends Controller
     public function updateAccountInfo(Request $request)
     {
         $request->validate([
-            // 'bio' => 'nullable|string|max:100',
             'birthDate' => 'required|date',
             'sex' => 'required|string',
-            'nationality' => 'required|string|max:100',
-            'contactNumber' => 'nullable|string|max:11',
             'email' => 'nullable|string|max:100',
         ]);
 
