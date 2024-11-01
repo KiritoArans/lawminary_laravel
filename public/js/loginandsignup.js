@@ -65,6 +65,17 @@ document.addEventListener('DOMContentLoaded', function () {
     createAccountButton.addEventListener('click', function (event) {
         event.preventDefault();
 
+        const agreeTermsCheckbox = document.getElementById('agreeTerms');
+        if (!agreeTermsCheckbox.checked) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Agreement Required',
+                text: 'You must agree to the user agreement before proceeding.',
+                confirmButtonText: 'OK'
+            });
+            return; 
+        }
+
         const formData = new FormData(signUpForm);
 
         Swal.fire({
@@ -282,54 +293,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-//nationalities
-document.addEventListener('DOMContentLoaded', function () {
-    // Fetch the nationalities from the JSON file
-    fetch('/nationalities.json') // Adjust the path if necessary
-        .then((response) => response.json())
-        .then((data) => {
-            const nationalitySelect = document.getElementById('nationality');
-            data.forEach((nationality) => {
-                const option = document.createElement('option');
-                option.value = nationality.name;
-                option.text = nationality.name;
-                nationalitySelect.appendChild(option);
-            });
-        })
-        .catch((error) => console.error('Error loading nationalities:', error));
-});
-
-//contact number
-
-document
-    .getElementById('contactNumber')
-    .addEventListener('input', function (e) {
-        // Replace any non-digit characters
-        this.value = this.value.replace(/\D/g, '');
-    });
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Fetch the nationalities from the JSON file
-    fetch('/nationalities.json') // Adjust the path if necessary
-        .then((response) => response.json())
-        .then((data) => {
-            const nationalitySelect = document.getElementById('nationality');
-            data.forEach((nationality) => {
-                const option = document.createElement('option');
-                option.value = nationality.name;
-                option.text = nationality.name;
-                nationalitySelect.appendChild(option);
-            });
-        })
-        .catch((error) => console.error('Error loading nationalities:', error));
-});
-//contact number
-document
-    .getElementById('contactNumber')
-    .addEventListener('input', function (e) {
-        // Replace any non-digit characters
-        this.value = this.value.replace(/\D/g, '');
-    });
 
 
-    
+// Get the agreement modal
+var agreementModal = document.getElementById("agreementModal");
+var span = document.getElementById("closeAgreementModal");
+
+document.getElementById("openAgreementModal").onclick = function(event) {
+    event.preventDefault(); // Prevent default anchor behavior
+    agreementModal.style.display = "flex"; // Show the modal
+}
+
+span.onclick = function() {
+    agreementModal.style.display = "none"; // Hide the modal
+}
+window.onclick = function(event) {
+    if (event.target == agreementModal) {
+        agreementModal.style.display = "none"; // Hide the modal
+    }
+}

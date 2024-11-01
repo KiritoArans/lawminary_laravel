@@ -233,17 +233,17 @@
 
                             <div id="delete-account" class="tab-content">
                                 <h2>Delete Account</h2>
-                                <form method="POST" action="{{ route('deleteAccount') }}">
+                                <form id="deleteAccountForm" method="POST" action="{{ route('deleteAccount') }}">
                                     @csrf
                                     @include('inclusions/response')
-                                
+                            
                                     <input type="text" 
                                         id="username" 
                                         name="username" 
                                         placeholder="Type your old username" 
                                         required
                                     />
-                                
+                            
                                     <label for="password">Current Password</label>
                                     <div class="password-container">
                                         <input
@@ -255,17 +255,16 @@
                                         />
                                         <i class="fas fa-eye toggle-password" id="togglePassword"></i>
                                     </div>
-
+                            
                                     <div class="note">
-                                        <Span>Note: You cannot retrive your account once it's deleted.</Span>
+                                        <span>Note: You cannot retrieve your account once it's deleted.</span>
                                     </div>
-                                
+                            
                                     <div class="action-button">
                                         <button type="button" onclick="window.location.href='{{ url()->previous() }}'">Cancel</button>
-                                        <button type="submit">Delete</button>
+                                        <button type="submit" id="delete-btn">Delete</button>
                                     </div>
                                 </form>
-                                
                             </div>
                             
                         </div>

@@ -21,7 +21,7 @@ class AccountController extends Controller
         try {
             $data = $request->validate(
                 [
-                    'username' => 'required|unique:tblaccounts,username|min:3|max:15',
+                    'username' => 'required|unique:tblaccounts,username|min:3|max:24',
                     'email' => 'required|email',
                     'password' => [
                         'required',
@@ -89,7 +89,7 @@ class AccountController extends Controller
         try {
             $data = $request->validate(
                 [
-                    'username' => 'required|unique:tblaccounts,username|min:3|max:15',
+                    'username' => 'required|unique:tblaccounts,username|min:3|max:24',
                     'email' => 'required|email',
                     'password' => [
                         'required',
@@ -357,23 +357,16 @@ class AccountController extends Controller
     
         $user = Auth::user();
     
-        // Verify the username and password
         if ($user->username === $request->username && Hash::check($request->password, $user->password)) {
-            // Delete the user account
             $user->delete();
     
-            // Log the user out after deleting the account
             Auth::logout();
-    
-            // Redirect to a confirmation page or login page
+
             return redirect()->back()->with('status', 'Your account has been deleted successfully.');
         }
     
-        // If credentials don't match, return an error
         return back()->withErrors(['username' => 'Username or password is incorrect.']);
     }
-
-
 
     public function showAdModLogin()
     {
