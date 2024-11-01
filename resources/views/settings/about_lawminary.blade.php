@@ -28,19 +28,16 @@
                     <hr class="divider" />
                 </header>
                 <content class="about-content">
-                    {{-- @include('includes_syscon.about_lawminary_inc') --}}
                     <div class="lawminary-desc">
-                        <h1>Lawminary,</h1>
-                        <p>Aims to create a community-centric platform that demystifies legal processes for the general public. It offers insights into various laws and facilitates a space where users can ask questions and receive answers from legal professionals, including lawyers. Users can post inquiries, attach relevant photos, and utilize a search function to find immediate answers or explore legal topics of interest. Moderators, primarily PAO Attorneys, will oversee content relevance and quality.</p>
-                        <p>The platform is designed to benefit citizens by providing accessible legal information and promoting legal literacy. It also offers lawyers a way to connect with the community, enhance their credibility, and gain recognition through a points and rating system based on their participation and user feedback. This interactive feature encourages community engagement and the sharing of experiences related to legal matters.</p>
-                        {{-- @if ($sysconData)
-                            <p>System Name: {{ $sysconData->system_name ?? 'N/A' }}</p>
-                            <p>System Description: {{ $sysconData->system_desc ?? 'N/A' }}</p>
-                            <p>Partner Name: {{ $sysconData->partner_name ?? 'N/A' }}</p>
-                            <p>Partner Description: {{ $sysconData->partner_desc ?? 'N/A' }}</p>
+                        @if ($sysconData->isNotEmpty())
+                            @foreach ($sysconData as $data)
+                                <h1>{{ $data->system_name ?? 'N/A' }}</h1>
+                                <p>{{ $data->system_desc ?? 'N/A' }}</p>
+                                <p>{{ $data->system_desc2 ?? 'N/A' }}</p>
+                            @endforeach
                         @else
                             <p>No data available.</p>
-                        @endif --}}
+                        @endif
                     </div>
                     <div class="code404">
                         <p>Sincerely,</p>
