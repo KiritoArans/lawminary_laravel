@@ -46,6 +46,7 @@
                             </p>
                         </div>
                         <div class="concern-field">
+                            @include('inclusions/response')
                             <form action="{{ route('searchLaw') }}" method="POST">
                                 @csrf
                                 <textarea name="user_concern" placeholder="Type your concern here..."></textarea>

@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         icon: 'success',
                         title: 'Success!',
                         text: 'Your reply has been posted.',
+                        showConfirmButton: false,  
+                        timer: 2000,
                     });
 
                     // Display the replies section when a new reply is added

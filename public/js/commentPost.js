@@ -26,6 +26,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         icon: 'success',
                         title: 'Success!',
                         text: 'Your comment has been posted.',
+                        showConfirmButton: false,  
+                        timer: 2000,
                     });
 
                     // No need to manually append the comment, Laravel Echo will handle that

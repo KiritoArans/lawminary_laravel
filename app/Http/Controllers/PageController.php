@@ -477,60 +477,69 @@ class PageController extends Controller
 
 
     public function showSearchLawPage(Request $request)
-{
-    $userConcern = $request->input('user_concern');
-    $possibleCharges = [];
+    {
+        $request->validate([
+            'user_concern' => 'required|string|max:255',
+        ]);
 
-    if ($userConcern) {
-        $normalizedConcern = strtolower(trim($userConcern));
+        $userConcern = $request->input('user_concern');
+        $possibleCharges = [];
 
-        $stopWords = ['the', 'and', 'a', 'of', 'in', 'on', 'at', 'for', 'to', 'is', 'with', 'i', 'you', 'my', 'person', 'man', 'me'];
-        $keywords = array_diff(explode(' ', $normalizedConcern), $stopWords);
+        if ($userConcern) {
+            $user = auth()->user();
+            $userId = $user->user_id;
+            $userEmail = $user->email;
 
-        $possibleCharges = BookTwoLaws::where(function ($query) use ($normalizedConcern, $keywords) {
-            $query->where(function ($subQuery) use ($normalizedConcern) {
-                $subQuery->whereRaw("LOWER(article_name) LIKE ?", ["%$normalizedConcern%"])
-                         ->orWhereRaw("LOWER(chapter_name) LIKE ?", ["%$normalizedConcern%"])
-                         ->orWhereRaw("LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE ?", ["%$normalizedConcern%"]);
-            });
+            \DB::table('tblsearchedlaw')->insert([
+                'user_id' => $userId,
+                'email' => $userEmail,
+                'concernQuery' => $userConcern,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
 
-            foreach ($keywords as $keyword) {
-                $query->orWhere(function ($subQuery) use ($keyword) {
-                    $subQuery->whereRaw("LOWER(article_name) LIKE ?", ["%$keyword%"])
-                             ->orWhereRaw("LOWER(chapter_name) LIKE ?", ["%$keyword%"])
-                             ->orWhereRaw("FIND_IN_SET(LOWER(TRIM(?)), TRIM(TRAILING ',' FROM synonyms)) > 0", [trim($keyword)]);
+            $normalizedConcern = strtolower(trim($userConcern));
+            $stopWords = ['the', 'and', 'a', 'of', 'in', 'on', 'at', 'for', 'to', 'is', 'with', 'i', 'you', 'my', 'person', 'man', 'me'];
+            $keywords = array_diff(explode(' ', $normalizedConcern), $stopWords);
+
+            $possibleCharges = BookTwoLaws::where(function ($query) use ($normalizedConcern, $keywords) {
+                $query->where(function ($subQuery) use ($normalizedConcern) {
+                    $subQuery->whereRaw("LOWER(article_name) LIKE ?", ["%$normalizedConcern%"])
+                            ->orWhereRaw("LOWER(chapter_name) LIKE ?", ["%$normalizedConcern%"])
+                            ->orWhereRaw("LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE ?", ["%$normalizedConcern%"]);
                 });
-            }
 
-            foreach ($keywords as $keyword) {
-                $query->orWhereRaw("LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE ?", ["%$keyword%"]);
-            }
-        })
-        ->select('title_name', 'chapter_name', 'article_name', 'description')
-        ->orderByRaw("
-            (CASE 
-                WHEN LOWER(article_name) LIKE '%$normalizedConcern%' THEN 5
-                WHEN LOWER(chapter_name) LIKE '%$normalizedConcern%' THEN 4
-                WHEN LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE '%$normalizedConcern%' THEN 3
-                ELSE 2
-            END) DESC,
-            (CASE 
-                WHEN FIND_IN_SET(LOWER(TRIM(?)), TRIM(TRAILING ',' FROM synonyms)) > 0 THEN 1
-                ELSE 0
-            END) DESC
-        ", [$normalizedConcern]) // Ensure we pass the normalized concern for the synonyms check
-        ->limit(10)  // Limit to top 15 results for efficiency
-        ->get();
+                foreach ($keywords as $keyword) {
+                    $query->orWhere(function ($subQuery) use ($keyword) {
+                        $subQuery->whereRaw("LOWER(article_name) LIKE ?", ["%$keyword%"])
+                                ->orWhereRaw("LOWER(chapter_name) LIKE ?", ["%$keyword%"])
+                                ->orWhereRaw("FIND_IN_SET(LOWER(TRIM(?)), TRIM(TRAILING ',' FROM synonyms)) > 0", [trim($keyword)]);
+                    });
+                }
+
+                foreach ($keywords as $keyword) {
+                    $query->orWhereRaw("LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE ?", ["%$keyword%"]);
+                }
+            })
+            ->select('title_name', 'chapter_name', 'article_name', 'description')
+            ->orderByRaw("
+                (CASE 
+                    WHEN LOWER(article_name) LIKE '%$normalizedConcern%' THEN 5
+                    WHEN LOWER(chapter_name) LIKE '%$normalizedConcern%' THEN 4
+                    WHEN LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE '%$normalizedConcern%' THEN 3
+                    ELSE 2
+                END) DESC,
+                (CASE 
+                    WHEN FIND_IN_SET(LOWER(TRIM(?)), TRIM(TRAILING ',' FROM synonyms)) > 0 THEN 1
+                    ELSE 0
+                END) DESC
+            ", [$normalizedConcern])
+            ->limit(10)
+            ->get();
+        }
+
+        return view('users.search-law', ['possibleCharges' => $possibleCharges]);
     }
-
-    return view('users.search-law', ['possibleCharges' => $possibleCharges]);
-}
-
-
-
-    
-
-    
 
     public function showResourcesPage()
     {

@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         icon: 'success',
                         title: data.is_liked ? 'Post Liked' : 'Post Unliked',
                         text: data.message,
+                        showConfirmButton: false,  
+                        timer: 1000,
                     });
 
                 } else {

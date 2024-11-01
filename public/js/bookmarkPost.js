@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         icon: 'success',
                         title: data.is_bookmarked ? 'Post Bookmarked' : 'Post Unbookmarked',
                         text: data.message,
+                        showConfirmButton: false,  
+                        timer: 1000,
                     });
 
                 } else {

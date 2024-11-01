@@ -29,27 +29,23 @@ class CommentController extends Controller
             'post_id' => 'required|string|max:100',
         ]);
     
-        $user = Auth::user(); // The user who is commenting
+        $user = Auth::user(); 
         $comment = new Comment();
         $comment->comment_id = uniqid('comm_');
-        $comment->user_id = $user->user_id; // The user who commented
+        $comment->user_id = $user->user_id; 
         $comment->post_id = $request->post_id;
         $comment->comment = $request->comment;
     
         $comment->save();
     
-        // Broadcast the comment
         event(new CommentCreated($comment));
     
-        // Notify the post's owner (optional)
         $post = Posts::where('post_id', $request->post_id)->with('user')->first();
     
-        // If the post is not found in Posts, check in ForumPosts
         if (!$post) {
             $post = ForumPosts::where('post_id', $request->post_id)->with('user')->first();
         }
     
-        // Notify the post owner if the post exists and it's not the commenting user
         if ($post && $post->user && $post->user->user_id !== $user->user_id) {
             $post->user->notify(new PostCommented($user, $post, $comment));
         }
@@ -66,7 +62,6 @@ class CommentController extends Controller
         ]);
     }
 
-    // Reply Function
     public function createReply(Request $request)
     {
         $validated = $request->validate([
@@ -77,7 +72,6 @@ class CommentController extends Controller
 
         $user = Auth::user();
 
-        // Create the reply
         $reply = new Reply();
         $reply->reply_id = uniqid('rply_');
         $reply->comment_id = $request->input('comment_id');
@@ -86,7 +80,6 @@ class CommentController extends Controller
         $reply->reply = $request->input('reply');
         $reply->save();
 
-        // Broadcast the reply to others
         event(new ReplyCreated($reply));
 
         $comment = Comment::with('user')->where('comment_id', $request->input('comment_id'))->first();
@@ -129,7 +122,7 @@ class CommentController extends Controller
             'rating' => 'required|integer|min:1|max:5',
         ]);
 
-        $user = Auth::user(); // The user who is rating the comment
+        $user = Auth::user(); 
 
         // Create a new rating
         $rate = new Rate();
@@ -139,17 +132,14 @@ class CommentController extends Controller
         $rate->rate = $request->input('rating'); 
         $rate->save();
 
-        // Calculate points based on rating
         $points = $request->input('rating') * 10;
 
-        // Add points to the lawyer's account
         $addPoints = new Points();
         $addPoints->lawyerUser_id = $request->input('lawyerUser_id');
         $addPoints->points = $points; 
         $addPoints->pointsFrom = "Rate";
         $addPoints->save();
 
-        // Fetch the comment and its user (the comment's author)
         $comment = Comment::where('comment_id', $request->input('comment_id'))->with('user')->first();
 
         if ($comment && $comment->user) {

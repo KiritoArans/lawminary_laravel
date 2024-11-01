@@ -123,19 +123,16 @@ class PostController extends Controller
             'post_id' => 'required',
         ]);
 
-        // Check if the like already exists
         $like = Like::where('user_id', $user->user_id)
                     ->where('post_id', $data['post_id'])
                     ->first();
 
-        $isLiked = false; // Track if the post is liked or unliked
+        $isLiked = false; 
 
         if ($like) {
-            // If the like exists, remove it (unlike)
             $like->delete();
-            $isLiked = false; // Post unliked
+            $isLiked = false; 
         } else {
-            // Otherwise, create a new like entry
             $newLike = new Like();
             $newLike->liked_id = uniqid('like_');
             $newLike->post_id = $data['post_id'];
@@ -143,16 +140,13 @@ class PostController extends Controller
             $newLike->like = 1;
             $newLike->save();
 
-            // Fetch the post and its user
             $post = Posts::where('post_id', $data['post_id'])->with('user')->first();
 
             if ($post) {
-                // Check if the post author is not the current user
                 if ($post->user->user_id !== $user->user_id) {
                     $post->user->notify(new PostLiked($user, $post));
                 }
 
-                // If the post's author is a lawyer, add points
                 if ($post->user->accountType === 'Lawyer') {
                     $addPoints = new Points();
                     $addPoints->lawyerUser_id = $post->user->user_id; 
@@ -162,10 +156,9 @@ class PostController extends Controller
                 }
             }
 
-            $isLiked = true; // Post liked
+            $isLiked = true;
         }
 
-        // Return the updated like count and whether it was liked/unliked
         $likeCount = Like::where('post_id', $data['post_id'])->count();
 
         return response()->json([
@@ -176,9 +169,6 @@ class PostController extends Controller
             'post_id' => $data['post_id'],
         ]);
     }
-
-    
-
 
     public function bookmarkPost(Request $request)
     {
@@ -191,12 +181,11 @@ class PostController extends Controller
                     ->where('post_id', $data['post_id'])
                     ->first();
     
-        $isBookmarked = false; // Track if the post is bookmarked or unbookmarked
+        $isBookmarked = false;
     
         if ($bookmark) {
-            // Post was already bookmarked, so we are unbookmarking it
             $bookmark->delete();
-            $isBookmarked = false; // Post unbookmarked
+            $isBookmarked = false; 
         } else {
             // Create a new bookmark
             $newBookmark = new Bookmark();
@@ -205,7 +194,7 @@ class PostController extends Controller
             $newBookmark->bookmark = 1;
             $newBookmark->save();
     
-            $isBookmarked = true; // Post bookmarked
+            $isBookmarked = true; 
     
             $post = Posts::where('post_id', $data['post_id'])->with('user')->first();
     
@@ -225,7 +214,6 @@ class PostController extends Controller
             }
         }
     
-        // Return the updated bookmark count and whether it was bookmarked/unbookmarked
         $bookmarkCount = Bookmark::where('post_id', $data['post_id'])->count();
     
         return response()->json([
