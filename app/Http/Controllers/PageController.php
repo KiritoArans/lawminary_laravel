@@ -475,7 +475,6 @@ class PageController extends Controller
         return view('users.search');
     }
 
-
     public function showSearchLawPage(Request $request)
     {
         $request->validate([
@@ -486,17 +485,18 @@ class PageController extends Controller
         $possibleCharges = [];
 
         if ($userConcern) {
-            $user = auth()->user();
-            $userId = $user->user_id;
-            $userEmail = $user->email;
 
-            \DB::table('tblsearchedlaw')->insert([
-                'user_id' => $userId,
-                'email' => $userEmail,
-                'concernQuery' => $userConcern,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+            // $user = auth()->user();
+            // $userId = $user->user_id;
+            // $userEmail = $user->email;
+
+            // \DB::table('tblsearchedlaw')->insert([
+            //     'user_id' => $userId,
+            //     'email' => $userEmail,
+            //     'concernQuery' => $userConcern,
+            //     'created_at' => now(),
+            //     'updated_at' => now(),
+            // ]);
 
             $normalizedConcern = strtolower(trim($userConcern));
             $stopWords = ['the', 'and', 'a', 'of', 'in', 'on', 'at', 'for', 'to', 'is', 'with', 'i', 'you', 'my', 'person', 'man', 'me'];
