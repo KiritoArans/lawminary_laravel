@@ -329,13 +329,16 @@ Route::prefix('admin')
 
 //admin system content route
 Route::prefix('admin')
-    ->middleware(['auth', AdminMiddleware::class]) // Use the default auth middleware
+    ->middleware(['auth', AdminMiddleware::class])
     ->group(function () {
         Route::get('systemcontent', [
             SystemContentController::class,
             'index',
         ])->name('admin.systemcontent');
-
+        Route::post('systemcontent/store', [
+            SystemContentController::class,
+            'store',
+        ])->name('admin.systemcontent.store');
         Route::put('systemcontent/update/{id}', [
             SystemContentController::class,
             'update',

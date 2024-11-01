@@ -15,11 +15,13 @@
         <form
             id="editForm"
             method="POST"
-            action="{{ route('admin.systemcontent.update', ['id' => $sysconData->isNotEmpty() ? $sysconData->first()->id : 0]) }}"
+            action="{{ $sysconData->isNotEmpty() ? route('admin.systemcontent.update', ['id' => $sysconData->first()->id]) : route('admin.systemcontent.store') }}"
             enctype="multipart/form-data"
         >
             @csrf
-            @method('PUT')
+            @if ($sysconData->isNotEmpty())
+                @method('PUT')
+            @endif
 
             <!-- Hidden input for ID and field type -->
             <input type="hidden" id="editId" name="id" />
@@ -27,6 +29,7 @@
 
             <!-- System Name Section -->
             <div class="form-group" id="nameField" style="display: none">
+                <strong>System Name</strong>
                 <input
                     type="text"
                     id="editName"
@@ -35,46 +38,76 @@
                 />
             </div>
 
-            <!-- About Lawminary Section -->
+            <!-- System Description Fields -->
+
+            <div class="form-group" id="systemDescField" style="display: none">
+                <strong>System Description</strong>
+                <textarea
+                    id="editSystemDesc"
+                    name="system_desc"
+                    class="form-control"
+                    rows="3"
+                ></textarea>
+            </div>
+
+            <div class="form-group" id="systemDesc2Field" style="display: none">
+                <textarea
+                    id="editSystemDesc2"
+                    name="system_desc2"
+                    class="form-control"
+                    rows="3"
+                ></textarea>
+            </div>
+
+            <!-- Partner Name Section -->
+
+            <div class="form-group" id="partnerNameField" style="display: none">
+                <strong>Partner's Name</strong>
+                <input
+                    type="text"
+                    id="editPartnerName"
+                    name="partner_name"
+                    class="form-control"
+                />
+            </div>
+
+            <!-- Partner Description Fields -->
+
+            <div class="form-group" id="partnerDescField" style="display: none">
+                <strong>Partner's Description</strong>
+                <textarea
+                    id="editPartnerDesc"
+                    name="partner_desc"
+                    class="form-control"
+                    rows="3"
+                ></textarea>
+            </div>
             <div
                 class="form-group"
-                id="about_LawminaryField"
+                id="partnerDesc2Field"
                 style="display: none"
             >
                 <textarea
-                    id="editAboutLawminary"
-                    name="about_lawminary"
+                    id="editPartnerDesc2"
+                    name="partner_desc2"
                     class="form-control"
-                    rows="5"
+                    rows="3"
                 ></textarea>
             </div>
 
-            <!-- About PAO Section -->
-            <div class="form-group" id="aboutPaoField" style="display: none">
-                <textarea
-                    id="editAboutPao"
-                    name="about_pao"
-                    class="form-control"
-                    rows="5"
-                ></textarea>
-            </div>
-
-            <!-- Terms of Service Section -->
-            <div
-                class="form-group"
-                id="termsOfServiceField"
-                style="display: none"
-            >
-                <textarea
-                    id="editTermsOfService"
-                    name="terms_of_service"
-                    class="form-control"
-                    rows="5"
-                ></textarea>
-            </div>
-
-            <!-- File input for Logo -->
             <div class="form-group" id="fileContentField" style="display: none">
+                <strong>System Logo</strong>
+                <div
+                    id="logoPreviewContainer"
+                    style="margin-bottom: 15px; display: none"
+                >
+                    <img
+                        id="logoPreview"
+                        src=""
+                        alt="Logo Preview"
+                        style="max-width: 100%; border-radius: 8px"
+                    />
+                </div>
                 <input
                     type="file"
                     name="logo"

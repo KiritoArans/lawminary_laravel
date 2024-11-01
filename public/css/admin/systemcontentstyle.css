@@ -2,15 +2,26 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
-    height: 120vh;
-    display: flex;
+    height: 100%; /* Ensure the body height fits the viewport */
     flex-direction: column;
+    width: 100%;
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 .container-syscon {
     display: flex;
-    height: 100vh;
-    width: 100vw;
+    flex-grow: 1;
+    width: 100%;
+}
+
+.content-wrapper {
+    max-width: 100%; /* Adjust this width as needed */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.content-sections {
+    text-align: center; /* Center-align the text */
 }
 
 main {
@@ -18,27 +29,29 @@ main {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    margin: 0px 48px 0px 32px;
+    margin: 0px 32px; /* Simplify margins to prevent overflow */
+    max-width: 100%; /* Ensure main content doesn't exceed viewport */
+    box-sizing: border-box; /* Include padding in element's total width/height */
 }
 
 @media (max-width: 767px) {
     main {
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
+        max-width: 100%; /* Ensure full-width on smaller screens */
+        margin: 0 16px; /* Slight padding on the sides for small screens */
         padding: 20px;
-        max-width: 600px; /* Set a max width to control the content width */
-        margin: 0 auto; /* Center align the main content */
     }
 }
 
 /* Center content vertically and horizontally */
-.dashboard-content-wrapper {
+.dashboard-content-wrapper,
+h1 {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     text-align: center;
+    width: 100%; /* Ensure wrapper fills the available space */
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 header {
@@ -151,22 +164,6 @@ button:hover {
     position: absolute;
     left: 8px;
     color: var(--primary-color);
-}
-.content-sections {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin: 20px 0;
-}
-
-.content-sections > div {
-    width: 45%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .content-sections strong {

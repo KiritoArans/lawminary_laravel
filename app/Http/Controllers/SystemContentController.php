@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\SystemContent;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class SystemContentController extends Controller
 {
@@ -21,72 +20,105 @@ class SystemContentController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function store(Request $request)
     {
-        \Log::info('Form submitted:', $request->all());
-        $syscon = SystemContent::findOrFail($id);
-
+        // Validate request fields for adding new data
         $request->validate([
             'system_name' => 'nullable|string',
-            'about_lawminary' => 'nullable|string',
-            'about_pao' => 'nullable|string',
-            'terms_of_service' => 'nullable|string',
+            'system_desc' => 'nullable|string',
+            'system_desc2' => 'nullable|string',
+            'partner_name' => 'nullable|string',
+            'partner_desc' => 'nullable|string',
+            'partner_desc2' => 'nullable|string',
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif',
         ]);
 
-        // Identify which field is being updated based on 'field'
-        $field = $request->input('field');
+        // Create a new instance of SystemContent and set fields
+        $syscon = new SystemContent();
+        $syscon->system_name = $request->input('system_name');
+        $syscon->system_desc = $request->input('system_desc');
+        $syscon->system_desc2 = $request->input('system_desc2');
+        $syscon->partner_name = $request->input('partner_name');
+        $syscon->partner_desc = $request->input('partner_desc');
+        $syscon->partner_desc2 = $request->input('partner_desc2');
 
-        // Validate and update based on the field being updated
-        switch ($field) {
-            case 'system_name':
-                $request->validate([
-                    'system_name' => 'required|string|max:255',
-                ]);
-                $syscon->system_name = $request->input('system_name');
-                break;
-
-            case 'about_lawminary':
-                $request->validate(['about_lawminary' => 'required|string']);
-                $syscon->about_lawminary = $request->input('about_lawminary');
-                break;
-
-            case 'about_pao':
-                $request->validate(['about_pao' => 'required|string']);
-                $syscon->about_pao = $request->input('about_pao');
-                break;
-
-            case 'terms_of_service':
-                $request->validate(['terms_of_service' => 'required|string']);
-                $syscon->terms_of_service = $request->input('terms_of_service');
-                break;
-
-            case 'logo':
-                $request->validate([
-                    'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-                ]);
-
-                // Store the new logo and delete the old one if it exists
-                if ($request->hasFile('logo')) {
-                    if ($syscon->logo_path) {
-                        Storage::disk('public')->delete($syscon->logo_path);
-                    }
-                    $logoPath = $request->file('logo')->store('imgs', 'public');
-                    $syscon->logo_path = $logoPath;
-                }
-                break;
-            default:
-                // Log the invalid field for debugging purposes
-                Log::info('Incoming Request Data:', $request->all());
+        // Handle file upload for logo
+        if ($request->hasFile('logo')) {
+            $logoPath = $request->file('logo')->store('imgs', 'public');
+            $syscon->logo_path = $logoPath;
         }
 
-        // Update 'updated_by' field with authenticated user's ID
-        $syscon->updated_by = Auth::id();
-
-        // Save changes
         $syscon->save();
 
         return redirect()
             ->back()
-            ->with('success', 'Resource updated successfully!');
+            ->with('success', 'Resource added successfully!');
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Find the SystemContent record by ID
+        $syscon = SystemContent::findOrFail($id);
+
+        // Determine which field to update based on the 'field' input
+        $field = $request->input('field');
+
+        // Validate fields based on the specified field being updated
+        $validationRules = [];
+        switch ($field) {
+            case 'system_name':
+                $validationRules = [
+                    'system_name' => 'required|string',
+                    'system_desc' => 'nullable|string',
+                    'system_desc2' => 'nullable|string',
+                ];
+                break;
+
+            case 'partner_name':
+                $validationRules = [
+                    'partner_name' => 'required|string',
+                    'partner_desc' => 'nullable|string',
+                    'partner_desc2' => 'nullable|string',
+                ];
+                break;
+
+            case 'logo':
+                $validationRules = [
+                    'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif',
+                ];
+                break;
+        }
+        $request->validate($validationRules);
+
+        // Update fields based on 'field' input
+        if ($field === 'system_name') {
+            $syscon->system_name = $request->input('system_name');
+            $syscon->system_desc = $request->input('system_desc');
+            $syscon->system_desc2 = $request->input('system_desc2');
+        } elseif ($field === 'partner_name') {
+            $syscon->partner_name = $request->input('partner_name');
+            $syscon->partner_desc = $request->input('partner_desc');
+            $syscon->partner_desc2 = $request->input('partner_desc2');
+        } elseif ($field === 'logo') {
+            if ($request->hasFile('logo')) {
+                if ($syscon->logo_path) {
+                    Storage::disk('public')->delete($syscon->logo_path);
+                }
+                $logoPath = $request->file('logo')->store('imgs', 'public');
+                $syscon->logo_path = $logoPath;
+            }
+        }
+
+        // Set the updated_by field and save
+        $syscon->updated_by = Auth::id();
+        $syscon->save();
+
+        return redirect()
+            ->back()
+            ->with(
+                'success',
+                ucfirst(str_replace('_', ' ', $field)) .
+                    ' updated successfully!'
+            );
     }
 }

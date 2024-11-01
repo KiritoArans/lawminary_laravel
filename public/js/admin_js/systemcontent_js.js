@@ -1,147 +1,145 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const editButtons = document.querySelectorAll('.editButton');
+    console.log('DOM fully loaded and parsed');
+
+    const clickableCells = document.querySelectorAll('.clickable-cell');
     const editForm = document.getElementById('editForm');
     const editModal = document.getElementById('editModal');
     const closeButton = document.querySelector('.close-buttonEdit');
 
     const editIdField = document.getElementById('editId');
     const editField = document.getElementById('editField');
+    const sysconButton = document.getElementById('sysconButton');
 
     // Fields
     const nameField = document.getElementById('nameField');
-    const aboutLawminaryField = document.getElementById('about_LawminaryField');
-    const aboutPaoField = document.getElementById('aboutPaoField');
-    const termsOfServiceField = document.getElementById('termsOfServiceField');
+    const systemDescField = document.getElementById('systemDescField');
+    const systemDesc2Field = document.getElementById('systemDesc2Field');
+    const partnerNameField = document.getElementById('partnerNameField');
+    const partnerDescField = document.getElementById('partnerDescField');
+    const partnerDesc2Field = document.getElementById('partnerDesc2Field');
     const fileContentField = document.getElementById('fileContentField');
 
-    // Text Areas
+    // Input elements for each field
     const editNameField = document.getElementById('editName');
-    const editAboutLawminaryField =
-        document.getElementById('editAboutLawminary');
-    const editAboutPaoField = document.getElementById('editAboutPao');
-    const editTermsOfServiceField =
-        document.getElementById('editTermsOfService');
+    const editSystemDesc = document.getElementById('editSystemDesc');
+    const editSystemDesc2 = document.getElementById('editSystemDesc2');
+    const editPartnerName = document.getElementById('editPartnerName');
+    const editPartnerDesc = document.getElementById('editPartnerDesc');
+    const editPartnerDesc2 = document.getElementById('editPartnerDesc2');
     const editLogoField = document.getElementById('editLogo');
 
-    // Clear modal content and show relevant fields based on the button clicked
-    editButtons.forEach((button) => {
-        button.addEventListener('click', function () {
-            // Hide all form fields first
+    // Logo preview elements
+    const logoPreviewContainer = document.getElementById(
+        'logoPreviewContainer'
+    );
+    const logoPreview = document.getElementById('logoPreview');
+
+    // Ensure the modal is hidden initially
+    editModal.style.display = 'none';
+
+    // Flag to control the modal opening
+    let preventAutoOpen = true;
+
+    // Adjust the height of the textarea to fit content
+    function adjustTextareaHeight(textarea) {
+        textarea.style.height = 'auto'; // Reset height
+        textarea.style.height = textarea.scrollHeight + 'px'; // Set height to content
+    }
+
+    // Apply initial height adjustment and add event listeners for input
+    const textareas = document.querySelectorAll(
+        '#editModal .form-group textarea'
+    );
+    textareas.forEach((textarea) => {
+        adjustTextareaHeight(textarea); // Adjust on load
+        textarea.addEventListener('input', () =>
+            adjustTextareaHeight(textarea)
+        ); // Adjust on input
+    });
+
+    // Event listener for clickable cells to open modal
+    clickableCells.forEach((cell) => {
+        cell.addEventListener('click', function () {
+            console.log('Cell clicked');
+            preventAutoOpen = false; // Allow modal to open
+
+            // Hide all form fields initially
             nameField.style.display = 'none';
-            aboutLawminaryField.style.display = 'none';
-            aboutPaoField.style.display = 'none';
-            termsOfServiceField.style.display = 'none';
+            systemDescField.style.display = 'none';
+            systemDesc2Field.style.display = 'none';
+            partnerNameField.style.display = 'none';
+            partnerDescField.style.display = 'none';
+            partnerDesc2Field.style.display = 'none';
             fileContentField.style.display = 'none';
+            logoPreviewContainer.style.display = 'none';
 
             const id = this.getAttribute('data-id');
-            const contentType = this.getAttribute('data-type'); // Type to determine content (logo, name, or text content)
+            const contentType = this.getAttribute('data-type');
             const content = this.getAttribute('data-content') || '';
-            const name = this.getAttribute('data-name') || ''; // Default to empty string if undefined
+            const desc = this.getAttribute('data-desc') || '';
+            const desc2 = this.getAttribute('data-desc2') || '';
+            const logoPath =
+                this.querySelector('.clickable-photo')?.getAttribute(
+                    'data-fullsize'
+                ) || '';
 
-            // Populate the hidden ID and field in the form
-            editIdField.value = id;
-            editField.value = contentType; // Set the hidden field for content type
+            editForm.action = id
+                ? `/admin/systemcontent/update/${id}`
+                : `/admin/systemcontent/store`;
+            sysconButton.innerText = id ? 'Update' : 'Add';
 
-            // Check content type and show corresponding form fields
+            editIdField.value = id || '';
+            editField.value = contentType;
+
             if (contentType === 'system_name') {
                 nameField.style.display = 'block';
-                editNameField.value = name || ''; // Populate name field
-            } else if (contentType === 'about_lawminary') {
-                aboutLawminaryField.style.display = 'block';
-                editAboutLawminaryField.value = content; // Populate textarea
-            } else if (contentType === 'about_pao') {
-                aboutPaoField.style.display = 'block';
-                editAboutPaoField.value = content; // Populate textarea
-            } else if (contentType === 'terms_of_service') {
-                termsOfServiceField.style.display = 'block';
-                editTermsOfServiceField.value = content; // Populate textarea
+                systemDescField.style.display = 'block';
+                systemDesc2Field.style.display = 'block';
+                editNameField.value = content;
+                editSystemDesc.value = desc;
+                editSystemDesc2.value = desc2;
+
+                adjustTextareaHeight(editSystemDesc);
+                adjustTextareaHeight(editSystemDesc2);
+            } else if (contentType === 'partner_name') {
+                partnerNameField.style.display = 'block';
+                partnerDescField.style.display = 'block';
+                partnerDesc2Field.style.display = 'block';
+                editPartnerName.value = content;
+                editPartnerDesc.value = desc;
+                editPartnerDesc2.value = desc2;
+
+                adjustTextareaHeight(editPartnerDesc);
+                adjustTextareaHeight(editPartnerDesc2);
             } else if (contentType === 'logo') {
-                fileContentField.style.display = 'block'; // Show file input for the logo
-            }
-
-            // Set the form action dynamically based on the ID
-            editForm.action = `/admin/systemcontent/update/${id}`;
-
-            // Show the modal
-            editModal.style.display = 'block';
-
-            // Close the modal when the close button is clicked
-            closeButton.addEventListener('click', function () {
-                editModal.style.display = 'none';
-            });
-
-            // Close the modal if the user clicks outside the modal content
-            window.addEventListener('click', function (event) {
-                if (event.target == editModal) {
-                    editModal.style.display = 'none';
+                fileContentField.style.display = 'block';
+                if (logoPath) {
+                    logoPreview.src = logoPath;
+                    logoPreviewContainer.style.display = 'block';
                 }
-            });
-        });
-    });
-});
-
-//table click
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Select all clickable text elements
-    const clickableTexts = document.querySelectorAll('.clickable-text');
-
-    // Get the modal and modal content elements
-    const modal = document.getElementById('textModal');
-    const modalContent = document.getElementById('fullText');
-
-    // Close button in the modal
-    const closeModal = document.querySelector('.close-modal');
-
-    // Add click event to each clickable text
-    clickableTexts.forEach((text) => {
-        text.addEventListener('click', function () {
-            const fullText = this.getAttribute('data-full-text'); // Get the full text from the data attribute
-            modalContent.textContent = fullText; // Set modal content
-            modal.style.display = 'flex'; // Show the modal
-        });
-    });
-
-    // Close modal on clicking the close button
-    closeModal.addEventListener('click', function () {
-        modal.style.display = 'none'; // Hide modal
-    });
-
-    // Close modal when clicking outside of modal content
-    window.onclick = function (event) {
-        if (event.target === modal) {
-            modal.style.display = 'none'; // Hide modal
-        }
-    };
-});
-
-// photo open
-
-document.addEventListener('DOMContentLoaded', function () {
-    // Open modal when the image is clicked
-    document.querySelectorAll('.clickable-photo').forEach((img) => {
-        img.addEventListener('click', function () {
-            var modal = document.getElementById('imageModalPic');
-            var fullImage = document.getElementById('fullImage');
-            fullImage.src = this.getAttribute('data-fullsize');
-            modal.style.display = 'flex'; // Use flex to center the image
-        });
-    });
-
-    // Close modal when the "X" button is clicked
-    document
-        .getElementById('closeModalPic')
-        .addEventListener('click', function () {
-            var modal = document.getElementById('imageModalPic');
-            modal.style.display = 'none';
-        });
-
-    // Close modal when clicking outside the image
-    document
-        .getElementById('imageModalPic')
-        .addEventListener('click', function (event) {
-            if (event.target === this) {
-                this.style.display = 'none';
+                editLogoField.value = '';
             }
+
+            console.log('Opening modal');
+            editModal.style.display = 'flex';
         });
+    });
+
+    closeButton.addEventListener('click', function () {
+        console.log('Close button clicked');
+        editModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', function (event) {
+        if (event.target === editModal) {
+            console.log('Window click detected outside modal');
+            editModal.style.display = 'none';
+        }
+    });
+
+    // Prevent the modal from auto-opening on page load
+    if (preventAutoOpen) {
+        editModal.style.display = 'none';
+        console.log('Auto-open prevented');
+    }
 });

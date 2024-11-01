@@ -20,7 +20,7 @@
         />
         <link
             rel="stylesheet"
-            href="{{ asset('css/admin/base_admin_modal_style.css') }}"
+            href="{{ asset('css/admin/modal_syscon.css') }}"
         />
         <link
             rel="stylesheet"
@@ -55,10 +55,12 @@
                     </div>
                     <hr class="divider" />
                 </header>
-                <content class="table-container">
-                    <h1>System Content</h1>
-                    @include('includes_syscon.syscon_table_inc')
-                </content>
+                <div class="content-wrapper">
+                    <content class="table-container">
+                        <h1>System Content</h1>
+                        @include('includes_syscon.syscon_table_inc')
+                    </content>
+                </div>
             </main>
         </div>
         <script src="{{ asset('js/admin_js/systemcontent_js.js') }}"></script>
