@@ -1,43 +1,33 @@
 /Get the modal/;
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('relatedFaqModal');
+    const contentDiv = document.getElementById('relatedQuestionsContent');
+    const closeButton = document.getElementsByClassName('close-button')[0];
 
-// Get the modal
-var modal = document.getElementById('relatedFaqModal');
-
-// Get the <span> element that closes the modal
-var closeButton = document.getElementsByClassName('close-button')[0];
-
-// When the user clicks on a 'View Related Questions' button, open the modal
-document.querySelectorAll('.view-related').forEach((button) => {
-    button.addEventListener('click', function () {
-        const questions = JSON.parse(this.getAttribute('data-questions'));
-
-        // Populate the modal with related questions
-        const contentDiv = document.getElementById('relatedQuestionsContent');
-        contentDiv.innerHTML = ''; // Clear previous content
-
-        questions.forEach((question) => {
-            // Check if the "text" field exists and is valid
-            const questionText = question.text
-                ? question.text
-                : 'No question available';
-            contentDiv.innerHTML += `<p>${questionText}</p>`;
+    document.querySelectorAll('.view-related').forEach((button) => {
+        button.addEventListener('click', function () {
+            const relatedQuestions = JSON.parse(
+                this.getAttribute('data-questions')
+            );
+            contentDiv.innerHTML = relatedQuestions
+                .map((q) => `<p>${q}</p>`)
+                .join('');
+            modal.style.display = 'block';
         });
-
-        modal.style.display = 'block';
     });
-});
 
-// Close the modal when the user clicks on <span> (X)
-closeButton.onclick = function () {
-    modal.style.display = 'none';
-};
-
-// Close the modal when the user clicks anywhere outside the modal
-window.onclick = function (event) {
-    if (event.target == modal) {
+    closeButton.onclick = function () {
         modal.style.display = 'none';
-    }
-};
+        contentDiv.innerHTML = '';
+    };
+
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+            contentDiv.innerHTML = '';
+        }
+    };
+});
 
 /filter button/;
 

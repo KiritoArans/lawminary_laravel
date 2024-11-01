@@ -128,9 +128,10 @@ Route::get('/notifications', [
     'showNotificationPage',
 ])->middleware('auth');
 
-Route::get('/old-search', [PageController::class, 'showSearchPage'])->middleware(
-    'auth'
-);
+Route::get('/old-search', [
+    PageController::class,
+    'showSearchPage',
+])->middleware('auth');
 
 Route::get('/search-law', function () {
     return view('users.search-law');
@@ -175,12 +176,9 @@ Route::get('/account-settings', [
     'showAccountPage',
 ])->middleware('auth');
 
-Route::get('/activitylogs', [
-    PageController::class,
-    'showActLogsPage',
-])->middleware('auth')
+Route::get('/activitylogs', [PageController::class, 'showActLogsPage'])
+    ->middleware('auth')
     ->name('actlogs');
-
 
 // Show feedback form
 Route::get('/provide-feedback', [PageController::class, 'showFeedbackPage'])
@@ -609,6 +607,11 @@ Route::prefix('moderator')
         Route::get('/faqs/search', [FaqsController::class, 'searchFAQs'])->name(
             'faqs.search'
         );
+
+        Route::get('/faqs/fetch-related', [
+            FaqsController::class,
+            'fetchRelatedQuestions',
+        ])->name('faqs.related');
     });
 
 //about law page
@@ -646,7 +649,10 @@ Route::prefix('moderator')
 Route::post('/signup', [AccountController::class, 'createAccount'])->name(
     'users.createAccount'
 );
-Route::post('/delete-account', [AccountController::class, 'deleteAccount'])->name('deleteAccount');
+Route::post('/delete-account', [
+    AccountController::class,
+    'deleteAccount',
+])->name('deleteAccount');
 
 Route::post('/lawyer-signup', [
     AccountController::class,

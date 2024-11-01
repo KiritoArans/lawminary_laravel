@@ -87,20 +87,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($faqs as $keyword => $questions)
+                                    @foreach ($faqs as $faq)
                                         <tr>
                                             <td
                                                 class="clickable-cell"
-                                                data-full-text="{{ $keyword }}"
+                                                data-full-text="{{ $faq['question'] }}"
                                             >
-                                                {{ Str::limit($keyword, 10) }}
-                                                <!-- Limit to 10 characters -->
+                                                {{ Str::limit($faq['question'], 10) }}
                                             </td>
                                             <td>
                                                 <button
-                                                    class="btn btn-info view-related"
                                                     id="btnInfo"
-                                                    data-questions="{{ json_encode($questions) }}"
+                                                    class="btn btn-info view-related"
+                                                    data-questions="{{ json_encode($faq['related']) }}"
                                                 >
                                                     View
                                                 </button>
