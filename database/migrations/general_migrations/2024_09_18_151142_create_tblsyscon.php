@@ -11,6 +11,7 @@ return new class extends Migration {
         Schema::create('tblsyscon', function (Blueprint $table) {
             $table->id();
             $table->string('logo_path', 100)->nullable();
+            $table->string('dev_name', 100)->nullable();
             $table->string('system_name', 100)->nullable();
             $table->string('system_desc', 1000)->nullable();
             $table->string('system_desc2', 1000)->nullable();

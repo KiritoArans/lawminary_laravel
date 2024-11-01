@@ -173,13 +173,13 @@ class PageController extends Controller
                 'tblpoints.lawyerUser_id',
                 '=',
                 'tblaccounts.user_id'
-            ) // Join with tblaccounts to get username
+            ) 
             ->select(
                 'tblpoints.lawyerUser_id',
-                'tblaccounts.username', // Select username from tblaccounts
+                'tblaccounts.username',
                 DB::raw('SUM(tblpoints.points) as total_points')
             )
-            ->groupBy('tblpoints.lawyerUser_id', 'tblaccounts.username') // Group by lawyerUser_id and username
+            ->groupBy('tblpoints.lawyerUser_id', 'tblaccounts.username') 
             ->get();
 
         // Iterate through the list of lawyers and assign rank
@@ -201,11 +201,10 @@ class PageController extends Controller
                 $rank = 'Wood';
             }
 
-            // Insert or update the lawyer's record in the leaderboards table
             Leaderboard::updateOrInsert(
                 ['lawyerUser_id' => $lawyer->lawyerUser_id],
                 [
-                    'username' => $lawyer->username, // Insert the username
+                    'username' => $lawyer->username, 
                     'rankPoints' => $lawyer->total_points,
                     'rank' => $rank,
                     'updated_at' => now(),
@@ -217,7 +216,7 @@ class PageController extends Controller
             ->join('tblaccounts', 'tblleaderboards.lawyerUser_id', '=', 'tblaccounts.user_id')
             ->select('tblleaderboards.*', 'tblaccounts.username', 'tblaccounts.firstName', 'tblaccounts.lastName')
             ->orderBy('tblleaderboards.rankPoints', 'desc')
-            ->take(10) // Limit to 10 records
+            ->take(10)
             ->get();
 
 
@@ -724,7 +723,7 @@ class PageController extends Controller
 
     public function showActLogsPage(Request $request)
     {
-        $user_id = Auth::user()->user_id; // This fetches the user's 'user_id' from the database
+        $user_id = Auth::user()->user_id; 
         
         $sortOrder = $request->input('sort', 'desc'); // Default to 'desc' (Newest)
         // 1. Get activities from different tables
