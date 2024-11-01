@@ -1,0 +1,72 @@
+/* Modal styling */
+#editModal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Dark background overlay */
+    justify-content: center;
+    align-items: center;
+}
+
+#editModal .modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%; /* Width relative to viewport */
+    max-width: 600px; /* Limit width */
+    overflow: visible; /* Ensure no clipping */
+}
+
+/* Close button */
+#editModal .close-buttonEdit {
+    color: #aaa;
+    font-size: 24px;
+    font-weight: bold;
+    float: right;
+    cursor: pointer;
+}
+
+#editModal .close-buttonEdit:hover {
+    color: black;
+}
+
+/* Full description view without scroll */
+#editModal .form-group {
+    margin-bottom: 16px;
+}
+
+#editModal .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+    font-size: 1rem;
+    line-height: 1.5;
+    /* Automatically expand height */
+    height: auto;
+    min-height: 100px; /* Minimum height */
+    max-height: none; /* Allow unlimited height if necessary */
+    transition: height 0.2s ease-out;
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* Button styling */
+#editModal .btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #561c24;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+#editModal .btn:hover {
+    background-color: #ffaf45;
+}
