@@ -68,3 +68,4 @@ Thumbs.db
 # Ignore other unnecessary files
 *.bak
 *.tmp
+storage/logs/laravel.log
