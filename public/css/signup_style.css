@@ -403,6 +403,13 @@ section {
     .line {
         display: none; /* Hide the dividing line on smaller screens */
     }
+    
+    .otp-input input{
+        text-align: center;
+        width: 2rem;
+        height: 2rem;
+        padding: .5rem;
+    }
 }
 
 
@@ -468,14 +475,6 @@ section {
         margin-bottom: 12px;
     }
 
-    .contact-number-wrapper {
-        width: 100%; 
-    }
-
-    .country-code {
-        margin-right: 5px; 
-    }
-
     .toggle-password {
         position: absolute;
         right: .75rem;
@@ -526,5 +525,12 @@ section {
 
     .agreementModal-content {
         width: 80%;
+    }
+    
+    .otp-input input{
+        text-align: center;
+        width: 2rem;
+        height: 2rem;
+        padding: .5rem;
     }
 }
