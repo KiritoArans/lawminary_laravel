@@ -326,6 +326,23 @@ section {
         gap: 1rem;
         /* margin-bottom: 40px; */
     }
+
+    .forgot-pass{
+        padding: 2rem;
+    }
+    .forgot-pass input{
+        width: 20rem;
+        padding: .5rem;
+        margin: 8px 0 16px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    .otp-input input{
+        width: 2rem;
+        height: 2rem;
+        padding: .5rem;
+    }
 }
 
 /* Styles for mobile phones */
@@ -361,5 +378,22 @@ section {
     }
     .buttons button, .buttons a {
         width: 100%;
+    }
+    .forgot-pass{
+        padding: 2rem;
+    }
+    .forgot-pass input{
+        width: 20rem;
+        padding: .5rem;
+        margin: 8px 0 16px 0;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+    .otp-input input{
+        text-align: center;
+        width: 2rem;
+        height: 2rem;
+        padding: .5rem;
     }
 }

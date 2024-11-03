@@ -22,7 +22,7 @@ class AccountController extends Controller
             $data = $request->validate(
                 [
                     'username' => 'required|unique:tblaccounts,username|min:3|max:24',
-                    'email' => 'required|email',
+                    'email' => 'required|email|unique:tblaccounts,email',
                     'password' => [
                         'required',
                         'min:8',
@@ -90,7 +90,7 @@ class AccountController extends Controller
             $data = $request->validate(
                 [
                     'username' => 'required|unique:tblaccounts,username|min:3|max:24',
-                    'email' => 'required|email',
+                    'email' => 'required|email|unique:tblaccounts,email',
                     'password' => [
                         'required',
                         'min:8',
@@ -325,11 +325,8 @@ class AccountController extends Controller
     public function updateAccountInfo(Request $request)
     {
         $request->validate([
-            // 'bio' => 'nullable|string|max:100',
             'birthDate' => 'required|date',
             'sex' => 'required|string',
-            'nationality' => 'required|string|max:100',
-            'contactNumber' => 'nullable|string|max:11',
             'email' => 'nullable|string|max:100',
         ]);
 
