@@ -12,7 +12,10 @@
             href="{{ asset('css/moderator/base_moderator_table_style.css') }}"
         />
         <link rel="stylesheet" href="{{ asset('css/nav_style.css') }}" />
-        <link rel="stylesheet" href="{{ asset('css/responsive/navres.css') }}" />
+        <link
+            rel="stylesheet"
+            href="{{ asset('css/responsive/navres.css') }}"
+        />
         @include('inclusions/libraryLinks')
     </head>
     <body>
@@ -26,7 +29,10 @@
                         <div class="notification">
                             <a href="notifications" class="notification-link">
                                 <i class="fas fa-bell bell-icon current"></i>
-                                <span id="notification-count" class="notification-badge"></span>
+                                <span
+                                    id="notification-count"
+                                    class="notification-badge"
+                                ></span>
                             </a>
                         </div>
                     </div>
@@ -36,18 +42,18 @@
                 <section>
                     <div class="search-form">
                         <form
-                                method="GET"
-                                action="{{ route('user.resources') }}"
-                                class="search-bar"
-                            >
-                                <input
-                                    type="text"
-                                    name="search"
-                                    placeholder="Search resources..."
-                                    value="{{ request()->query('search') }}"
-                                />
-                                <button type="submit">Search</button>
-                            </form>
+                            method="GET"
+                            action="{{ route('user.resources') }}"
+                            class="search-bar"
+                        >
+                            <input
+                                type="text"
+                                name="search"
+                                placeholder="Search resources..."
+                                value="{{ request()->query('search') }}"
+                            />
+                            <button type="submit">Search</button>
+                        </form>
                     </div>
                     <table class="resources-table">
                         <thead>
@@ -64,9 +70,10 @@
                                         <td>{{ $resource->title }}</td>
                                         <td>{{ $resource->description }}</td>
                                         <td>
-                                            <a 
-                                                href="{{ route('moderator.downloadResource', $resource->id) }}"
-                                                class="btn-download">
+                                            <a
+                                                href="{{ route('user.downloadResource', $resource->id) }}"
+                                                class="btn-download"
+                                            >
                                                 Click to Download
                                             </a>
                                         </td>
@@ -86,25 +93,44 @@
                         <div class="paginationContent">
                             <ul class="pagination">
                                 <!-- Previous Page Button -->
-                                <li class="page-item {{ $resources->currentPage() == 1 ? 'disabled' : '' }}">
-                                    <a href="{{ $resources->appends(request()->input())->previousPageUrl() }}" rel="prev">&lt;</a>
+                                <li
+                                    class="page-item {{ $resources->currentPage() == 1 ? 'disabled' : '' }}"
+                                >
+                                    <a
+                                        href="{{ $resources->appends(request()->input())->previousPageUrl() }}"
+                                        rel="prev"
+                                    >
+                                        &lt;
+                                    </a>
                                 </li>
 
                                 <!-- Page Numbers -->
                                 @for ($i = 1; $i <= $resources->lastPage(); $i++)
-                                    <li class="page-item {{ $resources->currentPage() == $i ? 'active' : '' }}">
-                                        <a href="{{ $resources->appends(request()->input())->url($i) }}">{{ $i }}</a>
+                                    <li
+                                        class="page-item {{ $resources->currentPage() == $i ? 'active' : '' }}"
+                                    >
+                                        <a
+                                            href="{{ $resources->appends(request()->input())->url($i) }}"
+                                        >
+                                            {{ $i }}
+                                        </a>
                                     </li>
                                 @endfor
 
                                 <!-- Next Page Button -->
-                                <li class="page-item {{ $resources->hasMorePages() ? '' : 'disabled' }}">
-                                    <a href="{{ $resources->appends(request()->input())->nextPageUrl() }}" rel="next">&gt;</a>
+                                <li
+                                    class="page-item {{ $resources->hasMorePages() ? '' : 'disabled' }}"
+                                >
+                                    <a
+                                        href="{{ $resources->appends(request()->input())->nextPageUrl() }}"
+                                        rel="next"
+                                    >
+                                        &gt;
+                                    </a>
                                 </li>
                             </ul>
                         </div>
                     @endif
-
                 </section>
             </main>
         </div>

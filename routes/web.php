@@ -151,6 +151,13 @@ Route::get('/resources', [ResourcepageController::class, 'showUserResources'])
     ->name('user.resources')
     ->middleware('auth');
 
+Route::get('/resources/download/{id}', [
+    ResourcepageController::class,
+    'downloadResource',
+])
+    ->name('user.downloadResource')
+    ->middleware('auth');
+
 Route::get('/profile', [PageController::class, 'showProfilePage'])
     ->name('profile')
     ->middleware('auth');
