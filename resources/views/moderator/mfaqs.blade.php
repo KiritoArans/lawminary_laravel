@@ -82,8 +82,10 @@
                             >
                                 <thead>
                                     <tr>
-                                        <th>Question</th>
-                                        <th>View Related Question/s</th>
+                                        <th style="width: 90%">Question</th>
+                                        <th style="width: 30%">
+                                            Related Questions
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -92,17 +94,12 @@
                                             <td
                                                 class="clickable-cell"
                                                 data-full-text="{{ $faq['question'] }}"
+                                                style="width: 70%"
                                             >
-                                                {{ Str::limit($faq['question'], 10) }}
+                                                {{ Str::limit($faq['question'], 90) }}
                                             </td>
-                                            <td>
-                                                <button
-                                                    id="btnInfo"
-                                                    class="btn btn-info view-related"
-                                                    data-questions="{{ json_encode($faq['related']) }}"
-                                                >
-                                                    View
-                                                </button>
+                                            <td style="width: 30%">
+                                                {{ count($faq['related']) }}
                                             </td>
                                         </tr>
                                     @endforeach
