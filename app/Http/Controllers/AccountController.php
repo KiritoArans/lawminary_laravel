@@ -14,6 +14,8 @@ use App\Mail\SendOtpMail;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use App\Models\BannedAccount;
+use App\Mail\RestrictionNotification;
+use App\Mail\RestrictionRemovedNotification;
 
 class AccountController extends Controller
 {
@@ -553,13 +555,17 @@ class AccountController extends Controller
 
             $bannedAccount->increment('restriction_count');
 
-            // Check if restriction count has reached 2
-            if (
-                $bannedAccount->restriction_count >= 2 &&
-                is_null($bannedAccount->blocked_at)
-            ) {
+            $isBlocked = $bannedAccount->restriction_count >= 2;
+
+            // Check if restriction count has reached 2 and block account if needed
+            if ($isBlocked && is_null($bannedAccount->blocked_at)) {
                 $bannedAccount->blocked_at = now();
                 $bannedAccount->save();
+
+                // Send "blocked" email to the user
+                Mail::to($account->email)->send(
+                    new RestrictionNotification($account->username, null, true)
+                );
 
                 if ($request->is('admin/*')) {
                     return redirect()->route('admin.account');
@@ -567,6 +573,13 @@ class AccountController extends Controller
                     return redirect()->route('moderator.account');
                 }
             }
+
+            Mail::to($account->email)->send(
+                new RestrictionNotification(
+                    $account->username,
+                    $request->input('restrictDays')
+                )
+            );
 
             $bannedAccount->save();
         }
@@ -589,19 +602,38 @@ class AccountController extends Controller
 
         // Delete restriction for the specified user_id
         $deleted = Restrict::where('user_id', $user_id)->delete();
+        $deleted = BannedAccount::where('user_id', $user_id)->delete();
 
         if ($deleted) {
             \Log::info('Restriction removed for user_id: ' . $user_id);
 
-            // Reduce the restriction count in tbl_banned
+            // Find the banned account entry
             $bannedAccount = BannedAccount::where('user_id', $user_id)->first();
-            if ($bannedAccount && $bannedAccount->restriction_count > 0) {
-                $bannedAccount->decrement('restriction_count');
-                // Remove banned status if restriction count is below 2
-                if ($bannedAccount->restriction_count < 2) {
-                    $bannedAccount->blocked_at = null;
+
+            if ($bannedAccount) {
+                // Decrement the restriction count
+                if ($bannedAccount->restriction_count > 0) {
+                    $bannedAccount->decrement('restriction_count');
                 }
-                $bannedAccount->save();
+
+                // If restriction count reaches 0, delete the entry in tbl_banned
+                if ($bannedAccount->restriction_count <= 0) {
+                    $bannedAccount->delete();
+                } else {
+                    // Remove blocked status if restriction count is below 2
+                    if ($bannedAccount->restriction_count < 2) {
+                        $bannedAccount->blocked_at = null;
+                    }
+                    $bannedAccount->save();
+                }
+            }
+
+            // Send an email to the user about restriction removal
+            $account = UserAccount::where('user_id', $user_id)->first();
+            if ($account) {
+                Mail::to($account->email)->send(
+                    new RestrictionRemovedNotification($account->username)
+                );
             }
 
             return redirect()
