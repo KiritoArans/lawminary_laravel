@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lawminary | Leaderboards</title>
+    <title>Lawminary | Top Lawyers</title>
     <link rel="icon" href="../imgs/lawminarylogo_v3.png" type="image/png">
     <link rel="stylesheet" href="{{ asset ('css/leaderboards_style.css') }}">
     <link rel="stylesheet" href="{{ asset ('css/nav_style.css') }}">
@@ -41,7 +41,7 @@
                             <i class="fa-solid fa-scale-balanced"></i>
                         </button>
                         <button id="leaderboardsTab" class="leaderboards-tab current-tab">
-                            <span>Leaderboards</span>
+                            <span>Top Lawyers</span>
                             <i class="fa-solid fa-chart-simple"></i>
                         </button>
                     </div> 
@@ -59,7 +59,7 @@
                 <div class="leaderboards-header">
                     <div class="leaderboards-ttl">
                         <i class="fa-solid fa-chart-simple"></i>
-                        <h1>Leaderboards</h1>
+                        <h1>Top Lawyers</h1>
                     </div>
                     <div class="leaderboards-chart">
                         <button onclick="openBadgeChart()">Badge Chart</button>
@@ -148,23 +148,6 @@
 
         </content>
         </main>
-        <script>
-            function openBadgeChart() {
-                document.getElementById("badgeModal").style.display = "block";
-            }
-
-            function closeBadgeChart() {
-                document.getElementById("badgeModal").style.display = "none";
-            }
-
-            // Close the modal when the user clicks outside of the modal content
-            window.onclick = function(event) {
-                let badgeModal = document.getElementById("badgeModal");
-                if (event.target == badgeModal) {
-                    badgeModal.style.display = "none";
-                }
-            }
-        </script>
     <script src="js/showUserNav.js"></script>
     <script src="js/showNotification.js"></script>
     <script src="js/visitProfileLb.js"></script>

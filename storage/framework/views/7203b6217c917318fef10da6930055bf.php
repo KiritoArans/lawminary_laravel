@@ -47,7 +47,7 @@
                             <i class="fa-solid fa-scale-balanced"></i>
                         </button>
                         <button id="leaderboardsTab" class="leaderboards-tab">
-                            <span>Leaderboards</span>
+                            <span>Top Lawyers</span>
                             <i class="fa-solid fa-chart-simple"></i>
                         </button>
                     </div>
@@ -133,52 +133,35 @@
                         <section class="forum-invitations">
                             <div class="forum-ttl">
                                 <h2>Forum List</h2>
-                                <i
-                                    class="fa-solid fa-window-minimize"
-                                    id="minimizeIcon"
-                                ></i>
-                            </div>
+                            <i class="fa-solid fa-window-minimize" id="minimizeIcon"></i>
+                            </div>              
                             <div class="search-bar">
                                 <i class="fas fa-search search-icon"></i>
-                                <input
-                                    type="text"
-                                    placeholder="Search Forums"
-                                />
+                                <input type="text" placeholder="Search Forums">
                             </div>
-
+                      
                             <?php $__currentLoopData = $joinedForum; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $forum): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <a
-                                    href="<?php echo e(route('visit.forum', $forum->forum_id)); ?>"
-                                    class="forum-link"
-                                >
-                                    <div
-                                        class="forum"
+                                <a href="<?php echo e(route('visit.forum', $forum->forum_id)); ?>" class="forum-link">
+                                    <div class="forum" 
                                         data-forum-id="<?php echo e($forum->forum_id); ?>"
                                         data-forum-name="<?php echo e($forum->forumName); ?>"
                                         data-forum-members="<?php echo e($forum->membersCount ?? 0); ?>"
                                         data-forum-desc="<?php echo e($forum->forumDesc); ?>"
-                                        data-forum-photo="<?php echo e(Storage::url($forum->forumPhoto)); ?>"
-                                    >
-                                        <img
-                                            src="<?php echo e(Storage::url($forum->forumPhoto)); ?>"
-                                            alt=""
-                                        />
-                                        <div class="forum-status">
-                                            <span>Joined</span>
-                                        </div>
-                                        <div class="forum-head">
-                                            <h3><?php echo e($forum->forumName); ?></h3>
-                                            <h5>
-                                                Member(s):
-                                                <?php echo e($forum->membersCount ?? 0); ?>
-
-                                            </h5>
-                                        </div>
+                                        data-forum-photo="<?php echo e(Storage::url($forum->forumPhoto)); ?>">
+                                        <img src="<?php echo e(Storage::url($forum->forumPhoto)); ?>" alt="">
+                                    <div class="forum-status">
+                                        <span>Joined</span>
+                                    </div>
+                                    <div class="forum-head">
+                                        <h3><?php echo e($forum->forumName); ?></h3>
+                                        <h5>Member(s): <?php echo e($forum->membersCount ?? 0); ?></h5>
+                                    </div>
                                     </div>
                                 </a>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
+                    
                         </section>
+                        </div>
                     </div>
                 </div>
             </main>

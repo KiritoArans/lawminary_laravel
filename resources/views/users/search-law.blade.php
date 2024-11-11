@@ -70,7 +70,10 @@
                                         <div class="possible-charges">
                                             <h1>{{ $charge->article_name }}</h1>
                                             <p>{{ $charge->description }}</p>
+                                            <span>Article {{ $charge->article_no }}: {{ $charge->title_name }}</span>
                                         </div>
+                                    </div>
+                                    <div>
                                     </div>
                                 @endforeach
                             </div>

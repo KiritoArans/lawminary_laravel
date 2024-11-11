@@ -128,11 +128,6 @@ Route::get('/notifications', [
     'showNotificationPage',
 ])->middleware('auth');
 
-Route::get('/old-search', [
-    PageController::class,
-    'showSearchPage',
-])->middleware('auth');
-
 Route::get('/search-law', function () {
     return view('users.search-law');
 })

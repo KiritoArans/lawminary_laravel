@@ -47,7 +47,7 @@
                             <i class="fa-solid fa-scale-balanced"></i>
                         </button>
                         <button id="leaderboardsTab" class="leaderboards-tab">
-                            <span>Leaderboards</span>
+                            <span>Top Lawyers</span>
                             <i class="fa-solid fa-chart-simple"></i>
                         </button>
                     </div>
@@ -130,51 +130,35 @@
                         <section class="forum-invitations">
                             <div class="forum-ttl">
                                 <h2>Forum List</h2>
-                                <i
-                                    class="fa-solid fa-window-minimize"
-                                    id="minimizeIcon"
-                                ></i>
-                            </div>
+                            <i class="fa-solid fa-window-minimize" id="minimizeIcon"></i>
+                            </div>              
                             <div class="search-bar">
                                 <i class="fas fa-search search-icon"></i>
-                                <input
-                                    type="text"
-                                    placeholder="Search Forums"
-                                />
+                                <input type="text" placeholder="Search Forums">
                             </div>
-
-                            @foreach ($joinedForum as $forum)
-                                <a
-                                    href="{{ route('visit.forum', $forum->forum_id) }}"
-                                    class="forum-link"
-                                >
-                                    <div
-                                        class="forum"
+                      
+                            @foreach($joinedForum as $forum)
+                                <a href="{{ route('visit.forum', $forum->forum_id) }}" class="forum-link">
+                                    <div class="forum" 
                                         data-forum-id="{{ $forum->forum_id }}"
                                         data-forum-name="{{ $forum->forumName }}"
                                         data-forum-members="{{ $forum->membersCount ?? 0 }}"
                                         data-forum-desc="{{ $forum->forumDesc }}"
-                                        data-forum-photo="{{ Storage::url($forum->forumPhoto) }}"
-                                    >
-                                        <img
-                                            src="{{ Storage::url($forum->forumPhoto) }}"
-                                            alt=""
-                                        />
-                                        <div class="forum-status">
-                                            <span>Joined</span>
-                                        </div>
-                                        <div class="forum-head">
-                                            <h3>{{ $forum->forumName }}</h3>
-                                            <h5>
-                                                Member(s):
-                                                {{ $forum->membersCount ?? 0 }}
-                                            </h5>
-                                        </div>
+                                        data-forum-photo="{{ Storage::url($forum->forumPhoto) }}">
+                                        <img src="{{ Storage::url($forum->forumPhoto) }}" alt="">
+                                    <div class="forum-status">
+                                        <span>Joined</span>
+                                    </div>
+                                    <div class="forum-head">
+                                        <h3>{{ $forum->forumName }}</h3>
+                                        <h5>Member(s): {{ $forum->membersCount ?? 0 }}</h5>
+                                    </div>
                                     </div>
                                 </a>
                             @endforeach
-
+                    
                         </section>
+                        </div>
                     </div>
                 </div>
             </main>
