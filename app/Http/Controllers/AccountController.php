@@ -13,6 +13,7 @@ use App\Models\Otp;
 use App\Mail\SendOtpMail;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use App\Models\BannedAccount;
 
 class AccountController extends Controller
 {
@@ -21,7 +22,8 @@ class AccountController extends Controller
         try {
             $data = $request->validate(
                 [
-                    'username' => 'required|unique:tblaccounts,username|min:3|max:24',
+                    'username' =>
+                        'required|unique:tblaccounts,username|min:3|max:24',
                     'email' => 'required|email|unique:tblaccounts,email',
                     'password' => [
                         'required',
@@ -89,7 +91,8 @@ class AccountController extends Controller
         try {
             $data = $request->validate(
                 [
-                    'username' => 'required|unique:tblaccounts,username|min:3|max:24',
+                    'username' =>
+                        'required|unique:tblaccounts,username|min:3|max:24',
                     'email' => 'required|email|unique:tblaccounts,email',
                     'password' => [
                         'required',
@@ -351,18 +354,25 @@ class AccountController extends Controller
             'username' => 'required|string',
             'password' => 'required|string',
         ]);
-    
+
         $user = Auth::user();
-    
-        if ($user->username === $request->username && Hash::check($request->password, $user->password)) {
+
+        if (
+            $user->username === $request->username &&
+            Hash::check($request->password, $user->password)
+        ) {
             $user->delete();
-    
+
             Auth::logout();
 
-            return redirect()->back()->with('status', 'Your account has been deleted successfully.');
+            return redirect()
+                ->back()
+                ->with('status', 'Your account has been deleted successfully.');
         }
-    
-        return back()->withErrors(['username' => 'Username or password is incorrect.']);
+
+        return back()->withErrors([
+            'username' => 'Username or password is incorrect.',
+        ]);
     }
 
     public function showAdModLogin()
@@ -484,7 +494,6 @@ class AccountController extends Controller
         }
     }
 
-    //view/edit button account
     public function updateAccount(Request $request, $id)
     {
         // Validate the incoming request data
@@ -498,10 +507,8 @@ class AccountController extends Controller
             'middleName' => 'nullable|string|max:255',
             'lastName' => 'required|string|max:255',
             'birthDate' => 'required|date',
-
             'sex' => 'nullable|string',
-
-            'restrict_Days' => 'nullable|integer|min:1',
+            'restrictDays' => 'nullable|integer|min:1',
             'accountType' => 'nullable|string',
         ]);
 
@@ -525,19 +532,43 @@ class AccountController extends Controller
         $account->middleName = $request->input('middleName');
         $account->lastName = $request->input('lastName');
         $account->birthDate = $request->input('birthDate');
-
         $account->sex = $request->input('sex');
         $account->accountType = $request->input('accountType');
 
         // Save the updated account
         $account->save();
 
-        // Insert or update restrict_days in tblrestrict
+        // Handle restriction logic
         if ($request->filled('restrictDays')) {
-            Restrict::updateOrCreate(
+            // Update or create restriction entry in tblrestrict
+            $restriction = Restrict::updateOrCreate(
                 ['user_id' => $account->user_id],
                 ['restrict_days' => $request->input('restrictDays')]
             );
+
+            // Track restriction count in tbl_banned
+            $bannedAccount = BannedAccount::firstOrCreate([
+                'user_id' => $account->user_id,
+            ]);
+
+            $bannedAccount->increment('restriction_count');
+
+            // Check if restriction count has reached 2
+            if (
+                $bannedAccount->restriction_count >= 2 &&
+                is_null($bannedAccount->blocked_at)
+            ) {
+                $bannedAccount->blocked_at = now();
+                $bannedAccount->save();
+
+                if ($request->is('admin/*')) {
+                    return redirect()->route('admin.account');
+                } elseif ($request->is('moderator/*')) {
+                    return redirect()->route('moderator.account');
+                }
+            }
+
+            $bannedAccount->save();
         }
 
         // Redirect back to the accounts list WITHOUT the ID in the URL
@@ -561,6 +592,18 @@ class AccountController extends Controller
 
         if ($deleted) {
             \Log::info('Restriction removed for user_id: ' . $user_id);
+
+            // Reduce the restriction count in tbl_banned
+            $bannedAccount = BannedAccount::where('user_id', $user_id)->first();
+            if ($bannedAccount && $bannedAccount->restriction_count > 0) {
+                $bannedAccount->decrement('restriction_count');
+                // Remove banned status if restriction count is below 2
+                if ($bannedAccount->restriction_count < 2) {
+                    $bannedAccount->blocked_at = null;
+                }
+                $bannedAccount->save();
+            }
+
             return redirect()
                 ->back()
                 ->with('success', 'Restriction removed successfully!');

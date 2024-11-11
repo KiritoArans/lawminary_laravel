@@ -106,4 +106,8 @@ class UserAccount extends Authenticatable
     {
         return $this->hasOne(Restrict::class, 'user_id', 'user_id');
     }
+    public function bannedAccount()
+    {
+        return $this->hasOne(BannedAccount::class, 'user_id', 'user_id');
+    }
 }

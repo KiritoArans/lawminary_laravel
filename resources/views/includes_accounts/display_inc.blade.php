@@ -95,9 +95,11 @@
                 </td>
                 <td
                     class="clickable-cell"
-                    data-full-text="{{ optional($account->restrictedUser)->restrict_days ? optional($account->restrictedUser)->restrict_days . ' day/s' : 'No - 0 day/s' }}"
+                    data-full-text="{{ optional($account->bannedAccount)->blocked_at ? 'Blocked' : (optional($account->restrictedUser)->restrict_days ? optional($account->restrictedUser)->restrict_days . ' day/s' : 'No - 0 day/s') }}"
                 >
-                    @if ($account->restrictedUser)
+                    @if ($account->bannedAccount && $account->bannedAccount->blocked_at)
+                        Blocked
+                    @elseif ($account->restrictedUser)
                         {{ Str::limit($account->restrictedUser->restrict_days . ' day/s', 15) }}
                     @else
                             No - 0 day/s
