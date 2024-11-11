@@ -458,7 +458,7 @@ class PageController extends Controller
             'comments.reply.user'
         )
             ->withCount('likes', 'comments', 'bookmarks')
-            ->whereNotNull('post_id') // This ensures that you're only getting posts that exist
+            ->whereNotNull('post_id') 
             ->orderBy('created_at', 'desc')
             ->get();
         
@@ -468,11 +468,6 @@ class PageController extends Controller
             'unreadNotificationsCount' => $unreadNotificationsCount,
             'allPosts' => $allPosts
         ]);
-    }
-
-    public function showSearchPage()
-    {
-        return view('users.search');
     }
 
     public function showSearchLawPage(Request $request)
@@ -486,20 +481,8 @@ class PageController extends Controller
 
         if ($userConcern) {
 
-            // $user = auth()->user();
-            // $userId = $user->user_id;
-            // $userEmail = $user->email;
-
-            // \DB::table('tblsearchedlaw')->insert([
-            //     'user_id' => $userId,
-            //     'email' => $userEmail,
-            //     'concernQuery' => $userConcern,
-            //     'created_at' => now(),
-            //     'updated_at' => now(),
-            // ]);
-
             $normalizedConcern = strtolower(trim($userConcern));
-            $stopWords = ['the', 'and', 'a', 'of', 'in', 'on', 'at', 'for', 'to', 'is', 'with', 'i', 'you', 'my', 'person', 'man', 'me', 'them'];
+            $stopWords = ['the', 'what', 'and', 'a', 'of', 'in', 'on', 'at', 'for', 'to', 'is', 'with', 'i', 'you', 'my', 'person', 'man', 'me', 'them'];
             $keywords = array_diff(explode(' ', $normalizedConcern), $stopWords);
 
             $possibleCharges = BookTwoLaws::where(function ($query) use ($normalizedConcern, $keywords) {
@@ -525,7 +508,7 @@ class PageController extends Controller
                     $query->orWhereRaw("LOWER(TRIM(TRAILING ',' FROM synonyms)) LIKE ?", ["%$keyword%"]);
                 }
             })
-            ->select('title_name', 'chapter_name', 'article_name', 'section_name', 'description')
+            ->select('title_name', 'chapter_name', 'article_name', 'section_name', 'description', 'article_no')
             ->orderByRaw("
                 (CASE 
                     WHEN LOWER(article_name) LIKE '%$normalizedConcern%' THEN 5
@@ -546,8 +529,6 @@ class PageController extends Controller
 
         return view('users.search-law', ['possibleCharges' => $possibleCharges]);
     }
-
-
 
     public function showResourcesPage()
     {
@@ -649,7 +630,11 @@ class PageController extends Controller
             ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('tblbookmarks.created_at', 'desc') 
             ->get();
-    
+
+            
+        $helpedUserCount = Comment::where('user_id', $user->user_id)
+            ->distinct('post_id')
+            ->count('post_id');
 
         return compact(
             'sortOrder',
@@ -665,7 +650,8 @@ class PageController extends Controller
             'followingCount',
             'followerCount',
             'pendingPosts',
-            'disregardPosts'
+            'disregardPosts',
+            'helpedUserCount'
         );
     }
     public function showProfilePage(Request $request)

@@ -1,3 +1,33 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const usernameInput = document.getElementById('username');
+    const firstNameInput = document.getElementById('first-name');
+    const middleNameInput = document.getElementById('middle-name');
+    const lastNameInput = document.getElementById('last-name');
+
+    usernameInput.addEventListener('input', function () {
+        this.value = this.value.replace(/[^a-zA-Z0-9]/g, '');
+    });
+
+    function autoCapitalize(input) {
+        input.value = input.value
+            .toLowerCase() 
+            .replace(/\b\w/g, char => char.toUpperCase()); 
+    }
+
+    firstNameInput.addEventListener('input', function () {
+        autoCapitalize(this);
+    });
+
+    middleNameInput.addEventListener('input', function () {
+        autoCapitalize(this);
+    });
+
+    lastNameInput.addEventListener('input', function () {
+        autoCapitalize(this);
+    });
+});
+
+
 document
     .getElementById('togglePassword')
     .addEventListener('click', function () {

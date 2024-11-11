@@ -104,3 +104,27 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const helpedModal = document.getElementById('helpedModal');
+    const openHelpedModalBtn = document.getElementById('openHelpedModal');
+    const closeModalBtn = document.getElementById('closeHelpedModal');
+
+    // Open helpedModal when badge is clicked
+    openHelpedModalBtn.addEventListener('click', () => {
+        helpedModal.style.display = 'block';
+    });
+
+    // Close helpedModal when close button is clicked
+    closeModalBtn.addEventListener('click', () => {
+        helpedModal.style.display = 'none';
+    });
+
+    // Close helpedModal if clicked outside of helpedModal content
+    window.addEventListener('click', (event) => {
+        if (event.target == helpedModal) {
+            helpedModal.style.display = 'none';
+        }
+    });
+});

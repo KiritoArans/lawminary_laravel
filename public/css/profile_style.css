@@ -160,6 +160,11 @@ header hr {
     border-radius: 4px;
     cursor: pointer;
     color: var(--text-color4);
+    transition: var(--tran-03);
+}
+.badge:hover{
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
 }
 
 .profile-stats{
@@ -263,10 +268,6 @@ header hr {
     color: var(--primary-color); 
     border-bottom: 4px solid var(--primary-color);
     transition: var(--tran-05);
-}
-
-.profile-posts, .profile-comments, .profile-liked, .profile-bookmarked {
-    /* margin-top: 20px; */
 }
 .hr2, .hr1{
     margin: 0;
@@ -679,6 +680,63 @@ header hr {
     cursor: pointer;
     scale: 1.1;
 }
+
+
+.helpedModal {
+    display: none; 
+    position: fixed;
+    z-index: 1000; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); 
+    }
+    .helpedModal-content {
+        background-color: #fff;
+        margin: 10% auto; 
+        padding: 20px;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 400px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+    .helpedModal-content .closeHelpedModal {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #555;
+        cursor: pointer;
+    }
+    .helpedModal-content .closeHelpedModal:hover {
+        color: red;
+    }
+    .helpedModal-content h2 {
+        font-size: 1.5rem;
+        margin: 1rem 0 .5rem 0;
+        text-align: center;
+        color: var(--primary-color);
+    }
+    .helpedModal-content .user-helped i {
+        color: #654520;
+        font-size: 1.5rem;
+    }
+    .helpedModal-content h1 {
+        color: var(--text-color3);
+        text-align: center;
+        margin: 0 0 0 0;
+    }
+    .helpedModal-content .user-rating i {
+        color: var(--secondary-color);
+        position: relative;
+        top: -.2rem;
+}
+
+
 
 @media (min-width: 577px) and (max-width: 1024px) {
     .profile-section, .posts-btn, .comments .comment-content {

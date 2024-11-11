@@ -237,6 +237,7 @@
                                     @csrf
                                     @include('inclusions/response')
                             
+                                    <label for="username">Username</label>
                                     <input type="text" 
                                         id="username" 
                                         name="username" 
@@ -244,7 +245,7 @@
                                         required
                                     />
                             
-                                    <label for="password">Current Password</label>
+                                    <label for="password">Password</label>
                                     <div class="password-container">
                                         <input
                                             type="password"

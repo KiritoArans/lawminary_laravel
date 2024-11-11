@@ -215,17 +215,21 @@ header hr {
     margin-bottom: 16px;
 }
 .charges .possible-charges{
-    margin: 0 0 24px 0;
+    margin: 0 0 .5rem 0;
     padding: 0 8px 0 16px;
     color: #666;
 }
 .charges .possible-charges h1{
     margin: .5rem 0 0 0;
-    color: var(--text-color3);
+    color: var(--primary-color);
     font-size: 1.75rem;
 }
 .charges .possible-charges p{
-    margin: 0;
+    margin: 0 0 .75rem 0;
+}
+.charges .possible-charges span{
+    font-weight: 600;
+    color: var(--text-color3);
 }
 
 
@@ -258,7 +262,6 @@ header hr {
     }
     .concern-field textarea{
         display: flex;
-        /* height: 12rem; */
     }
 }
 @media (max-width: 576px) {

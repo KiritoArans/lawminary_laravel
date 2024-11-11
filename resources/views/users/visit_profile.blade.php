@@ -58,7 +58,7 @@
                                     </div>
                                     <h4>@<span>{{ $user->username }}</span></h4>
                                     <div class="profile-badge">
-                                        <span class="badge">
+                                        <span class="badge" id="openHelpedModal">
                                             {{ $user->accountType }}{{ $user->accountType === 'Lawyer' ? ' | ' . $averageRating : '' }}
                                         </span>                                    
                                     </div>
@@ -121,6 +121,8 @@
                     @include('inclusions/profile/profileBookmarks')
 
                     @include('inclusions/reportPostModal')
+
+                    @include('inclusions/profile/userHelpedCount')
 
                     <div id="profileModal" class="profileModal">
                         <div class="profileModal-content">

@@ -16,3 +16,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
+
+function openBadgeChart() {
+    document.getElementById("badgeModal").style.display = "block";
+}
+
+function closeBadgeChart() {
+    document.getElementById("badgeModal").style.display = "none";
+}
+
+window.onclick = function(event) {
+    let badgeModal = document.getElementById("badgeModal");
+    if (event.target == badgeModal) {
+        badgeModal.style.display = "none";
+    }
+}
