@@ -9,6 +9,10 @@ use App\Models\UserAccount;
 use App\Models\Report;
 use App\Notifications\PostApproved;
 
+use App\Mail\PostApprovedMail;
+use App\Mail\PostRejectedMail;
+use Illuminate\Support\Facades\Mail;
+
 class PostpageController extends Controller
 {
     public function postpage(Request $request)
@@ -20,36 +24,7 @@ class PostpageController extends Controller
             // Ensure the post ID exists
             $username = auth()->user()->username;
 
-            $post = DB::table('tblposts')->where('post_id', $postId)->first();
-
-            // BOYYY, IF WALANG PROBLEM ANG PAG AAPPROVE SAYO PWEDE NA IDELETE TONG MGA TO
-
-            // if (!$post) {
-            //     return redirect()->back()->with('error', 'Post not found.');
-            // }
-
-            // if ($request->has('approve')) {
-            //     // Approve the post
-            //     $updated = DB::table('tblposts')
-            //         ->where('post_id', $postId)
-            //         ->update([
-            //             'status' => 'Approved',
-            //             'approvedBy' => $username,
-            //         ]);
-
-            //     // Check if the update was successful
-            //     if ($updated) {
-            //         return redirect()
-            //             ->back()
-            //             ->with('success', 'Post approved successfully.');
-            //     } else {
-            //         return redirect()
-            //             ->back()
-            //             ->with('error', 'Failed to approve post.');
-            //     }
-            // }
-
-            // UNTIL HERE LANG, PAG NAG DELETE KA NG SOBRA, IKAW IDEDELETE KO SA MOANTHO
+            $post = Posts::with('user')->where('post_id', $postId)->first();
 
             if (!$post) {
                 return redirect()->back()->with('error', 'Post not found.');
@@ -69,6 +44,9 @@ class PostpageController extends Controller
                     ]);
 
                 if ($updated) {
+                    Mail::to($post->user->email)->send(
+                        new PostApprovedMail($post)
+                    );
                     // Find lawyers with matching field expertise and notify them
                     $lawyers = UserAccount::where('accountType', 'Lawyer')
                         ->where('fieldExpertise', $post->concernCategory)
@@ -115,6 +93,10 @@ class PostpageController extends Controller
 
                 // Check if the update was successful
                 if ($updated) {
+                    Mail::to($post->user->email)->send(
+                        new PostRejectedMail($post, $reasonDisregard)
+                    );
+
                     return redirect()
                         ->back()
                         ->with('success', 'Post disregarded successfully.');
