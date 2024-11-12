@@ -41,11 +41,11 @@
                         <i class="fa-solid fa-users"></i>
                     </button>
                     <button id="articlesTab" class="articles-tab">
-                        <span>Article</span>
+                        <span>Articles</span>
                         <i class="fa-solid fa-scale-balanced"></i>
                     </button>
                     <button id="leaderboardsTab" class="leaderboards-tab">
-                        <span>Leaderboards</span>
+                        <span>Top Lawyers</span>
                         <i class="fa-solid fa-chart-simple"></i>
                     </button>
                 </div>

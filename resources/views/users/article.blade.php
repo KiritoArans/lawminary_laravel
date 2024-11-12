@@ -37,7 +37,7 @@
                             <i class="fa-solid fa-users"></i>
                         </button>
                         <button id="articlesTab" class="articles-tab current-tab">
-                            <span>Article</span>
+                            <span>Articles</span>
                             <i class="fa-solid fa-scale-balanced"></i>
                         </button>
                         <button id="leaderboardsTab" class="leaderboards-tab">
@@ -56,6 +56,16 @@
             </header>
         <content>
             @if($articles->isNotEmpty())
+            @if(request()->has('query') && request()->input('query') != '')
+                <div class="article-list">
+                    @foreach($articles as $article)
+                        <div class="article-content">
+                            <h1>Article {{ $article->article_no }}: {{ $article->article_name }}</h1>
+                            <p>{{ $article->description }}</p>
+                        </div>
+                    @endforeach
+                </div>
+            @else
                 <div class="article">
                     <div class="article-content">
                         <h1>Article {{ $articles[0]->article_no }}: {{ $articles[0]->article_name }}</h1>
@@ -76,15 +86,11 @@
                         @endif
                     </div>
                 </div>
-                
-                @if($articles->count() > 3)
-                    <div class="see-more">
-                        <a href="{{ route('moreArticles', ['query' => request()->input('query')]) }}">See More</a>
-                    </div>
-                @endif
-            @else
-                <p>No articles found for "{{ request()->input('query') }}"</p>
             @endif
+        
+        @else
+            <p>No articles found for "{{ request()->input('query') }}"</p>
+        @endif
         </content>
         </main>
         <script src="js/showUserNav.js"></script>

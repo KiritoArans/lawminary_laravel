@@ -147,14 +147,14 @@ class PageController extends Controller
         $searchTerm = $request->input('query');
         
         if ($searchTerm) {
+            // No pagination for search results
             $articles = DB::table('tblbooktwo')
                 ->where('article_name', 'LIKE', '%' . $searchTerm . '%')
                 ->orWhere('description', 'LIKE', '%' . $searchTerm . '%')
                 ->orWhere('title', 'LIKE', '%' . $searchTerm . '%')
-                ->paginate(3); // Adjust the number of articles per page
-        } 
-
-        else {
+                ->get();
+        } else {
+            // Paginate for default view
             $articles = DB::table('tblbooktwo')
                 ->inRandomOrder()
                 ->paginate(3); // Adjust the number of articles per page
@@ -162,6 +162,7 @@ class PageController extends Controller
     
         return view('users.article', compact('articles', 'searchTerm'));
     }
+    
     
     
     
