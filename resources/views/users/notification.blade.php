@@ -48,6 +48,34 @@
                         $approver = $item['approver'];
                     @endphp
 
+                    @if (isset($notification->data['status']) && in_array($notification->data['status'], ['Approved', 'Rejected']))
+                        <div class="notifs btn-comment" data-post-id="{{ $notification->data['post_id'] }}">
+                            <div class="notifs-content">
+                                <div class="user-info system-acc">
+                                    <img src="{{ asset('imgs/lawminarylogo_v3.png') }}" alt="System Picture" class="user-profile-photo" />
+                                    <div class="notifs-info">
+                                        <h2>System Message</h2>
+                                    </div>
+                                </div>
+                                
+                                <div class="notifs-action" onclick="redirectToPost('{{ $notification->data['post_id'] }}')">
+                                    <span>{{ $notification->data['message'] }}</span>
+                                    @if($notification->data['reason'])
+                                        <p>Reason: {{ $notification->data['reason'] }}</p>
+                                    @endif
+                                    <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                                </div>
+                                <form action="{{ route('notification.delete', $notification->id) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" style="border:none; background:none;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    @endif
+
                     @if ($approver)
                         <div class="notifs btn-comment" data-post-id="{{ $notification->data['post_id'] }}">
                             <div class="notifs-content">

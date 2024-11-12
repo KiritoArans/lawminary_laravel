@@ -13,6 +13,8 @@ use App\Mail\PostApprovedMail;
 use App\Mail\PostRejectedMail;
 use Illuminate\Support\Facades\Mail;
 
+use App\Notifications\PostStatusChangeNotification; // Import the Notification class
+
 class PostpageController extends Controller
 {
     public function postpage(Request $request)
@@ -47,6 +49,11 @@ class PostpageController extends Controller
                     Mail::to($post->user->email)->send(
                         new PostApprovedMail($post)
                     );
+
+                    $post->user->notify(
+                        new PostStatusChangeNotification($postId, 'Approved')
+                    );
+
                     // Find lawyers with matching field expertise and notify them
                     $lawyers = UserAccount::where('accountType', 'Lawyer')
                         ->where('fieldExpertise', $post->concernCategory)
@@ -95,6 +102,14 @@ class PostpageController extends Controller
                 if ($updated) {
                     Mail::to($post->user->email)->send(
                         new PostRejectedMail($post, $reasonDisregard)
+                    );
+
+                    $post->user->notify(
+                        new PostStatusChangeNotification(
+                            $postId,
+                            'Rejected',
+                            $reasonDisregard
+                        )
                     );
 
                     return redirect()
