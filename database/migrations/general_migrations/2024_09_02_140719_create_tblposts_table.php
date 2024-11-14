@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('postedBy', 50);
             $table->string('status', 15);
             $table->string('tags', 125)->nullable();
+            $table->string('privacy', 10);
             $table->string('approvedBy', 100)->nullable();
             $table->string('reasonDisregard', 100)->nullable();
             $table->timestamps();

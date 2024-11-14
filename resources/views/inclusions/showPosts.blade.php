@@ -56,8 +56,9 @@
             <hr />
             <div class="post-text">
                 <p>{{ $post->concern }}</p>
-                <div>
+                <div class="post-category-privacy">
                     <a href="home-search?query={{$post->concernCategory}}">{{ $post->concernCategory }}</a>
+                    <span>{{ $post->privacy}}</span>
                 </div>
                 @if ($post->concernPhoto)
                     <img src="{{ Storage::url($post->concernPhoto) }}" 

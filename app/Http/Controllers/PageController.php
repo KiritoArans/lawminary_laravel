@@ -47,8 +47,6 @@ class PageController extends Controller
         return view('emails.otp');
     }
 
-
-    // View Post Page
     public function showViewPostPage(Request $request, $post_id)
     {
         $user = Auth::user();
@@ -121,6 +119,7 @@ class PageController extends Controller
                 $posts = Posts::with('user')
                     ->withCount('likes', 'comments', 'bookmarks')
                     ->where('status', 'Approved')
+                    ->where('privacy', 'Public')
                     ->whereIn('postedBy', $followingUserIds)
                     ->whereHas('user')
                     ->orderBy('created_at', 'desc')
@@ -129,6 +128,7 @@ class PageController extends Controller
                 $posts = Posts::with('user')
                     ->withCount('likes', 'comments', 'bookmarks')
                     ->where('status', 'Approved')
+                    ->where('privacy', 'Public')
                     ->whereHas('user')
                     ->orderBy('created_at', 'desc')
                     ->get();
@@ -568,6 +568,13 @@ class PageController extends Controller
 
         $sortOrder = $request->input('sort', 'desc'); // Default to 'desc' (Newest)
 
+        $vPosts = Posts::where('postedBy', $user->user_id)
+            ->withCount('likes', 'comments', 'bookmarks')
+            ->where('status', 'Approved')
+            ->where('privacy', 'Public')
+            ->orderBy('created_at', $sortOrder)
+            ->get();
+
         $posts = Posts::where('postedBy', $user->user_id)
             ->withCount('likes', 'comments', 'bookmarks')
             ->where('status', 'Approved')
@@ -581,6 +588,7 @@ class PageController extends Controller
             'comments.reply.user'
         )
             ->withCount('likes', 'comments', 'bookmarks')
+            ->where('privacy', 'Public')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -615,6 +623,7 @@ class PageController extends Controller
             })
             ->join('tbllikes', 'tblposts.post_id', '=', 'tbllikes.post_id')
             ->where('tbllikes.user_id', $user->user_id)
+            ->where('privacy', 'Public')
             ->with(['user'])
             ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('tbllikes.created_at', 'desc') 
@@ -629,6 +638,7 @@ class PageController extends Controller
             })
             ->join('tblbookmarks', 'tblposts.post_id', '=', 'tblbookmarks.post_id')
             ->where('tblbookmarks.user_id', $user->user_id)
+            ->where('privacy', 'Public')
             ->with('user')
             ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('tblbookmarks.created_at', 'desc') 
@@ -642,6 +652,7 @@ class PageController extends Controller
         return compact(
             'sortOrder',
             'posts',
+            'vPosts',
             'allPosts',
             'comments',
             'likes',

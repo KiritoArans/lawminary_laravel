@@ -1,6 +1,33 @@
 .posts .post-info h2 a:hover, .posts a:hover{
     color: var(--primary-color);
 }
+
+.publish-public{
+    margin: .5rem 0;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #ddd;
+    padding: .5rem;
+    background-color: #ddd;
+    color: var(--text-color3);
+    border-radius: 4px;
+    transition: var(--tran-03);
+}
+.publish-public button{
+    border: none;
+    background-color: transparent;
+    color: green;
+    cursor: pointer;
+    font: 1rem;
+    transition: var(--tran-03);
+}
+.publish-public:hover{
+    background-color: var(--primary-color);
+}
+.publish-public button:hover{
+    color: var(--text-color4);
+}
+
 .posts .post-content {
     background-color: #ffffff;
     border: 1px solid #ddd;
@@ -114,6 +141,18 @@
     background-color: var(--primary-color);
     color: #ddd;
 }
+
+.posts .post-category-privacy{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.posts .post-category-privacy span{
+    font-size: .8rem;
+    color: var(--text-color3);
+    margin: 0;
+}
+
 .posts .post-text img{
     object-fit: cover;
     max-width: 100%;
@@ -132,7 +171,6 @@
     padding: 10px;
     background-color: transparent;
     color: var(--text-color3);
-    /* color: #666; */
     font-weight: 600;
     font-size: 16px;
     border: none;

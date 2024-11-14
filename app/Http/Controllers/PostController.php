@@ -32,6 +32,7 @@ class PostController extends Controller
         $post->postedBy = Auth::user()->user_id; 
         
         $post->status = "Pending";
+        $post->privacy = "Private";
 
         if ($request->hasFile('concernPhoto')) {
             $photoPath = $request->file('concernPhoto')->store('public/files/posts');
@@ -71,6 +72,29 @@ class PostController extends Controller
 
         return redirect()->back()->with('success', 'Posted successfully.');
     }
+
+    public function updatePrivacy(Request $request, $postId)
+    {
+        $post = Posts::where('post_id', $postId)->first();
+
+        if (!$post) {
+            return response()->json(['success' => false, 'message' => 'Post not found.']);
+        }
+
+        // Check if the logged-in user is the one who posted it
+        if (Auth::check() && Auth::user()->user_id == $post->postedBy) {
+            // Update the post privacy to 'Public'
+            $post->update(['privacy' => 'Public']);
+
+            return response()->json(['success' => true, 'message' => 'Post has been published to Public.']);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Unauthorized action.']);
+    }
+
+    
+    
+
 
     public function deletePost($postId)
     {

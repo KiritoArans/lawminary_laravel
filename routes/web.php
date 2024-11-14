@@ -719,6 +719,8 @@ Route::post('/home', [PostController::class, 'createPost'])->name(
 Route::delete('/home-{post}', [PostController::class, 'deletePost'])->name(
     'post.delete'
 );
+Route::post('update-privacy-{post_id}', [PostController::class, 'updatePrivacy'])->name('post.updatePrivacy');
+
 
 Route::delete('/forum-{post}', [
     PostController::class,

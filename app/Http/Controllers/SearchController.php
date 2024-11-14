@@ -51,6 +51,7 @@ class SearchController extends Controller
             });
     
         $posts = Posts::where('status', 'Approved')
+            ->where('privacy', 'Public')
             ->with('user')
             ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('created_at', 'desc')
@@ -73,6 +74,7 @@ class SearchController extends Controller
             'comments.user',
             'comments.reply.user'
         )
+        ->where('privacy', 'Public')
         ->withCount('likes', 'comments', 'bookmarks')
         ->orderBy('created_at', 'desc')
         ->get();
@@ -80,6 +82,4 @@ class SearchController extends Controller
         // Return the search results to the view
         return view('users.home-search', compact('users', 'lawyers', 'posts', 'query', 'allPosts'));
     }
-    
-    
 }

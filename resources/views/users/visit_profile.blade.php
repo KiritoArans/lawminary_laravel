@@ -108,7 +108,15 @@
 
                     @include('inclusions/profile/profileFollowModal')
                     
-                    @include('inclusions/profile/profilePosts')
+                    <div class="profile-posts">
+                        @if ($vPosts->isEmpty())
+                            <div class="empty">No posts yet.</div>
+                        @endif
+
+                        @foreach ($vPosts as $post)
+                            @include('inclusions/profile/profilePosts')
+                        @endforeach
+                    </div>
     
                     @include('inclusions/openComments')
                     
@@ -116,9 +124,25 @@
     
                     @include('inclusions/profile/profileCommsReps')
     
-                    @include('inclusions/profile/profileLikes')
-    
-                    @include('inclusions/profile/profileBookmarks')
+                    <div class="profile-liked">
+                        @if($likes->isEmpty())
+                            <div class="empty">No likes yet.</div>
+                        @endif
+
+                        @foreach($likes as $post)
+                            @include('inclusions/profile/profilePosts')
+                        @endforeach
+                    </div>
+
+                    <div class="profile-bookmarked">
+                        @if($bookmarks->isEmpty())
+                            <div class="empty">No bookmarks yet.</div>
+                        @endif
+
+                        @foreach($bookmarks as $post)
+                            @include('inclusions/profile/profilePosts')
+                        @endforeach
+                    </div>
 
                     @include('inclusions/reportPostModal')
 

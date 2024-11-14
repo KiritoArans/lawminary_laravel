@@ -107,6 +107,51 @@ function confirmDelete(postId) {
     });
 }
 
+// Publish Post
+document.querySelectorAll('.publishToPublicBtn').forEach(button => {
+    button.addEventListener('click', function() {
+        var postId = this.getAttribute('data-post-id'); // Get post ID from the button's data attribute
+
+        Swal.fire({
+            title: 'Publish to Public?',
+            text: "Publishing your post can help other people.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'Cancel',
+            reverseButtons: true, 
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`update-privacy-${postId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify({
+                        _method: 'POST'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire('Success', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Failed', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire('Error!', 'An error occurred while updating privacy.', 'error');
+                });
+            }
+        });
+    });
+});
 
 
 // Rate Modal:

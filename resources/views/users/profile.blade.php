@@ -94,13 +94,33 @@
                     
                     </div>
 
-
-
                     <div class="profile-content">
 
                         @include('inclusions/profile/profileFollowModal')
 
-                        @include('inclusions/profile/profilePosts')
+                        <div class="profile-posts">
+                            <div class="posts-btn">
+                                <div class="filter-btn">
+                                    <form action="{{ route('profile') }}" method="GET">
+                                        <select name="sort" id="sortFilter" onchange="this.form.submit()">
+                                            <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>Newest</option>
+                                            <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>Oldest</option>
+                                        </select>
+                                    </form>
+                                </div>
+                                <div class="pending-btn">
+                                    <button class="view-pendings">View Pending Posts</button>
+                                </div>
+                            </div>
+                        
+                            @if ($posts->isEmpty())
+                                <div class="empty">No posts yet.</div>
+                            @endif
+
+                            @foreach ($posts as $post)
+                                @include('inclusions/profile/profilePosts')
+                            @endforeach
+                        </div>
 
                         @include('inclusions/openComments')
 
@@ -108,9 +128,25 @@
 
                         @include('inclusions/profile/profileCommsReps')
 
-                        @include('inclusions/profile/profileLikes')
+                        <div class="profile-liked">
+                            @if($likes->isEmpty())
+                                <div class="empty">No likes yet.</div>
+                            @endif
 
-                        @include('inclusions/profile/profileBookmarks')
+                            @foreach($likes as $post)
+                                @include('inclusions/profile/profilePosts')
+                            @endforeach
+                        </div>
+
+                        <div class="profile-bookmarked">
+                            @if($bookmarks->isEmpty())
+                                <div class="empty">No bookmarks yet.</div>
+                            @endif
+
+                            @foreach($bookmarks as $post)
+                                @include('inclusions/profile/profilePosts')
+                            @endforeach
+                        </div>
 
                         @include('inclusions/reportPostModal')
 
@@ -156,6 +192,5 @@
         <script src="js/settings.js"></script>
         <script src="js/profile.js"></script>
         <script src="js/logout.js"></script>
-
     </body>
 </html>

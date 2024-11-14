@@ -21,6 +21,7 @@ class Posts extends Model
         'reasonDisregard',
         'status',
         'tags',
+        'privacy',
         'created_by',
         'updated_by',
     ];

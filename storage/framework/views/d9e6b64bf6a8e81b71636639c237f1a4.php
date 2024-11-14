@@ -57,8 +57,9 @@
             <hr />
             <div class="post-text">
                 <p><?php echo e($post->concern); ?></p>
-                <div>
+                <div class="post-category-privacy">
                     <a href="home-search?query=<?php echo e($post->concernCategory); ?>"><?php echo e($post->concernCategory); ?></a>
+                    <span><?php echo e($post->privacy); ?></span>
                 </div>
                 <?php if($post->concernPhoto): ?>
                     <img src="<?php echo e(Storage::url($post->concernPhoto)); ?>" 
