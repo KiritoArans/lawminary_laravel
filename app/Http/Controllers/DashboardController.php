@@ -437,4 +437,54 @@ class DashboardController extends Controller
 
         return response()->json($postData);
     }
+
+    public function getLawyerResponseData(Request $request)
+    {
+        $range = $request->input('range', 'weekly'); // Default to 'weekly'
+
+        $query = DB::table('tblcomments')
+            ->join(
+                'tblaccounts',
+                'tblcomments.user_id',
+                '=',
+                'tblaccounts.user_id'
+            )
+            ->join('tblposts', 'tblcomments.post_id', '=', 'tblposts.post_id')
+            ->where('tblaccounts.accountType', 'Lawyer');
+
+        // Apply time filter based on the range
+        switch ($range) {
+            case 'daily':
+                $query->where('tblcomments.created_at', '>=', now()->subDay());
+                break;
+            case 'weekly':
+                $query->where('tblcomments.created_at', '>=', now()->subWeek());
+                break;
+            case 'monthly':
+                $query->where(
+                    'tblcomments.created_at',
+                    '>=',
+                    now()->subMonth()
+                );
+                break;
+            case 'yearly':
+                $query->where('tblcomments.created_at', '>=', now()->subYear());
+                break;
+        }
+
+        // Get lawyer response data
+        $lawyerData = $query
+            ->select(
+                'tblcomments.user_id',
+                'tblaccounts.username',
+                DB::raw(
+                    'AVG(TIMESTAMPDIFF(HOUR, tblposts.created_at, tblcomments.created_at)) as avg_response_time'
+                ),
+                DB::raw('COUNT(tblcomments.post_id) as posts_handled')
+            )
+            ->groupBy('tblcomments.user_id', 'tblaccounts.username')
+            ->get();
+
+        return response()->json($lawyerData);
+    }
 }

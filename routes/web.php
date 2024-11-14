@@ -411,15 +411,10 @@ Route::prefix('moderator')
             'getPostEngagementData',
         ])->name('moderator.postEngagementData');
 
-        Route::get('/dashboard/lawyer-response-data', [
+        Route::get('dashboard/lawyer-response-data', [
             DashboardController::class,
             'getLawyerResponseData',
         ])->name('moderator.lawyerResponseData');
-
-        Route::get('/dashboard/user-rating-data', [
-            DashboardController::class,
-            'getUserRatingData',
-        ])->name('moderator.userRatingData');
     });
 
 //moderator post page

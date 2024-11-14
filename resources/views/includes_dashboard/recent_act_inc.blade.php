@@ -23,6 +23,16 @@
     <canvas id="engagementChart" width="400" height="200"></canvas>
 </div>
 
+<div class="col-12 chart-container" id="lawyerResponseChartContainer">
+    <div class="chart-header">
+        <i
+            class="fas fa-minus minimize-icon minimize-chart"
+            onclick="toggleChart('lawyerResponseChartContainer', this)"
+        ></i>
+    </div>
+    <canvas id="lawyerResponseChart" width="400" height="200"></canvas>
+</div>
+
 <div class="col-12 chart-container" id="myChartContainer">
     <div class="chart-header">
         <i

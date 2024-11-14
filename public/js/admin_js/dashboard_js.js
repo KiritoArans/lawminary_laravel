@@ -578,3 +578,106 @@ function renderEngagementChart(times, engagements) {
         }
     });
 }
+
+//lawyerr engagment---------------------------------///
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Attach event listeners to the time filter buttons
+    filterData('weekly'); // Load weekly data by default
+
+    const dailyButton = document.getElementById('daily');
+    const weeklyButton = document.getElementById('weekly');
+    const monthlyButton = document.getElementById('monthly');
+    const yearlyButton = document.getElementById('yearly');
+
+    if (dailyButton) {
+        dailyButton.addEventListener('click', function () {
+            filterData('daily');
+            fetchLawyerResponseData('daily');
+        });
+    }
+
+    if (weeklyButton) {
+        weeklyButton.addEventListener('click', function () {
+            filterData('weekly');
+            fetchLawyerResponseData('weekly');
+        });
+    }
+
+    if (monthlyButton) {
+        monthlyButton.addEventListener('click', function () {
+            filterData('monthly');
+            fetchLawyerResponseData('monthly');
+        });
+    }
+
+    if (yearlyButton) {
+        yearlyButton.addEventListener('click', function () {
+            filterData('yearly');
+            fetchLawyerResponseData('yearly');
+        });
+    }
+
+    // Fetch default weekly data on page load
+    fetchLawyerResponseData('weekly');
+});
+
+function fetchLawyerResponseData(range = 'weekly') {
+    fetch(`/moderator/dashboard/lawyer-response-data?range=${range}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data); // Add this line to check if data is coming through properly
+            const avgResponseTimes = data.map(
+                (lawyer) => lawyer.avg_response_time
+            );
+            const postsHandled = data.map((lawyer) => lawyer.posts_handled);
+
+            renderLawyerResponseChart(avgResponseTimes, postsHandled);
+        })
+        .catch((error) => {
+            console.error('Error fetching lawyer response data:', error);
+        });
+}
+
+function renderLawyerResponseChart(avgTimes, handledPosts) {
+    const ctx = document.getElementById('lawyerResponseChart').getContext('2d');
+    if (
+        window.lawyerResponseChart &&
+        typeof window.lawyerResponseChart.destroy === 'function'
+    ) {
+        window.lawyerResponseChart.destroy();
+    }
+    window.lawyerResponseChart = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+            datasets: [
+                {
+                    label: 'Lawyer Response Time vs Posts Handled',
+                    data: avgTimes.map((time, index) => ({
+                        x: time,
+                        y: handledPosts[index]
+                    })),
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                }
+            ]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Average Response Time (Hours)'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Number of Posts Handled'
+                    }
+                }
+            }
+        }
+    });
+}
