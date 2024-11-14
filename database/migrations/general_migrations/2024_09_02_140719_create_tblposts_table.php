@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->string('privacy', 10);
             $table->string('approvedBy', 100)->nullable();
             $table->string('reasonDisregard', 100)->nullable();
+            $table->timestamp('last_notified_at')->nullable(); // Add the new column here
             $table->timestamps();
         });
     }

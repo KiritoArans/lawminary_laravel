@@ -17,6 +17,7 @@ use App\Models\Leaderboard;
 use App\Models\Point;
 use App\Models\SystemContent;
 use App\Http\Controllers\LeaderboardController;
+use App\Notifications\PostRequiresLawyerAttentionNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
@@ -428,6 +429,8 @@ class PageController extends Controller
 
     public function showNotificationPage()
     {
+        $this->notifyLawyersIfNoComments();
+
         $notifications = auth()->user()->notifications()->get();
         
         // Count unread notifications
@@ -812,5 +815,42 @@ class PageController extends Controller
     public function showTOSPage()
     {
         return view('settings.tos');
+    }
+
+   public function notifyLawyersIfNoComments()
+    {
+        // Get posts that are approved, at least 48 hours old, and either have never notified or were notified more than 48 hours ago
+        $posts = Posts::where('status', 'Approved')
+            ->where('created_at', '<=', now()->subHours(48))
+            ->where(function ($query) {
+                $query->whereNull('last_notified_at')
+                    ->orWhere('last_notified_at', '<=', now()->subHours(48));
+            })
+            ->get();
+
+        foreach ($posts as $post) {
+            // Check if there are any comments on this post by a lawyer
+            $hasLawyerComments = Comment::where('post_id', $post->post_id)
+                ->whereHas('user', function ($query) {
+                    $query->where('accountType', 'Lawyer');
+                })
+                ->exists();
+
+            if (!$hasLawyerComments) {
+                // Get all lawyers
+                $lawyers = UserAccount::where('accountType', 'Lawyer')->get();
+
+                foreach ($lawyers as $lawyer) {
+                    // Notify the lawyer about the post if it is older than 48 hours
+                    $lawyer->notify(new PostRequiresLawyerAttentionNotification($post));
+                }
+
+                // Update the last notified time
+                $post->last_notified_at = now();
+                $post->save();
+            }
+        }
+
+        return "Notifications sent for posts that require lawyer comments.";
     }
 }
