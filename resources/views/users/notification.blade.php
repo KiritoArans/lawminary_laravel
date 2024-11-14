@@ -64,8 +64,18 @@
                                         <p>Reason: {{ $notification->data['reason'] }}</p>
                                     @endif
                                     <!-- Use notification->created_at instead of data array -->
-                                    <span class="notifs-date">{{ $notification->created_at->diffForHumans() }}</span>
+                                     
+                                @if(isset($notification->data['post_created_at']))
+                                    <span class="notifs-date">This post was created {{ \Carbon\Carbon::parse($notification->data['post_created_at'])->diffForHumans() }}</span>
+                                @else
+                                    <span class="notifs-date">Date Not Available</span>
+                                @endif
+
+                                <span class="notifs-date">Notification sent {{ $notification->created_at->diffForHumans() }}</span>
+
                                 </div>
+
+
                                 <form action="{{ route('notification.delete', $notification->id) }}" method="POST" style="display:inline;">
                                     @csrf
                                     @method('DELETE')
@@ -75,7 +85,6 @@
                                 </form>
                             </div>
                         </div>
-
                     @endif
 
 

@@ -806,11 +806,15 @@ class PageController extends Controller
         return view('settings.tos');
     }
 
-    public function notifyLawyersIfNoComments()
+   public function notifyLawyersIfNoComments()
     {
-        // Get posts that are approved and at least 48 hours old
+        // Get posts that are approved, at least 48 hours old, and either have never notified or were notified more than 48 hours ago
         $posts = Posts::where('status', 'Approved')
             ->where('created_at', '<=', now()->subHours(48))
+            ->where(function ($query) {
+                $query->whereNull('last_notified_at')
+                    ->orWhere('last_notified_at', '<=', now()->subHours(48));
+            })
             ->get();
 
         foreach ($posts as $post) {
@@ -826,9 +830,13 @@ class PageController extends Controller
                 $lawyers = UserAccount::where('accountType', 'Lawyer')->get();
 
                 foreach ($lawyers as $lawyer) {
-                    // Notify the lawyer about the post
+                    // Notify the lawyer about the post if it is older than 48 hours
                     $lawyer->notify(new PostRequiresLawyerAttentionNotification($post));
                 }
+
+                // Update the last notified time
+                $post->last_notified_at = now();
+                $post->save();
             }
         }
 

@@ -22,13 +22,13 @@ class PostRequiresLawyerAttentionNotification extends Notification
         return ['database'];
     }
 
-    public function toDatabase($notifiable)
+   public function toDatabase($notifiable)
     {
         return [
             'post_id' => $this->post->post_id,
             'message' => "A post requires your attention: {$this->post->concern}",
             'status' => 'Pending Lawyer Comment',
-            'created_at' => $this->post->created_at,
+            'post_created_at' => $this->post->created_at,  // Ensure this contains the correct timestamp
         ];
     }
 }
