@@ -252,10 +252,6 @@ header hr {
 }
 
 
-@media (min-width: 1024px) and (max-width: 1366px) {
-
-}
-
 @media (min-width: 576px) and (max-width: 1024px) {
     .home-search-nav, .user-searched, .search-results h2, .search-results h3{
         margin: 0 12rem 0.75rem 12rem;
