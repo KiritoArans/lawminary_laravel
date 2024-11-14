@@ -13,6 +13,16 @@
     </button>
 </div>
 
+<div class="col-12 chart-container" id="engagementChartContainer">
+    <div class="chart-header">
+        <i
+            class="fas fa-minus minimize-icon minimize-chart"
+            onclick="toggleChart('engagementChartContainer', this)"
+        ></i>
+    </div>
+    <canvas id="engagementChart" width="400" height="200"></canvas>
+</div>
+
 <div class="col-12 chart-container" id="myChartContainer">
     <div class="chart-header">
         <i

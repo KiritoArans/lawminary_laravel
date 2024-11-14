@@ -429,3 +429,152 @@ document.querySelectorAll('.minimize-chart').forEach(function (button, index) {
         chartContainer.parentNode.insertBefore(placeholder, chartContainer);
     });
 });
+document.addEventListener('DOMContentLoaded', function () {
+    fetchEngagementData();
+});
+
+function fetchEngagementData() {
+    fetch('{{ route("dashboard.postEngagementData") }}')
+        .then((response) => response.json())
+        .then((data) => {
+            const timesSinceApproval = data.map(
+                (post) => post.time_since_approval
+            );
+            const totalEngagements = data.map((post) => post.total_engagement);
+
+            renderEngagementChart(timesSinceApproval, totalEngagements);
+        });
+}
+
+function renderEngagementChart(times, engagements) {
+    const ctx = document.getElementById('engagementChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'scatter',
+        data: {
+            datasets: [
+                {
+                    label: 'Post Engagement vs Time Since Approval',
+                    data: times.map((time, index) => ({
+                        x: time,
+                        y: engagements[index]
+                    })),
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                }
+            ]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Time Since Approval (Hours)'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Total Engagement (Likes + Comments)'
+                    }
+                }
+            }
+        }
+    });
+}
+
+//post scatter diagram//
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Attach event listeners to the time filter buttons
+    filterData('weekly'); // Load weekly data by default
+
+    const dailyButton = document.getElementById('daily');
+    const weeklyButton = document.getElementById('weekly');
+    const monthlyButton = document.getElementById('monthly');
+    const yearlyButton = document.getElementById('yearly');
+
+    if (dailyButton) {
+        dailyButton.addEventListener('click', function () {
+            filterData('daily');
+            fetchEngagementData('daily'); // Fetch scatter data for daily range
+        });
+    }
+
+    if (weeklyButton) {
+        weeklyButton.addEventListener('click', function () {
+            filterData('weekly');
+            fetchEngagementData('weekly'); // Fetch scatter data for weekly range
+        });
+    }
+
+    if (monthlyButton) {
+        monthlyButton.addEventListener('click', function () {
+            filterData('monthly');
+            fetchEngagementData('monthly'); // Fetch scatter data for monthly range
+        });
+    }
+
+    if (yearlyButton) {
+        yearlyButton.addEventListener('click', function () {
+            filterData('yearly');
+            fetchEngagementData('yearly'); // Fetch scatter data for yearly range
+        });
+    }
+});
+
+function fetchEngagementData(range = 'weekly') {
+    fetch(`/moderator/dashboard/post-engagement-data?range=${range}`)
+        .then((response) => response.json())
+        .then((data) => {
+            const timesSinceApproval = data.map(
+                (post) => post.time_since_approval
+            );
+            const totalEngagements = data.map((post) => post.total_engagement);
+
+            renderEngagementChart(timesSinceApproval, totalEngagements);
+        });
+}
+
+function renderEngagementChart(times, engagements) {
+    const ctx = document.getElementById('engagementChart').getContext('2d');
+    if (
+        window.engagementChart &&
+        typeof window.engagementChart.destroy === 'function'
+    ) {
+        window.engagementChart.destroy();
+    }
+    window.engagementChart = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+            datasets: [
+                {
+                    label: 'Post Engagement vs Time Since Approval',
+                    data: times.map((time, index) => ({
+                        x: time,
+                        y: engagements[index]
+                    })),
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                }
+            ]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Time Since Approval (Hours)'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Total Engagement (Likes + Comments)'
+                    }
+                }
+            }
+        }
+    });
+}

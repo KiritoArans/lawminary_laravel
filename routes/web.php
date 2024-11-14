@@ -405,6 +405,21 @@ Route::prefix('moderator')
             DashboardController::class,
             'getDashboardData',
         ]);
+
+        Route::get('/dashboard/post-engagement-data', [
+            DashboardController::class,
+            'getPostEngagementData',
+        ])->name('moderator.postEngagementData');
+
+        Route::get('/dashboard/lawyer-response-data', [
+            DashboardController::class,
+            'getLawyerResponseData',
+        ])->name('moderator.lawyerResponseData');
+
+        Route::get('/dashboard/user-rating-data', [
+            DashboardController::class,
+            'getUserRatingData',
+        ])->name('moderator.userRatingData');
     });
 
 //moderator post page
@@ -719,8 +734,10 @@ Route::post('/home', [PostController::class, 'createPost'])->name(
 Route::delete('/home-{post}', [PostController::class, 'deletePost'])->name(
     'post.delete'
 );
-Route::post('update-privacy-{post_id}', [PostController::class, 'updatePrivacy'])->name('post.updatePrivacy');
-
+Route::post('update-privacy-{post_id}', [
+    PostController::class,
+    'updatePrivacy',
+])->name('post.updatePrivacy');
 
 Route::delete('/forum-{post}', [
     PostController::class,

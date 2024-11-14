@@ -398,48 +398,43 @@ class DashboardController extends Controller
             'forumsCount' => DB::table('tblforums')->count(),
         ];
     }
+
+    public function getPostEngagementData(Request $request)
+    {
+        $range = $request->input('range', 'weekly'); // Default to 'weekly'
+
+        $query = DB::table('tblposts')
+            ->where('status', 'Approved')
+            ->select('post_id', 'created_at');
+
+        switch ($range) {
+            case 'daily':
+                $query->where('created_at', '>=', now()->subDay());
+                break;
+            case 'weekly':
+                $query->where('created_at', '>=', now()->subWeek());
+                break;
+            case 'monthly':
+                $query->where('created_at', '>=', now()->subMonth());
+                break;
+            case 'yearly':
+                $query->where('created_at', '>=', now()->subYear());
+                break;
+        }
+
+        $postData = $query->get()->map(function ($post) {
+            $post->likes_count = DB::table('tbllikes')
+                ->where('post_id', $post->post_id)
+                ->count();
+            $post->comments_count = DB::table('tblcomments')
+                ->where('post_id', $post->post_id)
+                ->count();
+            $post->time_since_approval = now()->diffInHours($post->created_at);
+            $post->total_engagement =
+                $post->likes_count + $post->comments_count;
+            return $post;
+        });
+
+        return response()->json($postData);
+    }
 }
-
-//search function
-//     public function search(Request $request)
-//     {
-//         $search = $request->input('search'); // Capture the search query
-
-//         // Perform the search
-//         if ($search) {
-//             // Filter dashboard activities based on the search query (username or action)
-//             $dashboardData = Dashboard::where(
-//                 'act_action',
-//                 'LIKE',
-//                 '%' . $search . '%'
-//             )
-//                 ->orWhere('act_username', 'LIKE', '%' . $search . '%')
-//                 ->paginate(10);
-//         } else {
-//             // If no search term, show all activities
-//             $dashboardData = Dashboard::paginate(10); // Use paginate instead of get()
-//         }
-
-//         // Fetch the additional dashboard data
-//         $dashboardCounts = $this->getDashboardData();
-
-//         // Pass both the search results and the dashboard counts to the view
-//         if (request()->is('admin*')) {
-//             return view('admin.dashboard', [
-//                 'dashboardData' => $dashboardData,
-//                 'pendingPosts' => $dashboardCounts['pendingPosts'],
-//                 'pendingAccounts' => $dashboardCounts['pendingAccounts'],
-//                 'accountsCount' => $dashboardCounts['accountsCount'],
-//                 'forumsCount' => $dashboardCounts['forumsCount'],
-//             ]);
-//         } elseif (request()->is('moderator*')) {
-//             return view('moderator.dashboard', [
-//                 'dashboardData' => $dashboardData,
-//                 'pendingPosts' => $dashboardCounts['pendingPosts'],
-//                 'pendingAccounts' => $dashboardCounts['pendingAccounts'],
-//                 'accountsCount' => $dashboardCounts['accountsCount'],
-//                 'forumsCount' => $dashboardCounts['forumsCount'],
-//             ]);
-//         }
-//     }
-// }
