@@ -33,6 +33,16 @@
     <canvas id="lawyerResponseChart" width="400" height="200"></canvas>
 </div>
 
+<div class="col-12 chart-container" id="userRatingChartContainer">
+    <div class="chart-header">
+        <i
+            class="fas fa-minus minimize-icon minimize-chart"
+            onclick="toggleChart('userRatingChartContainer', this)"
+        ></i>
+    </div>
+    <canvas id="userRatingChart" width="400" height="200"></canvas>
+</div>
+
 <div class="col-12 chart-container" id="myChartContainer">
     <div class="chart-header">
         <i

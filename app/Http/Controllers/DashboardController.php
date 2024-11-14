@@ -487,4 +487,45 @@ class DashboardController extends Controller
 
         return response()->json($lawyerData);
     }
+
+    public function getUserRatingData(Request $request)
+    {
+        $range = $request->input('range', 'weekly'); // Default to 'weekly'
+
+        $query = DB::table('tblrates')->join(
+            'tblaccounts',
+            'tblrates.lawyerUser_id',
+            '=',
+            'tblaccounts.user_id'
+        );
+
+        // Apply time filter based on the range
+        switch ($range) {
+            case 'daily':
+                $query->where('tblrates.created_at', '>=', now()->subDay());
+                break;
+            case 'weekly':
+                $query->where('tblrates.created_at', '>=', now()->subWeek());
+                break;
+            case 'monthly':
+                $query->where('tblrates.created_at', '>=', now()->subMonth());
+                break;
+            case 'yearly':
+                $query->where('tblrates.created_at', '>=', now()->subYear());
+                break;
+        }
+
+        // Get lawyer rating data
+        $lawyerRatings = $query
+            ->select(
+                'tblaccounts.user_id',
+                'tblaccounts.username',
+                DB::raw('AVG(tblrates.rate) as avg_rating'),
+                DB::raw('COUNT(tblrates.rate) as posts_responded')
+            )
+            ->groupBy('tblaccounts.user_id', 'tblaccounts.username')
+            ->get();
+
+        return response()->json($lawyerRatings);
+    }
 }

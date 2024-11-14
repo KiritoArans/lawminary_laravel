@@ -524,7 +524,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function fetchEngagementData(range = 'weekly') {
-    fetch(`/moderator/dashboard/post-engagement-data?range=${range}`)
+    const basePath = window.location.pathname.includes('/admin')
+        ? '/admin'
+        : '/moderator';
+    fetch(`${basePath}/dashboard/post-engagement-data?range=${range}`)
         .then((response) => response.json())
         .then((data) => {
             const timesSinceApproval = data.map(
@@ -623,7 +626,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function fetchLawyerResponseData(range = 'weekly') {
-    fetch(`/moderator/dashboard/lawyer-response-data?range=${range}`)
+    const basePath = window.location.pathname.includes('/admin')
+        ? '/admin'
+        : '/moderator';
+    fetch(`${basePath}/dashboard/lawyer-response-data?range=${range}`)
         .then((response) => response.json())
         .then((data) => {
             console.log(data); // Add this line to check if data is coming through properly
@@ -675,6 +681,125 @@ function renderLawyerResponseChart(avgTimes, handledPosts) {
                     title: {
                         display: true,
                         text: 'Number of Posts Handled'
+                    }
+                }
+            }
+        }
+    });
+}
+
+//User Rating vs Number of Posts Responded To by Lawyers///
+
+document.addEventListener('DOMContentLoaded', function () {
+    filterData('weekly'); // Load default 'weekly' data
+
+    fetchUserRatingData('weekly');
+    fetchLawyerResponseData('weekly');
+    fetchEngagementData('weekly');
+
+    attachEventListeners(); // Function to attach click events to buttons
+});
+
+function attachEventListeners() {
+    const dailyButton = document.getElementById('daily');
+    const weeklyButton = document.getElementById('weekly');
+    const monthlyButton = document.getElementById('monthly');
+    const yearlyButton = document.getElementById('yearly');
+
+    if (dailyButton) {
+        dailyButton.addEventListener('click', function () {
+            filterData('daily');
+            fetchUserRatingData('daily');
+            fetchLawyerResponseData('daily');
+            fetchEngagementData('daily');
+        });
+    }
+
+    if (weeklyButton) {
+        weeklyButton.addEventListener('click', function () {
+            filterData('weekly');
+            fetchUserRatingData('weekly');
+            fetchLawyerResponseData('weekly');
+            fetchEngagementData('weekly');
+        });
+    }
+
+    if (monthlyButton) {
+        monthlyButton.addEventListener('click', function () {
+            filterData('monthly');
+            fetchUserRatingData('monthly');
+            fetchLawyerResponseData('monthly');
+            fetchEngagementData('monthly');
+        });
+    }
+
+    if (yearlyButton) {
+        yearlyButton.addEventListener('click', function () {
+            filterData('yearly');
+            fetchUserRatingData('yearly');
+            fetchLawyerResponseData('yearly');
+            fetchEngagementData('yearly');
+        });
+    }
+}
+
+function fetchUserRatingData(range = 'weekly') {
+    const basePath = window.location.pathname.includes('/admin')
+        ? '/admin'
+        : '/moderator';
+    fetch(`${basePath}/dashboard/user-rating-data?range=${range}`)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log('Fetched User Rating Data:', data); // Add this line
+            const avgRatings = data.map((lawyer) => lawyer.avg_rating);
+            const postsResponded = data.map((lawyer) => lawyer.posts_responded);
+
+            renderUserRatingChart(avgRatings, postsResponded);
+        })
+        .catch((error) => {
+            console.error('Error fetching user rating data:', error); // Catch and log errors
+        });
+}
+
+function renderUserRatingChart(avgRatings, postsResponded) {
+    console.log('Average Ratings:', avgRatings);
+    console.log('Posts Responded:', postsResponded);
+
+    const ctx = document.getElementById('userRatingChart').getContext('2d');
+    if (
+        window.userRatingChart &&
+        typeof window.userRatingChart.destroy === 'function'
+    ) {
+        window.userRatingChart.destroy();
+    }
+    window.userRatingChart = new Chart(ctx, {
+        type: 'scatter',
+        data: {
+            datasets: [
+                {
+                    label: 'User Rating vs Posts Responded',
+                    data: avgRatings.map((rating, index) => ({
+                        x: rating,
+                        y: postsResponded[index]
+                    })),
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                }
+            ]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'linear',
+                    position: 'bottom',
+                    title: {
+                        display: true,
+                        text: 'Average Rating'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Number of Posts Responded'
                     }
                 }
             }

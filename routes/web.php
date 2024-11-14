@@ -267,6 +267,21 @@ Route::prefix('admin')
             DashboardController::class,
             'getDashboardData',
         ]);
+
+        Route::get('/dashboard/post-engagement-data', [
+            DashboardController::class,
+            'getPostEngagementData',
+        ])->name('admin.postEngagementData');
+
+        Route::get('dashboard/lawyer-response-data', [
+            DashboardController::class,
+            'getLawyerResponseData',
+        ])->name('admin.lawyerResponseData');
+
+        Route::get('/dashboard/user-rating-data', [
+            DashboardController::class,
+            'getUserRatingData',
+        ])->name('admin.userRatingData');
     });
 
 Route::get('/api/chart-data', [DashboardController::class, 'getDataForChart']);
@@ -415,6 +430,11 @@ Route::prefix('moderator')
             DashboardController::class,
             'getLawyerResponseData',
         ])->name('moderator.lawyerResponseData');
+
+        Route::get('/dashboard/user-rating-data', [
+            DashboardController::class,
+            'getUserRatingData',
+        ])->name('moderator.userRatingData');
     });
 
 //moderator post page
