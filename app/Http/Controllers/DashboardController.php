@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PDF; // Import PDF from dompdf
+use Illuminate\Support\Facades\Storage; // <-- Import Storage facade
 
 class DashboardController extends Controller
 {
@@ -527,5 +529,41 @@ class DashboardController extends Controller
             ->get();
 
         return response()->json($lawyerRatings);
+    }
+
+    public function generateDailyReport()
+    {
+        // Fetch system configuration data (assuming this is how you fetch $sysconData)
+        $sysconData = DB::table('tblsyscon')->get();
+
+        // Determine the logo path based on the conditions from your Blade include
+        if (
+            $sysconData->isNotEmpty() &&
+            !empty($sysconData->first()->logo_path)
+        ) {
+            // Get the logo path from storage (must be an absolute path for PDF)
+            $logoPath = storage_path(
+                'app/public/' . $sysconData->first()->logo_path
+            );
+        } else {
+            // Use default logo path if sysconData is not available or logo path is empty
+            $logoPath = public_path('imgs/Lawminary_Logo_2-Gold.png');
+        }
+
+        // Fetch the data you need for the daily report
+        $reportData = [
+            'title' => 'Daily Report',
+            'date' => now()->format('Y-m-d'),
+            'content' => 'This is the content of the daily report.',
+            'logo' => $logoPath,
+        ];
+
+        // Load the data into the PDF view
+        $pdf = PDF::loadView('reports.daily', $reportData);
+
+        // Download the generated PDF
+        return $pdf->download(
+            'daily_report_' . now()->format('Y-m-d') . '.pdf'
+        );
     }
 }

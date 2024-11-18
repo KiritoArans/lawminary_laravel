@@ -435,6 +435,11 @@ Route::prefix('moderator')
             DashboardController::class,
             'getUserRatingData',
         ])->name('moderator.userRatingData');
+
+        Route::get('/generate-daily-report', [
+            DashboardController::class,
+            'generateDailyReport',
+        ])->name('generate.dailyReport');
     });
 
 //moderator post page

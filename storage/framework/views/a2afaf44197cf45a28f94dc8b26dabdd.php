@@ -13,6 +13,16 @@
     </button>
 </div>
 
+<form
+    action="<?php echo e(route('generate.dailyReport')); ?>"
+    method="GET"
+    style="display: inline-block"
+>
+    <button type="submit" class="time-button" id="printReport">
+        Print Daily Report
+    </button>
+</form>
+
 <div class="col-12 chart-container" id="engagementChartContainer">
     <div class="chart-header">
         <i
