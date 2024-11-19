@@ -14,7 +14,7 @@
 </div>
 
 <form
-    action="<?php echo e(route('generate.dailyReport')); ?>"
+    action="<?php echo e(request()->is('admin*') ? route('admin.generate.dailyReport') : route('moderator.generate.dailyReport')); ?>"
     method="GET"
     style="display: inline-block"
 >

@@ -14,7 +14,7 @@
 </div>
 
 <form
-    action="{{ route('generate.dailyReport') }}"
+    action="{{ request()->is('admin*') ? route('admin.generate.dailyReport') : route('moderator.generate.dailyReport') }}"
     method="GET"
     style="display: inline-block"
 >

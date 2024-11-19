@@ -282,6 +282,11 @@ Route::prefix('admin')
             DashboardController::class,
             'getUserRatingData',
         ])->name('admin.userRatingData');
+
+        Route::get('/generate-daily-report', [
+            DashboardController::class,
+            'generateDailyReport',
+        ])->name('admin.generate.dailyReport');
     });
 
 Route::get('/api/chart-data', [DashboardController::class, 'getDataForChart']);
@@ -439,7 +444,7 @@ Route::prefix('moderator')
         Route::get('/generate-daily-report', [
             DashboardController::class,
             'generateDailyReport',
-        ])->name('generate.dailyReport');
+        ])->name('moderator.generate.dailyReport');
     });
 
 //moderator post page

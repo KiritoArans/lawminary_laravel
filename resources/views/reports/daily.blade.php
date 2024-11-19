@@ -23,19 +23,36 @@
                 margin-top: 20px;
                 font-size: 16px;
             }
+            .section-title {
+                font-size: 18px;
+                font-weight: bold;
+                margin-top: 20px;
+            }
+            .data-item {
+                margin-left: 20px;
+                line-height: 1.5;
+            }
         </style>
     </head>
     <body>
         <div class="header">
-            @if (! empty($logo))
-                <img src="{{ $logo }}" alt="Logo" />
-            @endif
-
+            <img src="{{ $logo }}" alt="Logo" />
             <p class="title">{{ $title }}</p>
             <p>{{ $date }}</p>
         </div>
         <div class="content">
-            <p>{{ $content }}</p>
+            <p class="section-title">Summary of Today's Activity:</p>
+            <div class="data-item">
+                <p>Pending Posts: {{ $content['pendingPosts'] }}</p>
+                <p>Pending Accounts: {{ $content['pendingAccounts'] }}</p>
+                <p>
+                    Accounts Created Today:
+                    {{ $content['accountsCreatedToday'] }}
+                </p>
+                <p>
+                    Forums Created Today: {{ $content['forumsCreatedToday'] }}
+                </p>
+            </div>
         </div>
     </body>
 </html>

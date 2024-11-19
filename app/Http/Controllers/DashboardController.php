@@ -550,11 +550,36 @@ class DashboardController extends Controller
             $logoPath = public_path('imgs/Lawminary_Logo_2-Gold.png');
         }
 
-        // Fetch the data you need for the daily report
+        // Fetch the data for the daily report
+        $startDate = now()->startOfDay();
+        $endDate = now()->endOfDay();
+
+        $pendingPosts = DB::table('tblposts')
+            ->where('status', 'pending')
+            ->count();
+
+        $pendingAccounts = DB::table('tblaccounts')
+            ->where('status', 'pending')
+            ->count();
+
+        $accountsCreatedToday = DB::table('tblaccounts')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        $forumsCreatedToday = DB::table('tblforums')
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->count();
+
+        // Prepare report data
         $reportData = [
             'title' => 'Daily Report',
             'date' => now()->format('Y-m-d'),
-            'content' => 'This is the content of the daily report.',
+            'content' => [
+                'pendingPosts' => $pendingPosts,
+                'pendingAccounts' => $pendingAccounts,
+                'accountsCreatedToday' => $accountsCreatedToday,
+                'forumsCreatedToday' => $forumsCreatedToday,
+            ],
             'logo' => $logoPath,
         ];
 
