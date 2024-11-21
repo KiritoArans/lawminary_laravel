@@ -1,7 +1,10 @@
 <!-- resources/views/includes/logo.blade.php -->
-
 @if ($sysconData->isNotEmpty() && !empty($sysconData->first()->logo_path))
-    <img src="{{ Storage::url($sysconData->first()->logo_path) }}" alt="Logo" />
+    <a href="/home">
+        <img src="{{ Storage::url($sysconData->first()->logo_path) }}" alt="Logo" />
+    </a>
 @else
-    <img src="{{ asset('../imgs/Lawminary_Logo_2-Gold.png') }}" alt="Logo">
+    <a href="/home">
+        <img src="{{ asset('../imgs/Lawminary_Logo_2-Gold.png') }}" alt="Logo">
+    </a>
 @endif
