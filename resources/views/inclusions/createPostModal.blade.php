@@ -22,6 +22,9 @@
                     <option value="">Select Concern Category</option>
                 </select>                                
             </div>
+            <div class="law-category">
+                <a id="view-laws-category">View Laws Category</a>
+            </div>
             <div id="image-preview-section" class="post-modal-photo" style="display: none;">
                 <img id="image-preview" src="" alt="Image Preview">
                 <button type="button" id="remove-image"><i class="fa-regular fa-circle-xmark"></i></button>
@@ -38,4 +41,20 @@
     </div>
 </div>
 
+@include('inclusions/showLawCategory')
+
 <script src="js/showExpertise.js"></script>
+
+{{-- <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('view-laws-category').addEventListener('click', () => {
+            const lawCategoryModal = document.getElementById('law-category-modal');
+            lawCategoryModal.style.display = 'block'; // Show modal
+        });
+
+        document.getElementById('close-law-category-modal').addEventListener('click', () => {
+            const lawCategoryModal = document.getElementById('law-category-modal');
+            lawCategoryModal.style.display = 'none'; // Hide modal
+        });
+    });
+</script> --}}

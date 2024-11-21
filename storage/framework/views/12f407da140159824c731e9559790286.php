@@ -22,6 +22,9 @@
                     <option value="">Select Concern Category</option>
                 </select>                                
             </div>
+            <div class="law-category">
+                <a id="view-laws-category">View Laws Category</a>
+            </div>
             <div id="image-preview-section" class="post-modal-photo" style="display: none;">
                 <img id="image-preview" src="" alt="Image Preview">
                 <button type="button" id="remove-image"><i class="fa-regular fa-circle-xmark"></i></button>
@@ -38,4 +41,9 @@
     </div>
 </div>
 
-<script src="js/showExpertise.js"></script><?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/inclusions/createPostModal.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('inclusions/showLawCategory', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
+<script src="js/showExpertise.js"></script>
+
+
+<?php /**PATH C:\xampp\htdocs\lawminary_laravel\resources\views/inclusions/createPostModal.blade.php ENDPATH**/ ?>

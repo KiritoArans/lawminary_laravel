@@ -787,4 +787,15 @@ header hr {
     .edit-profile-button {
         margin-top: .25rem;
     }
+    .profile-details img{
+        margin: 0 .5rem 0 0;
+    }
+    .profile-nav {
+        display: flex;
+        max-width: 24rem;
+        overflow-x: auto; 
+        white-space: nowrap; 
+        -webkit-overflow-scrolling: touch; 
+        scrollbar-width: thin; 
+    }
 }

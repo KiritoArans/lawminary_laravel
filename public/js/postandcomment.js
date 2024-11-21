@@ -282,6 +282,20 @@ fileUpload.addEventListener('change', function(event) {
     }
 });
 
+// Show Law Category List
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('view-laws-category').addEventListener('click', () => {
+        const lawCategoryModal = document.getElementById('law-category-modal');
+        lawCategoryModal.style.display = 'block'; 
+    });
+
+    document.getElementById('close-law-category-modal').addEventListener('click', () => {
+        const lawCategoryModal = document.getElementById('law-category-modal');
+        lawCategoryModal.style.display = 'none';
+    });
+});
+
+
 // Remove image preview when 'X' button is clicked
 removeImage.addEventListener('click', function() {
     imagePreview.src = ''; // Clear the image preview source
@@ -290,7 +304,7 @@ removeImage.addEventListener('click', function() {
 });
 
 
-
+// Concern Photo
 function openConPhoto(postId) {
     const modal = document.getElementById(`conPhotoModal-${postId}`);
     if (modal) {
@@ -299,7 +313,6 @@ function openConPhoto(postId) {
         console.error("Modal not found for post ID:", postId);
     }
 }
-
 function closeConPhoto(postId) {
     const modal = document.getElementById(`conPhotoModal-${postId}`);
     if (modal) {
