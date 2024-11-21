@@ -28,6 +28,18 @@ class AuthController extends Controller
                     ->withInput();
             }
 
+            // Check if the user is banned (present twice in tblrestrict)
+            $restrictionCount = \DB::table('tbl_banned')
+                ->where('user_id', $user->user_id)
+                ->value('restriction_count');
+            
+            if ($restrictionCount >= 2) {
+                return redirect()
+                    ->back()
+                    ->withErrors(['loginError' => 'Your account has been banned.'])
+                    ->withInput();
+            }
+
             // Check if the user is restricted and get restriction details
             $restriction = \DB::table('tblrestrict')->where('user_id', $user->user_id)->first();
 
@@ -72,10 +84,6 @@ class AuthController extends Controller
             ->withErrors(['loginError' => 'Invalid username or password.'])
             ->withInput();
     }
-
-
-
-
 
 
     public function logout(Request $request)
