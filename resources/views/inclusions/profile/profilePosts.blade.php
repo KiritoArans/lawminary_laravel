@@ -96,7 +96,7 @@
                     class="btn-hit {{ $hasLiked ? 'btn-hitted' : '' }}"
                 >
                     <i class="fa-solid fa-gavel"></i>
-                    Hit
+                    <span>Hit</span>
                     <span id="likes-count-{{ $post->post_id }}">
                         ({{ $post->likes_count }})
                     </span>
@@ -108,7 +108,7 @@
                 data-post-id="{{ $post->post_id }}"
             >
                 <i class="fas fa-comment"></i>
-                Comment
+                <span>Comment</span>
                 @if ($post->comments_count > 0)
                     <span>({{ $post->comments_count }})</span>
                 @endif
@@ -131,7 +131,7 @@
                     class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : '' }}"
                 >
                     <i class="fas fa-bookmark"></i>
-                    Bookmark
+                    <span>Bookmark</span>
                     <span id="bookmark-count-{{ $post->post_id }}">
                         ({{ $post->bookmarks_count }})
                     </span>

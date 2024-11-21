@@ -98,7 +98,7 @@
                     class="btn-hit <?php echo e($hasLiked ? 'btn-hitted' : ''); ?>"
                 >
                     <i class="fa-solid fa-gavel"></i>
-                    Hit
+                    <span>Hit</span>
                     <span id="likes-count-<?php echo e($post->post_id); ?>">
                         (<?php echo e($post->likes_count); ?>)
                     </span>
@@ -110,7 +110,7 @@
                 data-post-id="<?php echo e($post->post_id); ?>"
             >
                 <i class="fas fa-comment"></i>
-                Comment
+                <span>Comment</span>
                 <?php if($post->comments_count > 0): ?>
                     <span>(<?php echo e($post->comments_count); ?>)</span>
                 <?php endif; ?>
@@ -133,7 +133,7 @@
                     class="btn-bookmark <?php echo e($hasBookmarked ? 'btn-bookmarked' : ''); ?>"
                 >
                     <i class="fas fa-bookmark"></i>
-                    Bookmark
+                    <span>Bookmark</span>
                     <span id="bookmark-count-<?php echo e($post->post_id); ?>">
                         (<?php echo e($post->bookmarks_count); ?>)
                     </span>

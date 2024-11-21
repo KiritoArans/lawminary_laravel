@@ -79,13 +79,15 @@
                     <?php echo csrf_field(); ?>
                     <input type="hidden" name="post_id" value="<?php echo e($post->post_id); ?>" />
                     <button type="submit" class="btn-hit <?php echo e($hasLiked ? 'btn-hitted' : ''); ?>">
-                        <i class="fa-solid fa-gavel"></i>Hit
+                        <i class="fa-solid fa-gavel"></i>
+                        <span>Hit</span>
                         <span id="likes-count-<?php echo e($post->post_id); ?>">(<?php echo e($post->likes_count); ?>)</span>
                     </button>
                 </form>
 
                 <button class="btn-comment" data-post-id="<?php echo e($post->post_id); ?>">
-                    <i class="fas fa-comment"></i>Comment
+                    <i class="fas fa-comment"></i>
+                    <span>Comment</span>
                     <?php if($post->comments_count > 0): ?>
                         <span>(<?php echo e($post->comments_count); ?>)</span>
                     <?php endif; ?>
@@ -95,7 +97,8 @@
                     <?php echo csrf_field(); ?>
                     <input type="hidden" name="post_id" value="<?php echo e($post->post_id); ?>" />
                     <button type="submit" class="btn-bookmark <?php echo e($hasBookmarked ? 'btn-bookmarked' : ''); ?>">
-                        <i class="fas fa-bookmark"></i> Bookmark
+                        <i class="fas fa-bookmark"></i>
+                        <span>Bookmark</span>
                         <span id="bookmark-count-<?php echo e($post->post_id); ?>">(<?php echo e($post->bookmarks_count); ?>)</span>
                     </button>
                 </form>

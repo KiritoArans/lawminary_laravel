@@ -198,13 +198,15 @@
                             @csrf
                             <input type="hidden" name="post_id" value="{{ $post->post_id }}" />
                             <button type="submit" class="btn-hit {{ $hasLiked ? 'btn-hitted' : '' }}">
-                                <i class="fa-solid fa-gavel"></i>Hit
+                                <i class="fa-solid fa-gavel"></i>
+                                <span>Hit</span>
                                 <span id="likes-count-{{ $post->post_id }}">({{ $post->likes_count }})</span>
                             </button>
                         </form>
 
                         <button class="btn-comment" data-post-id="{{ $post->post_id }}">
-                            <i class="fas fa-comment"></i>Comment
+                            <i class="fas fa-comment"></i>
+                            <span>Comment</span>
                             @if($post->comments_count > 0)
                                 <span>({{ $post->comments_count }})</span>
                             @endif
@@ -214,7 +216,8 @@
                             @csrf
                             <input type="hidden" name="post_id" value="{{ $post->post_id }}" />
                             <button type="submit" class="btn-bookmark {{ $hasBookmarked ? 'btn-bookmarked' : '' }}">
-                                <i class="fas fa-bookmark"></i> Bookmark
+                                <i class="fas fa-bookmark"></i>
+                                <span>Bookmark</span>
                                 <span id="bookmark-count-{{ $post->post_id }}">({{ $post->bookmarks_count }})</span>
                             </button>
                         </form>
