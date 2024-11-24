@@ -18,6 +18,7 @@ use App\Mail\RestrictionNotification;
 use App\Mail\RestrictionRemovedNotification;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage; // Make sure to import the Storage facade
 
 class AccountController extends Controller
 {
@@ -810,6 +811,16 @@ class AccountController extends Controller
             return redirect()->back()->with('error', 'Account not found.');
         }
 
+        // Delete idPhoto from storage
+        if ($account->idPhoto) {
+            // Assuming idPhoto contains the relative path like 'uploads/profile_pictures/filename.jpg'
+            Storage::disk('public')->delete($account->idPhoto);
+        }
+
+        // Set idPhoto path to null in the database
+        $account->idPhoto = null;
+
+        // Update the status to 'Approved'
         $account->status = 'Approved';
         $account->save();
 
