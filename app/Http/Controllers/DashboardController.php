@@ -551,36 +551,51 @@ class DashboardController extends Controller
         }
 
         // Fetch the data for the daily report
-        $startDate = now()->startOfDay();
-        $endDate = now()->endOfDay();
-
         $pendingPosts = DB::table('tblposts')
             ->where('status', 'pending')
             ->count();
-
         $pendingAccounts = DB::table('tblaccounts')
             ->where('status', 'pending')
             ->count();
-
         $accountsCreatedToday = DB::table('tblaccounts')
-            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereBetween('created_at', [
+                now()->startOfDay(),
+                now()->endOfDay(),
+            ])
             ->count();
-
         $forumsCreatedToday = DB::table('tblforums')
-            ->whereBetween('created_at', [$startDate, $endDate])
+            ->whereBetween('created_at', [
+                now()->startOfDay(),
+                now()->endOfDay(),
+            ])
             ->count();
 
-        // Prepare report data
+        // Fetch count of comments made by lawyers today
+        $lawyerCommentsCount = DB::table('tblcomments')
+            ->join(
+                'tblaccounts',
+                'tblcomments.user_id',
+                '=',
+                'tblaccounts.user_id'
+            ) // Join tblcomments with tblaccounts on user_id
+            ->where('tblaccounts.accountType', 'Lawyer') // Filter where the accountType is 'Lawyer'
+            ->whereBetween('tblcomments.created_at', [
+                now()->startOfDay(),
+                now()->endOfDay(),
+            ]) // Filter only comments created today
+            ->count(); // Count the comments
+
+        // Prepare report data as an array with correct data types
         $reportData = [
             'title' => 'Daily Report',
             'date' => now()->format('Y-m-d'),
-            'content' => [
-                'pendingPosts' => $pendingPosts,
-                'pendingAccounts' => $pendingAccounts,
-                'accountsCreatedToday' => $accountsCreatedToday,
-                'forumsCreatedToday' => $forumsCreatedToday,
-            ],
+            'content' => 'Summary of Today\'s Activity:',
             'logo' => $logoPath,
+            'pendingPosts' => (int) $pendingPosts,
+            'pendingAccounts' => (int) $pendingAccounts,
+            'accountsCreatedToday' => (int) $accountsCreatedToday,
+            'forumsCreatedToday' => (int) $forumsCreatedToday,
+            'lawyerCommentsCount' => (int) $lawyerCommentsCount,
         ];
 
         // Load the data into the PDF view
