@@ -16,6 +16,7 @@ class UserAccount extends Authenticatable
 
     protected $fillable = [
         'userPhoto',
+        'idPhoto',
         'username',
         'email',
         'password',

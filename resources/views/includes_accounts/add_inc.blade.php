@@ -10,6 +10,9 @@
     <label for="userPhoto">Upload Profile Picture</label>
     <input type="file" name="userPhoto" id="userPhoto" />
 
+    <label for="idPhoto">Upload ID Picture</label>
+    <input type="file" name="idPhoto" id="idPhoto" />
+
     <label for="firstName">First Name:</label>
     <input
         type="text"

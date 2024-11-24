@@ -17,6 +17,8 @@ use App\Models\BannedAccount;
 use App\Mail\RestrictionNotification;
 use App\Mail\RestrictionRemovedNotification;
 
+use Illuminate\Support\Facades\Log;
+
 class AccountController extends Controller
 {
     public function createAccount(Request $request)
@@ -395,6 +397,7 @@ class AccountController extends Controller
             [
                 'user_id' => 'nullable',
                 'userPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|min:1',
+                'idPhoto' => 'nullable|image|mimes:jpeg,png,jpg,gif|min:1',
                 'username' => 'required|unique:tblaccounts,username',
                 'email' => [
                     'required',
@@ -448,6 +451,7 @@ class AccountController extends Controller
         // Collect all data from the request except for password
         $data = $request->only([
             'userPhoto',
+            'idPhoto',
             'user_id',
             'username',
             'email',
@@ -472,6 +476,17 @@ class AccountController extends Controller
                 'public' // Disk
             );
             $data['userPhoto'] = $filePath; // Save the file path to the $data array
+        }
+
+        if ($request->hasFile('idPhoto')) {
+            $file = $request->file('idPhoto');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs(
+                'uploads/id_pictures', // Path
+                $filename, // Filename
+                'public' // Disk
+            );
+            $data['idPhoto'] = $filePath; // Save the file path to the $data array
         }
 
         if (!empty($data['accountType'])) {
