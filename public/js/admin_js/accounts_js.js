@@ -368,3 +368,27 @@ function togglePassword(fieldId) {
         eyeIcon.classList.add('fa-eye');
     }
 }
+
+// Show the modal with the ID photo
+function showIdPhotoModal(photoUrl) {
+    const modal = document.getElementById('idPhotoModal');
+    const modalImage = document.getElementById('idPhotoModalImage');
+
+    modalImage.src = photoUrl;
+    modal.style.display = 'flex'; // Use flex to center the image
+}
+
+// Close the modal
+function closeIdPhotoModal() {
+    const modal = document.getElementById('idPhotoModal');
+    modal.style.display = 'none';
+}
+
+// Close the modal when clicking outside the modal content
+document
+    .getElementById('idPhotoModal')
+    .addEventListener('click', function (event) {
+        if (event.target === this) {
+            this.style.display = 'none';
+        }
+    });
