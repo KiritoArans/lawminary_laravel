@@ -12,7 +12,10 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Username <h6>click the id picture to view*</h6></th>
+                    <th>
+                        Username
+                        <h6>click the id picture to view*</h6>
+                    </th>
                     <th>LN, FN, MI</th>
                     <th>Email</th>
                     <th>Status</th>
