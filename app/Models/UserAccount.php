@@ -25,6 +25,7 @@ class UserAccount extends Authenticatable
         'lastName',
         'birthDate',
         'sex',
+        'address',
         'accountType',
         'lawyerID',
         'fieldExpertise',

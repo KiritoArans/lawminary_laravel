@@ -23,7 +23,7 @@ return new class extends Migration {
             $table->string('lastName', 100);
             $table->date('birthDate');
             $table->enum('sex', ['Male', 'Female', 'Other']);
-            $table->string('contactNumber', 11);
+            $table->string('address', 100)->nullable();
             $table->string('lawyerID', 50)->nullable();
             $table->string('fieldExpertise', 100)->nullable();
             $table->string('status', 15)->nullable();

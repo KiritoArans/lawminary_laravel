@@ -25,10 +25,10 @@ class AccountController extends Controller
     public function createAccount(Request $request)
     {
         try {
+            // Validate input fields
             $data = $request->validate(
                 [
-                    'username' =>
-                        'required|unique:tblaccounts,username|min:3|max:24',
+                    'username' => 'required|unique:tblaccounts,username|min:3|max:24',
                     'email' => 'required|email|unique:tblaccounts,email',
                     'password' => [
                         'required',
@@ -47,8 +47,9 @@ class AccountController extends Controller
                         'date',
                         'before:' . now()->subYears(13)->format('Y-m-d'),
                     ],
-
                     'sex' => 'required',
+                    'address' => 'required|string|max:100',
+                    'idPhoto' => 'required|image|mimes:jpeg,png,jpg|max:2048', 
                 ],
                 [
                     'password.regex' =>
@@ -58,6 +59,13 @@ class AccountController extends Controller
                 ]
             );
 
+            // Handle idPhoto upload
+            if ($request->hasFile('idPhoto')) {
+                $idPhotoPath = $request->file('idPhoto')->store('public/files/id_pics');
+                $data['idPhoto'] = $idPhotoPath; // Store path in the data array
+            }
+
+            // Generate a random OTP
             $otp = rand(100000, 999999);
 
             // Store the OTP in the session
@@ -66,6 +74,7 @@ class AccountController extends Controller
             // Send OTP to user's email
             \Mail::to($data['email'])->send(new \App\Mail\SendOtpMail($otp));
 
+            // Store all user data in the session, including address and idPhoto path
             session(['user_data' => $data]);
 
             return response()->json([
@@ -90,6 +99,7 @@ class AccountController extends Controller
             );
         }
     }
+
 
     public function createLawyerAccount(Request $request)
     {
@@ -163,7 +173,7 @@ class AccountController extends Controller
     {
         // Get the OTP from the request
         $otp = $request->input('otp');
-
+    
         // Check if OTP matches the one sent to the email
         if ($otp != session('otp')) {
             return response()->json(
@@ -171,33 +181,27 @@ class AccountController extends Controller
                 400
             );
         }
-
+    
         try {
             // OTP is correct, create the account using the stored form data
             $data = session('user_data');
             $data['password'] = Hash::make($data['password']);
-            // $data['accountType'] = 'User';
-
+    
+            // Handle idPhoto only if it's present
+            if (isset($data['idPhoto'])) {
+                $data['idPhoto'] = $data['idPhoto']; // Use the stored path
+            } else {
+                $data['idPhoto'] = null; // Set to null if not provided
+            }
+    
             // Create the user account
             $newAccount = UserAccount::create($data);
-
-            \Mail::raw(
-                'Hello, ' .
-                    $data['firstName'] .
-                    ".\n\nYour account has been created successfully.",
-                function ($message) use ($data) {
-                    $message->to($data['email'])->subject('Account Creation');
-                }
-            );
-
+    
             // Clear the session data
             session()->forget(['otp', 'user_data']);
-
-            $message =
-                $data['accountType'] === 'Lawyer'
-                    ? 'Please wait for the approval of your account.'
-                    : 'Account created successfully.';
-
+    
+            $message = "Please wait for the approval of your account.\nYou will be notified through email.\nThank you!";
+    
             return response()->json([
                 'success' => true,
                 'message' => $message,
@@ -212,7 +216,7 @@ class AccountController extends Controller
             );
         }
     }
-
+    
     // New method for resending OTP
     public function resendOtp(Request $request)
     {
