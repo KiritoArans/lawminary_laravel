@@ -12,18 +12,39 @@
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
-                    <th>Username</th>
+                    <th>Username <h6>click the id picture to view*</h6></th>
                     <th>LN, FN, MI</th>
                     <th>Email</th>
                     <th>Status</th>
                     <th>Created at</th>
                     <th>Actions</th>
+                    ss
                 </tr>
             </thead>
             <tbody>
                 @foreach ($pendingAcc as $pending)
                     @include('inclusions.response')
                     <tr>
+                        <td>
+                            @if ($pending->idPhoto)
+                                <img
+                                    src="{{ Storage::url($pending->idPhoto) }}"
+                                    alt="ID Photo"
+                                    width="50"
+                                    height="50"
+                                    class="clickable-id-photo"
+                                    onclick="showIdPhotoModal('{{ Storage::url($pending->idPhoto) }}')"
+                                />
+                            @else
+                                <img
+                                    src="{{ asset('imgs/no-id-photo.png') }}"
+                                    alt="No ID Photo Available"
+                                    width="50"
+                                    height="50"
+                                />
+                            @endif
+                        </td>
+
                         <td>{{ $pending->username }}</td>
                         <td>
                             {{ $pending->lastName . ', ' . $pending->firstName . ', ' . $pending->middleName }}
@@ -74,4 +95,10 @@
             </tbody>
         </table>
     </div>
+</div>
+
+<!-- Modal for ID Photo -->
+<div id="idPhotoModal" class="modalPic" style="display: none">
+    <div class="close-modalPic" onclick="closeIdPhotoModal()">&times;</div>
+    <img id="idPhotoModalImage" src="" alt="ID Photo" />
 </div>
