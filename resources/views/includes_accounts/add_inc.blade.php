@@ -39,6 +39,78 @@
         required
     />
 
+    <label for="streetName">Street Name:</label>
+    <input
+        type="text"
+        id="streetName"
+        name="streetName"
+        value="{{ old('streetName') }}"
+        required
+    />
+
+    <label for="address">Barangay:</label>
+    <select id="address" name="barangay" required>
+        <option value="">Select Barangay</option>
+        @foreach ([
+                'Altura Bata',
+                'Altura Matanda',
+                'Altura-South',
+                'Ambulong',
+                'Bañadero',
+                'Bagbag',
+                'Bagumbayan',
+                'Balele',
+                'Banjo East (Bungkalot)',
+                'Banjo West (Banjo Laurel)',
+                'Bilog-bilog',
+                'Boot',
+                'Cale',
+                'Darasa',
+                'Gonzales',
+                'Hidalgo',
+                'Janopol',
+                'Janopol Oriental',
+                'Laurel',
+                'Luyos',
+                'Mabini',
+                'Malaking Pulo',
+                'Maria Paz',
+                'Maugat',
+                'Montaña (Ik-ik)',
+                'Natatas',
+                'Pagaspas (Balokbalok)',
+                'Pantay Matanda',
+                'Pantay Bata',
+                'Poblacion Barangay 1',
+                'Poblacion Barangay 2',
+                'Poblacion Barangay 3',
+                'Poblacion Barangay 4',
+                'Poblacion Barangay 5',
+                'Poblacion Barangay 6',
+                'Poblacion Barangay 7',
+                'Sala',
+                'Sambat',
+                'San Jose',
+                'Santol (Doña Jacoba Garcia)',
+                'Santor',
+                'Sulpoc',
+                'Suplang',
+                'Talaga',
+                'Tinurik',
+                'Trapiche',
+                'Ulango',
+                'Wawa'
+            ]
+            as $barangay)
+            <option
+                value="{{ $barangay }}"
+                {{ old('barangay') == $barangay ? 'selected' : '' }}
+            >
+                {{ $barangay }}
+            </option>
+        @endforeach
+    </select>
+
     <label for="birthDate">Birth Date:</label>
     <input
         type="date"

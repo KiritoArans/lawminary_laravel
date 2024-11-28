@@ -28,7 +28,8 @@ class AccountController extends Controller
             // Validate input fields
             $data = $request->validate(
                 [
-                    'username' => 'required|unique:tblaccounts,username|min:3|max:24',
+                    'username' =>
+                        'required|unique:tblaccounts,username|min:3|max:24',
                     'email' => 'required|email|unique:tblaccounts,email',
                     'password' => [
                         'required',
@@ -49,7 +50,7 @@ class AccountController extends Controller
                     ],
                     'sex' => 'required',
                     'address' => 'required|string|max:100',
-                    'idPhoto' => 'required|image|mimes:jpeg,png,jpg|max:2048', 
+                    'idPhoto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
                 ],
                 [
                     'password.regex' =>
@@ -61,7 +62,9 @@ class AccountController extends Controller
 
             // Handle idPhoto upload
             if ($request->hasFile('idPhoto')) {
-                $idPhotoPath = $request->file('idPhoto')->store('public/files/id_pics');
+                $idPhotoPath = $request
+                    ->file('idPhoto')
+                    ->store('public/files/id_pics');
                 $data['idPhoto'] = $idPhotoPath; // Store path in the data array
             }
 
@@ -99,7 +102,6 @@ class AccountController extends Controller
             );
         }
     }
-
 
     public function createLawyerAccount(Request $request)
     {
@@ -173,7 +175,7 @@ class AccountController extends Controller
     {
         // Get the OTP from the request
         $otp = $request->input('otp');
-    
+
         // Check if OTP matches the one sent to the email
         if ($otp != session('otp')) {
             return response()->json(
@@ -181,27 +183,28 @@ class AccountController extends Controller
                 400
             );
         }
-    
+
         try {
             // OTP is correct, create the account using the stored form data
             $data = session('user_data');
             $data['password'] = Hash::make($data['password']);
-    
+
             // Handle idPhoto only if it's present
             if (isset($data['idPhoto'])) {
                 $data['idPhoto'] = $data['idPhoto']; // Use the stored path
             } else {
                 $data['idPhoto'] = null; // Set to null if not provided
             }
-    
+
             // Create the user account
             $newAccount = UserAccount::create($data);
-    
+
             // Clear the session data
             session()->forget(['otp', 'user_data']);
-    
-            $message = "Please wait for the approval of your account.\nYou will be notified through email.\nThank you!";
-    
+
+            $message =
+                "Please wait for the approval of your account.\nYou will be notified through email.\nThank you!";
+
             return response()->json([
                 'success' => true,
                 'message' => $message,
@@ -216,7 +219,7 @@ class AccountController extends Controller
             );
         }
     }
-    
+
     // New method for resending OTP
     public function resendOtp(Request $request)
     {
@@ -471,6 +474,12 @@ class AccountController extends Controller
 
             'restrict_days',
         ]);
+
+        $data['address'] =
+            $request->streetName .
+            ', ' .
+            $request->barangay .
+            ', Tanauan City, Batangas';
 
         if ($request->hasFile('userPhoto')) {
             $file = $request->file('userPhoto');

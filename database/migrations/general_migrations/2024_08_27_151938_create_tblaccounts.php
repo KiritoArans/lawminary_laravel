@@ -21,6 +21,7 @@ return new class extends Migration {
             $table->string('firstName', 100);
             $table->string('middleName', 100)->nullable();
             $table->string('lastName', 100);
+            $table->string('address', 255);
             $table->date('birthDate');
             $table->enum('sex', ['Male', 'Female', 'Other']);
             $table->string('address', 100)->nullable();
