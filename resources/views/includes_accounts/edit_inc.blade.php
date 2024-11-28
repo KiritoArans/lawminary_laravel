@@ -33,69 +33,10 @@
     <label for="editLastName">Last Name</label>
     <input type="text" id="editLastName" name="lastName" required value="" />
 
-    <!-- Street Name and Barangay Fields -->
-    <label for="editStreetName">Street Name</label>
-    <input
-        type="text"
-        id="editStreetName"
-        name="streetName"
-        required
-        value="{{ explode(', ', $account->address)[0] }}"
-    />
-
-    <label for="editBarangay">Barangay</label>
+    <label for="editBarangay">Address</label>
     <select id="editBarangay" name="barangay" required>
-        <option value="">Select Barangay</option>
-        @foreach ([
-                'Altura Bata',
-                'Altura Matanda',
-                'Altura-South',
-                'Ambulong',
-                'Bañadero',
-                'Bagbag',
-                'Bagumbayan',
-                'Balele',
-                'Banjo East (Bungkalot)',
-                'Banjo West (Banjo Laurel)',
-                'Bilog-bilog',
-                'Boot',
-                'Cale',
-                'Darasa',
-                'Gonzales',
-                'Hidalgo',
-                'Janopol',
-                'Janopol Oriental',
-                'Laurel',
-                'Luyos',
-                'Mabini',
-                'Malaking Pulo',
-                'Maria Paz',
-                'Maugat',
-                'Montaña (Ik-ik)',
-                'Natatas',
-                'Pagaspas (Balokbalok)',
-                'Pantay Matanda',
-                'Pantay Bata',
-                'Poblacion Barangay 1',
-                'Poblacion Barangay 2',
-                'Poblacion Barangay 3',
-                'Poblacion Barangay 4',
-                'Poblacion Barangay 5',
-                'Poblacion Barangay 6',
-                'Poblacion Barangay 7',
-                'Sala',
-                'Sambat',
-                'San Jose',
-                'Santol (Doña Jacoba Garcia)',
-                'Santor',
-                'Sulpoc',
-                'Suplang',
-                'Talaga',
-                'Tinurik',
-                'Trapiche',
-                'Ulango',
-                'Wawa'
-            ]
+        <option value="">Option</option>
+        @foreach (['Tanauan', 'Malvar', 'Sto. Tomas', 'Balete', 'Talisay', 'Laurel']
             as $barangay)
             <option
                 value="{{ $barangay }}"
