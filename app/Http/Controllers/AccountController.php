@@ -173,7 +173,6 @@ class AccountController extends Controller
 
     public function verifyOtp(Request $request)
     {
-        // Get the OTP from the request
         $otp = $request->input('otp');
 
         // Check if OTP matches the one sent to the email
@@ -196,9 +195,16 @@ class AccountController extends Controller
                 $data['idPhoto'] = null; // Set to null if not provided
             }
 
-            // Create the user account
             $newAccount = UserAccount::create($data);
 
+            \Mail::raw(
+                'Hello, ' .
+                    $data['firstName'] .
+                    ".\n\nThank you for signing up! Your account has been created successfully and is awaiting approval. You will be notified via this email once your account has been approved.",
+                function ($message) use ($data) {
+                    $message->to($data['email'])->subject('Account Creation');
+                }
+            );
             // Clear the session data
             session()->forget(['otp', 'user_data']);
 
