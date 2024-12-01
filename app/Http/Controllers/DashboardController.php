@@ -398,6 +398,21 @@ class DashboardController extends Controller
                 ->count(),
             'accountsCount' => DB::table('tblaccounts')->count(),
             'forumsCount' => DB::table('tblforums')->count(),
+            'totalPosts' => DB::table('tblposts')->count(),
+            'totalConcernsCommentedByLawyer' => DB::table('tblcomments')
+                ->join(
+                    'tblaccounts',
+                    'tblcomments.user_id',
+                    '=',
+                    'tblaccounts.id'
+                )
+                ->where('tblaccounts.accountType', 'Lawyer')
+                ->distinct('tblcomments.post_id')
+                ->count(),
+            'highestLeaderboardPoints' => DB::table('tblleaderboards')->max(
+                'rankPoints'
+            ), // Assuming the leaderboard points are stored in 'points' column
+            'totalLaws' => DB::table('tblbooktwo')->count(), // Assuming the laws are stored in 'tbllaws' table
         ];
     }
 
