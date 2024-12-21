@@ -45,13 +45,16 @@ class SearchController extends Controller
                 $firstNameDistance = levenshtein(strtolower($query), strtolower($lawyer->firstName));
                 $lastNameDistance = levenshtein(strtolower($query), strtolower($lawyer->lastName));
                 $usernameDistance = levenshtein(strtolower($query), strtolower($lawyer->username));
-                
-                // Allow close matches (distance less than or equal to 3, adjust as needed)
-                return $firstNameDistance <= 3 || $lastNameDistance <= 3 || $usernameDistance <= 3;
+                $fieldExpertiseMatch = stripos($lawyer->fieldExpertise, $query) !== false; // Check if query exists in fieldExpertise
+        
+                // Include lawyers with close name matches or fieldExpertise match
+                return $firstNameDistance <= 3 || $lastNameDistance <= 3 || $usernameDistance <= 3 || $fieldExpertiseMatch;
             });
+        
     
         $posts = Posts::where('status', 'Approved')
             ->where('privacy', 'Public')
+            ->whereHas('user')
             ->with('user')
             ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('created_at', 'desc')
@@ -75,6 +78,7 @@ class SearchController extends Controller
             'comments.reply.user'
         )
         ->where('privacy', 'Public')
+        ->whereHas('user')
         ->withCount('likes', 'comments', 'bookmarks')
         ->orderBy('created_at', 'desc')
         ->get();

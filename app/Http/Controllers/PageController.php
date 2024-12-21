@@ -55,12 +55,14 @@ class PageController extends Controller
         $post = Posts::with('user', 'comments', 'comments.user', 'comments.reply.user')
             ->withCount('likes', 'comments', 'bookmarks')
             ->where('post_id', $post_id)
+            ->whereHas('user')
             ->first();
 
         if (!$post) {
             $forumPost = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
                 ->withCount('likes', 'comments', 'bookmarks')
                 ->where('post_id', $post_id)
+                ->whereHas('user')
                 ->first();
 
             if ($forumPost) {
@@ -81,6 +83,7 @@ class PageController extends Controller
         $post = ForumPosts::with('user', 'comments', 'comments.user', 'comments.reply.user')
             ->withCount('likes', 'comments', 'bookmarks')
             ->where('post_id', $post_id)
+            ->whereHas('user')
             ->first();
 
         if (!$post) {
@@ -90,8 +93,6 @@ class PageController extends Controller
 
         return view('users.viewForumPost', compact('post'));
     }
-    
-
 
     // User Page
     public function showHomePage(Request $request)
@@ -115,7 +116,8 @@ class PageController extends Controller
                 $followingUserIds = \App\Models\Follow::where(
                     'follower',
                     $user->user_id
-                )->pluck('following');
+                )->pluck('following')
+                ->whereHas('user');
 
                 $posts = Posts::with('user')
                     ->withCount('likes', 'comments', 'bookmarks')
@@ -388,6 +390,7 @@ class PageController extends Controller
 
         $posts = ForumPosts::with('user')
             ->where('forum_id', $forum_id)
+            ->whereHas('user')
             ->when($searchQuery, function($query) use ($searchQuery) {
                 return $query->where('concern', 'like', '%' . $searchQuery . '%')
                             ->orWhereHas('user', function($q) use ($searchQuery) {
@@ -405,6 +408,7 @@ class PageController extends Controller
             'comments.user',
             'comments.reply.user'
         )
+        ->whereHas('user')
         ->withCount('likes', 'comments', 'bookmarks')
         ->orderBy('created_at', 'desc')
         ->get();
@@ -465,6 +469,7 @@ class PageController extends Controller
         )
             ->withCount('likes', 'comments', 'bookmarks')
             ->whereNotNull('post_id') 
+            ->whereHas('user')
             ->orderBy('created_at', 'desc')
             ->get();
         
@@ -575,6 +580,7 @@ class PageController extends Controller
             ->withCount('likes', 'comments', 'bookmarks')
             ->where('status', 'Approved')
             ->where('privacy', 'Public')
+            ->whereHas('user')
             ->orderBy('created_at', $sortOrder)
             ->get();
 
@@ -592,6 +598,7 @@ class PageController extends Controller
         )
             ->withCount('likes', 'comments', 'bookmarks')
             ->where('privacy', 'Public')
+            ->whereHas('user')
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -610,6 +617,7 @@ class PageController extends Controller
         ->get();
 
         $comments = Comment::where('user_id', $user->user_id)
+            ->whereHas('user')
             ->whereIn('post_id', function($query) {
                 $query->select('post_id')
                     ->from('tblposts'); 
@@ -642,6 +650,7 @@ class PageController extends Controller
             ->join('tblbookmarks', 'tblposts.post_id', '=', 'tblbookmarks.post_id')
             ->where('tblbookmarks.user_id', $user->user_id)
             ->where('privacy', 'Public')
+            ->whereHas('user')
             ->with('user')
             ->withCount('likes', 'comments', 'bookmarks')
             ->orderBy('tblbookmarks.created_at', 'desc') 
