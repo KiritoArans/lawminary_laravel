@@ -730,17 +730,6 @@ Route::middleware(['web'])->group(function () {
     ]);
 });
 
-Route::get('/test-email', function () {
-    try {
-        Mail::raw('Testing...', function ($message) {
-            $message->to('larsenatienza917@gmail.com')->subject('Email Test');
-        });
-        return 'Email sent successfully';
-    } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
-    }
-});
-
 // OTP-related Routes
 Route::post('/account-verify-otp', [
     AccountController::class,
@@ -858,16 +847,3 @@ Route::post('/search', [
     SearchUserController::class,
     'findPossibleCharges',
 ])->name('find.charges');
-
-//testing for email
-
-Route::get('/test-email', function () {
-    try {
-        Mail::raw('Test 123 Test 123 K0p4l', function ($message) {
-            $message->to('lawminary@gmail.com')->subject('Email Test');
-        });
-        return 'Email sent successfully';
-    } catch (\Exception $e) {
-        return 'Error: ' . $e->getMessage();
-    }
-});

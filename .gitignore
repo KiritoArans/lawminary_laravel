@@ -69,3 +69,8 @@ Thumbs.db
 *.bak
 *.tmp
 storage/logs/laravel.log
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
