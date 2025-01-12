@@ -116,8 +116,7 @@ class PageController extends Controller
                 $followingUserIds = \App\Models\Follow::where(
                     'follower',
                     $user->user_id
-                )->pluck('following')
-                ->whereHas('user');
+                )->pluck('following');
 
                 $posts = Posts::with('user')
                     ->withCount('likes', 'comments', 'bookmarks')
